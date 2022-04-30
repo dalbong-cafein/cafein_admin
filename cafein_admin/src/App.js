@@ -1,18 +1,22 @@
-import { Route, Routes } from "react-router-dom";
-import Main from "./pages/main";
-import LogIn from "./pages/login";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
+//component
+import SideBar from "./components/common/sidebar";
+import Header from "./components/common/header";
+
+//page
+import Main from "./pages/main";
+import LogIn from "./pages/login";
+
 function App() {
   return (
-    <>
+    <div style={{ backgroundColor: "#000" }}>
       <GlobalStyle />
-      <Routes>
-        <Route path="/" exact element={<Main />} />
-        <Route path="/login" exact element={<LogIn />} />
-      </Routes>
-    </>
+      <Header />
+      <SideBar />
+      <Main />
+    </div>
   );
 }
 
