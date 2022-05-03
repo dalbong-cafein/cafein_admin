@@ -8,17 +8,14 @@ const Main = () => {
   return (
     <Containaer style={{ color: "#fff" }}>
       <Routes>
-        <Route path="/" exact element={<ManagementCafe />} />
-        <Route path="/login" exact element={<LogIn />} />
+        <Route path="/management" exact element={<ManagementCafe />} />
       </Routes>
     </Containaer>
   );
 };
 
 const Containaer = styled.div`
-  position: fixed;
-  top: 10rem;
-  left: 296px;
+  padding-right: 102px;
 `;
 
 export default Main;

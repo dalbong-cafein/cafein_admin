@@ -20,13 +20,9 @@ const Header = () => {
 
 const Container = styled.div`
   width: 100vw;
-  height: 10rem;
   padding: 72px 56px 48px 56px;
-  position: absolute;
   display: flex;
   gap: 152px;
-  top: 0;
-  left: 0;
   & > svg {
     width: 118px;
     height: 39px;
