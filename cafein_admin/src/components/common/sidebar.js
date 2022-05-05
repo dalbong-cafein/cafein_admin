@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-//atoms
-import MenuBox from "../atoms/menuBox";
-
 //icon
 import { ReactComponent as Cup } from "../../svg/Cup.svg";
 import { ReactComponent as Desh } from "../../svg/desh.svg";
@@ -11,48 +8,54 @@ import { ReactComponent as Review } from "../../svg/review.svg";
 import { ReactComponent as Marketing } from "../../svg/marketing.svg";
 import { ReactComponent as Notice } from "../../svg/notice.svg";
 import { ReactComponent as Statictis } from "../../svg/statictis.svg";
+import { ReactComponent as Exit } from "../../svg/exit.svg";
 import Row from "../atoms/row";
+import { useNavigate } from "react-router-dom";
 
-const SideBar = () => {
+const SideBar = ({ menu, setMenu }) => {
+  const navigate = useNavigate();
   return (
     <Container>
       <div>
-        <MenuBox>
-          <Desh />
+        <MenuBox onClick={() => navigate("/desh")}>
+          <Desh isT={menu === "desh"} />
           대시보드
         </MenuBox>
-        <MenuBox>
-          <Cup />
+        <MenuBox onClick={() => navigate("/management")}>
+          <Cup isT={menu === "management"} />
           카페관리
         </MenuBox>
-        <MenuBox>
-          <Review />
+        <MenuBox onClick={() => navigate("/review")}>
+          <Review isT={menu === "review"} />
           카페리뷰
         </MenuBox>
-        <MenuBox>
-          <User />
+        <MenuBox onClick={() => navigate("/user")}>
+          <User isT={menu === "user"} />
           회원정보
         </MenuBox>
-        <MenuBox>
-          <Marketing />
+        <MenuBox onClick={() => navigate("/marketing")}>
+          <Marketing isT={menu === "marketing"} />
           마케팅 서비스
         </MenuBox>
-        <MenuBox>
-          <Notice />
+        <MenuBox onClick={() => navigate("/notice")}>
+          <Notice isT={menu === "notice"} />
           공지사항
         </MenuBox>
-        <MenuBox>
-          <Statictis />
+        <MenuBox onClick={() => navigate("/statistics")}>
+          <Statictis isT={menu === "statistics"} />
           통계
         </MenuBox>
       </div>
       <Profile>
-        <Row gap={10}>
-          <Pic></Pic>
-          <Column>
-            <p>카페인</p>
-            <p>관리자</p>
-          </Column>
+        <Row align={"center"} gap={60}>
+          <Row gap={12}>
+            <Pic></Pic>
+            <Column>
+              <p>카페인</p>
+              <p>관리자</p>
+            </Column>
+          </Row>
+          <Exit />
         </Row>
       </Profile>
     </Container>
@@ -61,9 +64,9 @@ const SideBar = () => {
 
 const Container = styled.div`
   position: relative;
-  padding: 32px 0 32px;
+  padding: 32px 0 20px 20px;
   width: 296px;
-  height: 72vh;
+  height: 75vh;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -76,7 +79,7 @@ const Container = styled.div`
     & > div {
       & > svg {
         path {
-          fill: #fff;
+          fill: ${(props) => (props.isT ? "#fff" : "#646464")};
         }
       }
     }
@@ -98,9 +101,28 @@ const Pic = styled.div`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  & > p {
+  gap: 8px;
+
+  & > p:first-child {
+    font-size: 16px;
+    font-weigth: bold;
     color: #fff;
   }
+  & > p:last-child {
+    font-size: 14px;
+    color: #acacac;
+  }
+`;
+
+const MenuBox = styled.div`
+  width: 156px;
+  height: 40px;
+  padding: 0 10px;
+  color: #fff;
+  display: flex;
+  justify-content: flex-start;
+  gap: 9px;
+  align-items: baseline;
+  pointer: cursor;
 `;
 export default SideBar;

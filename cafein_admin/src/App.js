@@ -9,8 +9,13 @@ import Header from "./components/common/header";
 //page
 import Main from "./pages/main";
 import LogIn from "./pages/login";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [menu, setMenu] = useState("");
+  useEffect(() => {
+    setMenu(window.location.pathname.split("/")[1]);
+  });
   return (
     <div
       style={{
@@ -23,7 +28,7 @@ function App() {
       <GlobalStyle />
       <Header />
       <Row>
-        <SideBar />
+        <SideBar menu={menu} setMenu={setMenu} />
         <Main />
       </Row>
     </div>
@@ -37,12 +42,13 @@ ${reset}
 const Row = styled.div`
   display: flex;
   width: 100%;
-  & > div:first-child {
-    flex: 1;
-  }
-  & > div:last-child {
-    flex: 3.2;
-  }
+  // align-items: flex-start;
+  // & > div:first-child {
+  //   flex: 1;
+  // }
+  // & > div:last-child {
+  //   flex: 3.2;
+  // }
 `;
 
 export default App;

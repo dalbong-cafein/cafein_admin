@@ -10,6 +10,7 @@ const Box = styled.div`
   padding: 0 10px;
   color: #fff;
   display: flex;
+  justify-content: flex-start;
   gap: 9px;
   align-items: baseline;
 `;

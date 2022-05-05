@@ -5,6 +5,9 @@ import Sbtn from "../components/atoms/Sbtn";
 
 import Paging from "../components/common/Pagination";
 
+import { ReactComponent as Search } from "../svg/Search.svg";
+import { ReactComponent as Memo } from "../svg/memo.svg";
+
 const ManagementCafe = () => {
   const [isActive, setIsActive] = useState(1);
   const temp = [
@@ -18,18 +21,9 @@ const ManagementCafe = () => {
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
+      img: "/캡처.PNG",
     },
-    {
-      code: "000001",
-      name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 ddddddddddd",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
-      registration: "03/29/2022",
-      edited: "03/29/2022",
-      memo: "",
-    },
+
     {
       code: "000001",
       name: "투썸플레이스 은평구청점",
@@ -40,6 +34,7 @@ const ManagementCafe = () => {
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
+      img: null,
     },
     {
       code: "000001",
@@ -51,6 +46,7 @@ const ManagementCafe = () => {
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
+      img: null,
     },
     {
       code: "000001",
@@ -62,11 +58,12 @@ const ManagementCafe = () => {
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
+      img: null,
     },
   ];
 
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(temp.length * 2 - 1);
+  const [count, setCount] = useState(temp.length * 3 - 1);
   const [items, setItems] = useState(5);
   const handlePageChange = (page) => {
     setPage(page);
@@ -75,26 +72,39 @@ const ManagementCafe = () => {
 
   return (
     <>
-      <Row align={"baseline"} style={{ marginBottom: "20px" }} gap={15}>
-        <Sbtn onClick={() => setIsActive(1)} isTrue={isActive === 1}>
-          새 카페 등록
-        </Sbtn>
-        <Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
-          최신순
-        </Sbtn>
-        <Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
-          오래된 순
-        </Sbtn>
-        <Paging
-          count={count}
-          handlePageChange={handlePageChange}
-          setPage={setPage}
-          page={page}
-        />
+      <Row
+        justify={"space-between"}
+        align={"baseline"}
+        style={{ marginBottom: "20px" }}
+      >
+        <Row gap={15}>
+          <Sbtn onClick={() => setIsActive(1)} isTrue={isActive === 1}>
+            새 카페 등록
+          </Sbtn>
+          <Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
+            최신순
+          </Sbtn>
+          <Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
+            오래된 순
+          </Sbtn>
+        </Row>
+        <Row gap={15} align={"baseline"}>
+          <Paging
+            count={count}
+            handlePageChange={handlePageChange}
+            setPage={setPage}
+            page={page}
+          />
+          <Sbtn>전체</Sbtn>
+          <Row style={{ borderBottom: "1px solid #fff" }}>
+            <Input placeholder="검색" />
+            <Search />
+          </Row>
+        </Row>
       </Row>
       <Wrapper>
         <TableHeader>
-          <tr height="40px">
+          <tr height="30px">
             <td>분류</td>
             <td>카페명</td>
             <td>위치</td>
@@ -108,18 +118,35 @@ const ManagementCafe = () => {
 
           {temp
             .concat(temp)
+            .concat(temp)
             .slice(items * (page - 1), items * (page - 1) + items)
             .map((item) => (
-              <tr height="120px">
-                <td>{item.code}</td>
-                <td>{item.name}</td>
+              <tr>
+                <td>
+                  <div>{item.code}</div>
+                </td>
+                <td>
+                  <Row gap={16} align={"center"}>
+                    {item.img ? (
+                      <Photo>
+                        z
+                        <img src={item.img} alt="pic" />
+                      </Photo>
+                    ) : (
+                      <NonePic>대표 사진</NonePic>
+                    )}
+                    <p>{item.name}</p>
+                  </Row>
+                </td>
                 <td>{item.location}</td>
                 <td>{item.phoneNum}</td>
                 <td>{item.congestion}</td>
                 <td>{item.review}건</td>
                 <td>{item.registration}</td>
                 <td>{item.edited}</td>
-                <td>{item.memo}</td>
+                <td>
+                  <Memo />
+                </td>
               </tr>
             ))}
         </TableHeader>
@@ -144,12 +171,45 @@ const TableHeader = styled.table`
 
   & > th,
   td {
-    padding: 8px;
+    padding: 16px;
     border: 1px solid #444444;
   }
   & > tr:first-child {
     color: #8b8b8b;
   }
+`;
+
+const Input = styled.input`
+  border: 0;
+  background-color: #000;
+  color: #fff;
+  width: 220px;
+  height: 32px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Photo = styled.div`
+  width: 88px;
+  height: 88px;
+  line-height: 88px;
+  position: relative;
+  transform: translate(-50%, 0);
+  & > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const NonePic = styled.div`
+  width: 88px;
+  height: 88px;
+  background-color: #fff;
+  color: #000;
+  line-height: 88px;
 `;
 
 export default ManagementCafe;

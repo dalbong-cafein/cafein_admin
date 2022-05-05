@@ -8,14 +8,25 @@ const Main = () => {
   return (
     <Containaer style={{ color: "#fff" }}>
       <Routes>
+        <Route path="/desh" exact element={<Temp />} />
         <Route path="/management" exact element={<ManagementCafe />} />
+        <Route path="/review" exact element={<Temp />} />
+        <Route path="/user" exact element={<Temp />} />
+        <Route path="/marketing" exact element={<Temp />} />
+        <Route path="/notice" exact element={<Temp />} />
+        <Route path="/statistics" exact element={<Temp />} />
       </Routes>
     </Containaer>
   );
 };
 
+const Temp = () => {
+  return <div style={{ color: "#fff" }}>아직</div>;
+};
+
 const Containaer = styled.div`
-  padding-right: 102px;
+  width: 100%;
+  padding: 0 102px 0 80px;
 `;
 
 export default Main;
