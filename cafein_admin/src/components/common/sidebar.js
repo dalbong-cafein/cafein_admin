@@ -9,88 +9,99 @@ import { ReactComponent as Marketing } from "../../svg/marketing.svg";
 import { ReactComponent as Notice } from "../../svg/notice.svg";
 import { ReactComponent as Statictis } from "../../svg/statictis.svg";
 import { ReactComponent as Exit } from "../../svg/exit.svg";
+import { ReactComponent as LogoIcon } from "../../svg/Logo.svg";
+
 import Row from "../atoms/row";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const SideBar = ({ menu, setMenu }) => {
+const SideBar = ({ menu }) => {
   const navigate = useNavigate();
+
   return (
     <Container>
-      <div>
-        <MenuBox onClick={() => navigate("/desh")}>
-          <Desh isT={menu === "desh"} />
-          대시보드
-        </MenuBox>
-        <MenuBox onClick={() => navigate("/management")}>
-          <Cup isT={menu === "management"} />
-          카페관리
-        </MenuBox>
-        <MenuBox onClick={() => navigate("/review")}>
-          <Review isT={menu === "review"} />
-          카페리뷰
-        </MenuBox>
-        <MenuBox onClick={() => navigate("/user")}>
-          <User isT={menu === "user"} />
-          회원정보
-        </MenuBox>
-        <MenuBox onClick={() => navigate("/marketing")}>
-          <Marketing isT={menu === "marketing"} />
-          마케팅 서비스
-        </MenuBox>
-        <MenuBox onClick={() => navigate("/notice")}>
-          <Notice isT={menu === "notice"} />
-          공지사항
-        </MenuBox>
-        <MenuBox onClick={() => navigate("/statistics")}>
-          <Statictis isT={menu === "statistics"} />
-          통계
-        </MenuBox>
-      </div>
-      <Profile>
-        <Row align={"center"} gap={60}>
-          <Row gap={12}>
-            <Pic></Pic>
-            <Column>
-              <p>카페인</p>
-              <p>관리자</p>
-            </Column>
+      <LogoIcon />
+      <Box>
+        <div>
+          <MenuBox onClick={() => navigate("/desh")}>
+            <Desh isT={menu === "desh"} />
+            대시보드
+          </MenuBox>
+          <MenuBox onClick={() => navigate("/management")}>
+            <Cup isT={menu === "management"} />
+            카페관리
+          </MenuBox>
+          <MenuBox onClick={() => navigate("/review")}>
+            <Review isT={menu === "review"} />
+            카페리뷰
+          </MenuBox>
+          <MenuBox onClick={() => navigate("/user")}>
+            <User isT={menu === "user"} />
+            회원정보
+          </MenuBox>
+          <MenuBox onClick={() => navigate("/marketing")}>
+            <Marketing isT={menu === "marketing"} />
+            마케팅 서비스
+          </MenuBox>
+          <MenuBox onClick={() => navigate("/notice")}>
+            <Notice isT={menu === "notice"} />
+            공지사항
+          </MenuBox>
+          <MenuBox onClick={() => navigate("/statistics")}>
+            <Statictis isT={menu === "statistics"} />
+            통계
+          </MenuBox>
+        </div>
+        <Profile>
+          <Row align={"center"} gap={60}>
+            <Row gap={12}>
+              <Pic></Pic>
+              <Column>
+                <p>카페인</p>
+                <p>관리자</p>
+              </Column>
+            </Row>
+            <Exit />
           </Row>
-          <Exit />
-        </Row>
-      </Profile>
+        </Profile>
+      </Box>
     </Container>
   );
 };
 
 const Container = styled.div`
   position: relative;
-  padding: 32px 0 20px 20px;
+  padding: 73px 124px 57px 57px;
   width: 296px;
-  height: 75vh;
+  height: 100vh;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
-  & > div:first-child {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    pointer: cursor;
-    & > div {
-      & > svg {
-        path {
-          fill: ${(props) => (props.isT ? "#fff" : "#646464")};
-        }
-      }
-    }
-  }
-  & > div:last-child {
+  gap: 72px;
+  & > svg {
+    width: 118px;
+    height: 39px;
   }
 `;
 
-const Profile = styled.div`
-  margin: 0 20px;
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 350px;
+  align-items: center;
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer: cursor;
+    & > div > svg {
+      path {
+        fill: #fff;
+      }
+    }
+  }
 `;
+
+const Profile = styled.div``;
 const Pic = styled.div`
   width: 40px;
   height: 40px;

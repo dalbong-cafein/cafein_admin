@@ -4,7 +4,6 @@ import reset from "styled-reset";
 
 //component
 import SideBar from "./components/common/sidebar";
-import Header from "./components/common/header";
 
 //page
 import Main from "./pages/main";
@@ -13,9 +12,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [menu, setMenu] = useState("");
-  useEffect(() => {
-    setMenu(window.location.pathname.split("/")[1]);
-  });
+
   return (
     <div
       style={{
@@ -26,10 +23,9 @@ function App() {
       }}
     >
       <GlobalStyle />
-      <Header />
       <Row>
         <SideBar menu={menu} setMenu={setMenu} />
-        <Main />
+        <Main menu={menu} />
       </Row>
     </div>
   );

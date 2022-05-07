@@ -1,36 +1,33 @@
 import styled from "styled-components";
+import { ReactComponent as Arrow } from "../../svg/arrow.svg";
 
-//atoms
-import Row from "../atoms/row";
-
-//icon
-import { ReactComponent as LogoIcon } from "../../svg/Logo.svg";
-
-const Header = () => {
+const Header = ({ text, subText, inner }) => {
   return (
-    <Container>
-      <LogoIcon />
-      <Row gap={16} align={"baseline"}>
-        <Menu>카페관리</Menu>
-        <Txt>등록된 카페 {}건</Txt>
-      </Row>
-    </Container>
+    <Row>
+      <Menu isInner={subText}>{text}</Menu>
+      {subText ? (
+        <Txt>{subText}</Txt>
+      ) : (
+        <Txt2>
+          <Arrow />
+          {inner}
+        </Txt2>
+      )}
+    </Row>
   );
 };
 
-const Container = styled.div`
-  width: 100vw;
-  padding: 72px 56px 48px 56px;
+const Row = styled.div`
   display: flex;
-  gap: 152px;
-  & > svg {
-    width: 118px;
-    height: 39px;
-  }
+  width: 100%;
+  padding: 72px 56px 48px 0;
+  display: flex;
+  gap: 20px;
+  align-items: baseline;
 `;
 
 const Menu = styled.div`
-  color: #fff;
+  color: ${(props) => (props.inInner ? "#fff" : "#8B8B8B")};
   font-size: 24px;
   font-weight: bold;
 `;
@@ -39,4 +36,13 @@ const Txt = styled.div`
   color: #acacac;
   font-size: 16px;
 `;
+
+const Txt2 = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  & > svg {
+    margin-right: 14px;
+  }
+`;
+
 export default Header;

@@ -1,15 +1,17 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Row from "../components/atoms/row";
-import Sbtn from "../components/atoms/Sbtn";
 
 import Paging from "../components/common/Pagination";
 
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { ReactComponent as Memo } from "../svg/memo.svg";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/common/header";
 
-const ManagementCafe = () => {
+const ManagementCafe = ({ setSubText }) => {
   const [isActive, setIsActive] = useState(1);
+  const navigate = useNavigate();
   const temp = [
     {
       code: "000001",
@@ -62,23 +64,43 @@ const ManagementCafe = () => {
     },
   ];
 
+  const [search, setSearch] = useState("");
+
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(temp.length * 3 - 1);
-  const [items, setItems] = useState(5);
+  const [items, setItems] = useState(9);
   const handlePageChange = (page) => {
     setPage(page);
     console.log(page);
   };
 
+  // const onclick=()=> {
+  //   let temp2=[]
+  //   for(i in temp) {
+  //     for (k in i) {
+  //       if (k.includes(search)) {
+  //         temp2.push(i)
+  //       }
+  //     }
+  //   }
+  // }
+
   return (
     <>
+      <Header text={"카페 관리"} subText={"등록된 카페 00건"} />
       <Row
         justify={"space-between"}
         align={"baseline"}
         style={{ marginBottom: "20px" }}
       >
         <Row gap={15}>
-          <Sbtn onClick={() => setIsActive(1)} isTrue={isActive === 1}>
+          <Sbtn
+            onClick={() => {
+              navigate("/management/register");
+              setSubText("새 카페 등록");
+            }}
+            isTrue={isActive === 1}
+          >
             새 카페 등록
           </Sbtn>
           <Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
@@ -97,14 +119,19 @@ const ManagementCafe = () => {
           />
           <Sbtn>전체</Sbtn>
           <Row style={{ borderBottom: "1px solid #fff" }}>
-            <Input placeholder="검색" />
-            <Search />
+            <Input
+              placeholder="검색"
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Search onClick={onclick} />
           </Row>
         </Row>
       </Row>
       <Wrapper>
         <TableHeader>
-          <tr height="30px">
+          <tr>
             <td>분류</td>
             <td>카페명</td>
             <td>위치</td>
@@ -121,7 +148,7 @@ const ManagementCafe = () => {
             .concat(temp)
             .slice(items * (page - 1), items * (page - 1) + items)
             .map((item) => (
-              <tr>
+              <tr height="72px">
                 <td>
                   <div>{item.code}</div>
                 </td>
@@ -130,7 +157,10 @@ const ManagementCafe = () => {
                     {item.img ? (
                       <Photo>
                         z
-                        <img src={item.img} alt="pic" />
+                        <img
+                          src={process.env.PUBLIC_URL + item.img}
+                          alt="pic"
+                        />
                       </Photo>
                     ) : (
                       <NonePic>대표 사진</NonePic>
@@ -156,7 +186,7 @@ const ManagementCafe = () => {
 };
 const Wrapper = styled.div`
   border-radius: 8px;
-  border: 1px solid #444444;
+  border: 1px solid #404040;
 `;
 
 const TableHeader = styled.table`
@@ -172,7 +202,7 @@ const TableHeader = styled.table`
   & > th,
   td {
     padding: 16px;
-    border: 1px solid #444444;
+    border: 1px solid #404040;
   }
   & > tr:first-child {
     color: #8b8b8b;
@@ -191,25 +221,40 @@ const Input = styled.input`
 `;
 
 const Photo = styled.div`
-  width: 88px;
-  height: 88px;
-  line-height: 88px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   position: relative;
-  transform: translate(-50%, 0);
+  position: relative;
   & > img {
     position: absolute;
+    transform: translate(-50%, 0);
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: 9;
   }
 `;
 
 const NonePic = styled.div`
-  width: 88px;
-  height: 88px;
+  width: 40px;
+  height: 40px;
   background-color: #fff;
   color: #000;
-  line-height: 88px;
+  font-size: 10px;
+  line-height: 40px;
 `;
 
+const Sbtn = styled.div`
+  width: 102px;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 10px;
+  color: #fff;
+  background-color: ${(props) => (props.isTrue ? "#2563EB" : "#333333")};
+  border-radius: 6px;
+  padding: auto 0;
+  text-align: center;
+  cursor: pointer;
+`;
 export default ManagementCafe;
