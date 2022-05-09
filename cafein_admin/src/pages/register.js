@@ -7,8 +7,33 @@ import { ReactComponent as Cbad } from "../svg/Cbad.svg";
 import { ReactComponent as Csoso } from "../svg/Csoso.svg";
 import { ReactComponent as Star } from "../svg/Star.svg";
 import { ReactComponent as Photo } from "../svg/photo.svg";
+import { ReactComponent as CloseIcon } from "../svg/close.svg";
+
+import { useState, useRef } from "react";
+import PVImg from "../components/common/PVImg";
 
 const Register = () => {
+  const [file, setFile] = useState([]);
+  const onLoadFile = (e) => {
+    let copy = [...file];
+    if (copy.length >= 5) {
+      window.alert("이미지는 5개만 추가 가능합니다");
+      return;
+    } else {
+      if (e.target.files[0]) {
+        copy = [...copy, e.target.files[0]];
+        setFile(copy);
+      }
+    }
+  };
+
+  const deleteImg = (idx) => {
+    let copy = [...file];
+    copy.splice(idx, 1);
+    setFile(copy);
+  };
+
+  const input = useRef();
   return (
     <>
       <Header text={"카페 관리"} inner={"새 카페 등록"} />
@@ -89,10 +114,28 @@ const Register = () => {
             <Box height={168}>
               <p>장소 사진</p>
               <PhotoBox>
-                <div>
+                <FileUpload
+                  onClick={() => {
+                    input.current?.click();
+                  }}
+                >
                   <Photo />
-                  <div>0/5</div>
-                </div>
+                  <div>{file.length}/5</div>
+                  <input
+                    ref={input}
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={(e) => onLoadFile(e)}
+                  />
+                </FileUpload>
+                {file?.map((a, i) => {
+                  return (
+                    <ImgBox key={i}>
+                      <CloseIcon name={a.name} onClick={() => deleteImg(i)} />
+                      <PVImg img={a} />
+                    </ImgBox>
+                  );
+                })}
               </PhotoBox>
             </Box>
             <Box height={128}>
@@ -195,23 +238,52 @@ const Box = styled.div`
 
 const PhotoBox = styled.div`
   padding: 0 24px;
+  display: flex;
+  gap: 12px;
+`;
+
+const FileUpload = styled.div`
+  width: 80px;
+  height: 80px;
+  background: #c4c4c4;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 9.5px;
+  cursor: pointer;
   & > div {
-    width: 80px;
-    height: 80px;
-    background: #c4c4c4;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 9.5px;
-    & > div {
-      color: #646464;
-      font-size: 13px;
-      font-weight: 500;
-    }
+    color: #646464;
+    font-size: 13px;
+    font-weight: 500;
   }
 `;
+
+const ImgBox = styled.div`
+  width: 80px;
+  height: 80px;
+  position: relative;
+  display: inline-block;
+  border-radius: 6px;
+  & > svg {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #fff;
+    transform: translate(50px, 5px);
+  }
+`;
+// const DeleteImg = styled.div`
+//   width: 25px;
+//   height: 25px;
+//   cursor: pointer;
+//   border-radius: 50%;
+//   background: #333333;
+//   position: absolute;
+// `;
 
 const BtnRow = styled.div`
   display: flex;
