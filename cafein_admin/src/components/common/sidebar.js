@@ -76,6 +76,7 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 72px;
   & > svg {
     width: 118px;
@@ -134,6 +135,6 @@ const MenuBox = styled.div`
   justify-content: flex-start;
   gap: 9px;
   align-items: baseline;
-  pointer: cursor;
+  cursor: pointer;
 `;
 export default SideBar;

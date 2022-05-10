@@ -37,14 +37,6 @@ ${reset}
 
 const Row = styled.div`
   display: flex;
-  width: 100%;
-  // align-items: flex-start;
-  // & > div:first-child {
-  //   flex: 1;
-  // }
-  // & > div:last-child {
-  //   flex: 3.2;
-  // }
 `;
 
 export default App;

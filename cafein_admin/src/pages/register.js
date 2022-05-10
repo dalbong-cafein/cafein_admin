@@ -36,7 +36,9 @@ const Register = () => {
   const input = useRef();
   return (
     <>
-      <Header text={"카페 관리"} inner={"새 카페 등록"} />
+      <Header mcolor={"#8B8B8B"} text={"카페 관리"} inner={"새 카페 등록"}>
+        <Submit>제출</Submit>
+      </Header>
       <Containaer>
         <Row gap={20}>
           <Column>
@@ -159,7 +161,14 @@ const Register = () => {
               <span>웹사이트</span>
               <input
                 type="text"
-                placeholder=" 카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
+                placeholder="카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
+              />
+            </InputBox>
+            <InputBox>
+              <span>와이파이 비밀번호</span>
+              <input
+                type="text"
+                placeholder="와이파이 비밀번호를 입력해 주세요"
               />
             </InputBox>
           </Column>
@@ -171,6 +180,17 @@ const Register = () => {
 
 const Containaer = styled.div`
   width: 100%;
+  box-sizing: border-box;
+`;
+const Submit = styled.div`
+  width: 88px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 6px;
+  background-color: #333333;
+  color: #fff;
+  transform: translate(20px, 0);
 `;
 const Input1 = styled.input`
   width: 100%;
@@ -201,7 +221,7 @@ const InputBox = styled.div`
   font-weight: 500;
   background-color: #333333;
   & > input {
-    width: 60%;
+    width: 70%;
     border: 0;
     color: #8b8b8b;
     background-color: inherit;
@@ -231,7 +251,7 @@ const Box = styled.div`
   flex-direction: column;
   gap: 16px;
   & > p {
-    padding: 16px;
+    padding: 16px 0 16px 16px;
     font-weight: 500;
   }
 `;

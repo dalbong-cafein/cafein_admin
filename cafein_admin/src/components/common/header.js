@@ -1,18 +1,21 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../svg/arrow.svg";
 
-const Header = ({ text, subText, inner }) => {
+const Header = ({ text, subText, mcolor, inner, children }) => {
   return (
     <Row>
-      <Menu isInner={subText}>{text}</Menu>
-      {subText ? (
-        <Txt>{subText}</Txt>
-      ) : (
-        <Txt2>
-          <Arrow />
-          {inner}
-        </Txt2>
-      )}
+      <div>
+        <Menu mcolor={mcolor}>{text}</Menu>
+        {subText ? (
+          <Txt>{subText}</Txt>
+        ) : (
+          <Txt2>
+            <Arrow />
+            {inner}
+          </Txt2>
+        )}
+      </div>
+      {children}
     </Row>
   );
 };
@@ -20,14 +23,17 @@ const Header = ({ text, subText, inner }) => {
 const Row = styled.div`
   display: flex;
   width: 100%;
-  padding: 72px 56px 48px 0;
-  display: flex;
-  gap: 20px;
-  align-items: baseline;
+  padding: 72px 102px 48px 0;
+  justify-content: space-between;
+  & > div:first-child {
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+  }
 `;
 
 const Menu = styled.div`
-  color: ${(props) => (props.inInner ? "#fff" : "#8B8B8B")};
+  color: ${(props) => props.mcolor};
   font-size: 24px;
   font-weight: bold;
 `;

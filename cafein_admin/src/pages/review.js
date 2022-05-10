@@ -1,38 +1,25 @@
-import { useState } from "react";
+import Header from "../components/common/header";
 import styled from "styled-components";
+
 import Row from "../components/atoms/row";
 
 import Paging from "../components/common/Pagination";
 
 import { ReactComponent as Search } from "../svg/Search.svg";
-import { ReactComponent as Memo } from "../svg/memo.svg";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/common/header";
+import { useState } from "react";
+import { ReactComponent as Memo } from "../svg/memo.svg";
 
-const ManagementCafe = ({ setSubText }) => {
+const Review = () => {
   const [isActive, setIsActive] = useState(1);
   const navigate = useNavigate();
   const temp = [
     {
       code: "000001",
+      content:
+        "맨날 오고싶어요 여기서 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요",
       name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 여기저기어쩌구",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
-      registration: "03/29/2022",
-      edited: "03/29/2022",
-      memo: "",
-      img: "/캡처.PNG",
-    },
-
-    {
-      code: "000001",
-      name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 ddddddddddddd",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
+      userNum: "000001",
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
@@ -40,11 +27,10 @@ const ManagementCafe = ({ setSubText }) => {
     },
     {
       code: "000001",
+      content:
+        "맨날 오고싶어요 여기서 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요",
       name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 여기저기어쩌구",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
+      userNum: "000001",
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
@@ -52,11 +38,21 @@ const ManagementCafe = ({ setSubText }) => {
     },
     {
       code: "000001",
+      content:
+        "맨날 오고싶어요 여기서 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요",
       name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 kkkkk",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
+      userNum: "000001",
+      registration: "03/29/2022",
+      edited: "03/29/2022",
+      memo: "",
+      img: null,
+    },
+    {
+      code: "000001",
+      content:
+        "맨날 오고싶어요 여기서 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요",
+      name: "투썸플레이스 은평구청점",
+      userNum: "000001",
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
@@ -74,35 +70,15 @@ const ManagementCafe = ({ setSubText }) => {
     console.log(page);
   };
 
-  // const onclick=()=> {
-  //   let temp2=[]
-  //   for(i in temp) {
-  //     for (k in i) {
-  //       if (k.includes(search)) {
-  //         temp2.push(i)
-  //       }
-  //     }
-  //   }
-  // }
-
   return (
     <>
-      <Header mcolor={"#fff"} text={"카페 관리"} subText={"등록된 카페 00건"} />
+      <Header mcolor={"#fff"} text={"카페 리뷰"} subText={"등록된 리뷰 00건"} />
       <Row
         justify={"space-between"}
         align={"baseline"}
         style={{ marginBottom: "20px" }}
       >
         <Row gap={15}>
-          <Sbtn
-            onClick={() => {
-              navigate("/management/register");
-              setSubText("새 카페 등록");
-            }}
-            isTrue={isActive === 1}
-          >
-            새 카페 등록
-          </Sbtn>
           <Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
             최신순
           </Sbtn>
@@ -133,11 +109,9 @@ const ManagementCafe = ({ setSubText }) => {
         <TableHeader>
           <tr>
             <td>분류</td>
-            <td>카페명</td>
-            <td>위치</td>
-            <td>연락처</td>
-            <td>혼잡도</td>
-            <td>리뷰</td>
+            <td>리뷰 내용</td>
+            <td>회원 번호</td>
+            <td>카페 번호</td>
             <td>등록일</td>
             <td>최종 수정일</td>
             <td>메모</td>
@@ -165,13 +139,11 @@ const ManagementCafe = ({ setSubText }) => {
                     ) : (
                       <NonePic>대표 사진</NonePic>
                     )}
-                    <p>{item.name}</p>
+                    <p>{item.content}</p>
                   </Row>
                 </td>
-                <td>{item.location}</td>
-                <td>{item.phoneNum}</td>
-                <td>{item.congestion}</td>
-                <td>{item.review}건</td>
+                <td>{item.userNum}</td>
+                <td>{`${item.code}\n${item.name}`}</td>
                 <td>{item.registration}</td>
                 <td>{item.edited}</td>
                 <td>
@@ -184,6 +156,7 @@ const ManagementCafe = ({ setSubText }) => {
     </>
   );
 };
+
 const Wrapper = styled.div`
   border-radius: 8px;
   border: 1px solid #404040;
@@ -203,9 +176,12 @@ const TableHeader = styled.table`
   td {
     padding: 16px;
     border: 1px solid #404040;
+    max-heightL 72px;
   }
   & > tr:first-child {
     color: #8b8b8b;
+    max-heightL 72px;
+
   }
 `;
 
@@ -257,4 +233,5 @@ const Sbtn = styled.div`
   text-align: center;
   cursor: pointer;
 `;
-export default ManagementCafe;
+
+export default Review;
