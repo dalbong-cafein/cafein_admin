@@ -8,9 +8,11 @@ import { ReactComponent as Search } from "../svg/Search.svg";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/header";
+import MemoModal from "../components/common/modal/memo";
 
 const ManagementCafe = ({ setSubText }) => {
   const [isActive, setIsActive] = useState(1);
+  const [modal, setModal] = useState(false);
   const navigate = useNavigate();
   const temp = [
     {
@@ -164,12 +166,13 @@ const ManagementCafe = ({ setSubText }) => {
                 <td>{item.registration}</td>
                 <td>{item.edited}</td>
                 <td>
-                  <Memo />
+                  <Memo onClick={() => setModal(true)} />
                 </td>
               </tr>
             ))}
         </S.TableHeader>
       </S.Wrapper>
+      {modal && <MemoModal setModal={setModal} />}
     </>
   );
 };

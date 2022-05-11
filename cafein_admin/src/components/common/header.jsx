@@ -1,14 +1,15 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../svg/arrow.svg";
 
-const Header = ({ text, subText, mcolor, inner, children }) => {
+const Header = ({ mSize, text, subText, mcolor, inner, children }) => {
   return (
     <Row>
       <div>
-        <Menu mcolor={mcolor}>{text}</Menu>
-        {subText ? (
-          <Txt>{subText}</Txt>
-        ) : (
+        <Menu mSize={mSize} mcolor={mcolor}>
+          {text}
+        </Menu>
+        {subText && <Txt>{subText}</Txt>}
+        {inner && (
           <Txt2>
             <Arrow />
             {inner}
@@ -34,7 +35,7 @@ const Row = styled.div`
 
 const Menu = styled.div`
   color: ${(props) => props.mcolor};
-  font-size: 24px;
+  font-size: ${(props) => (props.mSize ? props.mSize : 24)}px;
   font-weight: bold;
 `;
 

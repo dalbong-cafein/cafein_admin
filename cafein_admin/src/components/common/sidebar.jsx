@@ -15,40 +15,50 @@ import Row from "../atoms/row";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-const SideBar = ({ menu }) => {
+const SideBar = () => {
   const navigate = useNavigate();
 
+  const menu = window.location.pathname.split("/")[1];
   return (
     <Container>
       <LogoIcon />
       <Box>
         <div>
-          <MenuBox onClick={() => navigate("/desh")}>
-            <Desh isT={menu === "desh"} />
+          <MenuBox onClick={() => navigate("/")} isT={menu === ""}>
+            <Desh />
             대시보드
           </MenuBox>
-          <MenuBox onClick={() => navigate("/management")}>
-            <Cup isT={menu === "management"} />
+          <MenuBox
+            onClick={() => navigate("/management")}
+            isT={menu === "management"}
+          >
+            <Cup />
             카페관리
           </MenuBox>
-          <MenuBox onClick={() => navigate("/review")}>
-            <Review isT={menu === "review"} />
+          <MenuBox onClick={() => navigate("/review")} isT={menu === "review"}>
+            <Review />
             카페리뷰
           </MenuBox>
-          <MenuBox onClick={() => navigate("/user")}>
-            <User isT={menu === "user"} />
+          <MenuBox onClick={() => navigate("/user")} isT={menu === "user"}>
+            <User />
             회원정보
           </MenuBox>
-          <MenuBox onClick={() => navigate("/marketing")}>
-            <Marketing isT={menu === "marketing"} />
+          <MenuBox
+            onClick={() => navigate("/marketing")}
+            isT={menu === "marketing"}
+          >
+            <Marketing />
             마케팅 서비스
           </MenuBox>
-          <MenuBox onClick={() => navigate("/notice")}>
-            <Notice isT={menu === "notice"} />
+          <MenuBox onClick={() => navigate("/notice")} isT={menu === "notice"}>
+            <Notice />
             공지사항
           </MenuBox>
-          <MenuBox onClick={() => navigate("/statistics")}>
-            <Statictis isT={menu === "statistics"} />
+          <MenuBox
+            onClick={() => navigate("/statistics")}
+            isT={menu === "statistics"}
+          >
+            <Statictis />
             통계
           </MenuBox>
         </div>
@@ -71,8 +81,9 @@ const SideBar = ({ menu }) => {
 
 const Container = styled.div`
   position: relative;
-  padding: 73px 20px 57px 57px;
+  padding: 73px 124px 57px 57px;
   width: 296px;
+  box-sizing: border-box;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -87,18 +98,14 @@ const Container = styled.div`
 const Box = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 350px;
+  height: 100%;
+  justify-content: space-between;
   align-items: center;
   & > div:first-child {
     display: flex;
     flex-direction: column;
     gap: 8px;
     pointer: cursor;
-    & > div > svg {
-      path {
-        fill: #fff;
-      }
-    }
   }
 `;
 
@@ -136,5 +143,10 @@ const MenuBox = styled.div`
   gap: 9px;
   align-items: baseline;
   cursor: pointer;
+  & > svg {
+    path {
+      fill: ${(props) => (props.isT ? "#fff" : "#646464")};
+    }
+  }
 `;
 export default SideBar;

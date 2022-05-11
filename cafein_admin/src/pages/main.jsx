@@ -5,13 +5,14 @@ import ManagementCafe from "./managementCafe";
 import Register from "./register";
 import Review from "./review";
 import User from "./user";
+import Desh from "./desh";
 import { useEffect, useState } from "react";
 
 const Main = ({}) => {
   return (
     <Containaer style={{ color: "#fff" }}>
       <Routes>
-        <Route path="/desh" exact element={<Temp />} />
+        <Route path="/" exact element={<Desh />} />
         <Route path="/management" exact element={<ManagementCafe />} />
         <Route path="/management/register" exact element={<Register />} />
         <Route path="/review" exact element={<Review />} />
