@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import * as S from "./style";
 import Row from "../components/atoms/row";
 
 import Paging from "../components/common/Pagination";
@@ -74,17 +74,6 @@ const ManagementCafe = ({ setSubText }) => {
     console.log(page);
   };
 
-  // const onclick=()=> {
-  //   let temp2=[]
-  //   for(i in temp) {
-  //     for (k in i) {
-  //       if (k.includes(search)) {
-  //         temp2.push(i)
-  //       }
-  //     }
-  //   }
-  // }
-
   return (
     <>
       <Header mcolor={"#fff"} text={"카페 관리"} subText={"등록된 카페 00건"} />
@@ -94,7 +83,7 @@ const ManagementCafe = ({ setSubText }) => {
         style={{ marginBottom: "20px" }}
       >
         <Row gap={15}>
-          <Sbtn
+          <S.Sbtn
             onClick={() => {
               navigate("/management/register");
               setSubText("새 카페 등록");
@@ -102,13 +91,13 @@ const ManagementCafe = ({ setSubText }) => {
             isTrue={isActive === 1}
           >
             새 카페 등록
-          </Sbtn>
-          <Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
+          </S.Sbtn>
+          <S.Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
             최신순
-          </Sbtn>
-          <Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
+          </S.Sbtn>
+          <S.Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
             오래된 순
-          </Sbtn>
+          </S.Sbtn>
         </Row>
         <Row gap={15} align={"baseline"}>
           <Paging
@@ -117,9 +106,9 @@ const ManagementCafe = ({ setSubText }) => {
             setPage={setPage}
             page={page}
           />
-          <Sbtn>전체</Sbtn>
+          <S.Sbtn>전체</S.Sbtn>
           <Row style={{ borderBottom: "1px solid #fff" }}>
-            <Input
+            <S.Input
               placeholder="검색"
               type="text"
               value={search}
@@ -129,8 +118,8 @@ const ManagementCafe = ({ setSubText }) => {
           </Row>
         </Row>
       </Row>
-      <Wrapper>
-        <TableHeader>
+      <S.Wrapper>
+        <S.TableHeader>
           <tr>
             <td>분류</td>
             <td>카페명</td>
@@ -155,15 +144,15 @@ const ManagementCafe = ({ setSubText }) => {
                 <td>
                   <Row gap={16} align={"center"}>
                     {item.img ? (
-                      <Photo>
+                      <S.Photo>
                         z
                         <img
                           src={process.env.PUBLIC_URL + item.img}
                           alt="pic"
                         />
-                      </Photo>
+                      </S.Photo>
                     ) : (
-                      <NonePic>대표 사진</NonePic>
+                      <S.NonePic>대표 사진</S.NonePic>
                     )}
                     <p>{item.name}</p>
                   </Row>
@@ -179,82 +168,10 @@ const ManagementCafe = ({ setSubText }) => {
                 </td>
               </tr>
             ))}
-        </TableHeader>
-      </Wrapper>
+        </S.TableHeader>
+      </S.Wrapper>
     </>
   );
 };
-const Wrapper = styled.div`
-  border-radius: 8px;
-  border: 1px solid #404040;
-`;
 
-const TableHeader = styled.table`
-  text-align: center;
-  font-size: 14px;
-  color: #e3e3e3;
-  width: 100%;
-
-  border-spacing: 0;
-  border-collapse: collapse;
-  border-style: hidden;
-
-  & > th,
-  td {
-    padding: 16px;
-    border: 1px solid #404040;
-  }
-  & > tr:first-child {
-    color: #8b8b8b;
-  }
-`;
-
-const Input = styled.input`
-  border: 0;
-  background-color: #000;
-  color: #fff;
-  width: 220px;
-  height: 32px;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Photo = styled.div`
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  position: relative;
-  position: relative;
-  & > img {
-    position: absolute;
-    transform: translate(-50%, 0);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 9;
-  }
-`;
-
-const NonePic = styled.div`
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
-  color: #000;
-  font-size: 10px;
-  line-height: 40px;
-`;
-
-const Sbtn = styled.div`
-  width: 102px;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 10px;
-  color: #fff;
-  background-color: ${(props) => (props.isTrue ? "#2563EB" : "#333333")};
-  border-radius: 6px;
-  padding: auto 0;
-  text-align: center;
-  cursor: pointer;
-`;
 export default ManagementCafe;

@@ -71,7 +71,7 @@ const SideBar = ({ menu }) => {
 
 const Container = styled.div`
   position: relative;
-  padding: 73px 124px 57px 57px;
+  padding: 73px 20px 57px 57px;
   width: 296px;
   height: 100vh;
   display: flex;
