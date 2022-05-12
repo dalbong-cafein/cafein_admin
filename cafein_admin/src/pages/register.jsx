@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Row from "../components/atoms/row";
 import Header from "../components/common/header";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { registerState } from "../recoil/NcafeRegister";
 
 import { ReactComponent as Cgood } from "../svg/Cgood.svg";
 import { ReactComponent as Cbad } from "../svg/Cbad.svg";
@@ -8,12 +10,49 @@ import { ReactComponent as Csoso } from "../svg/Csoso.svg";
 import { ReactComponent as Star } from "../svg/Star.svg";
 import { ReactComponent as Photo } from "../svg/photo.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
+import { ReactComponent as CCbad } from "../svg/CCbad.svg";
+import { ReactComponent as CCgood } from "../svg/CCgood.svg";
+import { ReactComponent as CCsoso } from "../svg/CCsoso.svg";
+import { ReactComponent as Plus } from "../svg/plus.svg";
+import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
+import { ReactComponent as ArrowUp } from "../svg/ArrowUp.svg";
 
 import { useState, useRef } from "react";
 import PVImg from "../components/common/PVImg";
 
 const Register = () => {
   const [file, setFile] = useState([]);
+  const [register, setRegister] = useRecoilState(registerState);
+  const [openTime, setOpenTime] = useState("");
+  const [closeTime, setCloseTime] = useState("");
+  const [selectOn, setSelectOn] = useState(false);
+  const [days, setDays] = useState([]);
+  const [dayarr, setDayarr] = useState([]);
+  const socketText = [
+    "바닥을 기어봐도 없어요",
+    "찾기 힘들어요",
+    "여유 있어요",
+    "모든 자리에 있어요",
+  ];
+  const wifiText = [
+    "없어요 그냥 없어요",
+    "자주 끊겨서 화나요",
+    "그냥 저냥 쓸 만해요",
+    "빵빵 잘 터져요",
+  ];
+  const restroomText = [
+    "바닥을 기어봐도 없어요",
+    "이용하기가 꺼려져요",
+    "그냥 저냥 쓸 만해요",
+    "화장실 맛집이에요",
+  ];
+  const tableSizeText = [
+    "테이블이 카공을 허락하지 않아요",
+    "오래 이용하면 몸이 아파요",
+    "그냥 저냥 쓸 만해요",
+    "매우 편하게 사용 가능해요",
+  ];
+
   const onLoadFile = (e) => {
     let copy = [...file];
     if (copy.length >= 5) {
@@ -33,30 +72,153 @@ const Register = () => {
     setFile(copy);
   };
 
+  const onChange = (e) => {
+    const name = e.target.name;
+    const copy = { ...register };
+    copy[name] = e.target.value;
+    setRegister(copy);
+  };
+
+  const recommendChange = (e) => {
+    const copy = { ...register };
+    copy.recommendation = e.currentTarget.id;
+    setRegister(copy);
+  };
+
+  const submit = (register) => {
+    if (register.storeName == "") {
+      window.alert("카페명을 입력해주세요");
+    } else {
+      const copy = { ...register };
+      copy.imageFiles = file;
+      setRegister(copy);
+      console.log(register);
+      if (register) {
+        //api 불러오삼
+      }
+    }
+    console.log(register);
+  };
+
+  const starChange = (e) => {
+    const star = e.currentTarget.id;
+    const name = e.currentTarget.parentNode.id;
+    const copy = { ...register };
+    copy[name] = star;
+    setRegister(copy);
+  };
+
+  const dayPush = (e) => {
+    e.stopPropagation();
+    if (!days.includes(e.currentTarget.id)) {
+      const copy = [...days];
+      copy.push(e.currentTarget.id);
+      setDays(copy);
+    } else {
+      const copy = [...days];
+      copy.splice(days.indexOf(e.currentTarget.id), 1);
+      setDays(copy);
+    }
+  };
+
+  const updateDay = (i, copy) => {
+    for (let j in i[2]) {
+      if (j === "월") {
+        copy.monOpen = i[0];
+        copy.monClose = i[1];
+      }
+      if (j === "화") {
+        copy.tueOpen = i[0];
+        copy.tueClose = i[1];
+      }
+      if (j === "수") {
+        copy.wedOpen = i[0];
+        copy.wedClose = i[1];
+      }
+      if (j === "목") {
+        copy.thuOpen = i[0];
+        copy.thuClose = i[1];
+      }
+      if (j === "금") {
+        copy.friOpen = i[0];
+        copy.friClose = i[1];
+      }
+      if (j === "토") {
+        copy.satOpen = i[0];
+        copy.satClose = i[1];
+      }
+      if (j === "일") {
+        copy.sunOpen = i[0];
+        copy.sunClose = i[1];
+      }
+    }
+  };
+
+  const addTime = async () => {
+    const copy = [...dayarr];
+    copy.push([openTime, closeTime, [days]]);
+    const copy2 = { ...register };
+    for (let item in dayarr) {
+      const res = await updateDay(item, copy2);
+      setRegister(copy2);
+    }
+    setDayarr(copy);
+    setOpenTime("");
+    setCloseTime("");
+    setDays([]);
+    setSelectOn(false);
+  };
   const input = useRef();
   return (
     <>
       <Header mcolor={"#8B8B8B"} text={"카페 관리"} inner={"새 카페 등록"}>
-        <Submit>제출</Submit>
+        <Submit onClick={() => submit(register)}>등록</Submit>
       </Header>
       <Containaer>
         <Row gap={20}>
           <Column>
-            <Input1 type="text" placeholder="카페명" />
-            <Input1 type="text" placeholder="주소" />
+            <Input1
+              name="storeName"
+              type="text"
+              placeholder="카페명"
+              defaultValue={register.storeName}
+              onChange={(e) => onChange(e)}
+            />
+            <Input1
+              name="siNm"
+              type="text"
+              placeholder="주소"
+              defaultValue={register.siNm}
+              onChange={(e) => onChange(e)}
+            />
             <Box height={176}>
               <p>카공 카페로 추천하시겠어요?</p>
               <RowBox>
-                <div>
-                  <Cbad />
+                <div
+                  id="BAD"
+                  onClick={(e) => {
+                    recommendChange(e);
+                  }}
+                >
+                  {register.recommendation === "BAD" ? <CCbad /> : <Cbad />}
                   <p>별로예요</p>
                 </div>
-                <div>
-                  <Csoso />
+                <div
+                  id="SOSO"
+                  onClick={(e) => {
+                    recommendChange(e);
+                  }}
+                >
+                  {register.recommendation === "SOSO" ? <CCsoso /> : <Csoso />}
                   <p>그저 그래요</p>
                 </div>
-                <div>
-                  <Cgood />
+                <div
+                  id="GOOD"
+                  onClick={(e) => {
+                    recommendChange(e);
+                  }}
+                >
+                  {register.recommendation === "GOOD" ? <CCgood /> : <Cgood />}
                   <p>추천해요</p>
                 </div>
               </RowBox>
@@ -66,40 +228,47 @@ const Register = () => {
               <ColumnBox>
                 <div>
                   <p>콘센트</p>
-                  {/* 나중에 스테이트 만들면 컴포넌트로 따로 빼삼 */}
-                  <div>
-                    <Star />
-                    <Star />
-                    <Star />
-                    <Star />
-                  </div>
+                  <StarBox id="socket" isFill={register.socket}>
+                    <Star id="1" onClick={(e) => starChange(e)} />
+                    <Star id="2" onClick={(e) => starChange(e)} />
+                    <Star id="3" onClick={(e) => starChange(e)} />
+                    <Star id="4" onClick={(e) => starChange(e)} />
+                  </StarBox>
+                  {register.socket && <p>{socketText[register.socket - 1]}</p>}
                 </div>
                 <div>
                   <p>와이파이</p>
-                  <div>
-                    <Star />
-                    <Star />
-                    <Star />
-                    <Star />
-                  </div>
+                  <StarBox id="wifi" isFill={register.wifi}>
+                    <Star id="1" onClick={(e) => starChange(e)} />
+                    <Star id="2" onClick={(e) => starChange(e)} />
+                    <Star id="3" onClick={(e) => starChange(e)} />
+                    <Star id="4" onClick={(e) => starChange(e)} />
+                  </StarBox>
+                  {register.wifi && <p>{wifiText[register.wifi - 1]}</p>}
                 </div>
                 <div>
                   <p>화장실</p>
-                  <div>
-                    <Star />
-                    <Star />
-                    <Star />
-                    <Star />
-                  </div>
+                  <StarBox id="restroom" isFill={register.restroom}>
+                    <Star id="1" onClick={(e) => starChange(e)} />
+                    <Star id="2" onClick={(e) => starChange(e)} />
+                    <Star id="3" onClick={(e) => starChange(e)} />
+                    <Star id="4" onClick={(e) => starChange(e)} />
+                  </StarBox>
+                  {register.restroom && (
+                    <p>{restroomText[register.restroom - 1]}</p>
+                  )}
                 </div>
                 <div>
                   <p>테이블</p>
-                  <div>
-                    <Star />
-                    <Star />
-                    <Star />
-                    <Star />
-                  </div>
+                  <StarBox id="tableSize" isFill={register.tableSize}>
+                    <Star id="1" onClick={(e) => starChange(e)} />
+                    <Star id="2" onClick={(e) => starChange(e)} />
+                    <Star id="3" onClick={(e) => starChange(e)} />
+                    <Star id="4" onClick={(e) => starChange(e)} />
+                  </StarBox>
+                  {register.tableSize && (
+                    <p>{tableSizeText[register.tableSize - 1]}</p>
+                  )}
                 </div>
               </ColumnBox>
             </Box>
@@ -142,12 +311,85 @@ const Register = () => {
             </Box>
             <Box height={128}>
               <p>운영시간</p>
+              <TimeBox>
+                <BtnRow gap={13}>
+                  <Btn>
+                    {openTime && (
+                      <p>{openTime.slice(0, 2) > 12 ? "오후" : "오전"}</p>
+                    )}
+                    <input
+                      placeholder="시작 시간"
+                      value={openTime}
+                      onChange={(e) => {
+                        setOpenTime(e.target.value);
+                      }}
+                    />
+                  </Btn>
+                  <Btn>
+                    {closeTime && (
+                      <p>{closeTime.slice(0, 2) > 12 ? "오후" : "오전"}</p>
+                    )}
+                    <input
+                      placeholder="종료 시간"
+                      value={closeTime}
+                      onChange={(e) => {
+                        setCloseTime(e.target.value);
+                      }}
+                    />
+                  </Btn>
+                  <Btn2 isT={selectOn} onClick={() => setSelectOn(!selectOn)}>
+                    <Row gap={13} align={"center"}>
+                      {days.length === 0 ? (
+                        <>
+                          <p>반복</p> {selectOn ? <ArrowUp /> : <ArrowDown />}
+                        </>
+                      ) : (
+                        <p>{days.join(" ")}</p>
+                      )}
+                    </Row>
 
-              <BtnRow gap={13}>
-                <Btn>시작 시간</Btn>
-                <Btn>종료 시간</Btn>
-                <Btn>반복</Btn>
-              </BtnRow>
+                    {selectOn && (
+                      <ComboBox>
+                        <div id="월" onClick={(e) => dayPush(e)}>
+                          월요일
+                        </div>
+                        <div id="화" onClick={(e) => dayPush(e)}>
+                          화요일
+                        </div>
+                        <div id="수" onClick={(e) => dayPush(e)}>
+                          수요일
+                        </div>
+                        <div id="목" onClick={(e) => dayPush(e)}>
+                          목요일
+                        </div>
+                        <div id="금" onClick={(e) => dayPush(e)}>
+                          금요일
+                        </div>
+                        <div id="토" onClick={(e) => dayPush(e)}>
+                          토요일
+                        </div>
+                        <div id="일" onClick={(e) => dayPush(e)}>
+                          일요일
+                        </div>
+                      </ComboBox>
+                    )}
+                  </Btn2>
+                  <Plus onClick={addTime} />
+                </BtnRow>
+                {dayarr.map((item, i) => (
+                  <Day>
+                    <div>
+                      {item[0] > 12 ? "오후" : "오전"} {item[0]}
+                    </div>
+                    <div>
+                      {item[0] > 12 ? "오후" : "오전"} {item[1]}
+                    </div>
+                    <div>
+                      {item[2].length == 1 ? item[2] : item[2].join(",")}
+                    </div>
+                  </Day>
+                ))}
+              </TimeBox>
             </Box>
             <InputBox>
               <span>기타 운영 시간</span>
@@ -155,12 +397,19 @@ const Register = () => {
             </InputBox>
             <InputBox>
               <span>전화번호</span>
-              <input type="text" placeholder="카페 전화번호를 입력해주세요" />
+              <input
+                type="text"
+                name="phone"
+                onChange={(e) => onchange(e)}
+                placeholder="카페 전화번호를 입력해주세요"
+              />
             </InputBox>
             <InputBox>
               <span>웹사이트</span>
               <input
                 type="text"
+                name="website"
+                onChange={(e) => onchange(e)}
                 placeholder="카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
               />
             </InputBox>
@@ -245,7 +494,7 @@ const Box = styled.div`
   width: 100%;
   box-sizing: border-box;
 
-  height: ${(props) => props.height}px;
+  min-height: ${(props) => props.height}px;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -296,28 +545,100 @@ const ImgBox = styled.div`
     transform: translate(50px, 5px);
   }
 `;
-// const DeleteImg = styled.div`
-//   width: 25px;
-//   height: 25px;
-//   cursor: pointer;
-//   border-radius: 50%;
-//   background: #333333;
-//   position: absolute;
-// `;
+
+const TimeBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+`;
+
+const Day = styled.div`
+  display: flex;
+  padding-left: 16px;
+  gap: 12px;
+  & > div {
+    padding: 13px 16px 13px 16px;
+    border: 1px solid #acacac;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #e3e3e3;
+    box-sizing: border-box;
+  }
+  & > div:first-child,
+  div:nth-child(2) {
+    min-width: 135px;
+  }
+`;
 
 const BtnRow = styled.div`
   display: flex;
   gap: 13px;
   padding-left: 16px;
+  & > svg {
+    padding: 15px;
+    border-radius: 6px;
+    background-color: #fc7521;
+  }
 `;
 
 const Btn = styled.div`
-  padding: 13px 48px 13px 16px;
+  padding: 13px 0 13px 16px;
   border: 1px solid #acacac;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 135px;
+  box-sizing: border-box;
+  background-color: #333333;
+  display: flex;
+  align-items: baseline;
+  color: #fff;
+  gap: 24px;
+  & > p {
+  }
+  & > input {
+    max-width: 60px;
+    border: 0;
+    background-color: #333333;
+    color: #fff;
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
+const Btn2 = styled.div`
+  padding: 13px 21px 13px 16px;
+  border: 1px solid #acacac;
+  color: ${(props) => (props.isT ? "#E3E3E3" : "#8b8b8b")};
+  font-size: 14px;
+  min-width: 86px;
+  box-sizing: border-box;
+  position: relative;
   border-radius: 6px;
 `;
 
-// const Btn2 = styled.
+const ComboBox = styled.div`
+  width: 94px;
+  height: 230px;
+  margin: 0 10px;
+  background-color: #646464;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  position: absolute;
+  transform: translate(-30%, 10%);
+  padding: 15px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  & > div {
+    text-align: center;
+    padding: 3px;
+    cursor: pointer;
+  }
+`;
 const RowBox = styled.div`
   display: flex;
   padding: 0 125px;
@@ -343,18 +664,47 @@ const ColumnBox = styled.div`
   justify-content: baseline;
   & > div {
     display: flex;
-    & > p {
+    align-items: center;
+    padding-left: 24px;
+
+    & > p:first-child {
       font-size: 15px;
       font-weight: 700;
       line-height: 33px;
-      flex: 1;
-      padding-left: 24px;
+      min-width: 100px;
       color: #d1d1d1;
     }
     & > div {
-      flex: 4.5;
       display: flex;
       gap: 16px;
+      margin-right: 18px;
+    }
+    & > p:nth-child(3) {
+      font-size: 14px;
+      color: #fff;
+    }
+  }
+`;
+
+const StarBox = styled.div`
+  & > svg:first-child {
+    path {
+      fill: ${(props) => props.isFill >= 1 && "#ffce4a"};
+    }
+  }
+  & > svg:nth-child(2) {
+    path {
+      fill: ${(props) => props.isFill >= 2 && "#ffce4a"};
+    }
+  }
+  & > svg:nth-child(3) {
+    path {
+      fill: ${(props) => props.isFill >= 3 && "#ffce4a"};
+    }
+  }
+  & > svg:nth-child(4) {
+    path {
+      fill: ${(props) => props.isFill >= 4 && "#ffce4a"};
     }
   }
 `;
