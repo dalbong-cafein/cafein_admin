@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cafein_admin/static/css/main.db35cbbe.css",
-    "main.js": "/cafein_admin/static/js/main.d9ede7b7.js",
+    "main.js": "/cafein_admin/static/js/main.f3b264c8.js",
     "static/media/CCbad.svg": "/cafein_admin/static/media/CCbad.92fc40986cc65619490ecdbe680109c9.svg",
     "static/media/Cbad.svg": "/cafein_admin/static/media/Cbad.5a131b096ed493fd1b41a87942f635be.svg",
     "static/media/Cgood.svg": "/cafein_admin/static/media/Cgood.3380f26a002f9a61da4198401d844f67.svg",
@@ -27,13 +27,14 @@
     "static/media/ArrowDown.svg": "/cafein_admin/static/media/ArrowDown.583718c8a6ef1e097ac0688c7a576cba.svg",
     "static/media/ArrowUp.svg": "/cafein_admin/static/media/ArrowUp.a5c6fe569b5944b54e4a738b785e2191.svg",
     "static/media/arrow.svg": "/cafein_admin/static/media/arrow.7bc33caf3d70e52be7c81e9a6bcb7e30.svg",
+    "static/media/emojicafe.svg": "/cafein_admin/static/media/emojicafe.ceb12298831081429d89ecd2d88f15b4.svg",
     "static/media/plus.svg": "/cafein_admin/static/media/plus.93ec5bd1a5a78e911e29a8ff6ca7204d.svg",
     "static/media/exit.svg": "/cafein_admin/static/media/exit.91191d7496ded6a868385c6f8935c7f3.svg",
     "main.db35cbbe.css.map": "/cafein_admin/static/css/main.db35cbbe.css.map",
-    "main.d9ede7b7.js.map": "/cafein_admin/static/js/main.d9ede7b7.js.map"
+    "main.f3b264c8.js.map": "/cafein_admin/static/js/main.f3b264c8.js.map"
   },
   "entrypoints": [
     "static/css/main.db35cbbe.css",
-    "static/js/main.d9ede7b7.js"
+    "static/js/main.f3b264c8.js"
   ]
 }
