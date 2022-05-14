@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 import reset from "styled-reset";
+import { useEffect, useState } from "react";
 
 //component
 import SideBar from "./components/common/sidebar";
@@ -8,7 +9,6 @@ import SideBar from "./components/common/sidebar";
 //page
 import Main from "./pages/main";
 import LogIn from "./pages/login";
-import { useEffect, useState } from "react";
 
 function App() {
   const [menu, setMenu] = useState("");

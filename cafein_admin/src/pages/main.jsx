@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import ManagementCafe from "./managementCafe";
 import Register from "./register";
 import Review from "./review";
 import User from "./user";
 import Desh from "./desh";
-import { useEffect, useState } from "react";
+import Marketing from "./marketing";
 
 const Main = ({}) => {
   return (
@@ -17,7 +18,7 @@ const Main = ({}) => {
         <Route path="/management/register" exact element={<Register />} />
         <Route path="/review" exact element={<Review />} />
         <Route path="/user" exact element={<User />} />
-        <Route path="/marketing" exact element={<Temp />} />
+        <Route path="/marketing" exact element={<Marketing />} />
         <Route path="/notice" exact element={<Temp />} />
         <Route path="/statistics" exact element={<Temp />} />
       </Routes>

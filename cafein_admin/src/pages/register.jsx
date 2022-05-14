@@ -97,6 +97,7 @@ const Register = () => {
         //api 불러오삼
       }
     }
+    // 시간 업데이트 해야함
     console.log(register);
   };
 
@@ -108,60 +109,61 @@ const Register = () => {
     setRegister(copy);
   };
 
-  const dayPush = (e) => {
+  const dayPush = async (e) => {
     e.stopPropagation();
+    const copy = [...days];
     if (!days.includes(e.currentTarget.id)) {
-      const copy = [...days];
       copy.push(e.currentTarget.id);
       setDays(copy);
     } else {
-      const copy = [...days];
       copy.splice(days.indexOf(e.currentTarget.id), 1);
       setDays(copy);
     }
+    console.log(register);
   };
 
-  const updateDay = (i, copy) => {
-    for (let j in i[2]) {
-      if (j === "월") {
-        copy.monOpen = i[0];
-        copy.monClose = i[1];
-      }
-      if (j === "화") {
-        copy.tueOpen = i[0];
-        copy.tueClose = i[1];
-      }
-      if (j === "수") {
-        copy.wedOpen = i[0];
-        copy.wedClose = i[1];
-      }
-      if (j === "목") {
-        copy.thuOpen = i[0];
-        copy.thuClose = i[1];
-      }
-      if (j === "금") {
-        copy.friOpen = i[0];
-        copy.friClose = i[1];
-      }
-      if (j === "토") {
-        copy.satOpen = i[0];
-        copy.satClose = i[1];
-      }
-      if (j === "일") {
-        copy.sunOpen = i[0];
-        copy.sunClose = i[1];
-      }
+  const deleteDay = async (a, i) => {
+    console.log(a);
+    const copy = [...dayarr];
+    copy.splice(i, 1);
+    setDayarr(copy);
+  };
+  const updateDay = (j, copy, open, close) => {
+    if (j === "월") {
+      copy.monOpen = open;
+      copy.monClose = close;
     }
+    if (j === "화") {
+      copy.tueOpen = open;
+      copy.tueClose = close;
+    }
+    if (j === "수") {
+      copy.wedOpen = open;
+      copy.wedClose = close;
+    }
+    if (j === "목") {
+      copy.thuOpen = open;
+      copy.thuClose = close;
+    }
+    if (j === "금") {
+      copy.friOpen = open;
+      copy.friClose = close;
+    }
+    if (j === "토") {
+      copy.satOpen = open;
+      copy.satClose = close;
+    }
+    if (j === "일") {
+      copy.sunOpen = open;
+      copy.sunClose = close;
+    }
+
+    return copy;
   };
 
   const addTime = async () => {
     const copy = [...dayarr];
     copy.push([openTime, closeTime, [days]]);
-    const copy2 = { ...register };
-    for (let item in dayarr) {
-      const res = await updateDay(item, copy2);
-      setRegister(copy2);
-    }
     setDayarr(copy);
     setOpenTime("");
     setCloseTime("");
@@ -321,6 +323,8 @@ const Register = () => {
                       placeholder="시작 시간"
                       value={openTime}
                       onChange={(e) => {
+                        // let temp = e.target.value.padStart(2, "0");
+                        // if (temp.length < 3) temp += ":00";
                         setOpenTime(e.target.value);
                       }}
                     />
@@ -377,7 +381,7 @@ const Register = () => {
                   <Plus onClick={addTime} />
                 </BtnRow>
                 {dayarr.map((item, i) => (
-                  <Day>
+                  <Day key={i}>
                     <div>
                       {item[0] > 12 ? "오후" : "오전"} {item[0]}
                     </div>
@@ -387,6 +391,13 @@ const Register = () => {
                     <div>
                       {item[2].length == 1 ? item[2] : item[2].join(",")}
                     </div>
+                    <p
+                      onClick={() => {
+                        deleteDay(item, i);
+                      }}
+                    >
+                      삭제
+                    </p>
                   </Day>
                 ))}
               </TimeBox>
@@ -557,7 +568,13 @@ const TimeBox = styled.div`
 const Day = styled.div`
   display: flex;
   padding-left: 16px;
+  align-items: center;
   gap: 12px;
+  & > p {
+    cursor: pointer;
+    font-size: 14px;
+    color: #ff5c50;
+  }
   & > div {
     padding: 13px 16px 13px 16px;
     border: 1px solid #acacac;
