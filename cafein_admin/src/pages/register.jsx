@@ -16,9 +16,11 @@ import { ReactComponent as CCsoso } from "../svg/CCsoso.svg";
 import { ReactComponent as Plus } from "../svg/plus.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 import { ReactComponent as ArrowUp } from "../svg/ArrowUp.svg";
+import { ReactComponent as Search } from "../svg/Search.svg";
 
 import { useState, useRef } from "react";
 import PVImg from "../components/common/PVImg";
+import SearchModal from "../components/common/modal/SearchModal";
 
 const Register = () => {
   const [file, setFile] = useState([]);
@@ -26,6 +28,9 @@ const Register = () => {
   const [openTime, setOpenTime] = useState("");
   const [closeTime, setCloseTime] = useState("");
   const [selectOn, setSelectOn] = useState(false);
+  const [search, setSearch] = useState("");
+  const [loc, setLoc] = useState({ address_name: "" });
+  const [searchModal, setSearchModal] = useState(false);
   const [days, setDays] = useState([]);
   const [dayarr, setDayarr] = useState([]);
   const socketText = [
@@ -85,20 +90,24 @@ const Register = () => {
     setRegister(copy);
   };
 
-  const submit = (register) => {
-    if (register.storeName == "") {
+  const submit = async (register) => {
+    const copy = { ...register };
+    copy.imageFiles = file;
+    for await (let i of dayarr) {
+      for await (let j of i[2]) {
+        updateDay(j, copy, i[0], i[1]);
+      }
+    }
+    setRegister(copy);
+    if (register.storeName === "") {
       window.alert("카페명을 입력해주세요");
     } else {
-      const copy = { ...register };
-      copy.imageFiles = file;
-      setRegister(copy);
       console.log(register);
+
       if (register) {
         //api 불러오삼
       }
     }
-    // 시간 업데이트 해야함
-    console.log(register);
   };
 
   const starChange = (e) => {
@@ -119,11 +128,9 @@ const Register = () => {
       copy.splice(days.indexOf(e.currentTarget.id), 1);
       setDays(copy);
     }
-    console.log(register);
   };
 
   const deleteDay = async (a, i) => {
-    console.log(a);
     const copy = [...dayarr];
     copy.splice(i, 1);
     setDayarr(copy);
@@ -157,13 +164,11 @@ const Register = () => {
       copy.sunOpen = open;
       copy.sunClose = close;
     }
-
-    return copy;
   };
 
   const addTime = async () => {
     const copy = [...dayarr];
-    copy.push([openTime, closeTime, [days]]);
+    copy.push([openTime, closeTime, days]);
     setDayarr(copy);
     setOpenTime("");
     setCloseTime("");
@@ -171,6 +176,8 @@ const Register = () => {
     setSelectOn(false);
   };
   const input = useRef();
+  console.log(loc);
+
   return (
     <>
       <Header mcolor={"#8B8B8B"} text={"카페 관리"} inner={"새 카페 등록"}>
@@ -179,20 +186,28 @@ const Register = () => {
       <Containaer>
         <Row gap={20}>
           <Column>
-            <Input1
-              name="storeName"
-              type="text"
-              placeholder="카페명"
-              defaultValue={register.storeName}
-              onChange={(e) => onChange(e)}
-            />
-            <Input1
-              name="siNm"
-              type="text"
-              placeholder="주소"
-              defaultValue={register.siNm}
-              onChange={(e) => onChange(e)}
-            />
+            <InputBox>
+              <span>카페명</span>
+              {loc.place_name ? (
+                <div>{loc.place_name}</div>
+              ) : (
+                <input
+                  name="storeName"
+                  type="text"
+                  defaultValue={register.storeName}
+                  onChange={(e) => {
+                    onChange(e);
+                    setSearch(e.target.value);
+                  }}
+                />
+              )}
+              <Search onClick={() => setSearchModal(!searchModal)} />
+            </InputBox>
+            <InputBox>
+              <span>주소</span>
+              <div>{loc.address_name} </div>
+            </InputBox>
+
             <Box height={176}>
               <p>카공 카페로 추천하시겠어요?</p>
               <RowBox>
@@ -404,13 +419,20 @@ const Register = () => {
             </Box>
             <InputBox>
               <span>기타 운영 시간</span>
-              <input type="text" placeholder="Ex. 매달 첫째주 수요일" />
+              <input
+                type="text"
+                placeholder="Ex. 매달 첫째주 수요일"
+                name="etcTime"
+                defaultValue={register.etcTime}
+                onChange={(e) => onChange(e)}
+              />
             </InputBox>
             <InputBox>
               <span>전화번호</span>
               <input
                 type="text"
                 name="phone"
+                defaultValue={register.phone}
                 onChange={(e) => onchange(e)}
                 placeholder="카페 전화번호를 입력해주세요"
               />
@@ -420,6 +442,7 @@ const Register = () => {
               <input
                 type="text"
                 name="website"
+                defaultValue={register.website}
                 onChange={(e) => onchange(e)}
                 placeholder="카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
               />
@@ -429,11 +452,24 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="와이파이 비밀번호를 입력해 주세요"
+                name="wifiPassword"
+                defaultValue={register.wifiPassword}
+                onChange={(e) => onChange(e)}
               />
             </InputBox>
           </Column>
         </Row>
       </Containaer>
+      {searchModal && (
+        <SearchModal
+          setModal={setSearchModal}
+          search={search}
+          setSearch={setSearch}
+          setLoc={setLoc}
+          setRegister={setRegister}
+          register={register}
+        />
+      )}
     </>
   );
 };

@@ -33,5 +33,7 @@ export const registerState = atom({
     wifi: null,
     restroom: null,
     tableSize: null,
+    wifiPassword: null,
+    etcTime: null,
   },
 });
