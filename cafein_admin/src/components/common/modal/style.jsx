@@ -28,7 +28,7 @@ export const ModalHeader = styled.div`
 `;
 export const ModalFooter = styled.div`
   display: flex;
-  width: 100%;
+  width: inherit;
   box-sizing: border-box;
   position: absolute;
   bottom: 40px;
@@ -49,6 +49,7 @@ export const Btn = styled.div`
   border-radius: 6px;
   text-align: center;
   line-height: 40px;
+  cursor: pointer;
 `;
 export const ModalContent = styled.div`
   color: #fff;

@@ -14,6 +14,7 @@ import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
 
 import PVImg from "../components/common/PVImg";
+import Alert from "./common/modal/alert";
 
 const Notices = () => {
   const temp = [
@@ -59,6 +60,7 @@ const Notices = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(temp.length * 3 - 1);
   const [items, setItems] = useState(10);
+  const [alert, setAlert] = useState(false);
   const handlePageChange = (page) => {
     setPage(page);
     console.log(page);
@@ -83,116 +85,127 @@ const Notices = () => {
   };
   const input = useRef();
   return (
-    <SS.Container>
-      <div>
-        <Row
-          justify={"space-between"}
-          align={"baseline"}
-          style={{ marginBottom: "20px" }}
-        >
-          <Row gap={15}>
-            <S.Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
-              최신순
-            </S.Sbtn>
-            <S.Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
-              오래된 순
-            </S.Sbtn>
-          </Row>
-          <Row gap={15} align={"baseline"}>
-            <Paging
-              count={count}
-              handlePageChange={handlePageChange}
-              setPage={setPage}
-              page={page}
-            />
-            <Row style={{ borderBottom: "1px solid #fff" }}>
-              <S.Input
-                placeholder="검색"
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
+    <>
+      <SS.Container>
+        <div>
+          <Row
+            justify={"space-between"}
+            align={"baseline"}
+            style={{ marginBottom: "20px" }}
+          >
+            <Row gap={15}>
+              <S.Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
+                최신순
+              </S.Sbtn>
+              <S.Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
+                오래된 순
+              </S.Sbtn>
+            </Row>
+            <Row gap={15} align={"baseline"}>
+              <Paging
+                count={count}
+                handlePageChange={handlePageChange}
+                setPage={setPage}
+                page={page}
               />
-              <Search onClick={onclick} />
+              <Row style={{ borderBottom: "1px solid #fff" }}>
+                <S.Input
+                  placeholder="검색"
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <Search onClick={onclick} />
+              </Row>
             </Row>
           </Row>
-        </Row>
-        <S.Wrapper>
-          <S.TableHeader>
-            <tr>
-              <td>분류</td>
-              <td>제목</td>
-              <td>PUSh</td>
-              <td>등록일</td>
-            </tr>
-            <>
-              {temp
-                .concat(temp)
-                .concat(temp)
-                .slice(items * (page - 1), items * (page - 1) + items)
-                .map((item) => (
-                  <tr style={{ maxHeight: "72px" }}>
-                    <td>{item.code}</td>
-                    <td style={{ textAlign: "left" }}>
-                      <p style={{ fontWeight: "bold" }}>{item.title}</p>
-                      <p>
-                        {item.content.length > 30
-                          ? item.content.slice(0, 30)
-                          : item.content}
-                      </p>
-                    </td>
-                    <td>{item.push === "" ? "-" : item.push}</td>
-                    <td>{item.registration}</td>
-                  </tr>
-                ))}
-            </>
-          </S.TableHeader>
-        </S.Wrapper>
-      </div>
-      <SS.NewNotice>
-        <p>새 공지 등록</p>
-        <div>
-          <SS.Input type="text" placeholder="날짜" />
-          <SS.Input type="text" placeholder="제목" />
-          <SS.TextBox>
-            <textarea type="text" placeholder="내용을 입력하세요" />
-            <SS.PhotoBox>
-              <SS.FileUpload
-                onClick={() => {
-                  input.current?.click();
-                }}
-              >
-                <Photo />
-                <div>{file.length}/5</div>
-                <input
-                  ref={input}
-                  type="file"
-                  style={{ display: "none" }}
-                  onChange={(e) => onLoadFile(e)}
-                />
-              </SS.FileUpload>
-              {file?.map((a, i) => {
-                return (
-                  <SS.ImgBox key={i}>
-                    <CloseIcon name={a.name} onClick={() => deleteImg(i)} />
-                    <PVImg img={a} />
-                  </SS.ImgBox>
-                );
-              })}
-            </SS.PhotoBox>
-          </SS.TextBox>
+          <S.Wrapper>
+            <S.TableHeader>
+              <tr>
+                <td>분류</td>
+                <td>제목</td>
+                <td>PUSh</td>
+                <td>등록일</td>
+              </tr>
+              <>
+                {temp
+                  .concat(temp)
+                  .concat(temp)
+                  .slice(items * (page - 1), items * (page - 1) + items)
+                  .map((item) => (
+                    <tr style={{ maxHeight: "72px" }}>
+                      <td>{item.code}</td>
+                      <td style={{ textAlign: "left" }}>
+                        <p style={{ fontWeight: "bold" }}>{item.title}</p>
+                        <p>
+                          {item.content.length > 30
+                            ? item.content.slice(0, 30)
+                            : item.content}
+                        </p>
+                      </td>
+                      <td>{item.push === "" ? "-" : item.push}</td>
+                      <td>{item.registration}</td>
+                    </tr>
+                  ))}
+              </>
+            </S.TableHeader>
+          </S.Wrapper>
         </div>
-        <Row gap={115} justify={"space-between"} align={"baseline"}>
-          <SS.CheckPush>
-            <Square />
-            <p>App Push</p>
-          </SS.CheckPush>
-          <Row gap={16}>
-            <SS.Btn back={"#515151"}>미리보기</SS.Btn>
-            <SS.Btn back={"#2563eb"}>등록</SS.Btn>
+        <SS.NewNotice>
+          <p>새 공지 등록</p>
+          <div>
+            <SS.Input type="text" placeholder="날짜" />
+            <SS.Input type="text" placeholder="제목" />
+            <SS.TextBox>
+              <textarea cols="50" rows="20" placeholder="내용을 입력하세요" />
+              <SS.PhotoBox>
+                <SS.FileUpload
+                  onClick={() => {
+                    input.current?.click();
+                  }}
+                >
+                  <Photo />
+                  <div>{file.length}/5</div>
+                  <input
+                    ref={input}
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={(e) => onLoadFile(e)}
+                  />
+                </SS.FileUpload>
+                {file?.map((a, i) => {
+                  return (
+                    <SS.ImgBox key={i}>
+                      <CloseIcon name={a.name} onClick={() => deleteImg(i)} />
+                      <PVImg img={a} />
+                    </SS.ImgBox>
+                  );
+                })}
+              </SS.PhotoBox>
+            </SS.TextBox>
+          </div>
+          <Row gap={115} justify={"space-between"} align={"baseline"}>
+            <SS.CheckPush>
+              <Square />
+              <p>App Push</p>
+            </SS.CheckPush>
+            <Row gap={16}>
+              <SS.Btn back={"#515151"}>미리보기</SS.Btn>
+              <SS.Btn back={"#2563eb"} onClick={() => setAlert(!alert)}>
+                등록
+              </SS.Btn>
+            </Row>
           </Row>
-        </Row>
-      </SS.NewNotice>
-    </SS.Container>
+        </SS.NewNotice>
+      </SS.Container>
+      {alert && (
+        <Alert
+          setAlert={setAlert}
+          text={"공지사항 등록"}
+          subtext={"게시물을 등록하시겠습니까?"}
+        />
+      )}
+    </>
   );
 };
 

@@ -107,15 +107,18 @@ export const TextBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: #333333;
-  color: #8b8b8b;
+  color: #acacac;
   box-sizing: border-box;
   border-radius: 6px;
   padding: 12px;
   & > textarea {
     width: 90%;
-    heigth: 80%;
+    heigth: 350px;
     background-color: #333333;
     border: 0;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 

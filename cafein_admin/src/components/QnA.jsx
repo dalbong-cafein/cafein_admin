@@ -154,7 +154,7 @@ const QnA = () => {
           <SS.Input type="text" placeholder="날짜" />
           <SS.Input type="text" placeholder="제목" />
           <SS.TextBox>
-            <textarea type="text" placeholder="내용을 입력하세요" />
+            <textarea cols="50" rows="20" placeholder="내용을 입력하세요" />
             <SS.PhotoBox>
               <SS.FileUpload
                 onClick={() => {
