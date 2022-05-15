@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   border-radius: 8px;
+  width: 100%;
   border: 1px solid #404040;
 `;
 

@@ -11,53 +11,54 @@ import Paging from "../components/common/Pagination";
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Memo } from "../svg/memo.svg";
+import None from "../components/None";
 
 const Marketing = () => {
   const temp = [
-    {
-      code: "1",
-      brand: "스타벅스",
-      content: "스타벅스 기프티콘",
-      userNum: "000001",
-      userPhoneNum: "010-0000-0000",
-      registration: "03/29/2022",
-      paymentDate: "03/29/2022",
-      memo: "",
-      state: "미완료",
-    },
-    {
-      code: "1",
-      brand: "스타벅스",
-      content: "스타벅스 기프티콘",
-      userNum: "000001",
-      userPhoneNum: "010-0000-0000",
-      registration: "03/29/2022",
-      paymentDate: "03/29/2022",
-      memo: "",
-      state: "완료",
-    },
-    {
-      code: "1",
-      brand: "스타벅스",
-      content: "스타벅스 기프티콘",
-      userNum: "000001",
-      userPhoneNum: "010-0000-0000",
-      registration: "03/29/2022",
-      paymentDate: "03/29/2022",
-      memo: "",
-      state: "미완료",
-    },
-    {
-      code: "1",
-      brand: "스타벅스",
-      content: "스타벅스 기프티콘",
-      userNum: "000001",
-      userPhoneNum: "010-0000-0000",
-      registration: "03/29/2022",
-      paymentDate: "03/29/2022",
-      memo: "",
-      state: "완료",
-    },
+    // {
+    //   code: "1",
+    //   brand: "스타벅스",
+    //   content: "스타벅스 기프티콘",
+    //   userNum: "000001",
+    //   userPhoneNum: "010-0000-0000",
+    //   registration: "03/29/2022",
+    //   paymentDate: "03/29/2022",
+    //   memo: "",
+    //   state: "미완료",
+    // },
+    // {
+    //   code: "1",
+    //   brand: "스타벅스",
+    //   content: "스타벅스 기프티콘",
+    //   userNum: "000001",
+    //   userPhoneNum: "010-0000-0000",
+    //   registration: "03/29/2022",
+    //   paymentDate: "03/29/2022",
+    //   memo: "",
+    //   state: "완료",
+    // },
+    // {
+    //   code: "1",
+    //   brand: "스타벅스",
+    //   content: "스타벅스 기프티콘",
+    //   userNum: "000001",
+    //   userPhoneNum: "010-0000-0000",
+    //   registration: "03/29/2022",
+    //   paymentDate: "03/29/2022",
+    //   memo: "",
+    //   state: "미완료",
+    // },
+    // {
+    //   code: "1",
+    //   brand: "스타벅스",
+    //   content: "스타벅스 기프티콘",
+    //   userNum: "000001",
+    //   userPhoneNum: "010-0000-0000",
+    //   registration: "03/29/2022",
+    //   paymentDate: "03/29/2022",
+    //   memo: "",
+    //   state: "완료",
+    // },
   ];
 
   const [search, setSearch] = useState("");
@@ -119,29 +120,31 @@ const Marketing = () => {
             <td>상태</td>
             <td>메모</td>
           </tr>
-
-          {temp
-            .concat(temp)
-            .concat(temp)
-            .slice(items * (page - 1), items * (page - 1) + items)
-            .map((item) => (
-              <tr style={{ maxHeight: "72px" }}>
-                <td>{item.code}</td>
-                <td>{item.brand}</td>
-                <td>{item.content}</td>
-                <td>{item.userNum}</td>
-                <td>{item.userPhoneNum}</td>
-                <td>{item.registration}</td>
-                <td>{item.paymentDate}</td>
-                <td>
-                  <Btn content={item.state}>{item.state}</Btn>
-                </td>
-                <td>
-                  <Memo />
-                </td>
-              </tr>
-            ))}
+          <>
+            {temp
+              .concat(temp)
+              .concat(temp)
+              .slice(items * (page - 1), items * (page - 1) + items)
+              .map((item) => (
+                <tr style={{ maxHeight: "72px" }}>
+                  <td>{item.code}</td>
+                  <td>{item.brand}</td>
+                  <td>{item.content}</td>
+                  <td>{item.userNum}</td>
+                  <td>{item.userPhoneNum}</td>
+                  <td>{item.registration}</td>
+                  <td>{item.paymentDate}</td>
+                  <td>
+                    <Btn content={item.state}>{item.state}</Btn>
+                  </td>
+                  <td>
+                    <Memo />
+                  </td>
+                </tr>
+              ))}
+          </>
         </S.TableHeader>
+        {temp.length === 0 && <None text={"마케팅 서비스"} />}
       </S.Wrapper>
     </>
   );

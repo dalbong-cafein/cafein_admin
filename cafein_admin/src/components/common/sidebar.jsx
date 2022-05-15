@@ -52,7 +52,7 @@ const SideBar = () => {
           </MenuBox>
           <MenuBox onClick={() => navigate("/notice")} isT={menu === "notice"}>
             <Notice />
-            공지사항
+            서비스 관리
           </MenuBox>
           <MenuBox
             onClick={() => navigate("/statistics")}
