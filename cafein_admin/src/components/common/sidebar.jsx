@@ -24,41 +24,70 @@ const SideBar = () => {
       <LogoIcon />
       <Box>
         <div>
-          <MenuBox onClick={() => navigate("/")} isT={menu === ""}>
-            <Desh />
+          <MenuBox svgW={15} onClick={() => navigate("/")} isT={menu === ""}>
+            <div>
+              <Desh />
+            </div>
             대시보드
           </MenuBox>
           <MenuBox
+            svgW={16}
             onClick={() => navigate("/management")}
             isT={menu === "management"}
           >
-            <Cup />
+            <div>
+              <Cup />
+            </div>
             카페관리
           </MenuBox>
-          <MenuBox onClick={() => navigate("/review")} isT={menu === "review"}>
-            <Review />
+          <MenuBox
+            svgW={16.6}
+            onClick={() => navigate("/review")}
+            isT={menu === "review"}
+          >
+            <div>
+              <Review />
+            </div>
             카페리뷰
           </MenuBox>
-          <MenuBox onClick={() => navigate("/user")} isT={menu === "user"}>
-            <User />
+          <MenuBox
+            svgW={13.3}
+            onClick={() => navigate("/user")}
+            isT={menu === "user"}
+          >
+            <div>
+              <User />
+            </div>
             회원정보
           </MenuBox>
           <MenuBox
+            svgW={18.5}
             onClick={() => navigate("/marketing")}
             isT={menu === "marketing"}
           >
-            <Marketing />
+            <div>
+              <Marketing />
+            </div>
             마케팅 서비스
           </MenuBox>
-          <MenuBox onClick={() => navigate("/notice")} isT={menu === "notice"}>
-            <Notice />
+          <MenuBox
+            svgW={16.2}
+            onClick={() => navigate("/notice")}
+            isT={menu === "notice"}
+          >
+            <div>
+              <Notice />
+            </div>
             서비스 관리
           </MenuBox>
           <MenuBox
+            svgW={18.3}
             onClick={() => navigate("/statistics")}
             isT={menu === "statistics"}
           >
-            <Statictis />
+            <div>
+              <Statictis />
+            </div>
             통계
           </MenuBox>
         </div>
@@ -141,11 +170,20 @@ const MenuBox = styled.div`
   display: flex;
   justify-content: flex-start;
   gap: 9px;
-  align-items: baseline;
+  align-items: center;
   cursor: pointer;
-  & > svg {
-    path {
-      fill: ${(props) => (props.isT ? "#fff" : "#646464")};
+  & > div {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & > svg {
+      width: ${(props) => props.svgW && props.svgw}px;
+      height: ${(props) => props.svgW && props.svgw}px;
+      path {
+        fill: ${(props) => (props.isT ? "#fff" : "#646464")};
+      }
     }
   }
 `;

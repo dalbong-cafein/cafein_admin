@@ -180,7 +180,12 @@ const Register = () => {
 
   return (
     <>
-      <Header mcolor={"#8B8B8B"} text={"카페 관리"} inner={"새 카페 등록"}>
+      <Header
+        align={"center"}
+        mcolor={"#8B8B8B"}
+        text={"카페 관리"}
+        inner={"새 카페 등록"}
+      >
         <Submit onClick={() => submit(register)}>등록</Submit>
       </Header>
       <Containaer>
@@ -188,20 +193,16 @@ const Register = () => {
           <Column>
             <InputBox>
               <span>카페명</span>
-              {loc.place_name ? (
-                <div>{loc.place_name}</div>
-              ) : (
-                <input
-                  name="storeName"
-                  type="text"
-                  defaultValue={register.storeName}
-                  onChange={(e) => {
-                    onChange(e);
-                    setSearch(e.target.value);
-                  }}
-                />
-              )}
               <Search onClick={() => setSearchModal(!searchModal)} />
+              <input
+                name="storeName"
+                type="text"
+                value={search}
+                onChange={(e) => {
+                  onChange(e);
+                  setSearch(e.target.value);
+                }}
+              />
             </InputBox>
             <InputBox>
               <span>주소</span>
@@ -291,11 +292,11 @@ const Register = () => {
             </Box>
             <TextBox>
               <p>안내사항</p>
-              <span>카공인에게 도움이 될 수 있는 정보를 공유해 주세요.</span>
-              <span>
+              <p>카공인에게 도움이 될 수 있는 정보를 공유해 주세요.</p>
+              <p>
                 부적절한 정보가 등록될 경우 카페인 운영정책에 따라 삭제될 수
                 있어요.
-              </span>
+              </p>
             </TextBox>
           </Column>
           <Column>
@@ -432,7 +433,7 @@ const Register = () => {
               <input
                 type="text"
                 name="phone"
-                defaultValue={register.phone}
+                defaultValue={loc?.phone}
                 onChange={(e) => onchange(e)}
                 placeholder="카페 전화번호를 입력해주세요"
               />
@@ -516,10 +517,12 @@ const InputBox = styled.div`
   color: #8b8b8b;
   font-weight: 500;
   background-color: #333333;
+  & > svg {
+  }
   & > input {
     width: 70%;
     border: 0;
-    color: #8b8b8b;
+    color: #e3e3e3;
     background-color: inherit;
     font-size: 16px;
     font-weight: 400;
@@ -695,7 +698,8 @@ const ComboBox = styled.div`
 const RowBox = styled.div`
   display: flex;
   padding: 0 125px;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 100px;
   & > div {
     & > p {
       padding-top: 12px;
@@ -765,7 +769,7 @@ const TextBox = styled.div`
   color: #646464;
   font-size: 14px;
   line-height: 18px;
-  & > p {
+  & > p:first-child {
     font-weight: bold;
   }
 `;

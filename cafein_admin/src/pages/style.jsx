@@ -51,6 +51,7 @@ export const Photo = styled.div`
   line-height: 40px;
   position: relative;
   position: relative;
+  background-img: ${(props) => props.src};
   & > img {
     position: absolute;
     transform: translate(-50%, 0);

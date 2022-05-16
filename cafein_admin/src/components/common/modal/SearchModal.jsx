@@ -108,6 +108,7 @@ export default function SearchModal({
     copy.katechX = item.x;
     copy.katechY = item.y;
     setRegister(copy);
+    setSearch(item.place_name);
     setModal(false);
   };
 
@@ -126,8 +127,8 @@ export default function SearchModal({
           <div
             id="myMap"
             style={{
-              width: "500px",
-              height: "500px",
+              width: "300px",
+              height: "300px",
             }}
           ></div>
           <div id="result-list" style={{ color: "#fff" }}>

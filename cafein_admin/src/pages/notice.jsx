@@ -68,7 +68,7 @@ const Headers = styled.div`
   & > div:first-child {
     display: flex;
     gap: 20px;
-    align-items: baseline;
+    align-items: center;
   }
 `;
 

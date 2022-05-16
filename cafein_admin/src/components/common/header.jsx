@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../svg/arrow.svg";
 
-const Header = ({ mSize, text, subText, mcolor, inner, children }) => {
+const Header = ({ align, mSize, text, subText, mcolor, inner, children }) => {
   return (
-    <Row>
+    <Row align={align}>
       <div>
         <Menu mSize={mSize} mcolor={mcolor}>
           {text}
@@ -29,7 +29,7 @@ const Row = styled.div`
   & > div:first-child {
     display: flex;
     gap: 20px;
-    align-items: baseline;
+    align-items: ${(props) => (props.align ? props.aplign : "baseline")};
   }
 `;
 
