@@ -44,19 +44,28 @@ export const NewNotice = styled.div`
     gap: 16px;
   }
 `;
-export const Input = styled.input`
+export const Input = styled.div`
   width: 100%;
   height: 48px;
+  display: flex;
   background-color: #333333;
-  color: #8b8b8b;
   border-radius: 6px;
-  border: 0;
+  align-items: center;
+  gap: 20px;
+
   box-sizing: border-box;
-  font-weight: 500;
-  font-size: 16px;
   padding: 12px;
-  &:focus {
-    outline: none;
+  & > p {
+    color: #acacac;
+  }
+  & > input {
+    font-size: 16px;
+    color: #e3e3e3;
+    border: 0;
+    background-color: #333333;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
@@ -115,6 +124,7 @@ export const TextBox = styled.div`
     width: 90%;
     heigth: 350px;
     background-color: #333333;
+    color: #e3e3e3;
     border: 0;
     &:focus {
       outline: none;

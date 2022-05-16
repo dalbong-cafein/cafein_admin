@@ -36,7 +36,7 @@ td {
 
 export const Input = styled.input`
   border: 0;
-  background-color: #000;
+  background-color: #131313;
   color: #fff;
   width: 220px;
   height: 32px;
@@ -74,7 +74,9 @@ export const NonePic = styled.div`
 export const Sbtn = styled.div`
   width: 102px;
   height: 36px;
-  line-height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0 10px;
   color: #fff;
   background-color: ${(props) => (props.isTrue ? "#2563EB" : "#333333")};

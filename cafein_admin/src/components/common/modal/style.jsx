@@ -5,9 +5,9 @@ export const ModalBox = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  background-color: #000;
+  background-color: #131313;
   box-sizing: border-box;
-  // padding: 0 40px 40px;
+  padding: 40px;
   border: 1px solid #515151;
   border-radius: 16px;
   width: 727px;
@@ -16,10 +16,10 @@ export const ModalBox = styled.div`
 export const ModalHeader = styled.div`
   display: flex;
   width: 100%;
-  padding: 40px;
   box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 40px;
   & > p {
     color: #fff;
     font-size: 20px;
@@ -28,11 +28,8 @@ export const ModalHeader = styled.div`
 `;
 export const ModalFooter = styled.div`
   display: flex;
-  width: inherit;
+  width: 100%;
   box-sizing: border-box;
-  position: absolute;
-  bottom: 40px;
-  left: 40px;
   justify-content: space-between;
   align-items: baseline;
   & > p {
@@ -53,6 +50,5 @@ export const Btn = styled.div`
 `;
 export const ModalContent = styled.div`
   color: #fff;
-  min-height: 400px;
-  padding: 0 40px;
+  height: 520px;
 `;

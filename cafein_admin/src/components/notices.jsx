@@ -12,9 +12,11 @@ import { ReactComponent as Photo } from "../svg/photo.svg";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
+import "react-datepicker/dist/react-datepicker.css";
 
 import PVImg from "../components/common/PVImg";
 import Alert from "./common/modal/alert";
+import DatePicker from "react-datepicker";
 
 const Notices = () => {
   const temp = [
@@ -52,6 +54,7 @@ const Notices = () => {
     },
   ];
   const [menu, setMenu] = useState("Notice");
+  const [picker, setPicker] = useState(false);
 
   const [search, setSearch] = useState("");
   const [isActive, setIsActive] = useState(1);
@@ -153,11 +156,20 @@ const Notices = () => {
         </div>
         <SS.NewNotice>
           <p>새 공지 등록</p>
+
           <div>
-            <SS.Input type="text" placeholder="날짜" />
-            <SS.Input type="text" placeholder="제목" />
+            <SS.Input>
+              <p onClick={() => setPicker(!picker)}>날짜</p>
+              {picker && <DatePickerComponent />}
+            </SS.Input>
+
+            <SS.Input>
+              <p>제목</p>
+              <input type="text" />
+            </SS.Input>
             <SS.TextBox>
               <textarea cols="50" rows="20" placeholder="내용을 입력하세요" />
+
               <SS.PhotoBox>
                 <SS.FileUpload
                   onClick={() => {
@@ -209,4 +221,19 @@ const Notices = () => {
   );
 };
 
+const DatePickerComponent = () => {
+  const [startDate, setStartDate] = useState(new Date());
+  const ExampleCustomInput = ({ value, onClick }) => (
+    <button className="example-custom-input" onClick={onClick}>
+      {value}
+    </button>
+  );
+  return (
+    <DatePicker
+      selected={startDate}
+      onChange={(date) => setStartDate(date)}
+      customInput={<ExampleCustomInput />}
+    />
+  );
+};
 export default Notices;
