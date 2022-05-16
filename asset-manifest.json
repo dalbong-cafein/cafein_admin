@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cafein_admin/static/css/main.db35cbbe.css",
-    "main.js": "/cafein_admin/static/js/main.130ac6a9.js",
+    "main.js": "/cafein_admin/static/js/main.301bb74e.js",
     "static/media/CCbad.svg": "/cafein_admin/static/media/CCbad.92fc40986cc65619490ecdbe680109c9.svg",
     "static/media/Cbad.svg": "/cafein_admin/static/media/Cbad.5a131b096ed493fd1b41a87942f635be.svg",
     "static/media/Cgood.svg": "/cafein_admin/static/media/Cgood.3380f26a002f9a61da4198401d844f67.svg",
@@ -32,10 +32,10 @@
     "static/media/plus.svg": "/cafein_admin/static/media/plus.93ec5bd1a5a78e911e29a8ff6ca7204d.svg",
     "static/media/exit.svg": "/cafein_admin/static/media/exit.91191d7496ded6a868385c6f8935c7f3.svg",
     "main.db35cbbe.css.map": "/cafein_admin/static/css/main.db35cbbe.css.map",
-    "main.130ac6a9.js.map": "/cafein_admin/static/js/main.130ac6a9.js.map"
+    "main.301bb74e.js.map": "/cafein_admin/static/js/main.301bb74e.js.map"
   },
   "entrypoints": [
     "static/css/main.db35cbbe.css",
-    "static/js/main.130ac6a9.js"
+    "static/js/main.301bb74e.js"
   ]
 }
