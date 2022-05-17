@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 export const TableHeader = styled.table`
 text-align: center;
 font-size: 14px;
+
 color: #e3e3e3;
 width: 100%;
 table-layout : auto ;
@@ -25,6 +26,7 @@ td {
 &>p{
   padding:0;
   margin:0;
+  line-height:15px;
 }
 }
 & > tr:first-child {

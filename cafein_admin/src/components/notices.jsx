@@ -160,7 +160,7 @@ const Notices = () => {
           <div>
             <SS.Input>
               <p onClick={() => setPicker(!picker)}>날짜</p>
-              {picker && <DatePickerComponent />}
+              <DatePickerComponent />
             </SS.Input>
 
             <SS.Input>
