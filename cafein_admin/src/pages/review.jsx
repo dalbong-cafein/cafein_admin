@@ -28,8 +28,7 @@ const Review = () => {
     },
     {
       code: "000001",
-      content:
-        "맨날 오고싶어요 여기서 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요 자면꿀잠 잘수있고 불면증에 추천하고 쿠키도 맛잇고 밥대신 먹고 싶어요",
+      content: "맨날 오고싶어요",
       name: "투썸플레이스 은평구청점",
       userNum: "000001",
       registration: "03/29/2022",
@@ -147,8 +146,9 @@ const Review = () => {
                       <S.NonePic>대표 사진</S.NonePic>
                     )}
                     <p style={{ textAlign: "left", maxWidth: "500px" }}>
-                      {item.content.length > 90 &&
-                        `${item.content.slice(0, 90)}...`}
+                      {item.content.length > 80
+                        ? `${item.content.slice(0, 80)}...`
+                        : item.content}
                     </p>
                   </Row>
                 </td>

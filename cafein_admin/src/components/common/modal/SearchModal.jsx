@@ -45,7 +45,6 @@ export default function SearchModal({
         // 페이지 목록 보여주는 displayPagination() 추가
         displayPagination(pagination);
         setPlaces(data);
-        console.log(data);
       }
     }
 
@@ -105,8 +104,11 @@ export default function SearchModal({
     copy.sggNm = sp[1];
     copy.rNm = sp[2];
     copy.rNum = sp[3];
+    copy.detail = sp[4] || "";
     copy.katechX = item.x;
     copy.katechY = item.y;
+    copy.storeName = item.place_name;
+    copy.phone = item.phone;
     setRegister(copy);
     setSearch(item.place_name);
     setModal(false);

@@ -22,6 +22,8 @@ import { useState, useRef } from "react";
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
 
+import feedCreateApi from "../util/postCafe";
+
 const Register = () => {
   const [file, setFile] = useState([]);
   const [register, setRegister] = useRecoilState(registerState);
@@ -93,19 +95,17 @@ const Register = () => {
   const submit = async (register) => {
     const copy = { ...register };
     copy.imageFiles = file;
-    for await (let i of dayarr) {
-      for await (let j of i[2]) {
-        updateDay(j, copy, i[0], i[1]);
-      }
-    }
     setRegister(copy);
     if (register.storeName === "") {
       window.alert("카페명을 입력해주세요");
     } else {
-      console.log(register);
-
       if (register) {
-        //api 불러오삼
+        console.log(register);
+
+        // feedCreateApi(register)
+        //   .then((res) => console.log(res))
+        //   .catch((err) => console.log(err));
+        // console.log(register);
       }
     }
   };
@@ -131,6 +131,11 @@ const Register = () => {
   };
 
   const deleteDay = async (a, i) => {
+    const copy2 = { ...register };
+    for await (let item of a[2]) {
+      updateDay(item, copy2, "", "");
+    }
+    setRegister(copy2);
     const copy = [...dayarr];
     copy.splice(i, 1);
     setDayarr(copy);
@@ -165,10 +170,24 @@ const Register = () => {
       copy.sunClose = close;
     }
   };
+  const convertTime = (time) => {
+    time = time.padStart(2, "0");
+    if (!time.includes(":")) {
+      time += ":00";
+    }
+    return time;
+  };
 
   const addTime = async () => {
     const copy = [...dayarr];
-    copy.push([openTime, closeTime, days]);
+    const copy2 = { ...register };
+    const open = await convertTime(openTime);
+    const close = await convertTime(closeTime);
+    for await (let item of days) {
+      updateDay(item, copy2, open, close);
+    }
+    setRegister(copy2);
+    copy.push([open, close, days]);
     setDayarr(copy);
     setOpenTime("");
     setCloseTime("");
@@ -176,7 +195,6 @@ const Register = () => {
     setSelectOn(false);
   };
   const input = useRef();
-  console.log(loc);
 
   return (
     <>
@@ -339,8 +357,6 @@ const Register = () => {
                       placeholder="시작 시간"
                       value={openTime}
                       onChange={(e) => {
-                        // let temp = e.target.value.padStart(2, "0");
-                        // if (temp.length < 3) temp += ":00";
                         setOpenTime(e.target.value);
                       }}
                     />
@@ -371,10 +387,22 @@ const Register = () => {
                 {dayarr.map((item, i) => (
                   <Day key={i}>
                     <div>
-                      {item[0] > 12 ? "오후" : "오전"} {item[0]}
+                      {item[0].slice(0, 2) > 12 ? "오후" : "오전"}{" "}
+                      {item[0].slice(0, 2) > 12
+                        ? `${String(item[0].slice(0, 2) - 12).padStart(
+                            2,
+                            "0"
+                          )}:${item[0].slice(3)}`
+                        : item[0]}
                     </div>
                     <div>
-                      {item[0] > 12 ? "오후" : "오전"} {item[1]}
+                      {item[1].slice(0, 2) > 12 ? "오후" : "오전"}{" "}
+                      {item[1].slice(0, 2) > 12
+                        ? `${String(item[1].slice(0, 2) - 12).padStart(
+                            2,
+                            "0"
+                          )}:${item[1].slice(3)}`
+                        : item[1]}
                     </div>
                     <div>
                       {item[2].length == 1 ? item[2] : item[2].join(",")}
@@ -431,7 +459,7 @@ const Register = () => {
                 type="text"
                 name="phone"
                 defaultValue={loc?.phone}
-                onChange={(e) => onchange(e)}
+                onChange={(e) => onChange(e)}
                 placeholder="카페 전화번호를 입력해주세요"
               />
             </InputBox>
@@ -441,7 +469,7 @@ const Register = () => {
                 type="text"
                 name="website"
                 defaultValue={register.website}
-                onChange={(e) => onchange(e)}
+                onChange={(e) => onChange(e)}
                 placeholder="카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
               />
             </InputBox>
