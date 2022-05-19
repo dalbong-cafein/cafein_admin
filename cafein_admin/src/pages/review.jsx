@@ -9,6 +9,7 @@ import { ReactComponent as Search } from "../svg/Search.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ReactComponent as Memo } from "../svg/memo.svg";
+import MReview from "../components/common/modal/MReview";
 
 const Review = () => {
   const [isActive, setIsActive] = useState(1);
@@ -34,7 +35,7 @@ const Review = () => {
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
-      img: null,
+      img: "/캡처.PNG",
     },
     {
       code: "000001",
@@ -56,7 +57,7 @@ const Review = () => {
       registration: "03/29/2022",
       edited: "03/29/2022",
       memo: "",
-      img: null,
+      img: "/캡처.PNG",
     },
   ];
 
@@ -65,11 +66,17 @@ const Review = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(temp.length * 3 - 1);
   const [items, setItems] = useState(9);
+  const [modal, setModal] = useState(false);
+  const [selectItem, setSelectItem] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
     console.log(page);
   };
 
+  const onModal = (item) => {
+    setModal(!modal);
+    setSelectItem(item);
+  };
   return (
     <>
       <Header mcolor={"#fff"} text={"카페 리뷰"} subText={"등록된 리뷰 00건"} />
@@ -121,12 +128,12 @@ const Review = () => {
             .concat(temp)
             .concat(temp)
             .slice(items * (page - 1), items * (page - 1) + items)
-            .map((item) => (
-              <tr style={{ maxHeight: "72px" }}>
-                <td>
+            .map((item, i) => (
+              <tr style={{ maxHeight: "72px" }} key={i}>
+                <td onClick={() => onModal(item)}>
                   <div>{item.code}</div>
                 </td>
-                <td>
+                <td onClick={() => onModal(item)}>
                   <Row gap={16} align={"center"}>
                     {item.img ? (
                       <S.Photo>
@@ -140,18 +147,18 @@ const Review = () => {
                       <S.NonePic>대표 사진</S.NonePic>
                     )}
                     <p style={{ textAlign: "left", maxWidth: "500px" }}>
-                      {item.content.length > 80 &&
-                        `${item.content.slice(0, 80)}...`}
+                      {item.content.length > 90 &&
+                        `${item.content.slice(0, 90)}...`}
                     </p>
                   </Row>
                 </td>
-                <td>{item.userNum}</td>
-                <td>
+                <td onClick={() => onModal(item)}>{item.userNum}</td>
+                <td onClick={() => onModal(item)}>
                   <p>{item.code}</p>
                   <p>{item.name}</p>
                 </td>
-                <td>{item.registration}</td>
-                <td>{item.edited}</td>
+                <td onClick={() => onModal(item)}>{item.registration}</td>
+                <td onClick={() => onModal(item)}>{item.edited}</td>
                 <td>
                   <Memo />
                 </td>
@@ -159,6 +166,7 @@ const Review = () => {
             ))}
         </S.TableHeader>
       </S.Wrapper>
+      {modal && <MReview setModal={setModal} selectItem={selectItem} />}
     </>
   );
 };

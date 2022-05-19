@@ -10,7 +10,7 @@ import Paging from "../components/common/Pagination";
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 import styled from "styled-components";
-
+import MUser from "../components/common/modal/MUser";
 const User = () => {
   const [isActive, setIsActive] = useState(1);
   const temp = [
@@ -63,9 +63,17 @@ const User = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(temp.length * 3 - 1);
   const [items, setItems] = useState(9);
+  const [modal, setModal] = useState(false);
+  const [selectItem, setSelectItem] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
     console.log(page);
+  };
+
+  const onModal = (item) => {
+    setModal(!modal);
+    console.log(item);
+    setSelectItem(item);
   };
 
   return (
@@ -122,16 +130,16 @@ const User = () => {
             .concat(temp)
             .concat(temp)
             .slice(items * (page - 1), items * (page - 1) + items)
-            .map((item) => (
-              <tr height="72px">
-                <td>
+            .map((item, i) => (
+              <tr height="72px" key={i}>
+                <td onClick={() => onModal(item)}>
                   <div>{item.code}</div>
                 </td>
-                <td>
+                <td onClick={() => onModal(item)}>
                   <p style={{ color: "#FC7521" }}>{item.social[0]}</p>
                   {item.social[1] && <p>{item.social[1]}</p>}
                 </td>
-                <td>
+                <td onClick={() => onModal(item)}>
                   <Row gap={16} align={"center"}>
                     {item.img ? (
                       <S.Photo>
@@ -147,15 +155,15 @@ const User = () => {
                     <p>{item.name}</p>
                   </Row>
                 </td>
-                <td>{item.phoneNum}</td>
-                <td>{item.email}</td>
-                <td>{item.app}</td>
-                <td>
+                <td onClick={() => onModal(item)}>{item.phoneNum}</td>
+                <td onClick={() => onModal(item)}>{item.email}</td>
+                <td onClick={() => onModal(item)}>{item.app}</td>
+                <td onClick={() => onModal(item)}>
                   <p>{item.divice}</p>
                   <p>{item.ip}</p>
                 </td>
-                <td>{item.join}</td>
-                <td>
+                <td onClick={() => onModal(item)}>{item.join}</td>
+                <td onClick={() => onModal(item)}>
                   <Btn content={item.state}>{item.state}</Btn>
                 </td>
                 <td>
@@ -165,6 +173,7 @@ const User = () => {
             ))}
         </S.TableHeader>
       </S.Wrapper>
+      {modal && <MUser setModal={setModal} selectItem={selectItem} />}
     </>
   );
 };
@@ -179,6 +188,7 @@ const Btn = styled.div`
   width: 86px;
   height: 26px;
   text-align: center;
+  margin: 0 auto;
   opacity: 0.3;
 
   border-radius: 6px;

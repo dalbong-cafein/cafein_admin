@@ -6,7 +6,7 @@ const NoneDiv = ({ text, loc, padding }) => {
   return (
     <Box padding={padding}>
       <p>{text} 내역이 없습니다.</p>
-      <p onClick={() => navigate(`/${loc}`)}>해당 페이지로 이동</p>
+      {loc && <p onClick={() => navigate(`/${loc}`)}>해당 페이지로 이동</p>}
     </Box>
   );
 };
