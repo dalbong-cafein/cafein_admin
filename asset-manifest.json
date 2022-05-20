@@ -1,7 +1,9 @@
 {
   "files": {
     "main.css": "/cafein_admin/static/css/main.3167ceb9.css",
-    "main.js": "/cafein_admin/static/js/main.cb6187ee.js",
+    "main.js": "/cafein_admin/static/js/main.9acaefff.js",
+    "static/media/kakao.svg": "/cafein_admin/static/media/kakao.980d1306e6a2490dbc2f19d311f434df.svg",
+    "static/media/login.svg": "/cafein_admin/static/media/login.754b19492d51fa1d9926a8c33029906f.svg",
     "static/media/CCbad.svg": "/cafein_admin/static/media/CCbad.92fc40986cc65619490ecdbe680109c9.svg",
     "static/media/Cbad.svg": "/cafein_admin/static/media/Cbad.5a131b096ed493fd1b41a87942f635be.svg",
     "static/media/Cgood.svg": "/cafein_admin/static/media/Cgood.3380f26a002f9a61da4198401d844f67.svg",
@@ -32,10 +34,10 @@
     "static/media/plus.svg": "/cafein_admin/static/media/plus.93ec5bd1a5a78e911e29a8ff6ca7204d.svg",
     "static/media/exit.svg": "/cafein_admin/static/media/exit.91191d7496ded6a868385c6f8935c7f3.svg",
     "main.3167ceb9.css.map": "/cafein_admin/static/css/main.3167ceb9.css.map",
-    "main.cb6187ee.js.map": "/cafein_admin/static/js/main.cb6187ee.js.map"
+    "main.9acaefff.js.map": "/cafein_admin/static/js/main.9acaefff.js.map"
   },
   "entrypoints": [
     "static/css/main.3167ceb9.css",
-    "static/js/main.cb6187ee.js"
+    "static/js/main.9acaefff.js"
   ]
 }
