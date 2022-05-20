@@ -3,14 +3,21 @@ import { ReactComponent as Emoji } from "../svg/login.svg";
 import { ReactComponent as Logo } from "../svg/Logo.svg";
 import { ReactComponent as Kakao } from "../svg/kakao.svg";
 
-const LogIn = () => {
+const LogIn = ({ KAKAO_AUTH_URL }) => {
+  // const kakaoLogin = () => {
+  //   window.location.replace(
+  //     `${process.env.REACT_APP_API_URL}/oauth2/authorization/kakao`
+  //   );
+  // };
   return (
     <Background>
       <Logo />
       <Emoji />
       <Box>
-        <Kakao />
-        <p>카카오로 시작하기</p>
+        <a href={KAKAO_AUTH_URL}>
+          <Kakao />
+          <p>카카오로 시작하기</p>
+        </a>
       </Box>
     </Background>
   );
@@ -37,14 +44,19 @@ const Box = styled.div`
   height: 56px;
   background-color: #fee500;
   border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
   cursor: pointer;
-  & > p {
-    font-size: 15px;
-    color: #3e2723;
+  & > a {
+    width: 328px;
+    height: 56px;
+    text-decoration: none;
+    display: flex;
+    gap: 7px;
+    justify-content: center;
+    align-items: center;
+    & > p {
+      font-size: 15px;
+      color: #3e2723;
+    }
   }
 `;
 

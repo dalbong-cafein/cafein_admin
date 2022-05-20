@@ -3,6 +3,7 @@ import styled from "styled-components";
 import reset from "styled-reset";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import Auth from "./Auth";
 
 //component
 import SideBar from "./components/common/sidebar";
@@ -13,6 +14,8 @@ import LogIn from "./pages/login";
 
 function App() {
   const [menu, setMenu] = useState("");
+  const REDIRECT_URI = "http://localhost:3000/oauth/kakao/callback";
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   return (
     <div
@@ -25,7 +28,12 @@ function App() {
     >
       <GlobalStyle />
       <Routes>
-        <Route path="/login" exact element={<LogIn />} />
+        <Route
+          path="/login"
+          exact
+          element={<LogIn KAKAO_AUTH_URL={KAKAO_AUTH_URL} />}
+        />
+        <Route path="/oauth/kakao/callback" exact element={<Auth />} />
       </Routes>
       <Row>
         <SideBar menu={menu} setMenu={setMenu} />

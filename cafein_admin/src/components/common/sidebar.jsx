@@ -93,14 +93,18 @@ const SideBar = () => {
         </div>
         <Profile>
           <Row align={"center"} gap={60}>
-            <Row gap={12}>
+            <Row
+              gap={12}
+              onClick={() => navigate("/admin")}
+              style={{ cursor: "pointer" }}
+            >
               <Pic></Pic>
               <Column>
                 <p>카페인</p>
                 <p>관리자</p>
               </Column>
             </Row>
-            <Exit />
+            <Exit style={{ cursor: "pointer" }} />
           </Row>
         </Profile>
       </Box>
