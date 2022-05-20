@@ -37,6 +37,7 @@ export const NewNotice = styled.div`
   box-sizing: border-box;
   & > p:first-child {
     font-size: 18px;
+    font-weight: 700;
   }
   & > div:nth-child(2) {
     display: flex;

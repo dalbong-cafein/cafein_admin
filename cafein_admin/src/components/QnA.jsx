@@ -12,6 +12,7 @@ import { ReactComponent as Photo } from "../svg/photo.svg";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
+import DatePickerComponent from "./common/datepicker/Datepicker";
 
 import PVImg from "./common/PVImg";
 
@@ -50,7 +51,9 @@ const QnA = () => {
       registration: "03/29/2022",
     },
   ];
-  const [menu, setMenu] = useState("Notice");
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [picker, setPicker] = useState(false);
 
   const [search, setSearch] = useState("");
   const [isActive, setIsActive] = useState(1);
@@ -151,8 +154,18 @@ const QnA = () => {
       <SS.NewNotice>
         <p>새 자주 묻는 질문 등록</p>
         <div>
-          <SS.Input type="text" placeholder="날짜" />
-          <SS.Input type="text" placeholder="제목" />
+          <SS.Input>
+            <p onClick={() => setPicker(!picker)}>날짜</p>
+            <DatePickerComponent
+              setStartDate={setStartDate}
+              startDate={startDate}
+            />
+          </SS.Input>
+
+          <SS.Input>
+            <p>제목</p>
+            <input type="text" />
+          </SS.Input>
           <SS.TextBox>
             <textarea cols="50" rows="20" placeholder="내용을 입력하세요" />
             <SS.PhotoBox>

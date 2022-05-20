@@ -12,11 +12,10 @@ import { ReactComponent as Photo } from "../svg/photo.svg";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
-import "react-datepicker/dist/react-datepicker.css";
 
 import PVImg from "../components/common/PVImg";
 import Alert from "./common/modal/alert";
-import DatePicker from "react-datepicker";
+import DatePickerComponent from "./common/datepicker/Datepicker";
 
 const Notices = () => {
   const temp = [
@@ -53,7 +52,7 @@ const Notices = () => {
       registration: "03/29/2022",
     },
   ];
-  const [menu, setMenu] = useState("Notice");
+
   const [picker, setPicker] = useState(false);
 
   const [search, setSearch] = useState("");
@@ -64,6 +63,8 @@ const Notices = () => {
   const [count, setCount] = useState(temp.length * 3 - 1);
   const [items, setItems] = useState(10);
   const [alert, setAlert] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
+
   const handlePageChange = (page) => {
     setPage(page);
     console.log(page);
@@ -160,7 +161,10 @@ const Notices = () => {
           <div>
             <SS.Input>
               <p onClick={() => setPicker(!picker)}>날짜</p>
-              <DatePickerComponent />
+              <DatePickerComponent
+                setStartDate={setStartDate}
+                startDate={startDate}
+              />
             </SS.Input>
 
             <SS.Input>
@@ -221,19 +225,4 @@ const Notices = () => {
   );
 };
 
-const DatePickerComponent = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const ExampleCustomInput = ({ value, onClick }) => (
-    <button className="example-custom-input" onClick={onClick}>
-      {value}
-    </button>
-  );
-  return (
-    <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      customInput={<ExampleCustomInput />}
-    />
-  );
-};
 export default Notices;
