@@ -1,13 +1,17 @@
 import styled from "styled-components";
+import { ReactComponent as Emoji } from "../svg/login.svg";
+import { ReactComponent as Logo } from "../svg/Logo.svg";
+import { ReactComponent as Kakao } from "../svg/kakao.svg";
 
 const LogIn = () => {
   return (
     <Background>
-      <p style={{ color: "#fff" }}>cafein</p>
-      <input type="text" placeholder="아이디를 입력해주세요" />
-      <input type="password" placeholder="비밀번호를 입력해주세요" />
-      <p style={{ color: "#fff" }}>아이디 기억하기</p>
-      <Box>로그인</Box>
+      <Logo />
+      <Emoji />
+      <Box>
+        <Kakao />
+        <p>카카오로 시작하기</p>
+      </Box>
     </Background>
   );
 };
@@ -15,14 +19,33 @@ const LogIn = () => {
 const Background = styled.div`
   height: 100vh;
   width: 100vw;
-  background-color: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  & > svg:first-child {
+    width: 164px;
+    height: 41px;
+  }
+  & > svg:nth-child(2) {
+    margin: 76px 0 16px;
+  }
 `;
 
-const Box = styled.div``;
+const Box = styled.div`
+  width: 328px;
+  height: 56px;
+  background-color: #fee500;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  & > p {
+    font-size: 15px;
+    color: #3e2723;
+  }
+`;
 
 export default LogIn;

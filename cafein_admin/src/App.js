@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 import reset from "styled-reset";
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
 
 //component
 import SideBar from "./components/common/sidebar";
@@ -23,6 +24,9 @@ function App() {
       }}
     >
       <GlobalStyle />
+      <Routes>
+        <Route path="/login" exact element={<LogIn />} />
+      </Routes>
       <Row>
         <SideBar menu={menu} setMenu={setMenu} />
         <Main menu={menu} />
