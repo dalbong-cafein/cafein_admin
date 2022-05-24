@@ -24,7 +24,7 @@ const Header = ({ align, mSize, text, subText, mcolor, inner, children }) => {
 const Row = styled.div`
   display: flex;
   width: 100%;
-  padding: 72px 102px 48px 0;
+  padding: 72px 102px 24px 0;
   justify-content: space-between;
   & > div:first-child {
     display: flex;

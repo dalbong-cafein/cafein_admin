@@ -4,11 +4,6 @@ import { ReactComponent as Logo } from "../svg/Logo.svg";
 import { ReactComponent as Kakao } from "../svg/kakao.svg";
 
 const LogIn = ({ KAKAO_AUTH_URL }) => {
-  // const kakaoLogin = () => {
-  //   window.location.replace(
-  //     `${process.env.REACT_APP_API_URL}/oauth2/authorization/kakao`
-  //   );
-  // };
   return (
     <Background>
       <Logo />

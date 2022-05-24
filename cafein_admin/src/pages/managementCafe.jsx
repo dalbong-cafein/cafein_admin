@@ -6,11 +6,13 @@ import Paging from "../components/common/Pagination";
 
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { ReactComponent as Memo } from "../svg/memo.svg";
+import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
+import DropBox from "../components/common/dropbox";
 
-const ManagementCafe = ({ setSubText }) => {
+const ManagementCafe = () => {
   const [isActive, setIsActive] = useState(1);
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
@@ -67,13 +69,16 @@ const ManagementCafe = ({ setSubText }) => {
   ];
 
   const [search, setSearch] = useState("");
+  const [isDrop, setIsDrop] = useState(false);
+  const [selected, setSelected] = useState("전체");
+  const [arr, setArr] = useState(["분류", "카페명", "위치"]);
 
+  // pagination
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(temp.length * 3 - 1);
   const [items, setItems] = useState(9);
   const handlePageChange = (page) => {
     setPage(page);
-    console.log(page);
   };
 
   return (
@@ -88,18 +93,13 @@ const ManagementCafe = ({ setSubText }) => {
           <S.Sbtn
             onClick={() => {
               navigate("/management/register");
-              setSubText("새 카페 등록");
             }}
-            isTrue={isActive === 1}
+            color={"#2563EB"}
           >
             새 카페 등록
           </S.Sbtn>
-          <S.Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
-            최신순
-          </S.Sbtn>
-          <S.Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
-            오래된 순
-          </S.Sbtn>
+          <S.Sbtn onClick={() => setIsActive(1)}>최신순</S.Sbtn>
+          <S.Sbtn onClick={() => setIsActive(2)}>오래된 순</S.Sbtn>
         </Row>
         <Row gap={15} align={"baseline"}>
           <Paging
@@ -108,7 +108,18 @@ const ManagementCafe = ({ setSubText }) => {
             setPage={setPage}
             page={page}
           />
-          <S.Sbtn>전체</S.Sbtn>
+          <S.Sbtn onClick={() => setIsDrop(!isDrop)}>
+            <p>{selected}</p>
+            <ArrowDown />
+          </S.Sbtn>
+          {isDrop && (
+            <DropBox
+              arr={arr}
+              setArr={setArr}
+              selected={selected}
+              setSelected={setSelected}
+            />
+          )}
           <Row style={{ borderBottom: "1px solid #fff" }}>
             <S.Input
               placeholder="검색"
@@ -120,6 +131,7 @@ const ManagementCafe = ({ setSubText }) => {
           </Row>
         </Row>
       </Row>
+
       <S.Wrapper>
         <S.TableHeader>
           <tr>
@@ -138,8 +150,8 @@ const ManagementCafe = ({ setSubText }) => {
             .concat(temp)
             .concat(temp)
             .slice(items * (page - 1), items * (page - 1) + items)
-            .map((item) => (
-              <tr height="72px">
+            .map((item, i) => (
+              <tr key={i} height="72px">
                 <td>
                   <div>{item.code}</div>
                 </td>

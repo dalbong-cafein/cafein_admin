@@ -76,14 +76,22 @@ export const NonePic = styled.div`
 export const Sbtn = styled.div`
   width: 102px;
   height: 36px;
+  line-height: 36px;
   display: flex;
   justify-content: center;
+  gap: 20px;
   align-items: center;
   padding: 0 10px;
   color: #fff;
-  background-color: ${(props) => (props.isTrue ? "#2563EB" : "#333333")};
+  background-color: ${(props) => props.color || "#333333"};
   border-radius: 6px;
-  padding: auto 0;
   text-align: center;
   cursor: pointer;
+  & > svg {
+    width: 12px;
+    height: 7px;
+    path {
+      fill: #fff;
+    }
+  }
 `;

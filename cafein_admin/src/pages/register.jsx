@@ -204,7 +204,29 @@ const Register = () => {
         text={"카페 관리"}
         inner={"새 카페 등록"}
       >
-        <Submit onClick={() => submit(register)}>등록</Submit>
+        <Submit
+          disalbed={
+            register.storeName == null ||
+            register.siNm == null ||
+            register.recommendation == null ||
+            register.wifi == null ||
+            register.restroom == null ||
+            register.tableSize == null ||
+            register.socket == null
+          }
+          isFill={
+            register.storeName !== null &&
+            register.siNm !== null &&
+            register.recommendation !== null &&
+            register.wifi !== null &&
+            register.restroom !== null &&
+            register.tableSize !== null &&
+            register.socket !== null
+          }
+          onClick={() => submit(register)}
+        >
+          등록
+        </Submit>
       </Header>
       <Containaer>
         <Row gap={20}>
@@ -504,13 +526,13 @@ const Containaer = styled.div`
   width: 100%;
   box-sizing: border-box;
 `;
-const Submit = styled.div`
+const Submit = styled.button`
   width: 88px;
   height: 36px;
-  line-height: 36px;
+  line-height: 34px;
   text-align: center;
   border-radius: 6px;
-  background-color: #333333;
+  background-color: ${(props) => (props.isFill ? "#2563EB" : "#333333")};
   color: #fff;
   transform: translate(20px, 0);
 `;
@@ -554,6 +576,9 @@ const InputBox = styled.div`
     &:focus {
       outline: none;
     }
+  }
+  & > div {
+    color: #e3e3e3;
   }
 `;
 const Column = styled.div`

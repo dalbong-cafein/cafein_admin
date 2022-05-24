@@ -63,7 +63,7 @@ const Notice = () => {
 const Headers = styled.div`
   display: flex;
   width: 100%;
-  padding: 72px 102px 48px 0;
+  padding: 72px 102px 24px 0;
   justify-content: space-between;
   & > div:first-child {
     display: flex;

@@ -8,7 +8,7 @@ const feedCreateApi = async (register) => {
   );
   return axios({
     method: "POST",
-    url: "localhost:5000/admin/stores",
+    url: "http://api.cafeinofficial.com/admin/stores",
     data: formData,
     headers: {
       Authorization: `Bearer ${axios.defaults.headers.common["Authorization"]}`,
