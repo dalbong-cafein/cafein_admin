@@ -15,9 +15,13 @@ import Row from "../atoms/row";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { adminState } from "../../recoil/admin";
+
 const SideBar = () => {
   const navigate = useNavigate();
-
+  const [admin] = useRecoilState(adminState);
+  console.log(admin);
   const menu = window.location.pathname.split("/")[1];
   return (
     <Container>
@@ -98,7 +102,7 @@ const SideBar = () => {
               onClick={() => navigate("/admin")}
               style={{ cursor: "pointer" }}
             >
-              <Pic></Pic>
+              <Pic img={admin.image}></Pic>
               <Column>
                 <p>카페인</p>
                 <p>관리자</p>
@@ -146,8 +150,9 @@ const Profile = styled.div``;
 const Pic = styled.div`
   width: 40px;
   height: 40px;
-  background-color: #fff;
   border-radius: 50%;
+  background: ${({ img }) => img && `url(${img})`} no-repeat center
+    center/contain;
 `;
 
 const Column = styled.div`

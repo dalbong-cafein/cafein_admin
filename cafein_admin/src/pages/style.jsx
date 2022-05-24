@@ -74,7 +74,7 @@ export const NonePic = styled.div`
 `;
 
 export const Sbtn = styled.div`
-  width: 102px;
+  min-width: 102px;
   height: 36px;
   line-height: 36px;
   display: flex;
@@ -87,6 +87,7 @@ export const Sbtn = styled.div`
   border-radius: 6px;
   text-align: center;
   cursor: pointer;
+  box-sizing: border-box;
   & > svg {
     width: 12px;
     height: 7px;
