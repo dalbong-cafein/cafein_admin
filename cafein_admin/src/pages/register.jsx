@@ -22,7 +22,7 @@ import { useState, useRef } from "react";
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
 
-import feedCreateApi from "../util/postCafe";
+// import feedCreateApi from "../util/management";
 
 const Register = () => {
   const [file, setFile] = useState([]);

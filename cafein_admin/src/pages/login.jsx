@@ -16,7 +16,6 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
   const navigate = useNavigate();
 
   const [admin, setAdmin] = useRecoilState(adminState);
-  const kauthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=http://localhost:3000/auth&response_type=code`;
   const query = queryString.parse(window.location.search);
 
   React.useEffect(() => {
@@ -44,9 +43,10 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
         },
       })
       .then((res) => {
+        axios.defaults.headers.common["Authorization"] = res.data.access_token;
+        localStorage.setItem("wtw-token", res.data.access_token);
         authApi(res.data.access_token)
           .then((res) => {
-            console.log(res);
             const copy = { ...admin };
             copy.image = res.data.data.imageDto.imageUrl;
             copy.email = res.data.data.email;

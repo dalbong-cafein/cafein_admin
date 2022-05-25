@@ -13,15 +13,13 @@ import { ReactComponent as LogoIcon } from "../../svg/Logo.svg";
 
 import Row from "../atoms/row";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { adminState } from "../../recoil/admin";
 
 const SideBar = () => {
   const navigate = useNavigate();
   const [admin] = useRecoilState(adminState);
-  console.log(admin);
   const menu = window.location.pathname.split("/")[1];
   return (
     <Container>
@@ -102,13 +100,19 @@ const SideBar = () => {
               onClick={() => navigate("/admin")}
               style={{ cursor: "pointer" }}
             >
-              <Pic img={admin.image}></Pic>
+              <Pic img={admin.image} />
               <Column>
                 <p>카페인</p>
                 <p>관리자</p>
               </Column>
             </Row>
-            <Exit style={{ cursor: "pointer" }} />
+            <Exit
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                window.location.replace("/");
+                localStorage.clear();
+              }}
+            />
           </Row>
         </Profile>
       </Box>

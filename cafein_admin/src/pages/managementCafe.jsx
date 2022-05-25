@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./style";
 import Row from "../components/atoms/row";
 
@@ -11,62 +11,20 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
 import DropBox from "../components/common/dropbox";
+import { feedDataApi } from "../util/management";
 
 const ManagementCafe = () => {
+  useEffect(() => {
+    feedDataApi(page).then((res) => {
+      setCount(res.data.data.storeCnt);
+      setTemp(res.data.data.storeResDtoList.dtoList);
+    });
+  }, []);
+
   const [isActive, setIsActive] = useState(1);
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
-  const temp = [
-    {
-      code: "000001",
-      name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 여기저기어쩌구",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
-      registration: "03/29/2022",
-      edited: "03/29/2022",
-      memo: "",
-      img: "/캡처.PNG",
-    },
-
-    {
-      code: "000001",
-      name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 ddddddddddddd",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
-      registration: "03/29/2022",
-      edited: "03/29/2022",
-      memo: "",
-      img: null,
-    },
-    {
-      code: "000001",
-      name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 여기저기어쩌구",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
-      registration: "03/29/2022",
-      edited: "03/29/2022",
-      memo: "",
-      img: null,
-    },
-    {
-      code: "000001",
-      name: "투썸플레이스 은평구청점",
-      location: "위치어쩌구저쩌구 kkkkk",
-      phoneNum: "0-1234-2345",
-      congestion: "여유",
-      review: "245",
-      registration: "03/29/2022",
-      edited: "03/29/2022",
-      memo: "",
-      img: null,
-    },
-  ];
+  const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
   const [isDrop, setIsDrop] = useState(false);
@@ -75,11 +33,17 @@ const ManagementCafe = () => {
 
   // pagination
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(temp.length * 3 - 1);
+  const [count, setCount] = useState(null);
   const [items, setItems] = useState(9);
   const handlePageChange = (page) => {
     setPage(page);
+    console.log(page);
+    feedDataApi(page).then((res) => {
+      setTemp(res.data.data.storeResDtoList.dtoList);
+    });
   };
+
+  console.log(temp);
 
   return (
     <>
@@ -115,6 +79,7 @@ const ManagementCafe = () => {
           {isDrop && (
             <DropBox
               arr={arr}
+              setIsDrop={setIsDrop}
               setArr={setArr}
               selected={selected}
               setSelected={setSelected}
@@ -146,37 +111,31 @@ const ManagementCafe = () => {
             <td>메모</td>
           </tr>
 
-          {temp
-            .concat(temp)
-            .concat(temp)
-            .slice(items * (page - 1), items * (page - 1) + items)
-            .map((item, i) => (
+          {temp &&
+            temp.map((item, i) => (
               <tr key={i} height="72px">
+                <td>{String(item.storeId).padStart(5, "0")}</td>
                 <td>
-                  <div>{item.code}</div>
-                </td>
-                <td>
-                  <Row gap={16} align={"center"}>
-                    {item.img ? (
-                      <S.Photo>
-                        z
-                        <img
-                          src={process.env.PUBLIC_URL + item.img}
-                          alt="pic"
-                        />
-                      </S.Photo>
+                  <Row gap={16}>
+                    {item.storeImageDto ? (
+                      <S.Photo img={item.storeImageDto.imageUrl} />
                     ) : (
-                      <S.NonePic>대표 사진</S.NonePic>
+                      <S.NonePic>
+                        대표
+                        <br /> 사진
+                      </S.NonePic>
                     )}
-                    <p>{item.name}</p>
+                    <p style={{ lineHeight: "40px" }}>{item.storeName}</p>
                   </Row>
                 </td>
-                <td>{item.location}</td>
-                <td>{item.phoneNum}</td>
-                <td>{item.congestion}</td>
-                <td>{item.review}건</td>
-                <td>{item.registration}</td>
-                <td>{item.edited}</td>
+                <td>{item.address.fullAddress}</td>
+                <td style={{ textAlign: "center" }}>{item.phone || "-"}</td>
+                <td style={{ textAlign: "center" }}>
+                  {item.congestionScoreAvg || "-"}
+                </td>
+                <td>{item.reviewCnt}건</td>
+                <td>{item.regDateTime.split("T")[0]}</td>
+                <td>{item.modDateTime.split("T")[0]}</td>
                 <td>
                   <Memo onClick={() => setModal(true)} />
                 </td>

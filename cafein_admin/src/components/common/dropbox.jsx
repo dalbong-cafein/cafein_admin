@@ -1,5 +1,5 @@
 import styled from "styled-components";
-const DropBox = ({ arr, selected, setSelected, setArr }) => {
+const DropBox = ({ setIsDrop, arr, selected, setSelected, setArr }) => {
   const onclick = (e) => {
     const temp = e.target.id;
     const copy = [...arr];
@@ -7,6 +7,7 @@ const DropBox = ({ arr, selected, setSelected, setArr }) => {
     copy.splice(arr.indexOf(temp), 1);
     setSelected(e.target.id);
     setArr(copy);
+    setIsDrop(false);
   };
   return (
     <Box>

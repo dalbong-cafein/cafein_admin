@@ -7,11 +7,15 @@ import Paging from "../components/common/Pagination";
 
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 import MReview from "../components/common/modal/MReview";
+import { reviewDataApi } from "../util/review";
 
 const Review = () => {
+  useEffect(() => {
+    reviewDataApi().then((res) => console.log(res));
+  });
   const [isActive, setIsActive] = useState(1);
   const navigate = useNavigate();
   const temp = [

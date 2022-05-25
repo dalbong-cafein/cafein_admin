@@ -7,7 +7,6 @@ export const Wrapper = styled.div`
 `;
 
 export const TableHeader = styled.table`
-text-align: center;
 font-size: 14px;
 
 color: #e3e3e3;
@@ -23,12 +22,9 @@ border-style: hidden;
 td {
   padding: 16px;
   border: 1px solid #404040;
-&>p{
-  padding:0;
-  margin:0;
-  line-height:15px;
+
 }
-}
+
 & > tr:first-child {
   color: #8b8b8b;
   max-heightL 72px;
@@ -50,18 +46,8 @@ export const Input = styled.input`
 export const Photo = styled.div`
   width: 40px;
   height: 40px;
-  line-height: 40px;
-  position: relative;
-  position: relative;
-  background-img: ${(props) => props.src};
-  & > img {
-    position: absolute;
-    transform: translate(-50%, 0);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 9;
-  }
+  background: ${({ img }) => img && `url(${img})`} no-repeat center
+    center/contain;
 `;
 
 export const NonePic = styled.div`
@@ -69,8 +55,10 @@ export const NonePic = styled.div`
   height: 40px;
   background-color: #fff;
   color: #000;
-  font-size: 10px;
-  line-height: 40px;
+  font-size: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Sbtn = styled.div`
