@@ -21,7 +21,7 @@ export const ModalHeader = styled.div`
   align-items: center;
   margin-bottom: 40px;
   & > p {
-    color: #fff;
+    color: #f6f6f6;
     font-size: 20px;
     font-weight: bold;
   }

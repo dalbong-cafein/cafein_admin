@@ -69,6 +69,9 @@ const Register = () => {
       if (e.target.files[0]) {
         copy = [...copy, e.target.files[0]];
         setFile(copy);
+        const copy2 = { ...register };
+        copy2.imageFiles = copy;
+        setRegister(copy2);
       }
     }
   };
@@ -93,21 +96,12 @@ const Register = () => {
   };
 
   const submit = async (register) => {
-    const copy = { ...register };
-    copy.imageFiles = file;
-    setRegister(copy);
-    if (register.storeName === "") {
-      window.alert("카페명을 입력해주세요");
-    } else {
-      if (register) {
-        console.log(register);
+    console.log(register);
 
-        // feedCreateApi(register)
-        //   .then((res) => console.log(res))
-        //   .catch((err) => console.log(err));
-        // console.log(register);
-      }
-    }
+    // feedCreateApi(register)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
+    // console.log(register);
   };
 
   const starChange = (e) => {
@@ -353,6 +347,7 @@ const Register = () => {
                   <input
                     ref={input}
                     type="file"
+                    accept="image/*"
                     style={{ display: "none" }}
                     onChange={(e) => onLoadFile(e)}
                   />

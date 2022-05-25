@@ -32,6 +32,11 @@ td {
 }
 `;
 
+export const FitBox = styled.div`
+  width: fit-content;
+  height: fit-content;
+`;
+
 export const Input = styled.input`
   border: 0;
   background-color: #131313;

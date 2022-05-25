@@ -4,6 +4,8 @@ import * as S from "./style";
 import Row from "../../atoms/row";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { ReactComponent as Search } from "../../../svg/Search.svg";
 
 const { kakao } = window;
 
@@ -99,7 +101,7 @@ export default function SearchModal({
   const onLoc = (item) => {
     setLoc(item);
     const copy = { ...register };
-    const sp = item.address_name.split(" ");
+    const sp = item.road_address_name.split(" ");
     copy.siNm = sp[0];
     copy.sggNm = sp[1];
     copy.rNm = sp[2];
@@ -118,47 +120,89 @@ export default function SearchModal({
     <Portal>
       <S.ModalBox>
         <S.ModalHeader>
+          <p>카페검색</p>
           <Close onClick={() => setModal(false)} />
         </S.ModalHeader>
-        <input
-          type="text"
-          defaultValue={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <Row style={{ borderBottom: "1px solid #fff" }}>
+          <Input
+            placeholder="검색"
+            type="text"
+            defaultValue={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Search onClick={onclick} />
+        </Row>
+
         <div>
           <div
             id="myMap"
             style={{
-              width: "300px",
-              height: "300px",
+              width: "600px",
+              height: "200px",
+              margin: "24px auto 12px",
             }}
           ></div>
-          <div id="result-list" style={{ color: "#fff" }}>
+          <ScrollBox id="result-list" style={{ color: "#fff" }}>
             {Places.map((item, i) => (
-              <div
-                key={i}
-                style={{ marginTop: "20px" }}
-                onClick={() => onLoc(item)}
-              >
-                <span>{i + 1}</span>
-                <div>
-                  <h5>{item.place_name}</h5>
-                  {item.road_address_name ? (
-                    <div>
-                      <span>{item.road_address_name}</span>
-                      <span>{item.address_name}</span>
-                    </div>
-                  ) : (
-                    <span>{item.address_name}</span>
-                  )}
-                  <span>{item.phone}</span>
-                </div>
-              </div>
+              <Box key={i} onClick={() => onLoc(item)}>
+                <p>{item.place_name}</p>
+                <p>
+                  {item.road_address_name
+                    ? item.road_address_name
+                    : item.address_name}
+                </p>
+              </Box>
             ))}
-            <div id="pagination"></div>
-          </div>
+          </ScrollBox>
+
+          <div id="pagination" style={{ display: "none" }}></div>
         </div>
       </S.ModalBox>
     </Portal>
   );
 }
+
+const Input = styled.input`
+  border: 0;
+  background-color: #131313;
+  color: #fff;
+  width: 595px;
+  height: 32px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Box = styled.div`
+  padding: 16px 14px;
+  border-bottom: 1px solid #333333;
+  cursor: pointer;
+  & > p:first-child {
+    font-size: 16px;
+    color: #e3e3e3;
+    padding-bottom: 8px;
+  }
+  & > p:nth-child(2) {
+    font-size: 14px;
+    color: #acacac;
+  }
+`;
+
+const ScrollBox = styled.div`
+  max-height: 280px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: gray;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
+`;

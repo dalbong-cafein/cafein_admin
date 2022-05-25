@@ -19,6 +19,5 @@ import { withAuthInstance } from "./index";
 // };
 
 export const feedDataApi = async (page) => {
-  console.log(page);
   return await withAuthInstance.get(`/stores?page=${page}`);
 };

@@ -37,13 +37,10 @@ const ManagementCafe = () => {
   const [items, setItems] = useState(9);
   const handlePageChange = (page) => {
     setPage(page);
-    console.log(page);
     feedDataApi(page).then((res) => {
       setTemp(res.data.data.storeResDtoList.dtoList);
     });
   };
-
-  console.log(temp);
 
   return (
     <>
@@ -110,37 +107,38 @@ const ManagementCafe = () => {
             <td>최종 수정일</td>
             <td>메모</td>
           </tr>
-
-          {temp &&
-            temp.map((item, i) => (
-              <tr key={i} height="72px">
-                <td>{String(item.storeId).padStart(5, "0")}</td>
-                <td>
-                  <Row gap={16}>
-                    {item.storeImageDto ? (
-                      <S.Photo img={item.storeImageDto.imageUrl} />
-                    ) : (
-                      <S.NonePic>
-                        대표
-                        <br /> 사진
-                      </S.NonePic>
-                    )}
-                    <p style={{ lineHeight: "40px" }}>{item.storeName}</p>
-                  </Row>
-                </td>
-                <td>{item.address.fullAddress}</td>
-                <td style={{ textAlign: "center" }}>{item.phone || "-"}</td>
-                <td style={{ textAlign: "center" }}>
-                  {item.congestionScoreAvg || "-"}
-                </td>
-                <td>{item.reviewCnt}건</td>
-                <td>{item.regDateTime.split("T")[0]}</td>
-                <td>{item.modDateTime.split("T")[0]}</td>
-                <td>
-                  <Memo onClick={() => setModal(true)} />
-                </td>
-              </tr>
-            ))}
+          <tbody>
+            {temp &&
+              temp.map((item, i) => (
+                <tr key={i} height="72px">
+                  <td>{String(item.storeId).padStart(5, "0")}</td>
+                  <td>
+                    <Row gap={16} align={"center"}>
+                      {item.storeImageDto ? (
+                        <S.Photo img={item.storeImageDto.imageUrl} />
+                      ) : (
+                        <S.NonePic>
+                          대표
+                          <br /> 사진
+                        </S.NonePic>
+                      )}
+                      <p>{item.storeName}</p>
+                    </Row>
+                  </td>
+                  <td>{item.address.fullAddress}</td>
+                  <td style={{ textAlign: "center" }}>{item.phone || "-"}</td>
+                  <td style={{ textAlign: "center" }}>
+                    {item.congestionScoreAvg || "-"}
+                  </td>
+                  <td>{item.reviewCnt}건</td>
+                  <td>{item.regDateTime.split("T")[0]}</td>
+                  <td>{item.modDateTime.split("T")[0]}</td>
+                  <td>
+                    <Memo onClick={() => setModal(true)} />
+                  </td>
+                </tr>
+              ))}
+          </tbody>
         </S.TableHeader>
       </S.Wrapper>
       {modal && <MemoModal setModal={setModal} />}
