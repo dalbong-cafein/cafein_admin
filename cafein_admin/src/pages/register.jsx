@@ -21,8 +21,7 @@ import { ReactComponent as Search } from "../svg/Search.svg";
 import { useState, useRef } from "react";
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
-
-// import feedCreateApi from "../util/management";
+import { feedCreateApi } from "../util/management";
 
 const Register = () => {
   const [file, setFile] = useState([]);
@@ -98,10 +97,9 @@ const Register = () => {
   const submit = async (register) => {
     console.log(register);
 
-    // feedCreateApi(register)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-    // console.log(register);
+    feedCreateApi(register)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const starChange = (e) => {

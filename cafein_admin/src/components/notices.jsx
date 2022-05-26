@@ -15,7 +15,6 @@ import { ReactComponent as CloseIcon } from "../svg/close.svg";
 
 import PVImg from "../components/common/PVImg";
 import Alert from "./common/modal/alert";
-import DatePickerComponent from "./common/datepicker/Datepicker";
 
 const Notices = () => {
   const temp = [
@@ -53,8 +52,6 @@ const Notices = () => {
     },
   ];
 
-  const [picker, setPicker] = useState(false);
-
   const [search, setSearch] = useState("");
   const [isActive, setIsActive] = useState(1);
   const navigate = useNavigate();
@@ -63,7 +60,6 @@ const Notices = () => {
   const [count, setCount] = useState(temp.length * 3 - 1);
   const [items, setItems] = useState(10);
   const [alert, setAlert] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -160,11 +156,7 @@ const Notices = () => {
 
           <div>
             <SS.Input>
-              <p onClick={() => setPicker(!picker)}>날짜</p>
-              <DatePickerComponent
-                setStartDate={setStartDate}
-                startDate={startDate}
-              />
+              <p>날짜</p>
             </SS.Input>
 
             <SS.Input>

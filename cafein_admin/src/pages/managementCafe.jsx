@@ -111,7 +111,17 @@ const ManagementCafe = () => {
             {temp &&
               temp.map((item, i) => (
                 <tr key={i} height="72px">
-                  <td>{String(item.storeId).padStart(5, "0")}</td>
+                  <td>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {String(item.storeId).padStart(5, "0")}
+                    </div>
+                  </td>
                   <td>
                     <Row gap={16} align={"center"}>
                       {item.storeImageDto ? (

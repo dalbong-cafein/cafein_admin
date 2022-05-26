@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import Row from "../components/atoms/row";
+
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { adminState } from "../recoil/admin";
 const Admin = () => {
+  const [admin] = useRecoilState(adminState);
   return (
     <Container>
       <div>
         <Row gap={24} align={"center"}>
-          <Pic>
-            <img alt="" src={`${process.env.PUBLIC_URL}/캡처.PNG`} />
-          </Pic>
+          <Pic img={admin.image} />
           <Column>
             <Row gap={16} align={"baseline"}>
               <Txt bold={true} color={"#f6f6f6"} size={24}>
@@ -41,7 +43,7 @@ const Admin = () => {
         </Line>
         <Line>
           <span>이메일</span>
-          <p>dalbong.cafein@gmail.com</p>
+          <p>{admin.email}</p>
         </Line>
       </Box>
       <BtnBox>
@@ -74,11 +76,9 @@ const Box = styled.div`
 const Pic = styled.div`
   width: 80px;
   height: 80px;
-  & > img {
-    width: 100%;
-    heigth: 100%;
-    border-radius: 50%;
-  }
+  border-radius: 50%;
+  background: ${({ img }) => img && `url(${img})`} no-repeat center
+    center/contain;
 `;
 const Column = styled.div`
   display: flex;

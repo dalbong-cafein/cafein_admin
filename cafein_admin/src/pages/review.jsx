@@ -139,15 +139,13 @@ const Review = () => {
                 <td onClick={() => onModal(item)}>
                   <Row gap={16} align={"center"}>
                     {item.img ? (
-                      <S.Photo>
-                        z
-                        <img
-                          src={process.env.PUBLIC_URL + item.img}
-                          alt="pic"
-                        />
-                      </S.Photo>
+                      <S.Photo img={process.env.PUBLIC_URL + item.img} />
                     ) : (
-                      <S.NonePic>대표 사진</S.NonePic>
+                      <S.NonePic>
+                        대표
+                        <br />
+                        사진
+                      </S.NonePic>
                     )}
                     <p style={{ textAlign: "left", maxWidth: "500px" }}>
                       {item.content.length > 80

@@ -56,7 +56,7 @@ export const Input = styled.div`
 
   box-sizing: border-box;
   padding: 12px;
-  & > p {
+  & > p:first-child {
     width: 50px;
     color: #acacac;
   }

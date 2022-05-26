@@ -12,7 +12,6 @@ import { ReactComponent as Photo } from "../svg/photo.svg";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
-import DatePickerComponent from "./common/datepicker/Datepicker";
 
 import PVImg from "./common/PVImg";
 
@@ -52,9 +51,6 @@ const QnA = () => {
     },
   ];
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [picker, setPicker] = useState(false);
-
   const [search, setSearch] = useState("");
   const [isActive, setIsActive] = useState(1);
   const navigate = useNavigate();
@@ -85,6 +81,15 @@ const QnA = () => {
     setFile(copy);
   };
   const input = useRef();
+
+  const dates = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <SS.Container>
       <div>
@@ -155,11 +160,8 @@ const QnA = () => {
         <p>새 자주 묻는 질문 등록</p>
         <div>
           <SS.Input>
-            <p onClick={() => setPicker(!picker)}>날짜</p>
-            <DatePickerComponent
-              setStartDate={setStartDate}
-              startDate={startDate}
-            />
+            <p>날짜</p>
+            <p>{dates()}</p>
           </SS.Input>
 
           <SS.Input>
