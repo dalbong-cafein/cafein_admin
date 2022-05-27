@@ -12,16 +12,18 @@ import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
 import DropBox from "../components/common/dropbox";
 import { feedDataApi } from "../util/management";
+import None from "../components/None";
 
 const ManagementCafe = () => {
   useEffect(() => {
-    feedDataApi(page).then((res) => {
+    feedDataApi(page, sort).then((res) => {
       setCount(res.data.data.storeCnt);
       setTemp(res.data.data.storeResDtoList.dtoList);
+      console.log(res);
     });
   }, []);
 
-  const [isActive, setIsActive] = useState(1);
+  const [sort, setSort] = useState("DESC");
   const [modal, setModal] = useState(false);
   const navigate = useNavigate();
   const [temp, setTemp] = useState([]);
@@ -37,8 +39,16 @@ const ManagementCafe = () => {
   const [items, setItems] = useState(9);
   const handlePageChange = (page) => {
     setPage(page);
-    feedDataApi(page).then((res) => {
+    feedDataApi(page, sort).then((res) => {
       setTemp(res.data.data.storeResDtoList.dtoList);
+    });
+  };
+
+  const sortData = (id) => {
+    setSort(id);
+    feedDataApi(page, sort).then((res) => {
+      setTemp(res.data.data.storeResDtoList.dtoList);
+      console.log(res);
     });
   };
 
@@ -59,8 +69,12 @@ const ManagementCafe = () => {
           >
             새 카페 등록
           </S.Sbtn>
-          <S.Sbtn onClick={() => setIsActive(1)}>최신순</S.Sbtn>
-          <S.Sbtn onClick={() => setIsActive(2)}>오래된 순</S.Sbtn>
+          <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
+            최신순
+          </S.Sbtn>
+          <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
+            오래된 순
+          </S.Sbtn>
         </Row>
         <Row gap={15} align={"baseline"}>
           <Paging
@@ -94,7 +108,7 @@ const ManagementCafe = () => {
         </Row>
       </Row>
 
-      <S.Wrapper>
+      <S.Wrapper isNull={temp.length === 0}>
         <S.TableHeader>
           <tr>
             <td>분류</td>
@@ -110,27 +124,16 @@ const ManagementCafe = () => {
           <tbody>
             {temp &&
               temp.map((item, i) => (
-                <tr key={i} height="72px">
+                <tr key={i}>
                   <td>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      {String(item.storeId).padStart(5, "0")}
-                    </div>
+                    <span>{String(item.storeId).padStart(5, "0")}</span>
                   </td>
                   <td>
                     <Row gap={16} align={"center"}>
                       {item.storeImageDto ? (
                         <S.Photo img={item.storeImageDto.imageUrl} />
                       ) : (
-                        <S.NonePic>
-                          대표
-                          <br /> 사진
-                        </S.NonePic>
+                        <S.NonePic />
                       )}
                       <p>{item.storeName}</p>
                     </Row>
@@ -151,6 +154,13 @@ const ManagementCafe = () => {
           </tbody>
         </S.TableHeader>
       </S.Wrapper>
+      {temp.length === 0 && (
+        <None
+          text={"카페"}
+          text2={"새 카페 등록"}
+          href={"/management/register"}
+        />
+      )}
       {modal && <MemoModal setModal={setModal} />}
     </>
   );

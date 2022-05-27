@@ -10,7 +10,6 @@ export default function MUser({ setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
   };
-  console.log(selectItem);
   return (
     <Portal>
       <ModalBox>

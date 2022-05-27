@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
 import styled from "styled-components";
+import { reviewDetailApi } from "../../../util/review";
 
 export default function MReview({ setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
   };
+
   return (
     <Portal>
       <S.ModalBox>
@@ -45,9 +47,6 @@ export default function MReview({ setModal, selectItem }) {
               <Pic>
                 <img src={process.env.PUBLIC_URL + selectItem.img} alt="img" />
               </Pic>
-              <Pic>
-                <img src={process.env.PUBLIC_URL + selectItem.img} alt="img" />
-              </Pic>
             </Row>
           )}
         </S.ModalContent>
@@ -75,7 +74,7 @@ const Line = styled.div`
   padding-bottom: 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
-    width: 78px;
+    width: 100px;
     text-align: right;
     font-size: 16px;
     font-weight: 700;

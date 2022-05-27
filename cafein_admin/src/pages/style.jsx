@@ -1,35 +1,37 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  border-radius: 8px;
+  border-radius: ${(props) => (props.isNull ? "8px 8px 0 0" : "8px")};
   width: 100%;
   border: 1px solid #404040;
 `;
 
 export const TableHeader = styled.table`
-font-size: 14px;
+  font-size: 14px;
 
-color: #e3e3e3;
-width: 100%;
-table-layout : auto ;
-word-break : break-all ;
+  color: #e3e3e3;
+  width: 100%;
+  table-layout: auto;
+  word-break: break-all;
 
-border-spacing: 0;
-border-collapse: collapse;
-border-style: hidden;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-style: hidden;
 
-& > th,
-td {
-  padding: 16px;
-  border: 1px solid #404040;
+  & > th,
+  td {
+    padding: 12px;
+    border: 1px solid #404040;
+    box-sizing: border-box;
+  }
+  & > td {
+    height: 72px;
+    position: relative;
+  }
 
-}
-
-& > tr:first-child {
-  color: #8b8b8b;
-  max-heightL 72px;
-
-}
+  & > tr:first-child {
+    color: #8b8b8b;
+  }
 `;
 
 export const FitBox = styled.div`
@@ -51,19 +53,13 @@ export const Input = styled.input`
 export const Photo = styled.div`
   width: 40px;
   height: 40px;
-  background: ${({ img }) => img && `url(${img})`} no-repeat center
-    center/contain;
+  background: ${({ img }) => img && `url(${img})`} no-repeat center center/cover;
 `;
 
 export const NonePic = styled.div`
   width: 40px;
   height: 40px;
   background-color: #fff;
-  color: #000;
-  font-size: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const Sbtn = styled.div`

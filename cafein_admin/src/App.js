@@ -13,6 +13,7 @@ import LogIn from "./pages/login";
 
 import { useRecoilState } from "recoil";
 import { adminState } from "./recoil/admin";
+import { Temp } from "./pages/temp";
 
 function App() {
   const [menu, setMenu] = useState("");
@@ -54,10 +55,6 @@ function App() {
     </div>
   );
 }
-
-const Temp = () => {
-  return <div></div>;
-};
 
 const GlobalStyle = createGlobalStyle` 
 ${reset} 

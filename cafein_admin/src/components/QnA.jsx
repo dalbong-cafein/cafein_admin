@@ -138,7 +138,7 @@ const QnA = () => {
                 .concat(temp)
                 .slice(items * (page - 1), items * (page - 1) + items)
                 .map((item) => (
-                  <tr style={{ maxHeight: "72px" }}>
+                  <tr>
                     <td>{item.code}</td>
                     <td style={{ textAlign: "left" }}>
                       <p style={{ fontWeight: "bold" }}>{item.title}</p>

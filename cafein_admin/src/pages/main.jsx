@@ -10,6 +10,7 @@ import Desh from "./desh";
 import Marketing from "./marketing";
 import Notice from "./notice";
 import Admin from "./admin";
+import { Temp } from "./temp";
 
 const Main = ({}) => {
   return (
@@ -27,10 +28,6 @@ const Main = ({}) => {
       </Routes>
     </Containaer>
   );
-};
-
-const Temp = () => {
-  return <div style={{ color: "#fff", width: "100%" }}>아직</div>;
 };
 
 const Containaer = styled.div`

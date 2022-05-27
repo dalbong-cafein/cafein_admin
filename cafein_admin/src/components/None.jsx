@@ -1,12 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as Cafe } from "../svg/emojicafe.svg";
 
-const None = ({ text, children }) => {
+const None = ({ text, href, text2 }) => {
+  const navigate = useNavigate();
   return (
     <Box>
       <Cafe />
       <p>등록된 {text}가 없습니다.</p>
-      {children}
+      {href && <p onClick={() => navigate(href)}>{text2}</p>}
     </Box>
   );
 };
@@ -14,10 +16,11 @@ const None = ({ text, children }) => {
 const Box = styled.div`
   width: 100%;
   height: 648px;
-  box-sizing: border-box;
+  border: 1px solid #404040;
+  border-radius: 0 0 8px 8px;
   display: flex;
   flex-direction: column;
-  gap: 39px;
+
   align-items: center;
   justify-content: center;
   & > svg {
@@ -28,6 +31,11 @@ const Box = styled.div`
     color: #e3e3e3;
     font-size: 20px;
     font-weight: 700;
+    margin: 39px 0 20px;
+  }
+  & > p:nth-child(3) {
+    color: #2563eb;
+    cursor: pointer;
   }
 `;
 

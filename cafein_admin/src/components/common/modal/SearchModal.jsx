@@ -107,8 +107,8 @@ export default function SearchModal({
     copy.rNm = sp[2];
     copy.rNum = sp[3];
     copy.detail = sp[4] || "";
-    copy.katechX = item.x;
-    copy.katechY = item.y;
+    copy.lngX = Number(item.x);
+    copy.latY = Number(item.y);
     copy.storeName = item.place_name;
     copy.phone = item.phone;
     setRegister(copy);

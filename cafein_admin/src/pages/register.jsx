@@ -106,7 +106,7 @@ const Register = () => {
     const star = e.currentTarget.id;
     const name = e.currentTarget.parentNode.id;
     const copy = { ...register };
-    copy[name] = star;
+    copy[name] = Number(star);
     setRegister(copy);
   };
 
@@ -279,30 +279,30 @@ const Register = () => {
                 <div>
                   <p>콘센트</p>
                   <StarBox id="socket" isFill={register.socket}>
-                    <Star id="1" onClick={(e) => starChange(e)} />
-                    <Star id="2" onClick={(e) => starChange(e)} />
-                    <Star id="3" onClick={(e) => starChange(e)} />
-                    <Star id="4" onClick={(e) => starChange(e)} />
+                    <Star id={1} onClick={(e) => starChange(e)} />
+                    <Star id={2} onClick={(e) => starChange(e)} />
+                    <Star id={3} onClick={(e) => starChange(e)} />
+                    <Star id={4} onClick={(e) => starChange(e)} />
                   </StarBox>
                   {register.socket && <p>{socketText[register.socket - 1]}</p>}
                 </div>
                 <div>
                   <p>와이파이</p>
                   <StarBox id="wifi" isFill={register.wifi}>
-                    <Star id="1" onClick={(e) => starChange(e)} />
-                    <Star id="2" onClick={(e) => starChange(e)} />
-                    <Star id="3" onClick={(e) => starChange(e)} />
-                    <Star id="4" onClick={(e) => starChange(e)} />
+                    <Star id={1} onClick={(e) => starChange(e)} />
+                    <Star id={2} onClick={(e) => starChange(e)} />
+                    <Star id={3} onClick={(e) => starChange(e)} />
+                    <Star id={4} onClick={(e) => starChange(e)} />
                   </StarBox>
                   {register.wifi && <p>{wifiText[register.wifi - 1]}</p>}
                 </div>
                 <div>
                   <p>화장실</p>
                   <StarBox id="restroom" isFill={register.restroom}>
-                    <Star id="1" onClick={(e) => starChange(e)} />
-                    <Star id="2" onClick={(e) => starChange(e)} />
-                    <Star id="3" onClick={(e) => starChange(e)} />
-                    <Star id="4" onClick={(e) => starChange(e)} />
+                    <Star id={1} onClick={(e) => starChange(e)} />
+                    <Star id={2} onClick={(e) => starChange(e)} />
+                    <Star id={3} onClick={(e) => starChange(e)} />
+                    <Star id={4} onClick={(e) => starChange(e)} />
                   </StarBox>
                   {register.restroom && (
                     <p>{restroomText[register.restroom - 1]}</p>
@@ -311,10 +311,10 @@ const Register = () => {
                 <div>
                   <p>테이블</p>
                   <StarBox id="tableSize" isFill={register.tableSize}>
-                    <Star id="1" onClick={(e) => starChange(e)} />
-                    <Star id="2" onClick={(e) => starChange(e)} />
-                    <Star id="3" onClick={(e) => starChange(e)} />
-                    <Star id="4" onClick={(e) => starChange(e)} />
+                    <Star id={1} onClick={(e) => starChange(e)} />
+                    <Star id={2} onClick={(e) => starChange(e)} />
+                    <Star id={3} onClick={(e) => starChange(e)} />
+                    <Star id={4} onClick={(e) => starChange(e)} />
                   </StarBox>
                   {register.tableSize && (
                     <p>{tableSizeText[register.tableSize - 1]}</p>
