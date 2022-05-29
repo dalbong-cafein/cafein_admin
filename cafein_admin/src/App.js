@@ -20,7 +20,7 @@ function App() {
   const navigate = useNavigate();
 
   const [admin] = useRecoilState(adminState);
-  const REDIRECT_URI = "https://dalbong-cafein.github.io/login"; //수정바람
+  const REDIRECT_URI = "https://dalbong-cafein.github.io/cafein_admin/login"; //수정바람
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   useEffect(() => {
     if (
@@ -46,7 +46,7 @@ function App() {
           exact
           element={<LogIn KAKAO_AUTH_URL={KAKAO_AUTH_URL} />}
         />
-        <Route path="/oauth/kakao/callback" exact element={<Temp />} />
+        {/* <Route path="/oauth/kakao/callback" exact element={<Temp />} /> */}
       </Routes>
       <Row>
         <SideBar menu={menu} setMenu={setMenu} />
