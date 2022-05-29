@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/cafein_admin/static/css/main.82e29804.css",
-    "main.js": "/cafein_admin/static/js/main.05a437af.js",
+    "main.css": "/cafein_admin/static/css/main.db35cbbe.css",
+    "main.js": "/cafein_admin/static/js/main.60236b76.js",
     "static/media/kakao.svg": "/cafein_admin/static/media/kakao.980d1306e6a2490dbc2f19d311f434df.svg",
     "static/media/login.svg": "/cafein_admin/static/media/login.754b19492d51fa1d9926a8c33029906f.svg",
     "static/media/CCbad.svg": "/cafein_admin/static/media/CCbad.92fc40986cc65619490ecdbe680109c9.svg",
@@ -22,22 +22,23 @@
     "static/media/close.svg": "/cafein_admin/static/media/close.a19cf1030b2429d42c3a0342b0e86789.svg",
     "static/media/Cup.svg": "/cafein_admin/static/media/Cup.8bdd3ae27ed4e25c36bb2d5816f3dbd3.svg",
     "static/media/close2.svg": "/cafein_admin/static/media/close2.673afa70351e80eeac9b9c92aa13c87a.svg",
+    "static/media/emojicafe.svg": "/cafein_admin/static/media/emojicafe.eb286d9c74476978fe10ea3c54c41345.svg",
     "static/media/review.svg": "/cafein_admin/static/media/review.4c2664503a5c8b193c03d140465068bf.svg",
     "static/media/user.svg": "/cafein_admin/static/media/user.337b3dcc623256319eb4230f086c60f5.svg",
     "static/media/memo.svg": "/cafein_admin/static/media/memo.19a34467079fe0d4c3f52789103cadf0.svg",
     "static/media/mail.svg": "/cafein_admin/static/media/mail.ac151cf295da8d5f60cf2129860428da.svg",
     "static/media/ArrowDown.svg": "/cafein_admin/static/media/ArrowDown.583718c8a6ef1e097ac0688c7a576cba.svg",
     "static/media/ArrowUp.svg": "/cafein_admin/static/media/ArrowUp.a5c6fe569b5944b54e4a738b785e2191.svg",
+    "static/media/check.svg": "/cafein_admin/static/media/check.331ea386fbdbb188a34055dd8ecfe2a7.svg",
     "static/media/arrow.svg": "/cafein_admin/static/media/arrow.7bc33caf3d70e52be7c81e9a6bcb7e30.svg",
-    "static/media/emojicafe.svg": "/cafein_admin/static/media/emojicafe.ceb12298831081429d89ecd2d88f15b4.svg",
     "static/media/square.svg": "/cafein_admin/static/media/square.db03d544707c0482c637d18e5366e60c.svg",
     "static/media/plus.svg": "/cafein_admin/static/media/plus.93ec5bd1a5a78e911e29a8ff6ca7204d.svg",
     "static/media/exit.svg": "/cafein_admin/static/media/exit.91191d7496ded6a868385c6f8935c7f3.svg",
-    "main.82e29804.css.map": "/cafein_admin/static/css/main.82e29804.css.map",
-    "main.05a437af.js.map": "/cafein_admin/static/js/main.05a437af.js.map"
+    "main.db35cbbe.css.map": "/cafein_admin/static/css/main.db35cbbe.css.map",
+    "main.60236b76.js.map": "/cafein_admin/static/js/main.60236b76.js.map"
   },
   "entrypoints": [
-    "static/css/main.82e29804.css",
-    "static/js/main.05a437af.js"
+    "static/css/main.db35cbbe.css",
+    "static/js/main.60236b76.js"
   ]
 }
