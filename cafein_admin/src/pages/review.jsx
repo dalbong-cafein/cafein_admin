@@ -9,9 +9,13 @@ import { ReactComponent as Search } from "../svg/Search.svg";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ReactComponent as Memo } from "../svg/memo.svg";
+import { ReactComponent as Check } from "../svg/check.svg";
+import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
+
 import MReview from "../components/common/modal/MReview";
 import { reviewDataApi, reviewDetailApi } from "../util/review";
 import None from "../components/None";
+import DropBox from "../components/common/dropbox";
 
 const Review = () => {
   useEffect(() => {
@@ -29,6 +33,12 @@ const Review = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(null);
   const [items, setItems] = useState(9);
+
+  //drop
+  const [isDrop, setIsDrop] = useState(false);
+  const [selected, setSelected] = useState("전체");
+  const [arr, setArr] = useState(["내용", "회원 번호", "카페 번호"]);
+
   const [modal, setModal] = useState(false);
   const [selectItem, setSelectItem] = useState([]);
   const handlePageChange = (page) => {
@@ -63,9 +73,10 @@ const Review = () => {
         <Row gap={15}>
           <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
             최신순
+            {sort === "DESC" && <Check />}
           </S.Sbtn>
           <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
-            오래된 순
+            오래된 순{sort === "ASC" && <Check />}
           </S.Sbtn>
         </Row>
         <Row gap={15} align={"baseline"}>
@@ -75,7 +86,20 @@ const Review = () => {
             setPage={setPage}
             page={page}
           />
-          <S.Sbtn>전체</S.Sbtn>
+          <S.Sbtn onClick={() => setIsDrop(!isDrop)}>
+            <p>{selected}</p>
+            <ArrowDown />
+          </S.Sbtn>
+
+          {isDrop && (
+            <DropBox
+              arr={arr}
+              setIsDrop={setIsDrop}
+              setArr={setArr}
+              selected={selected}
+              setSelected={setSelected}
+            />
+          )}
           <Row style={{ borderBottom: "1px solid #fff" }}>
             <S.Input
               placeholder="검색"

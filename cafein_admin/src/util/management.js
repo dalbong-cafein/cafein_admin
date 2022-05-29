@@ -1,6 +1,6 @@
 import axios from "axios";
 import { withAuthInstance } from "./index";
-
+axios.defaults.withCredentials = true;
 export const feedCreateApi = async (register) => {
   const formData = new FormData();
   formData.append("storeName", register.storeName);
@@ -10,7 +10,6 @@ export const feedCreateApi = async (register) => {
   formData.append("rNum", register.rNum);
   formData.append("lngX", register.lngX);
   formData.append("latY", register.latY);
-  formData.append("imageFiles", register.imageFiles[0]);
   formData.append("monOpen", register.monOpen);
   formData.append("monClose", register.monClose);
   formData.append("tueOpen", register.tueOpen);
@@ -32,18 +31,27 @@ export const feedCreateApi = async (register) => {
   formData.append("tableSize", register.tableSize);
   formData.append("wifiPassword", register.wifiPassword);
   formData.append("etcTime", register.etcTime);
-  for (var pair of formData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
+  if (register.imageFiles.length > 0) {
+    for (let i = 0; i < register.imageFiles.length; i++) {
+      formData.append("imageFiles", register.imageFiles[i]);
+    }
   }
+
   return axios({
     method: "POST",
     url: process.env.REACT_APP_API_URL + "/admin/stores",
     data: formData,
-    headers: {
-      Authorization: `Bearer ${axios.defaults.headers.common["Authorization"]}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    // headers: {
+    //   Authorization: `Bearer ${axios.defaults.headers.common["Authorization"]}`,
+    // },
+    // withCredentials: true,
+    accessToken: localStorage.getItem("token"),
   });
+  //  return await axios.post(
+  //   `${process.env.REACT_APP_API_URL}/admin/stores`,
+  //   formData,
+
+  // );
 };
 
 export const feedDataApi = async (page, sort) => {

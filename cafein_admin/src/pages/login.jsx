@@ -12,6 +12,8 @@ import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
 import { useNavigate } from "react-router-dom";
 
+// document.cookie = "crossCookie=bar; ";
+
 const LogIn = ({ KAKAO_AUTH_URL }) => {
   const navigate = useNavigate();
 
@@ -41,12 +43,20 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
+        withCredentials: false,
       })
       .then((res) => {
-        axios.defaults.headers.common["Authorization"] = res.data.access_token;
-        localStorage.setItem("wtw-token", res.data.access_token);
+        console.log(res);
+        // axios.defaults.headers.common[
+        //   "Authorization"
+        // ] = `${res.data.access_token}`;
         authApi(res.data.access_token)
           .then((res) => {
+            // const { accessToken } = res.data;
+            // console.log(res);
+
+            // // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+            // axios.defaults.headers.common["Authorization"] = `${accessToken}`;
             const copy = { ...admin };
             copy.image = res.data.data.imageDto.imageUrl;
             copy.email = res.data.data.email;

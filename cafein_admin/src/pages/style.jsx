@@ -63,12 +63,12 @@ export const NonePic = styled.div`
 `;
 
 export const Sbtn = styled.div`
-  min-width: 102px;
+  min-width: 120px;
   height: 36px;
   line-height: 36px;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
   padding: 0 10px;
   color: #fff;
@@ -78,8 +78,8 @@ export const Sbtn = styled.div`
   cursor: pointer;
   box-sizing: border-box;
   & > svg {
-    width: 12px;
-    height: 7px;
+    width: 13px;
+    height: 10px;
     path {
       fill: #fff;
     }

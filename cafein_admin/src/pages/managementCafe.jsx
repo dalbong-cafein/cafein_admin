@@ -7,6 +7,7 @@ import Paging from "../components/common/Pagination";
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
+import { ReactComponent as Check } from "../svg/check.svg";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
@@ -71,9 +72,10 @@ const ManagementCafe = () => {
           </S.Sbtn>
           <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
             최신순
+            {sort === "DESC" && <Check />}
           </S.Sbtn>
           <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
-            오래된 순
+            오래된 순{sort === "ASC" && <Check />}
           </S.Sbtn>
         </Row>
         <Row gap={15} align={"baseline"}>

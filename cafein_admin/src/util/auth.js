@@ -9,6 +9,7 @@ const authAPi = async (code) => {
         authProvider: "KAKAO",
         oAuthAccessToken: code,
       },
+      withCredentials: true,
     }
   );
 };

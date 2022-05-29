@@ -3,8 +3,10 @@ import Row from "../components/atoms/row";
 
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
+import { useState } from "react";
 const Admin = () => {
   const [admin] = useRecoilState(adminState);
+  const [editMode, setEditMode] = useState(false);
   return (
     <Container>
       <div>
@@ -39,16 +41,31 @@ const Admin = () => {
         </Line>
         <Line>
           <span>사이트</span>
-          <p>http://cafeinoffical.notion.site/Cafein</p>
+
+          <a href="http://cafeinoffical.notion.site/Cafein" target="blank">
+            http://cafeinoffical.notion.site/Cafein
+          </a>
         </Line>
         <Line>
           <span>이메일</span>
           <p>{admin.email}</p>
         </Line>
       </Box>
-      <BtnBox>
-        <div>수정</div>
-      </BtnBox>
+      {editMode ? (
+        <BtnBox>
+          <div
+            style={{ backgroundColor: "#515151" }}
+            onClick={() => setEditMode(!editMode)}
+          >
+            취소
+          </div>
+          <div>저장</div>
+        </BtnBox>
+      ) : (
+        <BtnBox>
+          <div onClick={() => setEditMode(!editMode)}>수정</div>
+        </BtnBox>
+      )}
     </Container>
   );
 };
@@ -105,16 +122,22 @@ const Line = styled.div`
     font-size: 14px;
     color: #e3e3e3;
   }
+  & > a {
+    font-size: 14px;
+    color: #e3e3e3;
+  }
 `;
 
 const BtnBox = styled.div`
   display: flex;
   justify-content: end;
   width: 871px;
+  gap: 20px;
   & > div {
     padding: 12px 75px;
     border-radius: 6px;
     background-color: #2563eb;
+    cursor: pointer;
     color: #fff;
     font-size: 16px;
     font-weight: 500;

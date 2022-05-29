@@ -27,7 +27,7 @@ const Box = styled.div`
   background-color: #646464;
   position: absolute;
   box-sizing: border-box;
-  transform: translate(185%, 60%);
+  transform: translate(215%, 60%);
   padding: 16px;
   display: flex;
   flex-direction: column;
