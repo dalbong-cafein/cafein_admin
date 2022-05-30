@@ -20,7 +20,6 @@ const ManagementCafe = () => {
     feedDataApi(page, sort).then((res) => {
       setCount(res.data.data.storeCnt);
       setTemp(res.data.data.storeResDtoList.dtoList);
-      console.log(res);
     });
   }, []);
 

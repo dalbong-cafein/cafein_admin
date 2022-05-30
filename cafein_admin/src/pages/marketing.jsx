@@ -107,7 +107,7 @@ const Marketing = () => {
           </Row>
         </Row>
       </Row>
-      <S.Wrapper>
+      <S.Wrapper isNull={temp.length === 0}>
         <S.TableHeader>
           <tr>
             <td>분류</td>
@@ -144,8 +144,8 @@ const Marketing = () => {
               ))}
           </>
         </S.TableHeader>
-        {temp.length === 0 && <None text={"마케팅 서비스"} />}
       </S.Wrapper>
+      {temp.length === 0 && <None text={"마케팅 서비스"} />}
     </>
   );
 };

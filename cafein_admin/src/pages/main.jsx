@@ -23,7 +23,7 @@ const Main = ({}) => {
         <Route path="/user" exact element={<User />} />
         <Route path="/marketing" exact element={<Marketing />} />
         <Route path="/notice" exact element={<Notice />} />
-        <Route path="/statistics" exact element={<Temp />} />
+        {/* <Route path="/statistics" exact element={<Temp />} /> */}
         <Route path="/admin" exact element={<Admin />} />
       </Routes>
     </Containaer>

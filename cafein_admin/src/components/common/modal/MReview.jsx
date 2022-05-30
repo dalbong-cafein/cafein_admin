@@ -11,6 +11,8 @@ export default function MReview({ setModal, selectItem }) {
     setModal(false);
   };
 
+  console.log(selectItem);
+
   return (
     <Portal>
       <S.ModalBox>
@@ -22,26 +24,26 @@ export default function MReview({ setModal, selectItem }) {
           <Columnbox>
             <Line>
               <span>분류</span>
-              <p>{selectItem.code}</p>
+              <p>{String(selectItem.reviewId).padStart(5, "0")}</p>
             </Line>
             <Line>
               <span>회원명</span>
-              <p>{selectItem.userNum}</p>
+              <p>{selectItem.nicknameOfWriter || "-"}</p>
             </Line>
             <Line>
               <span>카페명</span>
-              <p>{selectItem.name}</p>
+              <p>{selectItem.storeName}</p>
             </Line>
             <Line>
               <span>등록일</span>
-              <p>{selectItem.registration}</p>
+              <p>{selectItem.regDateTime}</p>
             </Line>
             <Line>
               <span>최종수정일</span>
-              <p>{selectItem.edited}</p>
+              <p>{selectItem.modDateTime}</p>
             </Line>
           </Columnbox>
-          <Text>{selectItem.content}</Text>
+          <Text>{selectItem.content || "-"}</Text>
           {selectItem.img && (
             <Row gap={10}>
               <Pic>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import * as S from "../pages/style";
 import * as SS from "./noticesStyle";
@@ -9,48 +9,26 @@ import Paging from "../components/common/Pagination";
 
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { ReactComponent as Photo } from "../svg/photo.svg";
+import { ReactComponent as Check } from "../svg/check.svg";
+
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
 
 import PVImg from "../components/common/PVImg";
 import Alert from "./common/modal/alert";
+import { adminFeedListApi } from "../util/admin";
+import None from "./None";
 
 const Notices = () => {
-  const temp = [
-    {
-      code: "1",
-      title: "제목입니다",
-      content:
-        "내용어쩌구저저쩌구 말줄임표를 써야하는데 몇글자에서 끊을지고민중이라 어쩌구 저쩌구우우우우우",
-      push: "",
-      registration: "03/29/2022",
-    },
-    {
-      code: "1",
-      title: "제목입니다",
-      content:
-        "내용어쩌구저저쩌구 말줄임표를 써야하는데 몇글자에서 끊을지고민중이라 어쩌구 저쩌구우우우우우",
-      push: "",
-      registration: "03/29/2022",
-    },
-    {
-      code: "1",
-      title: "제목입니다",
-      content:
-        "내용어쩌구저저쩌구 말줄임표를 써야하는데 몇글자에서 끊을지고민중이라 어쩌구 저쩌구우우우우우",
-      push: "",
-      registration: "03/29/2022",
-    },
-    {
-      code: "1",
-      title: "제목입니다",
-      content:
-        "내용어쩌구저저쩌구 말줄임표를 써야하는데 몇글자에서 끊을지고민중이라 어쩌구 저쩌구우우우우우",
-      push: "",
-      registration: "03/29/2022",
-    },
-  ];
+  const [temp, setTemp] = useState([]);
+  const [sort, setSort] = useState("DESC");
+  useEffect(() => {
+    adminFeedListApi(page, sort).then((res) => {
+      setCount(res.data.data.boardCnt);
+      setTemp(res.data.data.boardResDtoList.dtoList);
+    });
+  }, []);
 
   const [search, setSearch] = useState("");
   const [isActive, setIsActive] = useState(1);
@@ -63,7 +41,9 @@ const Notices = () => {
 
   const handlePageChange = (page) => {
     setPage(page);
-    console.log(page);
+    adminFeedListApi(page, sort).then((res) => {
+      setTemp(res.data.data.boardResDtoList.dtoList);
+    });
   };
   const [file, setFile] = useState([]);
   const onLoadFile = (e) => {
@@ -78,10 +58,18 @@ const Notices = () => {
       }
     }
   };
+
   const deleteImg = (idx) => {
     let copy = [...file];
     copy.splice(idx, 1);
     setFile(copy);
+  };
+
+  const sortData = (id) => {
+    setSort(id);
+    adminFeedListApi(page, sort).then((res) => {
+      setTemp(res.data.data.boardResDtoList.dtoList);
+    });
   };
   const input = useRef();
   return (
@@ -94,11 +82,12 @@ const Notices = () => {
             style={{ marginBottom: "20px" }}
           >
             <Row gap={15}>
-              <S.Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
+              <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
                 최신순
+                {sort === "DESC" && <Check />}
               </S.Sbtn>
-              <S.Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
-                오래된 순
+              <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
+                오래된 순{sort === "ASC" && <Check />}
               </S.Sbtn>
             </Row>
             <Row gap={15} align={"baseline"}>
@@ -119,7 +108,7 @@ const Notices = () => {
               </Row>
             </Row>
           </Row>
-          <S.Wrapper>
+          <S.Wrapper isNull={temp.length === 0}>
             <S.TableHeader>
               <tr>
                 <td>분류</td>
@@ -128,11 +117,8 @@ const Notices = () => {
                 <td>등록일</td>
               </tr>
               <>
-                {temp
-                  .concat(temp)
-                  .concat(temp)
-                  .slice(items * (page - 1), items * (page - 1) + items)
-                  .map((item) => (
+                {temp &&
+                  temp.map((item) => (
                     <tr style={{ maxHeight: "72px" }}>
                       <td>{item.code}</td>
                       <td style={{ textAlign: "left" }}>
@@ -150,6 +136,7 @@ const Notices = () => {
               </>
             </S.TableHeader>
           </S.Wrapper>
+          {temp.length == 0 && <None text={"공지"} />}
         </div>
         <SS.NewNotice>
           <p>새 공지 등록</p>
@@ -157,6 +144,7 @@ const Notices = () => {
           <div>
             <SS.Input>
               <p>날짜</p>
+              <div>{new Date().toLocaleDateString()}</div>
             </SS.Input>
 
             <SS.Input>

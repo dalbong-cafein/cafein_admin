@@ -41,11 +41,11 @@ export const feedCreateApi = async (register) => {
     method: "POST",
     url: process.env.REACT_APP_API_URL + "/admin/stores",
     data: formData,
-    // headers: {
-    //   Authorization: `Bearer ${axios.defaults.headers.common["Authorization"]}`,
-    // },
-    // withCredentials: true,
-    accessToken: localStorage.getItem("token"),
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${axios.defaults.headers.common["Authorization"]}`,
+    },
+    withCredentials: true,
   });
   //  return await axios.post(
   //   `${process.env.REACT_APP_API_URL}/admin/stores`,

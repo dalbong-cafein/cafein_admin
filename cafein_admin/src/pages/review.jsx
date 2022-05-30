@@ -24,6 +24,7 @@ const Review = () => {
       setTemp(res.data.data.reviewResDtoList.dtoList);
     });
   }, []);
+
   const [sort, setSort] = useState("DESC");
   const navigate = useNavigate();
   const [temp, setTemp] = useState([]);
@@ -51,9 +52,8 @@ const Review = () => {
   const onModal = (item) => {
     setModal(!modal);
     reviewDetailApi(item.reviewId)
-      .then((res) => console.log(res))
+      .then((res) => setSelectItem(res.data.data))
       .catch((err) => console.log(err));
-    setSelectItem(item);
   };
 
   const sortData = (id) => {
