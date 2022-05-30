@@ -22,8 +22,10 @@ import { useState, useRef } from "react";
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
 import { feedCreateApi } from "../util/management";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [file, setFile] = useState([]);
   const [register, setRegister] = useRecoilState(registerState);
   const [openTime, setOpenTime] = useState("");
@@ -98,7 +100,7 @@ const Register = () => {
     console.log(register);
 
     feedCreateApi(register)
-      .then((res) => console.log(res))
+      .then((res) => navigate("/management"))
       .catch((err) => console.log(err));
   };
 

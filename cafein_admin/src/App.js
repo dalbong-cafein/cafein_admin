@@ -22,14 +22,14 @@ function App() {
   const [admin] = useRecoilState(adminState);
   const REDIRECT_URI = "https://dalbong-cafein.github.io/cafein_admin/login"; //수정바람
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  // useEffect(() => {
-  //   if (
-  //     admin.email == null &&
-  //     window.location.pathname.split("/")[1] !== "login"
-  //   ) {
-  //     navigate("/login");
-  //   }
-  // });
+  useEffect(() => {
+    if (
+      admin.email == null &&
+      window.location.pathname.split("/")[1] !== "login"
+    ) {
+      navigate("/login");
+    }
+  });
   return (
     <div
       style={{

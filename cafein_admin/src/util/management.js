@@ -1,6 +1,6 @@
 import axios from "axios";
 import { withAuthInstance } from "./index";
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 export const feedCreateApi = async (register) => {
   const formData = new FormData();
   formData.append("storeName", register.storeName);

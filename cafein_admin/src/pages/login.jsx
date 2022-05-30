@@ -44,7 +44,7 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-        withCredentials: false,
+        // withCredentials: false,
       })
       .then((res) => {
         console.log(res);
@@ -57,9 +57,9 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
               headers: {
                 authProvider: "KAKAO",
                 oAuthAccessToken: res.data.access_token,
-                withCredentials: true,
-                crossDomain: true,
-                credentials: "include",
+                // withCredentials: true,
+                // crossDomain: true,
+                // credentials: "include",
               },
             }
           )
