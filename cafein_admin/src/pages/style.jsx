@@ -85,3 +85,18 @@ export const Sbtn = styled.div`
     }
   }
 `;
+
+export const Btn = styled.div`
+  margin: 0 auto;
+  background-color: ${(props) =>
+    props.content === "완료" ? "#26BA6A" : "#f44336"};
+  width: 96px;
+  height: 26px;
+  text-align: center;
+  opacity: 0.3;
+
+  border-radius: 6px;
+  color: #fff;
+  line-height: 26px;
+  cursor: pointer;
+`;

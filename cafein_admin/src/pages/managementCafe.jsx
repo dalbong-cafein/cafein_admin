@@ -12,8 +12,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
 import DropBox from "../components/common/dropbox";
-import { feedDataApi } from "../util/management";
+import { feedDataApi, feedDetailApi } from "../util/management";
 import None from "../components/None";
+import CafeDetailModal from "../components/common/modal/cafeDetail";
 
 const ManagementCafe = () => {
   useEffect(() => {
@@ -25,12 +26,14 @@ const ManagementCafe = () => {
 
   const [sort, setSort] = useState("DESC");
   const [modal, setModal] = useState(false);
+  const [dModal, setDModal] = useState(false);
   const navigate = useNavigate();
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState("전체");
+  const [dSelected, setDSelected] = useState("전체");
   const [arr, setArr] = useState(["분류", "카페명", "위치"]);
 
   // pagination
@@ -50,6 +53,14 @@ const ManagementCafe = () => {
       setTemp(res.data.data.storeResDtoList.dtoList);
       console.log(res);
     });
+  };
+
+  const detailModal = (item) => {
+    setDModal(!dModal);
+    // feedDetailApi(item.storeId)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err)); //수정바람
+    setDSelected(item);
   };
 
   return (
@@ -126,10 +137,10 @@ const ManagementCafe = () => {
             {temp &&
               temp.map((item, i) => (
                 <tr key={i}>
-                  <td>
+                  <td onClick={() => detailModal(item)}>
                     <span>{String(item.storeId).padStart(5, "0")}</span>
                   </td>
-                  <td>
+                  <td onClick={() => detailModal(item)}>
                     <Row gap={16} align={"center"}>
                       {item.storeImageDto ? (
                         <S.Photo img={item.storeImageDto.imageUrl} />
@@ -139,14 +150,28 @@ const ManagementCafe = () => {
                       <p>{item.storeName}</p>
                     </Row>
                   </td>
-                  <td>{item.address.fullAddress}</td>
-                  <td style={{ textAlign: "center" }}>{item.phone || "-"}</td>
-                  <td style={{ textAlign: "center" }}>
+                  <td onClick={() => detailModal(item)}>
+                    {item.address.fullAddress}
+                  </td>
+                  <td
+                    onClick={() => detailModal(item)}
+                    style={{ textAlign: "center" }}
+                  >
+                    {item.phone || "-"}
+                  </td>
+                  <td
+                    onClick={() => detailModal(item)}
+                    style={{ textAlign: "center" }}
+                  >
                     {item.congestionScoreAvg || "-"}
                   </td>
-                  <td>{item.reviewCnt}건</td>
-                  <td>{item.regDateTime.split("T")[0]}</td>
-                  <td>{item.modDateTime.split("T")[0]}</td>
+                  <td onClick={() => detailModal(item)}>{item.reviewCnt}건</td>
+                  <td onClick={() => detailModal(item)}>
+                    {item.regDateTime.split("T")[0]}
+                  </td>
+                  <td onClick={() => detailModal(item)}>
+                    {item.modDateTime.split("T")[0]}
+                  </td>
                   <td>
                     <Memo onClick={() => setModal(true)} />
                   </td>
@@ -163,6 +188,9 @@ const ManagementCafe = () => {
         />
       )}
       {modal && <MemoModal setModal={setModal} />}
+      {dModal && (
+        <CafeDetailModal setDModal={setDModal} setDSelected={setDSelected} />
+      )}
     </>
   );
 };

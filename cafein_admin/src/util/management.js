@@ -1,6 +1,6 @@
 import axios from "axios";
 import { withAuthInstance } from "./index";
-// axios.defaults.withCredentials = true;
+
 export const feedCreateApi = async (register) => {
   const formData = new FormData();
   formData.append("storeName", register.storeName);
@@ -47,13 +47,12 @@ export const feedCreateApi = async (register) => {
     },
     withCredentials: true,
   });
-  //  return await axios.post(
-  //   `${process.env.REACT_APP_API_URL}/admin/stores`,
-  //   formData,
-
-  // );
 };
 
 export const feedDataApi = async (page, sort) => {
   return await withAuthInstance.get(`/stores?page=${page}&sort=${sort}`);
+};
+
+export const feedDetailApi = async (id) => {
+  return await withAuthInstance.get(`/stores/${id}`);
 };

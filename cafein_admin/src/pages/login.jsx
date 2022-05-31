@@ -13,6 +13,7 @@ import { adminState } from "../recoil/admin";
 import { useNavigate } from "react-router-dom";
 
 // document.cookie = "crossCookie=bar; ";
+axios.defaults.withCredentials = true;
 
 const LogIn = ({ KAKAO_AUTH_URL }) => {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
     const data = {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_REST_API_KEY,
-      redirect_uri: "https://dalbong-cafein.github.io/cafein_admin/login", //수정
+      redirect_uri: "http://localhost:3000/login", //수정
       code: code,
     };
     const queryString = Object.keys(data)
@@ -44,25 +45,10 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-        // withCredentials: false,
+        withCredentials: false,
       })
       .then((res) => {
-        console.log(res);
-
-        axios
-          .post(
-            "http://api.cafeinofficial.com/auth/social-login",
-            {},
-            {
-              headers: {
-                authProvider: "KAKAO",
-                oAuthAccessToken: res.data.access_token,
-                // withCredentials: true,
-                // crossDomain: true,
-                // credentials: "include",
-              },
-            }
-          )
+        authApi(res.data.access_token)
           .then((res) => {
             console.log(res.headers);
             const copy = { ...admin };

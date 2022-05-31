@@ -3,7 +3,7 @@ import Portal from "./Portal";
 import * as S from "./alertstyle";
 import Row from "../../atoms/row";
 
-const Alert = ({ setAlert, text, subtext }) => {
+const RedAlert = ({ setAlert, text, text1, text2, text3 }) => {
   const closeModal = () => {
     setAlert(false);
   };
@@ -12,7 +12,11 @@ const Alert = ({ setAlert, text, subtext }) => {
       <S.ModalBox>
         <S.ModalContent>
           <p>{text}</p>
-          <p style={{ fontSize: "14px" }}>{subtext}</p>
+          <Row>
+            <span>{text1}</span>
+            <span style={{ color: "#ff5c50" }}>{text2}</span>
+            <span>{text3}</span>
+          </Row>
           <Row justify={"end"} gap={16}>
             <S.Btn color={"#515151"} onClick={closeModal}>
               취소
@@ -24,4 +28,4 @@ const Alert = ({ setAlert, text, subtext }) => {
     </Portal>
   );
 };
-export default Alert;
+export default RedAlert;

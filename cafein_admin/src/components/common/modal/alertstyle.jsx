@@ -33,7 +33,7 @@ export const ModalContent = styled.div`
     font-size: 20px;
     font-weight: bold;
   }
-  & > p:nth-child(2) {
+  & > span {
     font-size: 14px;
   }
 `;

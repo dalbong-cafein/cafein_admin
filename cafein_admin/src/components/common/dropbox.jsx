@@ -1,5 +1,5 @@
 import styled from "styled-components";
-const DropBox = ({ setIsDrop, arr, selected, setSelected, setArr }) => {
+const DropBox = ({ left, setIsDrop, arr, selected, setSelected, setArr }) => {
   const onclick = (e) => {
     const temp = e.target.id;
     const copy = [...arr];
@@ -10,7 +10,7 @@ const DropBox = ({ setIsDrop, arr, selected, setSelected, setArr }) => {
     setIsDrop(false);
   };
   return (
-    <Box>
+    <Box left={left}>
       {arr.map((item, i) => (
         <p onClick={(e) => onclick(e)} key={i} id={item}>
           {item}
@@ -27,7 +27,7 @@ const Box = styled.div`
   background-color: #646464;
   position: absolute;
   box-sizing: border-box;
-  transform: translate(215%, 60%);
+  transform: translate(${(props) => (props.left ? props.left : "215%")}, 60%);
   padding: 16px;
   display: flex;
   flex-direction: column;
