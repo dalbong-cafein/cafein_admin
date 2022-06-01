@@ -131,7 +131,7 @@ const Notices = () => {
               <tr>
                 <td>분류</td>
                 <td>제목</td>
-                <td>PUSh</td>
+                <td>PUSH</td>
                 <td>등록일</td>
               </tr>
               <>
