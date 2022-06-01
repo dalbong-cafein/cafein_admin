@@ -2,10 +2,7 @@ import axios from "axios";
 
 export function setInterceptors(instance) {
   instance.interceptors.request.use(
-    (res) => {
-      // res.headers.Authorization = `Bearer ${axios.defaults.headers.common["Authorization"]}`;
-      return res;
-    },
+    (res) => res,
     (err) => Promise.reject(err)
   );
   instance.interceptors.response.use(

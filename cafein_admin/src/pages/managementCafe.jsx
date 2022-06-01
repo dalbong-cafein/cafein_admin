@@ -12,7 +12,11 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
 import DropBox from "../components/common/dropbox";
-import { feedDataApi, feedDetailApi } from "../util/management";
+import {
+  feedDataApi,
+  feedDetailApi,
+  feedDetailDataApi,
+} from "../util/management";
 import None from "../components/None";
 import CafeDetailModal from "../components/common/modal/cafeDetail";
 
@@ -33,13 +37,14 @@ const ManagementCafe = () => {
   const [search, setSearch] = useState("");
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState("전체");
-  const [dSelected, setDSelected] = useState("전체");
+  const [dSelected, setDSelected] = useState([]);
   const [arr, setArr] = useState(["분류", "카페명", "위치"]);
 
   // pagination
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(null);
+  const [count, setCount] = useState(0);
   const [items, setItems] = useState(9);
+  const [reviewData, setReviewData] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
     feedDataApi(page, sort).then((res) => {
@@ -51,16 +56,19 @@ const ManagementCafe = () => {
     setSort(id);
     feedDataApi(page, sort).then((res) => {
       setTemp(res.data.data.storeResDtoList.dtoList);
-      console.log(res);
     });
   };
 
   const detailModal = (item) => {
+    feedDetailApi(item.storeId)
+      .then((res) => {
+        setDSelected(res.data.data);
+        feedDetailDataApi(res.data.data.storeId).then((res) => {
+          setReviewData(res.data.data);
+        });
+      })
+      .catch((err) => console.log(err));
     setDModal(!dModal);
-    // feedDetailApi(item.storeId)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err)); //수정바람
-    setDSelected(item);
   };
 
   return (
@@ -189,7 +197,11 @@ const ManagementCafe = () => {
       )}
       {modal && <MemoModal setModal={setModal} />}
       {dModal && (
-        <CafeDetailModal setDModal={setDModal} setDSelected={setDSelected} />
+        <CafeDetailModal
+          data={reviewData}
+          setDModal={setDModal}
+          dSelected={dSelected}
+        />
       )}
     </>
   );

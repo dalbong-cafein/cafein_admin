@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
 
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
-import Stars from "../../atoms/stars";
 
-export default function CafeDetailModal({ setDModal, setDSelected }) {
+import HoverContent from "../../hoverContent";
+
+export default function CafeDetailModal({ data, setDModal, dSelected }) {
   const closeModal = () => {
     setDModal(false);
   };
 
-  console.log(setDSelected);
+  console.log(data);
 
+  const totalfunc = (title) => {
+    if (title) {
+      const values = Object.values(title);
+
+      return values.reduce((a, b) => a + b);
+    }
+  };
   return (
     <Portal>
       <ModalBox>
@@ -26,24 +34,23 @@ export default function CafeDetailModal({ setDModal, setDSelected }) {
           <Columnbox gap={14}>
             <Line>
               <span>분류</span>
-              <p>000001</p>
-              {/* <p>{selectItem.code}</p> */}
+              <p>{String(dSelected.storeId).padStart(5, "0")}</p>
             </Line>
             <Line>
               <span>회원명</span>
-              <p>00001</p>
+              <p>{dSelected.modMemberId}</p>
             </Line>
             <Line>
               <span>카페명</span>
-              <p>개비스 커피</p>
+              <p>{dSelected.storeName}</p>
             </Line>
             <Line>
               <span>등록일</span>
-              <p>03.29.2022</p>
+              <p>{String(dSelected.regDateTime).split("T"[0])}</p>
             </Line>
             <Line>
               <span>최종수정일</span>
-              <p>03.29.2022</p>
+              <p>{String(dSelected.modDateTime).split("T"[0])}</p>
             </Line>
 
             <Title style={{ padding: "40px 0" }} size={16}>
@@ -53,34 +60,70 @@ export default function CafeDetailModal({ setDModal, setDSelected }) {
               <StateRow>
                 <div>
                   <span>사진</span>
-                  {/* <Btn content={selectItem.state}>{selectItem.state}</Btn> */}
+                  <Row gap={8} style={{ flexWrap: "wrap", maxWidth: "230px" }}>
+                    {dSelected.storeImageDtoList &&
+                      dSelected.storeImageDtoList.map((item, i) => (
+                        <Photo key={i} img={item.imageUrl} />
+                      ))}
+                  </Row>
                 </div>
               </StateRow>
               <Line color={"#515151"}>
                 <span>위치</span>
-                <p>서울시 어쩌구</p>
+                <p>{String(dSelected?.address?.fullAddress)}</p>
               </Line>
               <StateRow>
                 <div>
                   <span>운영시간</span>
-                  {/* <Btn content={selectItem.state}>{selectItem.state}</Btn> */}
+                  {dSelected?.businessHoursResDto && (
+                    <Column>
+                      <p>
+                        월
+                        {` ${dSelected?.businessHoursResDto?.onMon?.open}-${dSelected?.businessHoursResDto?.onMon?.close}`}
+                      </p>
+                      <p>
+                        화
+                        {` ${dSelected?.businessHoursResDto?.onTue?.open}-${dSelected?.businessHoursResDto?.onTue?.close}`}
+                      </p>
+                      <p>
+                        수
+                        {` ${dSelected?.businessHoursResDto?.onWed?.open}-${dSelected?.businessHoursResDto?.onWed?.close}`}
+                      </p>
+                      <p>
+                        목
+                        {` ${dSelected?.businessHoursResDto?.onThu?.open}-${dSelected?.businessHoursResDto?.onThu?.close}`}
+                      </p>
+                      <p>
+                        금
+                        {` ${dSelected?.businessHoursResDto?.onFri?.open}-${dSelected?.businessHoursResDto?.onFri?.close}`}
+                      </p>
+                      <p>
+                        토
+                        {` ${dSelected?.businessHoursResDto?.onSat?.open}-${dSelected?.businessHoursResDto?.onSat?.close}`}
+                      </p>
+                      <p>
+                        일
+                        {` ${dSelected?.businessHoursResDto?.onSun?.open}-${dSelected?.businessHoursResDto?.onSun?.close}`}
+                      </p>
+                    </Column>
+                  )}
                 </div>
               </StateRow>
               <Line color={"#515151"}>
                 <span>기타 시간</span>
-                <p>서울시 어쩌구</p>
+                <p>{dSelected?.businessHoursResDto?.etcTime}</p>
               </Line>
               <Line color={"#515151"}>
                 <span>와이파이</span>
-                <p>서울시 어쩌구</p>
+                <p>{dSelected?.wifiPassword}</p>
               </Line>
               <Line color={"#515151"}>
                 <span>전화번호</span>
-                <p>서울시 어쩌구</p>
+                <p>{dSelected?.phone}</p>
               </Line>
               <Line color={"#515151"}>
                 <span>웹사이트</span>
-                <p>서울시 어쩌구</p>
+                <p>{dSelected?.website}</p>
               </Line>
             </Columnbox>
           </Columnbox>
@@ -94,26 +137,26 @@ export default function CafeDetailModal({ setDModal, setDSelected }) {
             <Title size={16}>활동정보</Title>
             <Close onClick={closeModal} />
           </Row>
-          <Columnbox>
+          <Columnbox style={{ paddingBottom: "40px" }}>
             <Line color={"#515151"}>
               <span>조회</span>
-              <p>100회</p>
+              <p>{dSelected?.viewCnt}</p>
             </Line>
             <Line color={"#515151"}>
               <span>저장</span>
-              <p>100회</p>
+              <p>{dSelected?.heartCnt}</p>
             </Line>
             <Line color={"#515151"}>
               <span>공유</span>
-              <p>100회</p>
+              <p>{dSelected?.congestionCnt}</p>
             </Line>
             <Line color={"#515151"}>
               <span>혼잡도</span>
-              <p>100회</p>
+              <p>{dSelected?.congestionCnt}</p>
             </Line>
             <Line color={"#515151"}>
               <span>리뷰</span>
-              <p>100회</p>
+              <p>{dSelected?.reviewCnt}</p>
             </Line>
           </Columnbox>
           <Title style={{ padding: "40px 0" }} size={16}>
@@ -122,24 +165,37 @@ export default function CafeDetailModal({ setDModal, setDSelected }) {
           <Columnbox style={{ paddingBottom: "70px" }}>
             <Line color={"#515151"}>
               <span>전체</span>
-              <p>86% 추천</p>
+              <p>{data?.recommendPercent}% 추천</p>
             </Line>
-            <Line color={"#515151"}>
+            <HoverLine color={"#515151"}>
               <span>콘센트</span>
-              <Stars width={18.4} gap={7} num={23} />
-            </Line>
-            <Line color={"#515151"}>
+              <p>{totalfunc(data?.socket)}</p>
+            </HoverLine>
+            <HoverBox late={20}>
+              <HoverContent obj={data?.socket} />
+            </HoverBox>
+
+            <HoverLine color={"#515151"}>
               <span>화장실</span>
-              <Stars width={18.4} gap={7} num={7} />
-            </Line>
-            <Line color={"#515151"}>
+              <p>{totalfunc(data?.restroom)}</p>
+            </HoverLine>
+            <HoverBox late={55}>
+              <HoverContent obj={data?.restroom} />
+            </HoverBox>
+            <HoverLine color={"#515151"}>
               <span>테이블</span>
-              <Stars width={18.4} gap={7} num={1} />
-            </Line>
-            <Line color={"#515151"}>
+              <p>{totalfunc(data?.tableSize)}</p>
+            </HoverLine>
+            <HoverBox late={90}>
+              <HoverContent obj={data?.tableSize} />
+            </HoverBox>
+            <HoverLine color={"#515151"}>
               <span>와이파이</span>
-              <Stars width={18.4} gap={7} num={8} />
-            </Line>
+              <p>{totalfunc(data?.wifi)}</p>
+            </HoverLine>
+            <HoverBox late={120}>
+              <HoverContent obj={data?.wifi} />
+            </HoverBox>
           </Columnbox>
           <Row gap={24}>
             <S.Btn color={"#515151"}>삭제</S.Btn>
@@ -193,19 +249,29 @@ const Line = styled.div`
     color: #8b8b8b;
   }
   & > p:nth-child(2) {
+    width: 230px;
     color: #e3e3e3;
+  }
+`;
+
+const HoverLine = styled(Line)`
+  :hover {
+    & + div {
+      display: inline;
+    }
   }
 `;
 
 const StateRow = styled.div`
   display: flex;
+  padding-bottom: 13px;
 
-  padding-bottom: 70px;
   border-bottom: 1px solid #515151;
   & > div {
     display: flex;
+
     gap: 32px;
-    align-items: baseline;
+    align-items: start;
     & > span {
       width: 80px;
       text-align: right;
@@ -214,9 +280,9 @@ const StateRow = styled.div`
       color: #8b8b8b;
     }
     & > p {
-      margin-left: 80px;
-      font-weight: 700;
-      color: #f44336;
+      // margin-left: 80px;
+      // font-weight: 700;
+      // color: #f44336;
     }
   }
 `;
@@ -253,4 +319,35 @@ const Btn = styled.div`
   border-radius: 6px;
   color: #fff;
   line-height: 26px;
+`;
+
+const Photo = styled.div`
+  width: 56px;
+  height: 56px;
+  background: ${({ img }) =>
+    img && `url(${img})`} no-repeat center center/cover;
+  border-radius: 6px;
+  }
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  & > p {
+    font-size: 14px;
+  }
+`;
+const HoverBox = styled.div`
+  width: 164px;
+  height: 136px;
+  display: none;
+  padding: 17px;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 9;
+  color: red;
+  background-color: #646464;
+  border-radius: 4px;
+  transform: translate(120%, ${(props) => props.late && props.late}%);
 `;

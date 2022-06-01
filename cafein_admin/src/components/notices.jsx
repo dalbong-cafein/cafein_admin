@@ -35,7 +35,7 @@ const Notices = () => {
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(temp.length * 3 - 1);
+  const [count, setCount] = useState(0);
   const [items, setItems] = useState(10);
   const [alert, setAlert] = useState(false);
 

@@ -32,7 +32,7 @@ const Review = () => {
   const [search, setSearch] = useState("");
   // pagination
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(null);
+  const [count, setCount] = useState(0);
   const [items, setItems] = useState(9);
 
   //drop

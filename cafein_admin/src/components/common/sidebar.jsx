@@ -85,7 +85,7 @@ const SideBar = () => {
           <MenuBox
             svgW={18.3}
             onClick={() =>
-              window.location.href("http://cafeinoffical.notion.site/Cafein")
+              window.location.replace("http://cafeinoffical.notion.site/Cafein")
             }
             isT={menu === "statistics"}
           >

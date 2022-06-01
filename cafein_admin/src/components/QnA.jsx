@@ -56,7 +56,7 @@ const QnA = () => {
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(temp.length * 3 - 1);
+  const [count, setCount] = useState(0);
   const [items, setItems] = useState(10);
   const handlePageChange = (page) => {
     setPage(page);

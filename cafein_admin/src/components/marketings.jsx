@@ -28,7 +28,7 @@ const Marketings = () => {
   const [sort, setSort] = useState("DESC");
 
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(null);
+  const [count, setCount] = useState(0);
   const [temp, setTemp] = useState([]);
   const [items, setItems] = useState(12);
 

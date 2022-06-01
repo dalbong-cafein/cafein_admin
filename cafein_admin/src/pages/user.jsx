@@ -61,7 +61,7 @@ const User = () => {
   const [search, setSearch] = useState("");
 
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(temp.length * 3 - 1);
+  const [count, setCount] = useState(0);
   const [items, setItems] = useState(9);
   const [modal, setModal] = useState(false);
   const [selectItem, setSelectItem] = useState([]);

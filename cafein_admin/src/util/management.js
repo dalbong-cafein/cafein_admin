@@ -49,10 +49,17 @@ export const feedCreateApi = async (register) => {
   });
 };
 
+//피드 리스트
 export const feedDataApi = async (page, sort) => {
   return await withAuthInstance.get(`/stores?page=${page}&sort=${sort}`);
 };
 
+//피드 상세 데이터
 export const feedDetailApi = async (id) => {
   return await withAuthInstance.get(`/stores/${id}`);
+};
+
+//피드 평가데이터
+export const feedDetailDataApi = async (id) => {
+  return await withAuthInstance.get(`/stores/${id}/reviews/detail-evaluation`);
 };

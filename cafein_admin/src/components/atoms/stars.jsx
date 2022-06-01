@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Stars = ({ width, gap, num }) => {
   return (
-    <Row width={width} gap={gap}>
+    <Row width={width} gap={gap} isFill={num}>
       <Star />
       <Star />
       <Star />
@@ -16,6 +16,9 @@ const Stars = ({ width, gap, num }) => {
 const Row = styled.div`
   display: flex;
   gap: ${(props) => props.gap && props.gap}px;
+  & > p {
+    color: #acacac;
+  }
   & > svg {
     width: ${(props) => props.width && props.width}px;
     height: ${(props) => props.width && props.width}px;

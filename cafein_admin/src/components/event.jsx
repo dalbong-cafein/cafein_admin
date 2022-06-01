@@ -11,7 +11,7 @@ import PVImg from "./common/PVImg";
 const Event = () => {
   const [isActive, setIsActive] = useState(1);
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(null);
+  const [count, setCount] = useState(0);
   const [temp, setTemp] = useState([]);
   const [items, setItems] = useState(12);
   const handlePageChange = (page) => {
