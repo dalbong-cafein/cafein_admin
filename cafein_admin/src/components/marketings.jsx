@@ -38,7 +38,7 @@ const Marketings = () => {
 
   const changeState = (id) => {
     changeStateApi(id)
-      .then((res) => console.log(res))
+      .then((res) => window.location.reload())
       .catch((err) => console.log(err));
   };
   //drop
@@ -55,7 +55,7 @@ const Marketings = () => {
       })
       .catch((err) => console.log(err));
   }, [page, sort]);
-
+  console.log(temp[0]);
   return (
     <>
       <Row
@@ -138,13 +138,14 @@ const Marketings = () => {
                     </td>
                     <td>
                       <S.Btn
-                        content={item.state}
+                        content={item.status}
+                        disabled={item.status}
                         onClick={() => {
                           setAlert(!alert);
                           setReportId(item.couponId);
                         }}
                       >
-                        {item.state ? "완료" : "미완료"}
+                        {item.status === true ? "완료" : "미완료"}
                       </S.Btn>
                     </td>
                     <td style={{ textAlign: "center" }}>

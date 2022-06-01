@@ -25,7 +25,7 @@ export const TableHeader = styled.table`
     box-sizing: border-box;
   }
   & > td {
-    height: 72px;
+    // height: 72px;
     position: relative;
   }
 
@@ -86,12 +86,11 @@ export const Sbtn = styled.div`
   }
 `;
 
-export const Btn = styled.div`
+export const Btn = styled.button`
   margin: 0 auto;
-  background-color: ${(props) =>
-    props.content === "완료" ? "#26BA6A" : "#f44336"};
+  background-color: ${(props) => (props.content ? "#26BA6A" : "#f44336")};
   width: 96px;
-  height: 26px;
+  height: 28px;
   text-align: center;
   opacity: 0.3;
 

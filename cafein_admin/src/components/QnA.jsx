@@ -22,19 +22,26 @@ import PVImg from "./common/PVImg";
 import { eventListApi } from "../util/events";
 import Alert from "./common/modal/alert";
 import None from "./None";
+import Preview from "./common/modal/preview";
+import NoticeModal from "./common/modal/noticeModal";
+import RedAlert from "./common/modal/redAlert";
 
 const QnA = () => {
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("DESC");
-  const [isActive, setIsActive] = useState(1);
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [items, setItems] = useState(10);
   const [alert, setAlert] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [Dalert, setDAlert] = useState(false);
+  const [selectItem, setSelectItem] = useState([]);
+
+  const [preview, setPreview] = useState(false);
   const [register, setRegister] = useRecoilState(registerNotice);
   const handlePageChange = (page) => {
     setPage(page);
@@ -61,6 +68,13 @@ const QnA = () => {
     setFile(copy);
   };
 
+  const onChange = (e) => {
+    const name = e.target.name;
+    const copy = { ...register };
+    copy[name] = e.target.value;
+    setRegister(copy);
+  };
+
   const onSubmit = (register) => {
     const copy = { ...register };
     copy.boardCategoryId = 2;
@@ -70,14 +84,6 @@ const QnA = () => {
       .catch((err) => console.log(err));
   };
   const input = useRef();
-
-  const dates = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-    return `${year}-${month}-${day}`;
-  };
 
   useEffect(() => {
     eventListApi(page, sort).then((res) => {
@@ -133,7 +139,12 @@ const QnA = () => {
                 {temp
                   .slice(items * (page - 1), items * (page - 1) + items)
                   .map((item) => (
-                    <tr>
+                    <tr
+                      onClick={() => {
+                        setModal(true);
+                        setSelectItem(item);
+                      }}
+                    >
                       <td>{String(item.boardId).padStart(5, "0")}</td>
                       <td style={{ textAlign: "left" }}>
                         <p style={{ fontWeight: "bold" }}>{item.title}</p>
@@ -157,15 +168,21 @@ const QnA = () => {
           <div>
             <SS.Input>
               <p>날짜</p>
-              <p>{dates()}</p>
+              <p>{new Date().toLocaleDateString()}</p>
             </SS.Input>
 
             <SS.Input>
               <p>제목</p>
-              <input type="text" />
+              <input type="text" name="title" onChange={(e) => onChange(e)} />
             </SS.Input>
             <SS.TextBox>
-              <textarea cols="50" rows="20" placeholder="내용을 입력하세요" />
+              <textarea
+                cols="50"
+                rows="20"
+                placeholder="내용을 입력하세요"
+                name="content"
+                onChange={(e) => onChange(e)}
+              />
               <SS.PhotoBox>
                 <SS.FileUpload
                   onClick={() => {
@@ -198,7 +215,9 @@ const QnA = () => {
               <p>App Push</p>
             </SS.CheckPush>
             <Row gap={16}>
-              <SS.Btn back={"#515151"}>미리보기</SS.Btn>
+              <SS.Btn back={"#515151"} onClick={() => setPreview(!preview)}>
+                미리보기
+              </SS.Btn>
               <SS.Btn back={"#2563eb"} onClick={() => setAlert(!alert)}>
                 등록
               </SS.Btn>
@@ -213,6 +232,23 @@ const QnA = () => {
           subtext={"게시물을 등록하시겠습니까?"}
           func={onSubmit}
           forFunc={register}
+        />
+      )}
+      {preview && <Preview item={register} setModal={setPreview} file={file} />}
+      {modal && (
+        <NoticeModal
+          setModal={setModal}
+          item={selectItem}
+          setAlert={setDAlert}
+        />
+      )}
+      {Dalert && (
+        <RedAlert
+          text={"자주 묻는 질문 삭제"}
+          text1={"자주 묻는 질문을 "}
+          text2={"삭제"}
+          text3={"하시겠습니까"}
+          setAlert={setDAlert}
         />
       )}
     </>

@@ -119,8 +119,10 @@ const User = () => {
                   <td onClick={() => onModal(item)}>{item.email}</td>
                   <td onClick={() => onModal(item)}>{item.app || "-"}</td>
                   <td onClick={() => onModal(item)}>
-                    <p>{item.divice || "-"}</p>
-                    <p>{item.ip || "-"}</p>
+                    <Row gap={16}>
+                      <p>{item.divice || "-"}</p>
+                      <p>{item.ip || "-"}</p>
+                    </Row>
                   </td>
                   <td onClick={() => onModal(item)}>
                     {item.regDateTime || "-"}

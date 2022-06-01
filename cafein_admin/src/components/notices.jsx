@@ -23,20 +23,26 @@ import None from "./None";
 import { useRecoilState } from "recoil";
 import { registerNotice } from "../recoil/NNotice";
 import { registerNoticeApi } from "../util/events";
+import Preview from "./common/modal/preview";
+import NoticeModal from "./common/modal/noticeModal";
+import RedAlert from "./common/modal/redAlert";
 
 const Notices = () => {
   const [temp, setTemp] = useState([]);
+  const [selectItem, setSelectItem] = useState([]);
   const [sort, setSort] = useState("DESC");
 
   const [search, setSearch] = useState("");
-  const [isActive, setIsActive] = useState(1);
   const navigate = useNavigate();
   const [register, setRegister] = useRecoilState(registerNotice);
+  const [preview, setPreview] = useState(false);
 
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [items, setItems] = useState(10);
   const [alert, setAlert] = useState(false);
+  const [Dalert, setDAlert] = useState(false);
+  const [modal, setModal] = useState(false);
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -137,7 +143,12 @@ const Notices = () => {
               <tbody>
                 {temp &&
                   temp.map((item) => (
-                    <tr>
+                    <tr
+                      onClick={() => {
+                        setModal(true);
+                        setSelectItem(item);
+                      }}
+                    >
                       <td>{String(item.boardId).padStart(5, "0")}</td>
                       <td>
                         <p style={{ fontWeight: "bold", marginBottom: "5px" }}>
@@ -212,7 +223,9 @@ const Notices = () => {
               <p>App Push</p>
             </SS.CheckPush>
             <Row gap={16}>
-              <SS.Btn back={"#515151"}>미리보기</SS.Btn>
+              <SS.Btn back={"#515151"} onClick={() => setPreview(!preview)}>
+                미리보기
+              </SS.Btn>
               <SS.Btn back={"#2563eb"} onClick={() => setAlert(!alert)}>
                 등록
               </SS.Btn>
@@ -227,6 +240,24 @@ const Notices = () => {
           subtext={"게시물을 등록하시겠습니까?"}
           func={onSubmit}
           forFunc={register}
+        />
+      )}
+
+      {preview && <Preview item={register} setModal={setPreview} file={file} />}
+      {modal && (
+        <NoticeModal
+          setModal={setModal}
+          item={selectItem}
+          setAlert={setDAlert}
+        />
+      )}
+      {Dalert && (
+        <RedAlert
+          text={"공지사항 삭제"}
+          text1={"공지사항을 "}
+          text2={"삭제"}
+          text3={"하시겠습니까"}
+          setAlert={setDAlert}
         />
       )}
     </>
