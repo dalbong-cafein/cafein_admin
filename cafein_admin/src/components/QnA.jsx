@@ -85,7 +85,6 @@ const QnA = () => {
       setTemp(res.data.data.boardResDtoList.dtoList);
     });
   }, [sort, page]);
-
   return (
     <>
       <SS.Container>
@@ -127,17 +126,15 @@ const QnA = () => {
               <tr>
                 <td>분류</td>
                 <td>제목</td>
-                <td>PUSh</td>
+                <td>PUSH</td>
                 <td>등록일</td>
               </tr>
-              <>
+              <tbody>
                 {temp
-                  .concat(temp)
-                  .concat(temp)
                   .slice(items * (page - 1), items * (page - 1) + items)
                   .map((item) => (
                     <tr>
-                      <td>{item.code}</td>
+                      <td>{String(item.boardId).padStart(5, "0")}</td>
                       <td style={{ textAlign: "left" }}>
                         <p style={{ fontWeight: "bold" }}>{item.title}</p>
                         <p>
@@ -146,11 +143,11 @@ const QnA = () => {
                             : item.content}
                         </p>
                       </td>
-                      <td>{item.push === "" ? "-" : item.push}</td>
-                      <td>{item.registration}</td>
+                      <td>{item.push || "-"}</td>
+                      <td>{item.regDateTime}</td>
                     </tr>
                   ))}
-              </>
+              </tbody>
             </S.TableHeader>
           </S.Wrapper>
           {temp.length == 0 && <None text={"QnA"} />}

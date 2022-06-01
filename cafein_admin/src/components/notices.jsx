@@ -134,24 +134,26 @@ const Notices = () => {
                 <td>PUSH</td>
                 <td>등록일</td>
               </tr>
-              <>
+              <tbody>
                 {temp &&
                   temp.map((item) => (
                     <tr>
-                      <td>{item.code}</td>
+                      <td>{String(item.boardId).padStart(5, "0")}</td>
                       <td>
-                        <p style={{ fontWeight: "bold" }}>{item.title}</p>
+                        <p style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                          {item.title}
+                        </p>
                         <p>
                           {item.content.length > 30
                             ? item.content.slice(0, 30)
                             : item.content}
                         </p>
                       </td>
-                      <td>{item.push === "" ? "-" : item.push}</td>
-                      <td>{item.registration}</td>
+                      <td>{item.push || "-"}</td>
+                      <td>{item.regDateTime}</td>
                     </tr>
                   ))}
-              </>
+              </tbody>
             </S.TableHeader>
           </S.Wrapper>
           {temp.length == 0 && <None text={"공지"} />}
