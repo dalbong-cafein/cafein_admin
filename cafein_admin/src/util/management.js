@@ -39,13 +39,13 @@ export const feedCreateApi = async (register) => {
 
   return axios({
     method: "POST",
-    url: process.env.REACT_APP_API_URL + "/admin/stores",
+    url: process.env.REACT_APP_API_URL + "/stores",
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${axios.defaults.headers.common["Authorization"]}`,
     },
-    withCredentials: true,
+    // withCredentials: true,
   });
 };
 
@@ -62,4 +62,11 @@ export const feedDetailApi = async (id) => {
 //피드 평가데이터
 export const feedDetailDataApi = async (id) => {
   return await withAuthInstance.get(`/stores/${id}/reviews/detail-evaluation`);
+};
+
+//피드 검색어
+export const feedSearchApi = async (keyword, sub) => {
+  return await withAuthInstance.get(
+    `/stores?searchType=${sub}&keyword=${keyword}`
+  );
 };

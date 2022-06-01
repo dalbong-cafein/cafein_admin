@@ -8,7 +8,7 @@ import App from "./App";
 const rootNode = document.getElementById("root");
 
 ReactDOM.createRoot(rootNode).render(
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <RecoilRoot>
       <App />
     </RecoilRoot>

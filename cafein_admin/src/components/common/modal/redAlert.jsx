@@ -3,10 +3,11 @@ import Portal from "./Portal";
 import * as S from "./alertstyle";
 import Row from "../../atoms/row";
 
-const RedAlert = ({ setAlert, text, text1, text2, text3 }) => {
+const RedAlert = ({ setAlert, text, text1, text2, text3, func, forFunc }) => {
   const closeModal = () => {
     setAlert(false);
   };
+
   return (
     <Portal>
       <S.ModalBox>
@@ -21,7 +22,9 @@ const RedAlert = ({ setAlert, text, text1, text2, text3 }) => {
             <S.Btn color={"#515151"} onClick={closeModal}>
               취소
             </S.Btn>
-            <S.Btn color={"#2563eb"}>확인</S.Btn>
+            <S.Btn color={"#2563eb"} onClick={() => func(forFunc)}>
+              확인
+            </S.Btn>
           </Row>
         </S.ModalContent>
       </S.ModalBox>

@@ -13,18 +13,16 @@ import { ReactComponent as Check } from "../svg/check.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
 import MReview from "../components/common/modal/MReview";
-import { reviewDataApi, reviewDetailApi } from "../util/review";
+import {
+  reviewDataApi,
+  reviewDetailApi,
+  reviewSearchApi,
+} from "../util/review";
 import None from "../components/None";
 import DropBox from "../components/common/dropbox";
+import ReviewTemp from "../components/reviewTemp";
 
 const Review = () => {
-  useEffect(() => {
-    reviewDataApi(page).then((res) => {
-      setCount(res.data.data.reviewCnt);
-      setTemp(res.data.data.reviewResDtoList.dtoList);
-    });
-  }, []);
-
   const [sort, setSort] = useState("DESC");
   const navigate = useNavigate();
   const [temp, setTemp] = useState([]);
@@ -44,9 +42,6 @@ const Review = () => {
   const [selectItem, setSelectItem] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
-    reviewDataApi(page, sort).then((res) => {
-      setTemp(res.data.data.reviewResDtoList.dtoList);
-    });
   };
 
   const onModal = (item) => {
@@ -58,10 +53,32 @@ const Review = () => {
 
   const sortData = (id) => {
     setSort(id);
-    reviewDataApi(page, sort).then((res) => {
-      setTemp(res.data.data.storeResDtoList.dtoList);
-    });
   };
+  const onclick = () => {
+    if (selected === "내용") {
+      reviewSearchApi(search, "w").then((res) => {
+        console.log(res);
+        setTemp(res.data.data.reviewResDtoList.dtoList);
+      });
+    }
+    if (selected === "회원 번호") {
+      reviewSearchApi(search, "c").then((res) =>
+        setTemp(res.data.data.reviewResDtoList.dtoList)
+      );
+    }
+    if (selected === "카페 번호") {
+      reviewSearchApi(search, "s").then((res) =>
+        setTemp(res.data.data.reviewResDtoList.dtoList)
+      );
+    }
+  };
+
+  useEffect(() => {
+    reviewDataApi(page, sort).then((res) => {
+      setCount(res.data.data.reviewCnt);
+      setTemp(res.data.data.reviewResDtoList.dtoList);
+    });
+  }, [page, sort]);
   return (
     <>
       <Header mcolor={"#fff"} text={"카페 리뷰"} subText={"등록된 리뷰 00건"} />
@@ -122,51 +139,7 @@ const Review = () => {
             <td>최종 수정일</td>
             <td>메모</td>
           </tr>
-          <tbody>
-            {temp &&
-              temp.map((item, i) => (
-                <tr key={i}>
-                  <td onClick={() => onModal(item)}>{item.reviewId}</td>
-                  <td onClick={() => onModal(item)}>
-                    <Row gap={16} align={"center"}>
-                      {item.reviewImageDto ? (
-                        <S.Photo img={item.reviewImageDto.imageUrl} />
-                      ) : (
-                        <S.NonePic />
-                      )}
-                      <p style={{ textAlign: "left", width: "200px" }}>
-                        {item.content
-                          ? item.content.length > 80
-                            ? `${item.content.slice(0, 80)}...`
-                            : item.content
-                          : "-"}
-                      </p>
-                    </Row>
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    <Row gap={16}>
-                      <p>{String(item.writerId).padStart(5, "0")}</p>
-                      <p>{item.nicknameOfWriter}</p>
-                    </Row>
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    <Row gap={16}>
-                      <p>{String(item.storeId).padStart(5, "0")}</p>
-                      <p>{item.storeName}</p>
-                    </Row>
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    {item.regDateTime.split("T")[0]}
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    {item.modDateTime.split("T")[0]}
-                  </td>
-                  <td>
-                    <Memo />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
+          <ReviewTemp temp={temp} onModal={onModal} />
         </S.TableHeader>
       </S.Wrapper>
 

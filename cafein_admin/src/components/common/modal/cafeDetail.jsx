@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
@@ -12,8 +12,6 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
   const closeModal = () => {
     setDModal(false);
   };
-
-  console.log(data);
 
   const totalfunc = (title) => {
     if (title) {

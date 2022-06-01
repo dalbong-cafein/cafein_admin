@@ -16,18 +16,13 @@ import {
   feedDataApi,
   feedDetailApi,
   feedDetailDataApi,
+  feedSearchApi,
 } from "../util/management";
 import None from "../components/None";
 import CafeDetailModal from "../components/common/modal/cafeDetail";
+import ManagementTemp from "../components/managementTemp";
 
 const ManagementCafe = () => {
-  useEffect(() => {
-    feedDataApi(page, sort).then((res) => {
-      setCount(res.data.data.storeCnt);
-      setTemp(res.data.data.storeResDtoList.dtoList);
-    });
-  }, []);
-
   const [sort, setSort] = useState("DESC");
   const [modal, setModal] = useState(false);
   const [dModal, setDModal] = useState(false);
@@ -47,16 +42,10 @@ const ManagementCafe = () => {
   const [reviewData, setReviewData] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
-    feedDataApi(page, sort).then((res) => {
-      setTemp(res.data.data.storeResDtoList.dtoList);
-    });
   };
 
   const sortData = (id) => {
     setSort(id);
-    feedDataApi(page, sort).then((res) => {
-      setTemp(res.data.data.storeResDtoList.dtoList);
-    });
   };
 
   const detailModal = (item) => {
@@ -71,6 +60,34 @@ const ManagementCafe = () => {
     setDModal(!dModal);
   };
 
+  const onclick = () => {
+    if (selected === "카페명") {
+      feedSearchApi(search, "sn")
+        .then((res) => {
+          setTemp(res.data.data.storeResDtoList.dtoList);
+          console.log(temp);
+        })
+        .catch((err) => console.log(err));
+    }
+    if (selected === "분류") {
+      feedSearchApi(search, "s")
+        .then((res) => setTemp(res.data.data.storeResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+    if (selected === "위치") {
+      feedSearchApi(search, "a")
+        .then((res) => setTemp(res.data.data.storeResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+  };
+  useEffect(() => {
+    feedDataApi(page, sort)
+      .then((res) => {
+        setCount(res.data.data.storeCnt);
+        setTemp(res.data.data.storeResDtoList.dtoList);
+      })
+      .catch((err) => console.log(err));
+  }, [sort, page]);
   return (
     <>
       <Header mcolor={"#fff"} text={"카페 관리"} subText={"등록된 카페 00건"} />
@@ -141,51 +158,11 @@ const ManagementCafe = () => {
             <td>최종 수정일</td>
             <td>메모</td>
           </tr>
-          <tbody>
-            {temp &&
-              temp.map((item, i) => (
-                <tr key={i}>
-                  <td onClick={() => detailModal(item)}>
-                    <span>{String(item.storeId).padStart(5, "0")}</span>
-                  </td>
-                  <td onClick={() => detailModal(item)}>
-                    <Row gap={16} align={"center"}>
-                      {item.storeImageDto ? (
-                        <S.Photo img={item.storeImageDto.imageUrl} />
-                      ) : (
-                        <S.NonePic />
-                      )}
-                      <p>{item.storeName}</p>
-                    </Row>
-                  </td>
-                  <td onClick={() => detailModal(item)}>
-                    {item.address.fullAddress}
-                  </td>
-                  <td
-                    onClick={() => detailModal(item)}
-                    style={{ textAlign: "center" }}
-                  >
-                    {item.phone || "-"}
-                  </td>
-                  <td
-                    onClick={() => detailModal(item)}
-                    style={{ textAlign: "center" }}
-                  >
-                    {item.congestionScoreAvg || "-"}
-                  </td>
-                  <td onClick={() => detailModal(item)}>{item.reviewCnt}건</td>
-                  <td onClick={() => detailModal(item)}>
-                    {item.regDateTime.split("T")[0]}
-                  </td>
-                  <td onClick={() => detailModal(item)}>
-                    {item.modDateTime.split("T")[0]}
-                  </td>
-                  <td>
-                    <Memo onClick={() => setModal(true)} />
-                  </td>
-                </tr>
-              ))}
-          </tbody>
+          <ManagementTemp
+            temp={temp}
+            setModal={setModal}
+            detailModal={detailModal}
+          />
         </S.TableHeader>
       </S.Wrapper>
       {temp.length === 0 && (

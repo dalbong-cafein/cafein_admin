@@ -8,3 +8,9 @@ export const reviewDataApi = async (page, sort) => {
 export const reviewDetailApi = async (id) => {
   return await withAuthInstance.get(`/reviews/${id}`);
 };
+
+export const reviewSearchApi = async (keyword, sub) => {
+  return await withAuthInstance.get(
+    `/reviews?searchType=${sub}&keyword=${keyword}`
+  );
+};

@@ -2,15 +2,17 @@ import Stars from "./atoms/stars";
 import styled from "styled-components";
 
 const HoverContent = ({ obj }) => {
-  const keys = Object.keys(obj);
+  if (obj) {
+    const keys = Object.keys(obj);
 
-  return (
-    <Div>
-      <div></div>
-      {keys &&
-        keys.map((item, i) => <Stars width={18.4} gap={7} num={obj[item]} />)}
-    </Div>
-  );
+    return (
+      <Div>
+        <div></div>
+        {keys &&
+          keys.map((item, i) => <Stars width={18.4} gap={7} num={obj[item]} />)}
+      </Div>
+    );
+  }
 };
 
 const Div = styled.div`

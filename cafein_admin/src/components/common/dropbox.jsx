@@ -1,13 +1,17 @@
 import styled from "styled-components";
 const DropBox = ({ left, setIsDrop, arr, selected, setSelected, setArr }) => {
   const onclick = (e) => {
-    const temp = e.target.id;
-    const copy = [...arr];
-    copy.push(selected);
-    copy.splice(arr.indexOf(temp), 1);
-    setSelected(e.target.id);
-    setArr(copy);
-    setIsDrop(false);
+    if (e.target.id === "전체") {
+      window.location.reload();
+    } else {
+      const temp = e.target.id;
+      const copy = [...arr];
+      copy.push(selected);
+      copy.splice(arr.indexOf(temp), 1);
+      setSelected(e.target.id);
+      setArr(copy);
+      setIsDrop(false);
+    }
   };
   return (
     <Box left={left}>

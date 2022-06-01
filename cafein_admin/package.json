@@ -28,7 +28,7 @@
     "deploy": "cp build/index.html build/404.html && gh-pages -d build",
     "predeploy": "npm run build"
   },
-  "homepage": "https://dalbong-cafein.github.io/cafein_admin",
+  "homepage": "https://cafeinofficial.com",
   "eslintConfig": {
     "extends": [
       "react-app",

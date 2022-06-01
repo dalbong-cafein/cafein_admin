@@ -20,30 +20,25 @@ import Alert from "./common/modal/alert";
 import { adminFeedListApi } from "../util/admin";
 import None from "./None";
 
+import { useRecoilState } from "recoil";
+import { registerNotice } from "../recoil/NNotice";
+import { registerNoticeApi } from "../util/events";
+
 const Notices = () => {
   const [temp, setTemp] = useState([]);
   const [sort, setSort] = useState("DESC");
-  useEffect(() => {
-    adminFeedListApi(page, sort).then((res) => {
-      setCount(res.data.data.boardCnt);
-      setTemp(res.data.data.boardResDtoList.dtoList);
-    });
-  }, []);
 
   const [search, setSearch] = useState("");
   const [isActive, setIsActive] = useState(1);
   const navigate = useNavigate();
+  const [register, setRegister] = useRecoilState(registerNotice);
 
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [items, setItems] = useState(10);
   const [alert, setAlert] = useState(false);
-
   const handlePageChange = (page) => {
     setPage(page);
-    adminFeedListApi(page, sort).then((res) => {
-      setTemp(res.data.data.boardResDtoList.dtoList);
-    });
   };
   const [file, setFile] = useState([]);
   const onLoadFile = (e) => {
@@ -55,6 +50,9 @@ const Notices = () => {
       if (e.target.files[0]) {
         copy = [...copy, e.target.files[0]];
         setFile(copy);
+        const copy2 = { ...register };
+        copy2.imageFiles = copy;
+        setRegister(copy2);
       }
     }
   };
@@ -65,12 +63,32 @@ const Notices = () => {
     setFile(copy);
   };
 
+  const onSubmit = (register) => {
+    const copy = { ...register };
+    copy.boardCategoryId = 1;
+    setRegister(copy);
+    registerNoticeApi(register)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+  const onChange = (e) => {
+    const name = e.target.name;
+    const copy = { ...register };
+    copy[name] = e.target.value;
+    setRegister(copy);
+  };
+
   const sortData = (id) => {
     setSort(id);
+  };
+
+  useEffect(() => {
     adminFeedListApi(page, sort).then((res) => {
+      setCount(res.data.data.boardCnt);
       setTemp(res.data.data.boardResDtoList.dtoList);
     });
-  };
+  }, [sort, page]);
   const input = useRef();
   return (
     <>
@@ -119,9 +137,9 @@ const Notices = () => {
               <>
                 {temp &&
                   temp.map((item) => (
-                    <tr style={{ maxHeight: "72px" }}>
+                    <tr>
                       <td>{item.code}</td>
-                      <td style={{ textAlign: "left" }}>
+                      <td>
                         <p style={{ fontWeight: "bold" }}>{item.title}</p>
                         <p>
                           {item.content.length > 30
@@ -149,10 +167,16 @@ const Notices = () => {
 
             <SS.Input>
               <p>제목</p>
-              <input type="text" />
+              <input type="text" name="title" onChange={(e) => onChange(e)} />
             </SS.Input>
             <SS.TextBox>
-              <textarea cols="50" rows="20" placeholder="내용을 입력하세요" />
+              <textarea
+                cols="50"
+                rows="20"
+                placeholder="내용을 입력하세요"
+                name="content"
+                onChange={(e) => onChange(e)}
+              />
 
               <SS.PhotoBox>
                 <SS.FileUpload
@@ -199,6 +223,8 @@ const Notices = () => {
           setAlert={setAlert}
           text={"공지사항 등록"}
           subtext={"게시물을 등록하시겠습니까?"}
+          func={onSubmit}
+          forFunc={register}
         />
       )}
     </>

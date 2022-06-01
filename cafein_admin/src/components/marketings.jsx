@@ -11,16 +11,10 @@ import None from "./None";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { marketingListApi } from "../util/events";
+import { changeStateApi, marketingListApi } from "../util/events";
 import DropBox from "./common/dropbox";
 import RedAlert from "./common/modal/redAlert";
 const Marketings = () => {
-  useEffect(() => {
-    marketingListApi(page, sort).then((res) => {
-      setCount(res.data.data.couponCnt);
-      setTemp(res.data.data.couponResDtoList.dtoList);
-    });
-  }, []);
   const [search, setSearch] = useState("");
 
   const [isActive, setIsActive] = useState(1);
@@ -31,26 +25,36 @@ const Marketings = () => {
   const [count, setCount] = useState(0);
   const [temp, setTemp] = useState([]);
   const [items, setItems] = useState(12);
+  const [reportId, setReportId] = useState(null);
 
   const [alert, setAlert] = useState(false);
   const handlePageChange = (page) => {
     setPage(page);
-    marketingListApi(page, sort).then((res) => {
-      setTemp(res.data.data.couponResDtoList.dtoList);
-    });
   };
 
   const sortData = (id) => {
     setSort(id);
-    marketingListApi(page, sort).then((res) => {
-      setTemp(res.data.data.couponResDtoList.dtoList);
-    });
   };
 
+  const changeState = (id) => {
+    changeStateApi(id)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
   //drop
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState("전체");
   const [arr, setArr] = useState(["분류", "회원 번호", "핸드폰"]);
+
+  useEffect(() => {
+    marketingListApi(page, sort)
+      .then((res) => {
+        setCount(res.data.data.couponCnt);
+        setTemp(res.data.data.couponResDtoList.dtoList);
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }, [page, sort]);
 
   return (
     <>
@@ -81,7 +85,7 @@ const Marketings = () => {
           </S.Sbtn>
           {isDrop && (
             <DropBox
-              left={"115%"}
+              left={"150%"}
               arr={arr}
               setIsDrop={setIsDrop}
               setArr={setArr}
@@ -115,43 +119,50 @@ const Marketings = () => {
           </tr>
           <tbody>
             {temp &&
-              temp.map((item, i) => (
-                <tr key={i}>
-                  <td style={{ textAlign: "center" }}>
-                    {String(item.couponId).padStart(5, "0")}
-                  </td>
-                  <td>{item.brandName}</td>
-                  <td>{item.itemName}</td>
-                  <td style={{ textAlign: "center" }}>
-                    {String(item.memberId).padStart(5, "0")}
-                  </td>
-                  <td>{item.phone || "-"}</td>
-                  <td>{item.regDateTime}</td>
-                  <td style={{ textAlign: "center" }}>
-                    {item.processingDateTime || "-"}
-                  </td>
-                  <td>
-                    <S.Btn
-                      content={item.state}
-                      onClick={() => setAlert(!alert)}
-                    >
-                      {item.state ? "완료" : "미완료"}
-                    </S.Btn>
-                  </td>
-                  <td style={{ textAlign: "center" }}>
-                    <Memo />
-                  </td>
-                </tr>
-              ))}
+              temp
+                .slice(items * (page - 1), items * (page - 1) + items)
+                .map((item, i) => (
+                  <tr key={i}>
+                    <td style={{ textAlign: "center" }}>
+                      {String(item.couponId).padStart(5, "0")}
+                    </td>
+                    <td>{item.brandName}</td>
+                    <td>{item.itemName}</td>
+                    <td style={{ textAlign: "center" }}>
+                      {String(item.memberId).padStart(5, "0")}
+                    </td>
+                    <td>{item.phone || "-"}</td>
+                    <td>{item.regDateTime}</td>
+                    <td style={{ textAlign: "center" }}>
+                      {item.processingDateTime || "-"}
+                    </td>
+                    <td>
+                      <S.Btn
+                        content={item.state}
+                        onClick={() => {
+                          setAlert(!alert);
+                          setReportId(item.couponId);
+                        }}
+                      >
+                        {item.state ? "완료" : "미완료"}
+                      </S.Btn>
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      <Memo />
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </S.TableHeader>
       </S.Wrapper>
-      {alert && (
+      {alert && reportId && (
         <RedAlert
           text={"마케팅 서비스 상태 변경"}
           text2={"'완료'"}
           text3={"로 상태를 변경하시겠습니까?"}
           setAlert={setAlert}
+          func={changeState}
+          forFunc={reportId}
         />
       )}
       {temp.length === 0 && <None text={"마케팅 서비스"} />}
