@@ -33,7 +33,6 @@ const User = () => {
 
   const onModal = (item) => {
     setModal(!modal);
-    console.log(item);
     setSelectItem(item);
   };
 

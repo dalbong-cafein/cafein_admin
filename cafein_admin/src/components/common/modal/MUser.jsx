@@ -13,123 +13,131 @@ export default function MUser({ setModal, selectItem }) {
   return (
     <Portal>
       <ModalBox>
-        <ModalBoxs
-          style={{ borderRadius: "16px 0 0 16px" }}
-          color={"#131313"}
-          width={516}
-        >
-          <Title size={20}>회원정보</Title>
-          <Columnbox gap={14}>
-            <Line>
-              <span>분류</span>
-              <p>{selectItem.code}</p>
-            </Line>
-            <Line>
-              <span>소셜</span>
-              <p style={{ color: "#FC7521" }}>{selectItem.social[0]}</p>
-              {selectItem.social[1] && (
-                <p style={{ color: "#e3e3e3" }}>{selectItem.social[1]}</p>
-              )}
-            </Line>
-            <Line>
-              <span>회원명</span>
-              <Row gap={190}>
-                <p>{selectItem.name}</p>
-                <Pic img={process.env.PUBLIC_URL + selectItem.img}>
-                  {selectItem.img ? <div></div> : <p>대표사진</p>}
-                </Pic>
+        {selectItem && (
+          <>
+            <ModalBoxs
+              style={{ borderRadius: "16px 0 0 16px" }}
+              color={"#131313"}
+              width={516}
+            >
+              <Title size={20}>회원정보</Title>
+              <Columnbox gap={14}>
+                <Line>
+                  <span>분류</span>
+                  <p>{String(selectItem.memderId).padStart(5, "0")}</p>
+                </Line>
+                <Line>
+                  <span>소셜</span>
+                  <p style={{ color: "#FC7521" }}>
+                    {selectItem.socialTypeList[0]}
+                  </p>
+                  {selectItem.socialTypeList[1] && (
+                    <p style={{ color: "#e3e3e3" }}>
+                      {selectItem.socialTypeList[1]}
+                    </p>
+                  )}
+                </Line>
+                <Line>
+                  <span>회원명</span>
+                  <Row gap={16} align={"center"}>
+                    {selectItem.memberImageDto && (
+                      <Photo img={selectItem.memberImageDto.imageUrl} />
+                    )}
+                    <p>{selectItem.nickname || "-"}</p>
+                  </Row>
+                </Line>
+                <Line>
+                  <span>핸드폰</span>
+                  <p>{selectItem.phone || "-"}</p>
+                </Line>
+                <Line>
+                  <span>이메일</span>
+                  <p>{selectItem.email || "-"}</p>
+                </Line>
+                <Line>
+                  <span>생년월일</span>
+                  <p>{selectItem.birth || "-"}</p>
+                </Line>
+                <Line>
+                  <span>성별</span>
+                  <p>{selectItem.gender || "-"}</p>
+                </Line>
+                <Line>
+                  <span>APP</span>
+                  <p>{selectItem.app || "-"}</p>
+                </Line>
+                <Line>
+                  <span>DEVICE IP</span>
+                  <p>
+                    {selectItem.divice || "-"}
+                    <br />
+                    {selectItem.ip || "-"}
+                  </p>
+                </Line>
+              </Columnbox>
+            </ModalBoxs>
+            <ModalBoxs
+              style={{ borderRadius: "0 16px 16px 0" }}
+              color={"#333333"}
+              width={476}
+            >
+              <Row justify={"space-between"}>
+                <Title size={16}>활동정보</Title>
+                <Close onClick={closeModal} />
               </Row>
-            </Line>
-            <Line>
-              <span>핸드폰</span>
-              <p>{selectItem.phoneNum}</p>
-            </Line>
-            <Line>
-              <span>이메일</span>
-              <p>{selectItem.email}</p>
-            </Line>
-            <Line>
-              <span>생년월일</span>
-              <p>1992.00.00</p>
-            </Line>
-            <Line>
-              <span>성별</span>
-              <p>남/여</p>
-            </Line>
-            <Line>
-              <span>APP</span>
-              <p>{selectItem.app}</p>
-            </Line>
-            <Line>
-              <span>DEVICE IP</span>
-              <p>
-                {selectItem.divice}
-                <br />
-                {selectItem.ip}
-              </p>
-            </Line>
-          </Columnbox>
-        </ModalBoxs>
-        <ModalBoxs
-          style={{ borderRadius: "0 16px 16px 0" }}
-          color={"#333333"}
-          width={476}
-        >
-          <Row justify={"space-between"}>
-            <Title size={16}>활동정보</Title>
-            <Close onClick={closeModal} />
-          </Row>
-          <Columnbox>
-            <Line color={"#515151"}>
-              <span>방문</span>
-              <p>100회</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>저장</span>
-              <p>100회</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>공유</span>
-              <p>100회</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>혼잡도</span>
-              <p>100회</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>리뷰</span>
-              <p>100회</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>스티커</span>
-              <p>100회</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>방문</span>
-              <p>100회</p>
-            </Line>
-          </Columnbox>
-          <Title style={{ padding: "40px 0" }} size={16}>
-            기타
-          </Title>
-          <Columnbox style={{ paddingBottom: "70px" }}>
-            <Line color={"#515151"}>
-              <span>가입일</span>
-              <p>{selectItem.join}</p>
-            </Line>
-            <StateRow>
-              <div>
-                <span>상태</span>
-                <Btn content={selectItem.state}>{selectItem.state}</Btn>
-                <p>탈퇴</p>
-              </div>
-            </StateRow>
-          </Columnbox>
-          <Row gap={24}>
-            <S.Btn color={"#515151"}>삭제</S.Btn>
-            <S.Btn color={"#2563eb"}>수정</S.Btn>
-          </Row>
-        </ModalBoxs>
+              <Columnbox>
+                <Line color={"#515151"}>
+                  <span>방문</span>
+                  <p>100회</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>저장</span>
+                  <p>100회</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>공유</span>
+                  <p>100회</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>혼잡도</span>
+                  <p>100회</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>리뷰</span>
+                  <p>100회</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>스티커</span>
+                  <p>100회</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>방문</span>
+                  <p>100회</p>
+                </Line>
+              </Columnbox>
+              <Title style={{ padding: "40px 0" }} size={16}>
+                기타
+              </Title>
+              <Columnbox style={{ paddingBottom: "70px" }}>
+                <Line color={"#515151"}>
+                  <span>가입일</span>
+                  <p>{selectItem.join}</p>
+                </Line>
+                <StateRow>
+                  <div>
+                    <span>상태</span>
+                    <Btn content={selectItem.state}>{selectItem.state}</Btn>
+                    <p>탈퇴</p>
+                  </div>
+                </StateRow>
+              </Columnbox>
+              <Row gap={24}>
+                <S.Btn color={"#515151"}>삭제</S.Btn>
+                <S.Btn color={"#2563eb"}>수정</S.Btn>
+              </Row>
+            </ModalBoxs>
+          </>
+        )}
       </ModalBox>
     </Portal>
   );
@@ -237,4 +245,10 @@ const Btn = styled.div`
   border-radius: 6px;
   color: #fff;
   line-height: 26px;
+`;
+
+export const Photo = styled.div`
+  width: 40px;
+  height: 40px;
+  background: ${({ img }) => img && `url(${img})`} no-repeat center center/cover;
 `;
