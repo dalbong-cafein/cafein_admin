@@ -51,11 +51,10 @@ const Marketings = () => {
       .then((res) => {
         setCount(res.data.data.couponCnt);
         setTemp(res.data.data.couponResDtoList.dtoList);
-        console.log(res);
       })
       .catch((err) => console.log(err));
   }, [page, sort]);
-  console.log(temp[0]);
+
   return (
     <>
       <Row
@@ -145,7 +144,7 @@ const Marketings = () => {
                           setReportId(item.couponId);
                         }}
                       >
-                        {item.status === true ? "완료" : "미완료"}
+                        {item.processingDateTime !== null ? "완료" : "미완료"}
                       </S.Btn>
                     </td>
                     <td style={{ textAlign: "center" }}>

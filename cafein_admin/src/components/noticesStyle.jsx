@@ -134,11 +134,6 @@ export const TextBox = styled.div`
   }
 `;
 
-export const CheckPush = styled.div`
-  display: flex;
-  gap: 15px;
-`;
-
 export const Btn = styled.div`
   color: #f6f6f6;
   background-color: ${(props) => props.back && props.back};

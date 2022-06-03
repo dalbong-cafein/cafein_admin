@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
 
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
+import { userReportApi } from "../../../util/user";
 
 export default function MUser({ setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
   };
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (selectItem.memberId) {
+      userReportApi(selectItem.memberId).then((res) => setData(res.data.data));
+    }
+  }, []);
+  console.log(data);
+
   return (
     <Portal>
       <ModalBox>
@@ -24,14 +34,15 @@ export default function MUser({ setModal, selectItem }) {
               <Columnbox gap={14}>
                 <Line>
                   <span>분류</span>
-                  <p>{String(selectItem.memderId).padStart(5, "0")}</p>
+                  <p>{String(selectItem.memberId).padStart(5, "0")}</p>
                 </Line>
                 <Line>
                   <span>소셜</span>
                   <p style={{ color: "#FC7521" }}>
-                    {selectItem.socialTypeList[0]}
+                    {selectItem?.socialTypeList?.length >= 1 &&
+                      selectItem?.socialTypeList[0]}
                   </p>
-                  {selectItem.socialTypeList[1] && (
+                  {selectItem?.socialTypeList?.length === 2 && (
                     <p style={{ color: "#e3e3e3" }}>
                       {selectItem.socialTypeList[1]}
                     </p>
@@ -88,48 +99,59 @@ export default function MUser({ setModal, selectItem }) {
               <Columnbox>
                 <Line color={"#515151"}>
                   <span>방문</span>
-                  <p>100회</p>
+                  <p>{"-"}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>저장</span>
-                  <p>100회</p>
+                  <p>{selectItem?.heartCnt || "-"}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>공유</span>
-                  <p>100회</p>
+                  <p>{"-"}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>혼잡도</span>
-                  <p>100회</p>
+                  <p>{selectItem?.congestionCnt || "-"}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>리뷰</span>
-                  <p>100회</p>
+                  <p>{selectItem?.reviewCnt || "-"}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>스티커</span>
-                  <p>100회</p>
-                </Line>
-                <Line color={"#515151"}>
-                  <span>방문</span>
-                  <p>100회</p>
+                  <p>{selectItem?.stickerCnt || "-"}</p>
                 </Line>
               </Columnbox>
               <Title style={{ padding: "40px 0" }} size={16}>
                 기타
               </Title>
-              <Columnbox style={{ paddingBottom: "70px" }}>
+              <Columnbox style={{ paddingBottom: "90px" }}>
                 <Line color={"#515151"}>
                   <span>가입일</span>
-                  <p>{selectItem.join}</p>
+                  <p>{selectItem.joinDateTime || "-"}</p>
                 </Line>
                 <StateRow>
                   <div>
                     <span>상태</span>
-                    <Btn content={selectItem.state}>{selectItem.state}</Btn>
+                    <Btn
+                      content={
+                        !selectItem.isReported && !selectItem.isDeleted
+                          ? "기본"
+                          : selectItem.isReported
+                          ? "신고"
+                          : "탈퇴"
+                      }
+                    >
+                      {!selectItem.isReported && !selectItem.isDeleted
+                        ? "기본"
+                        : selectItem.isReported
+                        ? "신고"
+                        : "탈퇴"}
+                    </Btn>
                     <p>탈퇴</p>
                   </div>
                 </StateRow>
+                {/* {data && data.map((item, i) => <div key={i}>{item}</div>)} */}
               </Columnbox>
               <Row gap={24}>
                 <S.Btn color={"#515151"}>삭제</S.Btn>
@@ -178,7 +200,7 @@ const Line = styled.div`
   padding-bottom: 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
-    width: 59px;
+    width: 69px;
     text-align: right;
     font-size: 16px;
     font-weight: 700;

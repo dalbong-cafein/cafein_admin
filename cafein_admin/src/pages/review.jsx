@@ -39,16 +39,14 @@ const Review = () => {
   const [arr, setArr] = useState(["내용", "회원 번호", "카페 번호"]);
 
   const [modal, setModal] = useState(false);
-  const [selectItem, setSelectItem] = useState([]);
+  const [selectItem2, setSelectItem2] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
   };
 
   const onModal = (item) => {
     setModal(!modal);
-    reviewDetailApi(item.reviewId)
-      .then((res) => setSelectItem(res.data.data))
-      .catch((err) => console.log(err));
+    setSelectItem2(item);
   };
 
   const sortData = (id) => {
@@ -144,7 +142,7 @@ const Review = () => {
       </S.Wrapper>
 
       {temp.length === 0 && <None text={"리뷰"} />}
-      {modal && <MReview setModal={setModal} selectItem={selectItem} />}
+      {modal && <MReview setModal={setModal} selectItem2={selectItem2} />}
     </>
   );
 };

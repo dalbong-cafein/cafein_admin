@@ -26,7 +26,7 @@ import Preview from "./common/modal/preview";
 import NoticeModal from "./common/modal/noticeModal";
 import RedAlert from "./common/modal/redAlert";
 
-const QnA = () => {
+const QnA = ({ menu }) => {
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -132,7 +132,6 @@ const QnA = () => {
               <tr>
                 <td>분류</td>
                 <td>제목</td>
-                <td>PUSH</td>
                 <td>등록일</td>
               </tr>
               <tbody>
@@ -154,7 +153,7 @@ const QnA = () => {
                             : item.content}
                         </p>
                       </td>
-                      <td>{item.push || "-"}</td>
+
                       <td>{item.regDateTime}</td>
                     </tr>
                   ))}
@@ -209,19 +208,14 @@ const QnA = () => {
               </SS.PhotoBox>
             </SS.TextBox>
           </div>
-          <Row gap={115} justify={"space-between"} align={"baseline"}>
-            <SS.CheckPush>
-              <Square />
-              <p>App Push</p>
-            </SS.CheckPush>
-            <Row gap={16}>
-              <SS.Btn back={"#515151"} onClick={() => setPreview(!preview)}>
-                미리보기
-              </SS.Btn>
-              <SS.Btn back={"#2563eb"} onClick={() => setAlert(!alert)}>
-                등록
-              </SS.Btn>
-            </Row>
+
+          <Row gap={16} justify={"end"} align={"baseline"}>
+            <SS.Btn back={"#515151"} onClick={() => setPreview(!preview)}>
+              미리보기
+            </SS.Btn>
+            <SS.Btn back={"#2563eb"} onClick={() => setAlert(!alert)}>
+              등록
+            </SS.Btn>
           </Row>
         </SS.NewNotice>
       </SS.Container>
@@ -234,12 +228,20 @@ const QnA = () => {
           forFunc={register}
         />
       )}
-      {preview && <Preview item={register} setModal={setPreview} file={file} />}
+      {preview && (
+        <Preview
+          item={register}
+          setModal={setPreview}
+          file={file}
+          menu={menu}
+        />
+      )}
       {modal && (
         <NoticeModal
           setModal={setModal}
           item={selectItem}
           setAlert={setDAlert}
+          menu={menu}
         />
       )}
       {Dalert && (

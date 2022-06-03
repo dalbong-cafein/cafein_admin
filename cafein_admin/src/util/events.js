@@ -26,7 +26,7 @@ export const registerNoticeApi = async (register) => {
 
   return axios({
     method: "POST",
-    url: process.env.REACT_APP_API_URL + "/boards",
+    url: process.env.REACT_APP_API_URL + "/admin/boards",
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",

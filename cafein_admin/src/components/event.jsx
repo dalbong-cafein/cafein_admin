@@ -7,13 +7,46 @@ import * as SS from "./noticesStyle";
 import { eventListApi } from "../util/events";
 import styled from "styled-components";
 import PVImg from "./common/PVImg";
+import EventMapBox from "./eventMapBox";
+import BPreview from "./common/modal/Bpreview";
 
 const Event = () => {
   const [isActive, setIsActive] = useState(1);
   const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
-  const [temp, setTemp] = useState([]);
-  const [items, setItems] = useState(12);
+  const [temp, setTemp] = useState([
+    { date: "2022.03.28" },
+    { date: "2022.03.28" },
+    { date: "2022.03.28" },
+    { date: "2022.03.28" },
+    { date: "2022.03.28" },
+    // { date: "2022.03.28" },
+    // { date: "2022.03.28" },
+    // { date: "2022.03.28" },
+    // { date: "2022.03.28" },
+    // { date: "2022.03.28" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "2페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+    // { date: "3페이지입니다" },
+  ]);
+  const [count, setCount] = useState(temp.length - 1);
+  const [preview, setPreview] = useState(false);
+  const [items, setItems] = useState(10);
   const handlePageChange = (page) => {
     setPage(page);
     console.log(page);
@@ -27,7 +60,7 @@ const Event = () => {
     }
   };
   useEffect(() => {
-    eventListApi().then((res) => console.log(res));
+    // eventListApi().then((res) => console.log(res));
   }, []);
   const input = useRef();
   return (
@@ -55,7 +88,11 @@ const Event = () => {
               page={page}
             />
           </Row>
-
+          <EventMapBox temp={temp} items={items} page={page} i={0} />
+          <EventMapBox temp={temp} items={items} page={page} i={2} />
+          <EventMapBox temp={temp} items={items} page={page} i={4} />
+          <EventMapBox temp={temp} items={items} page={page} i={6} />
+          <EventMapBox temp={temp} items={items} page={page} i={8} />
           {temp.length === 0 && <None text={"마케팅 서비스"} />}
         </div>
         <SS.NewNotice>
@@ -87,11 +124,14 @@ const Event = () => {
             )}
           </AttachBox>
           <Row gap={16} justify={"end"}>
-            <SS.Btn back={"#515151"}>미리보기</SS.Btn>
+            <SS.Btn back={"#515151"} onClick={() => setPreview(true)}>
+              미리보기
+            </SS.Btn>
             <SS.Btn back={"#2563eb"}>등록</SS.Btn>
           </Row>
         </SS.NewNotice>
       </SS.Container>
+      {preview && <BPreview setModal={setPreview} item={file} />}
     </>
   );
 };
@@ -128,7 +168,7 @@ const ImgBox = styled.div`
   position: absolute;
   transform: translate(45%, 25%);
   border-radius: 8px;
-  max-width: 328px;
+  width: 328px;
   max-height: 72px;
   margin: 0 auto;
   height: 72px;

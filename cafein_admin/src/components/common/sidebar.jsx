@@ -82,18 +82,18 @@ const SideBar = () => {
             </div>
             서비스 관리
           </MenuBox>
-          <MenuBox
-            svgW={18.3}
-            onClick={() =>
-              window.location.replace("http://cafeinoffical.notion.site/Cafein")
-            }
-            isT={menu === "statistics"}
+          <a
+            style={{ textDecoration: "none" }}
+            target="blank"
+            href="https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807"
           >
-            <div>
-              <Statictis />
-            </div>
-            통계
-          </MenuBox>
+            <MenuBox svgW={18.3} isT={menu === "statistics"}>
+              <div>
+                <Statictis />
+              </div>
+              통계
+            </MenuBox>
+          </a>
         </div>
         <Profile>
           <Row align={"center"} gap={60}>

@@ -42,8 +42,11 @@ const Admin = () => {
         <Line>
           <span>사이트</span>
 
-          <a href="http://cafeinoffical.notion.site/Cafein" target="blank">
-            http://cafeinoffical.notion.site/Cafein
+          <a
+            href="https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807"
+            target="blank"
+          >
+            https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807
           </a>
         </Line>
         <Line>

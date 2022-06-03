@@ -6,12 +6,16 @@ import Row from "../../atoms/row";
 import styled from "styled-components";
 import { reviewDetailApi } from "../../../util/review";
 
-export default function MReview({ setModal, selectItem }) {
+export default function MReview({ setModal, selectItem2 }) {
   const closeModal = () => {
     setModal(false);
   };
 
-  console.log(selectItem);
+  // useEffect(() => {
+  //   if (selectItem2.reviewId) {
+  //     reviewDetailApi(selectItem2.reviewId).then((res) => console.log(res));
+  //   }
+  // }, []);
 
   return (
     <Portal>
@@ -24,30 +28,61 @@ export default function MReview({ setModal, selectItem }) {
           <Columnbox>
             <Line>
               <span>분류</span>
-              <p>{String(selectItem.reviewId).padStart(5, "0")}</p>
+              <p>{String(selectItem2.reviewId).padStart(5, "0")}</p>
             </Line>
             <Line>
               <span>회원명</span>
-              <p>{selectItem.nicknameOfWriter || "-"}</p>
+              <p>{selectItem2.nicknameOfWriter || "-"}</p>
             </Line>
             <Line>
               <span>카페명</span>
-              <p>{selectItem.storeName}</p>
+              <p>{selectItem2.storeName}</p>
             </Line>
             <Line>
               <span>등록일</span>
-              <p>{selectItem.regDateTime}</p>
+              <p>{selectItem2.regDateTime}</p>
             </Line>
             <Line>
               <span>최종수정일</span>
-              <p>{selectItem.modDateTime}</p>
+              <p>{selectItem2.modDateTime}</p>
             </Line>
           </Columnbox>
-          <Text>{selectItem.content || "-"}</Text>
-          {selectItem.img && (
+          <Text>{selectItem2.content || "-"}</Text>
+          {/* {selectItem2?.reviewImageDto &&
+          selectItem2?.reviewImageDto.length === 1 ? (
             <Row gap={10}>
               <Pic>
-                <img src={process.env.PUBLIC_URL + selectItem.img} alt="img" />
+                <img
+                  src={
+                    process.env.PUBLIC_URL +
+                    selectItem2?.reviewImageDto.imageUrl
+                  }
+                  alt="img"
+                />
+              </Pic>
+            </Row>
+          ) : (
+            selectItem2?.reviewImageDto.map((item, i) => (
+              <Row gap={10} key={i}>
+                <Pic>
+                  <img
+                    src={process.env.PUBLIC_URL + item?.imageUrl}
+                    alt="img"
+                  />
+                </Pic>
+              </Row>
+            ))
+          )} */}
+          {selectItem2.reviewImageDto && (
+            <Row gap={10}>
+              <Pic>
+                <img
+                  src={
+                    process.env.PUBLIC_URL +
+                    selectItem2?.reviewImageDto.imageUrl
+                  }
+                  alt="img"
+                />
               </Pic>
             </Row>
           )}
@@ -89,6 +124,7 @@ const Line = styled.div`
 
 const Text = styled.div`
   padding: 40px 0;
+  white-space: pre-line;
 `;
 
 const Pic = styled.div`

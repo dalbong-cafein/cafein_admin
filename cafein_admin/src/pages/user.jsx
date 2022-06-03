@@ -8,18 +8,22 @@ import Row from "../components/atoms/row";
 import Paging from "../components/common/Pagination";
 
 import { ReactComponent as Search } from "../svg/Search.svg";
-import { ReactComponent as Memo } from "../svg/memo.svg";
 import { ReactComponent as Check } from "../svg/check.svg";
+import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
 import styled from "styled-components";
 import MUser from "../components/common/modal/MUser";
-import { userListApi } from "../util/user";
+import { userDetailApi, userListApi, userSearchApi } from "../util/user";
 import None from "../components/None";
+import UserTemp from "../components/userTemp";
+import DropBox from "../components/common/dropbox";
 const User = () => {
-  const [isActive, setIsActive] = useState(1);
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
+  const [isDrop, setIsDrop] = useState(false);
+  const [selected, setSelected] = useState("전체");
+  const [arr, setArr] = useState(["분류", "회원명", "핸드폰"]);
 
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -32,12 +36,31 @@ const User = () => {
   };
 
   const onModal = (item) => {
+    userDetailApi(item.memberId)
+      .then((res) => setSelectItem(res.data.data))
+      .catch((err) => alert("존재하지 않는 회원입니다."));
     setModal(!modal);
-    setSelectItem(item);
   };
 
+  const onclick = () => {
+    if (selected === "분류") {
+      userSearchApi("m", search)
+        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+    if (selected === "회원명") {
+      userSearchApi("mn", search)
+        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+    if (selected === "핸드폰") {
+      userSearchApi("p", search)
+        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+  };
   useEffect(() => {
-    userListApi().then((res) => {
+    userListApi(sort).then((res) => {
       setTemp(res.data.data.memberResDtoList.dtoList);
     });
   }, [sort, page]);
@@ -66,7 +89,19 @@ const User = () => {
             setPage={setPage}
             page={page}
           />
-          <S.Sbtn>전체</S.Sbtn>
+          <S.Sbtn onClick={() => setIsDrop(!isDrop)}>
+            {selected} <ArrowDown />
+          </S.Sbtn>
+          {isDrop && (
+            <DropBox
+              arr={arr}
+              left={"85%"}
+              setIsDrop={setIsDrop}
+              setArr={setArr}
+              selected={selected}
+              setSelected={setSelected}
+            />
+          )}
           <Row style={{ borderBottom: "1px solid #fff" }}>
             <S.Input
               placeholder="검색"
@@ -92,63 +127,7 @@ const User = () => {
             <td>상태</td>
             <td>메모</td>
           </tr>
-
-          {temp &&
-            temp
-              .slice(items * (page - 1), items * (page - 1) + items)
-              .map((item, i) => (
-                <tr key={i}>
-                  <td onClick={() => onModal(item)}>
-                    <div>{String(item.memberId).padStart(5, "0")}</div>
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    <p style={{ color: "#FC7521" }}>{item.socialTypeList[0]}</p>
-                    {item.socialTypeList[1] && <p>{item.socialTypeList[1]}</p>}
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    <Row gap={16} align={"center"}>
-                      {item.memberImageDto ? (
-                        <S.Photo img={item.memberImageDto.imageUrl} />
-                      ) : (
-                        <S.NonePic />
-                      )}
-                      <p>{item.nickname || "-"}</p>
-                    </Row>
-                  </td>
-                  <td onClick={() => onModal(item)}>{item.phone || "-"}</td>
-                  <td onClick={() => onModal(item)}>{item.email}</td>
-                  <td onClick={() => onModal(item)}>{item.app || "-"}</td>
-                  <td onClick={() => onModal(item)}>
-                    <Row gap={16}>
-                      <p>{item.divice || "-"}</p>
-                      <p>{item.ip || "-"}</p>
-                    </Row>
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    {item.regDateTime || "-"}
-                  </td>
-                  <td onClick={() => onModal(item)}>
-                    <Btn
-                      content={
-                        !item.isReported && !item.isDeleted
-                          ? "기본"
-                          : item.isReported
-                          ? "신고"
-                          : "탈퇴"
-                      }
-                    >
-                      {!item.isReported && !item.isDeleted
-                        ? "기본"
-                        : item.isReported
-                        ? "신고"
-                        : "탈퇴"}
-                    </Btn>
-                  </td>
-                  <td>
-                    <Memo />
-                  </td>
-                </tr>
-              ))}
+          <UserTemp temp={temp} onModal={onModal} page={page} items={items} />
         </S.TableHeader>
       </S.Wrapper>
       {temp.length === 0 && <None text={"유저"} />}
@@ -156,23 +135,5 @@ const User = () => {
     </>
   );
 };
-
-const Btn = styled.div`
-  background-color: ${(props) =>
-    props.content === "기본"
-      ? "#26BA6A"
-      : props.content === "신고"
-      ? "#f44336"
-      : "#ff9800"};
-  width: 86px;
-  height: 26px;
-  text-align: center;
-  margin: 0 auto;
-  opacity: 0.3;
-
-  border-radius: 6px;
-  color: #fff;
-  line-height: 26px;
-`;
 
 export default User;

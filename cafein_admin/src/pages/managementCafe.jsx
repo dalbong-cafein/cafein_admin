@@ -65,7 +65,6 @@ const ManagementCafe = () => {
       feedSearchApi(search, "sn")
         .then((res) => {
           setTemp(res.data.data.storeResDtoList.dtoList);
-          console.log(temp);
         })
         .catch((err) => console.log(err));
     }
