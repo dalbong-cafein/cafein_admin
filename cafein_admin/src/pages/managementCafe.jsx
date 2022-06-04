@@ -34,6 +34,8 @@ const ManagementCafe = () => {
   const [selected, setSelected] = useState("전체");
   const [dSelected, setDSelected] = useState([]);
   const [arr, setArr] = useState(["분류", "카페명", "위치"]);
+  const [memoId, setMemoId] = useState(null);
+  const [selectItem, setSelectItem] = useState([]);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -84,6 +86,7 @@ const ManagementCafe = () => {
       .then((res) => {
         setCount(res.data.data.storeCnt);
         setTemp(res.data.data.storeResDtoList.dtoList);
+        console.log(temp);
       })
       .catch((err) => console.log(err));
   }, [sort, page]);
@@ -161,6 +164,8 @@ const ManagementCafe = () => {
             temp={temp}
             setModal={setModal}
             detailModal={detailModal}
+            setMemoId={setMemoId}
+            setSelectItem={setSelectItem}
           />
         </S.TableHeader>
       </S.Wrapper>
@@ -171,7 +176,13 @@ const ManagementCafe = () => {
           href={"/management/register"}
         />
       )}
-      {modal && <MemoModal setModal={setModal} />}
+      {modal && (
+        <MemoModal
+          memoId={memoId}
+          setModal={setModal}
+          selectItem={selectItem}
+        />
+      )}
       {dModal && (
         <CafeDetailModal
           data={reviewData}

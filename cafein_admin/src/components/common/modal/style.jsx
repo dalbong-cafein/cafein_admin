@@ -51,4 +51,21 @@ export const Btn = styled.div`
 export const ModalContent = styled.div`
   color: #fff;
   height: 520px;
+
+  & > textarea {
+    width: 90%;
+    heigth: 350px;
+    background-color: #131313;
+    color: #e3e3e3;
+    border: 0;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  & > div {
+    width: 90%;
+    heigth: 350px;
+    color: #e3e3e3;
+  }
 `;

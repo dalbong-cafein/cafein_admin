@@ -1,12 +1,21 @@
 import styled from "styled-components";
 import Row from "../components/atoms/row";
 
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
 import { useState } from "react";
 const Admin = () => {
   const [admin] = useRecoilState(adminState);
   const [editMode, setEditMode] = useState(false);
+
+  function getTime() {
+    const target = new Date("2022-06-02 00:00:00+0900"); //출시일
+    const today = new Date();
+    const gap = today - target;
+
+    return Math.floor(gap / (1000 * 60 * 60 * 24));
+  }
+
   return (
     <Container>
       <div>
@@ -33,7 +42,7 @@ const Admin = () => {
         </Txt>
         <Line>
           <span>출시</span>
-          <p>+00일</p>
+          <p>+{getTime()}일</p>
         </Line>
         <Line>
           <span>회원 수</span>
@@ -41,17 +50,24 @@ const Admin = () => {
         </Line>
         <Line>
           <span>사이트</span>
-
-          <a
-            href="https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807"
-            target="blank"
-          >
-            https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807
-          </a>
+          {!editMode ? (
+            <a
+              href="https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807"
+              target="blank"
+            >
+              https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807
+            </a>
+          ) : (
+            <input type="text" onChange={(e) => console.log(e.target.value)} />
+          )}
         </Line>
         <Line>
           <span>이메일</span>
-          <p>{admin.email}</p>
+          {!editMode ? (
+            <p>{admin.email}</p>
+          ) : (
+            <input type="text" onChange={(e) => console.log(e.target.value)} />
+          )}
         </Line>
       </Box>
       {editMode ? (
@@ -128,6 +144,17 @@ const Line = styled.div`
   & > a {
     font-size: 14px;
     color: #e3e3e3;
+  }
+  & > input {
+    font-size: 14px;
+    color: #acacac;
+    border: 0;
+    width: 70%;
+    border-bottom: 1px solid #515151;
+    background-color: #131313;
+    &:focus {
+      outline: none;
+    }
   }
 `;
 
