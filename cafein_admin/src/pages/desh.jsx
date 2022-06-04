@@ -14,7 +14,7 @@ const Desh = () => {
   const [memoArr, setMemoArr] = useState([]);
   useEffect(() => {
     memoListApi().then((res) => setMemoArr(res.data.data));
-  });
+  }, []);
   return (
     <>
       <Header
@@ -177,6 +177,22 @@ const LongBox = styled.div`
     color: #fff;
     font-size: 18px;
     font-weight: bold;
+  }
+
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: gray;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
   }
 `;
 
