@@ -3,7 +3,12 @@ import Portal from "./Portal";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
-import { memoDataApi, registerMemoApi } from "../../../util/memo";
+import {
+  delMemoApi,
+  editMemoApi,
+  memoDataApi,
+  registerMemoApi,
+} from "../../../util/memo";
 
 export default function MemoModal({ setModal, memoId, selectItem }) {
   const closeModal = () => {
@@ -14,8 +19,6 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
   const [editMode, setEditMode] = useState(false);
   const [content, setContent] = useState("");
   const txt = window.location.pathname;
-  console.log(selectItem);
-  console.log(memoId);
 
   const onChange = (e) => {
     setContent(e.target.value);
@@ -29,11 +32,48 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
     registerMemoApi(id, content, txt).then((res) => console.log(res));
   };
 
+  const onEdit = () => {
+    editMemoApi(memoId, content)
+      .then((res) => setEditMode(false))
+      .catch((err) => console.log(err));
+  };
+  const onDel = () => {
+    delMemoApi(memoId)
+      .then((res) => setModal(false))
+      .catch((err) => console.log(err));
+  };
+
+  function getTime() {
+    const today = new Date();
+    const timeValue = new Date(memo?.modDateTime || memo?.regDateTime);
+
+    const betweenTime = Math.floor(
+      (today.getTime() - timeValue.getTime()) / 1000 / 60
+    );
+    if (betweenTime < 1) return "방금전";
+    if (betweenTime < 60) {
+      return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  }
+
   useEffect(() => {
     if (memoId) {
-      memoDataApi(memoId).then((res) => console.log(res));
+      memoDataApi(memoId).then((res) => setMemo(res.data.data));
     }
-  });
+  }, []);
+
   return (
     <Portal>
       <S.ModalBox>
@@ -45,7 +85,7 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
               ? "리뷰관리_"
               : "회원관리_"}
             {txt === "/management"
-              ? memo.storeId || String(selectItem.storeId).padStart(5, "0")
+              ? memo.storeId || selectItem.storeId
               : txt === "/review"
               ? memo.reviewId || selectItem.reviewId
               : memo.memberId || selectItem.memberId}
@@ -55,20 +95,42 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
         {memoId ? (
           <>
             <S.ModalContent>
-              {editMode ? <textarea /> : <div>hi</div>}
+              {editMode ? (
+                <textarea
+                  cols="50"
+                  rows="20"
+                  placeholder="내용을 입력하세요"
+                  name="content"
+                  defaultValue={memo?.content}
+                  onChange={(e) => onChange(e)}
+                />
+              ) : (
+                <div>{memo?.content}</div>
+              )}
             </S.ModalContent>
             <S.ModalFooter>
-              <p>2시간전</p>
+              <p>{getTime()}</p>
               <Row gap={24}>
                 {editMode ? (
                   <>
-                    <S.Btn color={"#515151"}>삭제</S.Btn>
-                    <S.Btn color={"#2563eb"}>등록</S.Btn>
+                    <S.Btn color={"#515151"} onClick={() => setEditMode(false)}>
+                      취소
+                    </S.Btn>
+                    <S.Btn color={"#2563eb"} onClick={onEdit}>
+                      등록
+                    </S.Btn>
                   </>
                 ) : (
                   <>
-                    <S.Btn color={"#515151"}>삭제</S.Btn>
-                    <S.Btn color={"#2563eb"}>수정</S.Btn>
+                    <S.Btn color={"#515151"} onClick={onDel}>
+                      삭제
+                    </S.Btn>
+                    <S.Btn
+                      color={"#2563eb"}
+                      onClick={() => setEditMode(!editMode)}
+                    >
+                      수정
+                    </S.Btn>
                   </>
                 )}
               </Row>

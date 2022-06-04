@@ -25,6 +25,9 @@ export const ModalHeader = styled.div`
     font-size: 20px;
     font-weight: bold;
   }
+  & > svg {
+    cursor: pointer;
+  }
 `;
 export const ModalFooter = styled.div`
   display: flex;
@@ -65,7 +68,25 @@ export const ModalContent = styled.div`
 
   & > div {
     width: 90%;
+    white-space: pre-line;
+    line-height: 22.4px;
     heigth: 350px;
+    max-height: 450px;
     color: #e3e3e3;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: none;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: gray;
+    }
+    ::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
   }
 `;

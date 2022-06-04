@@ -1,7 +1,13 @@
 import Row from "./atoms/row";
 import * as S from "../pages/style";
 import { ReactComponent as Memo } from "../svg/memo.svg";
-const ReviewTemp = ({ temp, onModal }) => {
+const ReviewTemp = ({
+  temp,
+  onModal,
+  setSelectItem,
+  setMemoModal,
+  setMemoId,
+}) => {
   return (
     <tbody>
       {temp &&
@@ -43,7 +49,13 @@ const ReviewTemp = ({ temp, onModal }) => {
               {item.modDateTime.split("T")[0]}
             </td>
             <td>
-              <Memo />
+              <Memo
+                onClick={() => {
+                  setSelectItem(item);
+                  setMemoId(item.memoId);
+                  setMemoModal(true);
+                }}
+              />
             </td>
           </tr>
         ))}

@@ -21,6 +21,7 @@ import {
 import None from "../components/None";
 import DropBox from "../components/common/dropbox";
 import ReviewTemp from "../components/reviewTemp";
+import MemoModal from "../components/common/modal/memo";
 
 const Review = () => {
   const [sort, setSort] = useState("DESC");
@@ -39,6 +40,9 @@ const Review = () => {
   const [arr, setArr] = useState(["내용", "회원 번호", "카페 번호"]);
 
   const [modal, setModal] = useState(false);
+
+  const [memoId, setMemoId] = useState(null);
+  const [memoModal, setMemoModal] = useState(false);
   const [selectItem2, setSelectItem2] = useState([]);
   const handlePageChange = (page) => {
     setPage(page);
@@ -137,10 +141,23 @@ const Review = () => {
             <td>최종 수정일</td>
             <td>메모</td>
           </tr>
-          <ReviewTemp temp={temp} onModal={onModal} />
+          <ReviewTemp
+            temp={temp}
+            onModal={onModal}
+            setMemoModal={setMemoModal}
+            setMemoId={setMemoId}
+            setSelectItem={setSelectItem2}
+          />
         </S.TableHeader>
       </S.Wrapper>
 
+      {memoModal && (
+        <MemoModal
+          memoId={memoId}
+          setModal={setMemoModal}
+          selectItem={selectItem2}
+        />
+      )}
       {temp.length === 0 && <None text={"리뷰"} />}
       {modal && <MReview setModal={setModal} selectItem2={selectItem2} />}
     </>

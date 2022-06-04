@@ -17,6 +17,7 @@ import { userDetailApi, userListApi, userSearchApi } from "../util/user";
 import None from "../components/None";
 import UserTemp from "../components/userTemp";
 import DropBox from "../components/common/dropbox";
+import MemoModal from "../components/common/modal/memo";
 const User = () => {
   const [temp, setTemp] = useState([]);
 
@@ -31,6 +32,9 @@ const User = () => {
   const [modal, setModal] = useState(false);
   const [selectItem, setSelectItem] = useState([]);
   const [sort, setSort] = useState("DESC");
+
+  const [memoId, setMemoId] = useState(null);
+  const [memoModal, setMemoModal] = useState(false);
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -127,10 +131,25 @@ const User = () => {
             <td>상태</td>
             <td>메모</td>
           </tr>
-          <UserTemp temp={temp} onModal={onModal} page={page} items={items} />
+          <UserTemp
+            temp={temp}
+            setMemoModal={setMemoModal}
+            onModal={onModal}
+            page={page}
+            items={items}
+            setMemoId={setMemoId}
+            setSelectItem={setSelectItem}
+          />
         </S.TableHeader>
       </S.Wrapper>
       {temp.length === 0 && <None text={"유저"} />}
+      {memoModal && (
+        <MemoModal
+          memoId={memoId}
+          setModal={setMemoModal}
+          selectItem={selectItem}
+        />
+      )}
       {modal && <MUser setModal={setModal} selectItem={selectItem} />}
     </>
   );

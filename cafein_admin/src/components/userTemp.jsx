@@ -3,7 +3,15 @@ import styled from "styled-components";
 import * as S from "../pages/style";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 
-const UserTemp = ({ temp, page, items, onModal }) => {
+const UserTemp = ({
+  temp,
+  page,
+  items,
+  onModal,
+  setSelectItem,
+  setMemoModal,
+  setMemoId,
+}) => {
   return (
     <tbody>
       {temp &&
@@ -56,7 +64,13 @@ const UserTemp = ({ temp, page, items, onModal }) => {
                 </Btn>
               </td>
               <td>
-                <Memo />
+                <Memo
+                  onClick={() => {
+                    setSelectItem(item);
+                    setMemoId(item.memoId);
+                    setMemoModal(true);
+                  }}
+                />
               </td>
             </tr>
           ))}

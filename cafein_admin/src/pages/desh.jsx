@@ -6,8 +6,15 @@ import { ReactComponent as User } from "../svg/user.svg";
 import { ReactComponent as Review } from "../svg/review.svg";
 import { ReactComponent as Mail } from "../svg/mail.svg";
 import NoneDiv from "../components/common/Nonediv";
+import { memo, useEffect, useState } from "react";
+import { memoListApi } from "../util/memo";
+import DeshMemo from "../components/deshMemobox";
 
 const Desh = () => {
+  const [memoArr, setMemoArr] = useState([]);
+  useEffect(() => {
+    memoListApi().then((res) => setMemoArr(res.data.data));
+  });
   return (
     <>
       <Header
@@ -79,7 +86,15 @@ const Desh = () => {
           </Box3>
           <LongBox>
             <p>메모</p>
-            <NoneDiv padding={284} text={"메모"} />
+            {memoArr.length === 0 ? (
+              <NoneDiv padding={284} text={"메모"} />
+            ) : (
+              <>
+                {memoArr.map((item, i) => (
+                  <DeshMemo key={i} item={item} />
+                ))}
+              </>
+            )}
           </LongBox>
         </Box2>
       </Container>
