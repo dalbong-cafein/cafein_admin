@@ -6,7 +6,21 @@ const NoneDiv = ({ text, loc, padding }) => {
   return (
     <Box padding={padding}>
       <p>{text} 내역이 없습니다.</p>
-      {loc && <p onClick={() => navigate(`/${loc}`)}>해당 페이지로 이동</p>}
+      {loc && (
+        <>
+          {loc === "statistics" ? (
+            <a
+              style={{ textDecoration: "none", color: "#2563eb" }}
+              href="https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807"
+              target="blank"
+            >
+              해당 페이지로 이동
+            </a>
+          ) : (
+            <p onClick={() => navigate(`/${loc}`)}>해당 페이지로 이동</p>
+          )}
+        </>
+      )}
     </Box>
   );
 };

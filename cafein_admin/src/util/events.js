@@ -5,6 +5,17 @@ export const marketingListApi = async (page, sort) => {
   return await withAuthInstance.get(`/coupons?page=${page}&sort=${sort}`);
 };
 
+//대시용
+export const marketingDListApi = async () => {
+  return await withAuthInstance.get(`/coupons/limit`);
+};
+
+//쿠폰리스트 검색
+export const marketingSearchApi = async (sub, keyword) => {
+  return await withAuthInstance.get(
+    `/coupons?searchType=${sub}&keyword=${keyword}`
+  );
+};
 export const eventListApi = async (page, sort) => {
   return await withAuthInstance.get(`/boards?boardCategoryId=2`);
 };

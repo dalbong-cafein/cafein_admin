@@ -80,7 +80,7 @@ const QnA = ({ menu }) => {
     copy.boardCategoryId = 2;
     setRegister(copy);
     registerNoticeApi(register)
-      .then((res) => console.log(res))
+      .then((res) => setAlert(false))
       .catch((err) => console.log(err));
   };
   const input = useRef();

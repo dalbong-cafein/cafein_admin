@@ -27,7 +27,7 @@ export const memoDataApi = async (id) => {
   return await withAuthInstance.get(`/memos/${id}`);
 };
 export const memoListApi = async () => {
-  return await withAuthInstance.get(`/memos/recent`);
+  return await withAuthInstance.get(`/memos/recent?size=7`);
 };
 export const delMemoApi = async (id) => {
   return await withAuthInstance.delete(`/memos/${id}`);

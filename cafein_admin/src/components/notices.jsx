@@ -74,7 +74,7 @@ const Notices = ({ menu }) => {
     copy.boardCategoryId = 1;
     setRegister(copy);
     registerNoticeApi(register)
-      .then((res) => console.log(res))
+      .then((res) => setAlert(false))
       .catch((err) => console.log(err));
   };
 

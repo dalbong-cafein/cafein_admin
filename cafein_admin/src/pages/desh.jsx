@@ -6,15 +6,37 @@ import { ReactComponent as User } from "../svg/user.svg";
 import { ReactComponent as Review } from "../svg/review.svg";
 import { ReactComponent as Mail } from "../svg/mail.svg";
 import NoneDiv from "../components/common/Nonediv";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { memoListApi } from "../util/memo";
 import DeshMemo from "../components/deshMemobox";
+import MemoModal from "../components/common/modal/memo";
+import { marketingDListApi, marketingListApi } from "../util/events";
+import DeshMarketing from "../components/deshMarketing";
+import { useNavigate } from "react-router-dom";
 
 const Desh = () => {
+  const navigate = useNavigate();
   const [memoArr, setMemoArr] = useState([]);
+  const [memoId, setMemoId] = useState(null);
+  const [memoModal, setMemoModal] = useState(false);
+  const [selectMItem, setselectMItem] = useState([]);
+
+  const [marketingArr, setMarketingArr] = useState([]);
+
+  const memoClick = (item) => {
+    setMemoId(item.memoId);
+    setselectMItem(item);
+    setMemoModal(!memoModal);
+  };
   useEffect(() => {
     memoListApi().then((res) => setMemoArr(res.data.data));
+    marketingDListApi()
+      .then((res) => {
+        setMarketingArr(res.data.data.couponResDtoList);
+      })
+      .catch((err) => console.log(err));
   }, []);
+
   return (
     <>
       <Header
@@ -66,21 +88,29 @@ const Desh = () => {
 
               <div>
                 <Table>
-                  <table>
-                    <tr>
-                      <td>회원번호</td>
-                      <td>상품명</td>
-                      <td>신청 날짜</td>
-                      <td>처리 날짜</td>
-                      <td>상태</td>
-                    </tr>
-                  </table>
+                  <THead>
+                    <div>회원번호</div>
+                    <div>상품명</div>
+                    <div>신청 날짜</div>
+                    <div>처리 날짜</div>
+                    <div>상태</div>
+                  </THead>
+
+                  {marketingArr && marketingArr.length === 0 ? (
+                    <NoneDiv
+                      padding={80}
+                      text={"마케팅 서비스"}
+                      loc={"marketing"}
+                    />
+                  ) : (
+                    <ColumnBox onClick={() => navigate("/marketing")}>
+                      {marketingArr &&
+                        marketingArr.map((item, i) => (
+                          <DeshMarketing item={item} />
+                        ))}
+                    </ColumnBox>
+                  )}
                 </Table>
-                <NoneDiv
-                  padding={80}
-                  text={"마케팅 서비스"}
-                  loc={"marketing"}
-                />
               </div>
             </LongBox2>
           </Box3>
@@ -91,20 +121,32 @@ const Desh = () => {
             ) : (
               <>
                 {memoArr.map((item, i) => (
-                  <DeshMemo key={i} item={item} />
+                  <DeshMemo
+                    key={i}
+                    item={item}
+                    memoClick={memoClick}
+                    setselectMItem={setselectMItem}
+                  />
                 ))}
               </>
             )}
           </LongBox>
         </Box2>
       </Container>
+      {memoModal && (
+        <MemoModal
+          memoId={memoId}
+          setModal={setMemoModal}
+          selectItem={selectMItem}
+        />
+      )}
     </>
   );
 };
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -179,21 +221,21 @@ const LongBox = styled.div`
     font-weight: bold;
   }
 
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: none;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: gray;
-  }
-  ::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-  }
+  // overflow-y: scroll;
+  // ::-webkit-scrollbar {
+  //   width: 6px;
+  // }
+  // ::-webkit-scrollbar-track {
+  //   background-color: none;
+  // }
+  // ::-webkit-scrollbar-thumb {
+  //   border-radius: 3px;
+  //   background-color: gray;
+  // }
+  // ::-webkit-scrollbar-button {
+  //   width: 0;
+  //   height: 0;
+  // }
 `;
 
 const LongBox2 = styled.div`
@@ -201,6 +243,7 @@ const LongBox2 = styled.div`
   border-radius: 16px;
   height: ${(props) => props.height && props.height}%;
   padding: 24px;
+  box-sizing: border-box;
 
   & > p:first-child {
     color: #fff;
@@ -218,19 +261,38 @@ const LongBox2 = styled.div`
 
 const Table = styled.div`
   width: 100%;
-  margin-top: 31px;
-  border-radius: 20px;
-  background-color: #333333;
-  & > table {
-    width: 100%;
-    font-size: 14px;
-    & > tr {
-      & > td {
-        text-align: center;
-        color: #8b8b8b;
-        padding: 11px 0 15px;
-      }
-    }
+  font-size: 14px;
+  box-sizing: border-box;
+  & > div {
+    flex: 1;
   }
+  & > div:nth-child(2) {
+    flex: 2;
+  }
+`;
+
+const THead = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 15px 0;
+  background-color: #333333;
+  border-radius: 20px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  & > div {
+    flex: 1;
+    text-align: center;
+  }
+  & > div:nth-child(2) {
+    flex: 2;
+  }
+`;
+
+const ColumnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `;
 export default Desh;

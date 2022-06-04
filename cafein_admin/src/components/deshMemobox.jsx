@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Row from "./atoms/row";
 
-const DeshMemo = ({ item }) => {
+const DeshMemo = ({ item, memoClick }) => {
   function getTime() {
     const today = new Date();
     const timeValue = new Date(item?.modDateTime || item?.regDateTime);
@@ -28,7 +28,7 @@ const DeshMemo = ({ item }) => {
   }
 
   return (
-    <Box>
+    <Box onClick={() => memoClick(item)}>
       <Row gap={10} style={{ padding: "10px 0" }}>
         <p style={{ color: "#f6f6f6" }}>
           {item.memoType} {item.storeId || item.memberId || item.reviewId}

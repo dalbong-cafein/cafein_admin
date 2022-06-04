@@ -2,7 +2,6 @@ import Paging from "../components/common/Pagination";
 
 import * as S from "../pages/style";
 import { ReactComponent as Search } from "../svg/Search.svg";
-import { ReactComponent as Memo } from "../svg/memo.svg";
 import { ReactComponent as Check } from "../svg/check.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
@@ -11,9 +10,14 @@ import None from "./None";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { changeStateApi, marketingListApi } from "../util/events";
+import {
+  changeStateApi,
+  marketingListApi,
+  marketingSearchApi,
+} from "../util/events";
 import DropBox from "./common/dropbox";
 import RedAlert from "./common/modal/redAlert";
+import MarketingsTemp from "./marketingsTemp";
 const Marketings = () => {
   const [search, setSearch] = useState("");
 
@@ -36,15 +40,37 @@ const Marketings = () => {
     setSort(id);
   };
 
+  //drop
+  const [isDrop, setIsDrop] = useState(false);
+  const [selected, setSelected] = useState("전체");
+  const [arr, setArr] = useState(["분류", "회원 번호", "핸드폰"]);
+
+  const onclick = () => {
+    if (selected === "회원 번호") {
+      marketingSearchApi("m", search)
+        .then((res) => {
+          setTemp(res.data.data.couponResDtoList.dtoList);
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    }
+    if (selected === "분류") {
+      marketingSearchApi("cp", search)
+        .then((res) => setTemp(res.data.data.couponResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+    if (selected === "핸드폰") {
+      marketingSearchApi("p", search)
+        .then((res) => setTemp(res.data.data.couponResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+  };
+
   const changeState = (id) => {
     changeStateApi(id)
       .then((res) => window.location.reload())
       .catch((err) => console.log(err));
   };
-  //drop
-  const [isDrop, setIsDrop] = useState(false);
-  const [selected, setSelected] = useState("전체");
-  const [arr, setArr] = useState(["분류", "회원 번호", "핸드폰"]);
 
   useEffect(() => {
     marketingListApi(page, sort)
@@ -116,43 +142,13 @@ const Marketings = () => {
             <td>상태</td>
             <td>메모</td>
           </tr>
-          <tbody>
-            {temp &&
-              temp
-                .slice(items * (page - 1), items * (page - 1) + items)
-                .map((item, i) => (
-                  <tr key={i}>
-                    <td style={{ textAlign: "center" }}>
-                      {String(item.couponId).padStart(5, "0")}
-                    </td>
-                    <td>{item.brandName}</td>
-                    <td>{item.itemName}</td>
-                    <td style={{ textAlign: "center" }}>
-                      {String(item.memberId).padStart(5, "0")}
-                    </td>
-                    <td>{item.phone || "-"}</td>
-                    <td>{item.regDateTime}</td>
-                    <td style={{ textAlign: "center" }}>
-                      {item.processingDateTime || "-"}
-                    </td>
-                    <td>
-                      <S.Btn
-                        content={item.status}
-                        disabled={item.status}
-                        onClick={() => {
-                          setAlert(!alert);
-                          setReportId(item.couponId);
-                        }}
-                      >
-                        {item.processingDateTime !== null ? "완료" : "미완료"}
-                      </S.Btn>
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      <Memo />
-                    </td>
-                  </tr>
-                ))}
-          </tbody>
+          <MarketingsTemp
+            temp={temp}
+            page={page}
+            items={items}
+            setAlert={setAlert}
+            setReportId={setReportId}
+          />
         </S.TableHeader>
       </S.Wrapper>
       {alert && reportId && (
