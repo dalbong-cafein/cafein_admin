@@ -2,12 +2,25 @@ import axios from "axios";
 import { withAuthInstance } from "./index";
 
 export const registerMemoApi = async (id, content, where) => {
-  let page = null;
-  if (where === "/management") page = "storeId";
-  else if (where === "/review") page = "reviewId";
-  else if (where === "/user") page = "memberId";
+  let body = null;
+  if (where === "/management") {
+    body = {
+      storeId: id,
+      content: content,
+    };
+  } else if (where === "/review") {
+    body = {
+      reviewId: id,
+      content: content,
+    };
+  } else if (where === "/user") {
+    body = {
+      memberId: id,
+      content: content,
+    };
+  }
 
-  return await withAuthInstance.post(`/memos`, { page: id, content: content });
+  return await withAuthInstance.post(`/memos`, body);
 };
 
 export const memoDataApi = async (id) => {
