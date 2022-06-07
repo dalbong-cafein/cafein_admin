@@ -34,10 +34,30 @@ const Marketings = () => {
   const [alert, setAlert] = useState(false);
   const handlePageChange = (page) => {
     setPage(page);
+    if (selected === "전체") {
+      marketingListApi(page, sort)
+        .then((res) => {
+          setCount(res.data.data.couponCnt);
+          setTemp(res.data.data.couponResDtoList.dtoList);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      onclick();
+    }
   };
 
-  const sortData = (id) => {
-    setSort(id);
+  const sortData = async (id) => {
+    await setSort(id);
+    if (selected === "전체") {
+      marketingListApi(page, sort)
+        .then((res) => {
+          setCount(res.data.data.couponCnt);
+          setTemp(res.data.data.couponResDtoList.dtoList);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      onclick();
+    }
   };
 
   //drop
@@ -46,8 +66,10 @@ const Marketings = () => {
   const [arr, setArr] = useState(["분류", "회원 번호", "핸드폰"]);
 
   const onclick = () => {
+    setSort("DESC");
+    setPage(1);
     if (selected === "회원 번호") {
-      marketingSearchApi("m", search)
+      marketingSearchApi("m", search, page, sort)
         .then((res) => {
           setTemp(res.data.data.couponResDtoList.dtoList);
           console.log(res);
@@ -55,12 +77,12 @@ const Marketings = () => {
         .catch((err) => console.log(err));
     }
     if (selected === "분류") {
-      marketingSearchApi("cp", search)
+      marketingSearchApi("cp", search, page, sort)
         .then((res) => setTemp(res.data.data.couponResDtoList.dtoList))
         .catch((err) => console.log(err));
     }
     if (selected === "핸드폰") {
-      marketingSearchApi("p", search)
+      marketingSearchApi("p", search, page, sort)
         .then((res) => setTemp(res.data.data.couponResDtoList.dtoList))
         .catch((err) => console.log(err));
     }
@@ -79,7 +101,7 @@ const Marketings = () => {
         setTemp(res.data.data.couponResDtoList.dtoList);
       })
       .catch((err) => console.log(err));
-  }, [page, sort]);
+  }, []);
 
   return (
     <>
