@@ -29,7 +29,11 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
     if (txt === "/management") id = selectItem.storeId;
     else if (txt === "/review") id = selectItem.reviewId;
     else if (txt === "/user") id = selectItem.memberId;
-    registerMemoApi(id, content, txt).then((res) => console.log(res));
+    //쿠폰이면
+    registerMemoApi(id, content, txt).then((res) => {
+      alert("등록되었습니다");
+      setModal(false);
+    });
   };
 
   const onEdit = () => {

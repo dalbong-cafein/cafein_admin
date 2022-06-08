@@ -23,17 +23,21 @@ import CafeDetailModal from "../components/common/modal/cafeDetail";
 import ManagementTemp from "../components/managementTemp";
 
 const ManagementCafe = () => {
+  const navigate = useNavigate();
+
   const [sort, setSort] = useState("DESC");
   const [modal, setModal] = useState(false);
   const [dModal, setDModal] = useState(false);
-  const navigate = useNavigate();
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
+  const [dSelected, setDSelected] = useState([]);
+
+  //drop
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState("전체");
-  const [dSelected, setDSelected] = useState([]);
   const [arr, setArr] = useState(["분류", "카페명", "위치"]);
+
   const [memoId, setMemoId] = useState(null);
   const [selectItem, setSelectItem] = useState([]);
 
@@ -42,12 +46,45 @@ const ManagementCafe = () => {
   const [count, setCount] = useState(0);
   const [items, setItems] = useState(9);
   const [reviewData, setReviewData] = useState([]);
-  const handlePageChange = (page) => {
-    setPage(page);
+
+  const changeData = () => {
+    if (selected === "전체") {
+      feedDataApi(page, sort)
+        .then((res) => {
+          setCount(res.data.data.storeCnt);
+          setTemp(res.data.data.storeResDtoList.dtoList);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      searchData();
+    }
   };
 
-  const sortData = (id) => {
-    setSort(id);
+  const searchData = () => {
+    if (selected === "카페명") {
+      feedSearchApi(search, "sn")
+        .then((res) => {
+          setTemp(res.data.data.storeResDtoList.dtoList);
+          setCount(res.data.data.storeCnt);
+        })
+        .catch((err) => console.log(err));
+    }
+    if (selected === "분류") {
+      feedSearchApi(search, "s")
+        .then((res) => {
+          setTemp(res.data.data.storeResDtoList.dtoList);
+          setCount(res.data.data.storeCnt);
+        })
+        .catch((err) => console.log(err));
+    }
+    if (selected === "위치") {
+      feedSearchApi(search, "a")
+        .then((res) => {
+          setTemp(res.data.data.storeResDtoList.dtoList);
+          setCount(res.data.data.storeCnt);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const detailModal = (item) => {
@@ -63,33 +100,22 @@ const ManagementCafe = () => {
   };
 
   const onclick = () => {
-    if (selected === "카페명") {
-      feedSearchApi(search, "sn")
-        .then((res) => {
-          setTemp(res.data.data.storeResDtoList.dtoList);
-        })
-        .catch((err) => console.log(err));
-    }
-    if (selected === "분류") {
-      feedSearchApi(search, "s")
-        .then((res) => setTemp(res.data.data.storeResDtoList.dtoList))
-        .catch((err) => console.log(err));
-    }
-    if (selected === "위치") {
-      feedSearchApi(search, "a")
-        .then((res) => setTemp(res.data.data.storeResDtoList.dtoList))
-        .catch((err) => console.log(err));
-    }
+    setSort("DESC");
+    setPage(1);
+    searchData();
   };
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  const sortData = (id) => {
+    setSort(id);
+  };
+
   useEffect(() => {
-    feedDataApi(page, sort)
-      .then((res) => {
-        setCount(res.data.data.storeCnt);
-        setTemp(res.data.data.storeResDtoList.dtoList);
-        console.log(temp);
-      })
-      .catch((err) => console.log(err));
-  }, [sort, page]);
+    changeData();
+  }, [page, sort]);
   return (
     <>
       <Header mcolor={"#fff"} text={"카페 관리"} subText={"등록된 카페 00건"} />

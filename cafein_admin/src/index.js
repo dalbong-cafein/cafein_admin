@@ -13,7 +13,7 @@ const rootNode = document.getElementById("root");
   /*//수정*/
 }
 ReactDOM.createRoot(rootNode).render(
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <RecoilRoot>
       <App />
     </RecoilRoot>

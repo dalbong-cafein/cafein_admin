@@ -1,11 +1,11 @@
 import { withAuthInstance } from "./index";
 
 export const userListApi = async (sort, page) => {
-  return await withAuthInstance.get(`/members?sort=${sort}`);
+  return await withAuthInstance.get(`/members?page=${page}&sort=${sort}`);
 };
-export const userSearchApi = async (sub, keyword) => {
+export const userSearchApi = async (sub, keyword, sort, page) => {
   return await withAuthInstance.get(
-    `/members?searchType=${sub}&keyword=${keyword}`
+    `/members?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );
 };
 export const userReportApi = async (id) => {

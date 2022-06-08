@@ -9,8 +9,6 @@ import User from "./user";
 import Desh from "./desh";
 import Marketing from "./marketing";
 import Notice from "./notice";
-import Admin from "./admin";
-import { Temp } from "./temp";
 
 const Main = ({}) => {
   return (
@@ -23,8 +21,6 @@ const Main = ({}) => {
         <Route path="/user" exact element={<User />} />
         <Route path="/marketing" exact element={<Marketing />} />
         <Route path="/notice" exact element={<Notice />} />
-        {/* <Route path="/statistics" exact element={<Temp />} /> */}
-        <Route path="/admin" exact element={<Admin />} />
       </Routes>
     </Containaer>
   );

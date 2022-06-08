@@ -23,7 +23,7 @@ const SideBar = () => {
   const menu = window.location.pathname.split("/")[1];
   return (
     <Container>
-      <LogoIcon />
+      <LogoIcon onClick={() => navigate("/")} />
       <Box>
         <div>
           <MenuBox svgW={15} onClick={() => navigate("/")} isT={menu === ""}>
@@ -97,11 +97,7 @@ const SideBar = () => {
         </div>
         <Profile>
           <Row align={"center"} gap={60}>
-            <Row
-              gap={12}
-              onClick={() => navigate("/admin")}
-              style={{ cursor: "pointer" }}
-            >
+            <Row gap={12}>
               <Pic img={admin.image} />
               <Column>
                 <p>카페인</p>
@@ -133,8 +129,8 @@ const Container = styled.div`
   align-items: flex-start;
   gap: 72px;
   & > svg {
-    width: 118px;
-    height: 39px;
+    width: 93px;
+    height: 26px;
   }
 `;
 
@@ -180,7 +176,7 @@ const Column = styled.div`
 const MenuBox = styled.div`
   width: 156px;
   height: 40px;
-  padding: 0 10px;
+  padding: 0 5px;
   color: #fff;
   display: flex;
   justify-content: flex-start;

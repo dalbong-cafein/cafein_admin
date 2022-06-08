@@ -13,7 +13,7 @@ export const marketingDListApi = async () => {
 //쿠폰리스트 검색
 export const marketingSearchApi = async (sub, keyword, page, sort) => {
   return await withAuthInstance.get(
-    `/coupons?searchType=${sub}&keyword=${keyword}?page=${page}&sort=${sort}`
+    `/coupons?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );
 };
 export const eventListApi = async (page, sort) => {

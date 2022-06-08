@@ -1,7 +1,16 @@
 import { ReactComponent as Memo } from "../svg/memo.svg";
 import * as S from "../pages/style";
 
-const MarketingsTemp = ({ temp, page, items, setAlert, setReportId }) => {
+const MarketingsTemp = ({
+  temp,
+  page,
+  items,
+  setAlert,
+  setReportId,
+  setSelectItem,
+  setMemoModal,
+  setMemoId,
+}) => {
   return (
     <tbody>
       {temp &&
@@ -35,7 +44,13 @@ const MarketingsTemp = ({ temp, page, items, setAlert, setReportId }) => {
                 </S.Btn>
               </td>
               <td style={{ textAlign: "center" }}>
-                <Memo />
+                <Memo
+                  onClick={() => {
+                    setSelectItem(item);
+                    setMemoId(item.memoId);
+                    setMemoModal(true);
+                  }}
+                />
               </td>
             </tr>
           ))}

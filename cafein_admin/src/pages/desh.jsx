@@ -13,6 +13,8 @@ import MemoModal from "../components/common/modal/memo";
 import { marketingDListApi, marketingListApi } from "../util/events";
 import DeshMarketing from "../components/deshMarketing";
 import { useNavigate } from "react-router-dom";
+import { deshDataApi } from "../util/admin";
+import Row from "../components/atoms/row";
 
 const Desh = () => {
   const navigate = useNavigate();
@@ -22,18 +24,31 @@ const Desh = () => {
   const [selectMItem, setselectMItem] = useState([]);
 
   const [marketingArr, setMarketingArr] = useState([]);
+  const [deshData, setDeshData] = useState([]);
 
   const memoClick = (item) => {
     setMemoId(item.memoId);
     setselectMItem(item);
     setMemoModal(!memoModal);
   };
+
+  function getTime() {
+    const target = new Date("2022-06-02 00:00:00+0900"); //출시일
+    const today = new Date();
+    const gap = today - target;
+
+    return Math.floor(gap / (1000 * 60 * 60 * 24));
+  }
+
   useEffect(() => {
     memoListApi().then((res) => setMemoArr(res.data.data));
     marketingDListApi()
       .then((res) => {
         setMarketingArr(res.data.data.couponResDtoList);
       })
+      .catch((err) => console.log(err));
+    deshDataApi()
+      .then((res) => setDeshData(res.data.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -43,7 +58,19 @@ const Desh = () => {
         mSize={22}
         text={"안녕하세요! 오늘도 일하는 당신, 참 멋져요"}
         mcolor={"#fff"}
-      />
+      >
+        <ColumnBox style={{ alignItems: "end" }}>
+          <Row align={"baseline"}>
+            <p style={{ width: "60px", color: "#8B8B8B" }}>출시</p>
+            <p style={{ fontSize: "14px" }}> +{getTime()}일</p>
+          </Row>
+          <Row align={"baseline"}>
+            <p style={{ width: "70px", color: "#8B8B8B" }}>회원수</p>
+            <p style={{ fontSize: "14px" }}>0명</p>
+          </Row>
+        </ColumnBox>
+      </Header>
+
       <Container>
         <RowBox>
           <Box colorS={"#FC6406"}>
@@ -51,21 +78,21 @@ const Desh = () => {
               <p>오늘 등록된 카페</p>
               <Cup />
             </div>
-            <p>0곳</p>
+            <p>{deshData?.storeCnt}곳</p>
           </Box>
           <Box colorS={"#2563eb"}>
             <div>
               <p>오늘 등록된 회원</p>
               <User />
             </div>
-            <p>0명</p>
+            <p>{deshData?.memberCnt}명</p>
           </Box>
           <Box colorS={"#26ba6a"}>
             <div>
               <p>오늘 등록된 리뷰</p>
               <Review />
             </div>
-            <p>0개</p>
+            <p>{deshData?.reviewCnt}개</p>
           </Box>
           <Box>
             <div>

@@ -13,11 +13,7 @@ import { ReactComponent as Check } from "../svg/check.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
 import MReview from "../components/common/modal/MReview";
-import {
-  reviewDataApi,
-  reviewDetailApi,
-  reviewSearchApi,
-} from "../util/review";
+import { reviewDataApi, reviewSearchApi } from "../util/review";
 import None from "../components/None";
 import DropBox from "../components/common/dropbox";
 import ReviewTemp from "../components/reviewTemp";
@@ -44,6 +40,7 @@ const Review = () => {
   const [memoId, setMemoId] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
   const [selectItem2, setSelectItem2] = useState([]);
+
   const handlePageChange = (page) => {
     setPage(page);
   };
@@ -57,29 +54,45 @@ const Review = () => {
     setSort(id);
   };
   const onclick = () => {
+    setSort("DESC");
+    setPage(1);
+    searchData();
+  };
+
+  const searchData = () => {
     if (selected === "내용") {
-      reviewSearchApi(search, "w").then((res) => {
+      reviewSearchApi(search, "w", page, sort).then((res) => {
         console.log(res);
         setTemp(res.data.data.reviewResDtoList.dtoList);
       });
     }
     if (selected === "회원 번호") {
-      reviewSearchApi(search, "c").then((res) =>
+      reviewSearchApi(search, "c", page, sort).then((res) =>
         setTemp(res.data.data.reviewResDtoList.dtoList)
       );
     }
     if (selected === "카페 번호") {
-      reviewSearchApi(search, "s").then((res) =>
+      reviewSearchApi(search, "s", page, sort).then((res) =>
         setTemp(res.data.data.reviewResDtoList.dtoList)
       );
     }
   };
 
+  const changeData = () => {
+    if (selected === "전체") {
+      reviewDataApi(page, sort)
+        .then((res) => {
+          setCount(res.data.data.reviewCnt);
+          setTemp(res.data.data.reviewResDtoList.dtoList);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      searchData();
+    }
+  };
+
   useEffect(() => {
-    reviewDataApi(page, sort).then((res) => {
-      setCount(res.data.data.reviewCnt);
-      setTemp(res.data.data.reviewResDtoList.dtoList);
-    });
+    changeData();
   }, [page, sort]);
   return (
     <>

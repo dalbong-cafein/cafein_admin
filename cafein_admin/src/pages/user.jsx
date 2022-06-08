@@ -1,9 +1,6 @@
-import Header from "../components/common/header";
+import { useEffect, useState } from "react";
 
 import * as S from "./style";
-
-import { useEffect, useState } from "react";
-import Row from "../components/atoms/row";
 
 import Paging from "../components/common/Pagination";
 
@@ -11,13 +8,15 @@ import { ReactComponent as Search } from "../svg/Search.svg";
 import { ReactComponent as Check } from "../svg/check.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
-import styled from "styled-components";
-import MUser from "../components/common/modal/MUser";
 import { userDetailApi, userListApi, userSearchApi } from "../util/user";
 import None from "../components/None";
 import UserTemp from "../components/userTemp";
 import DropBox from "../components/common/dropbox";
 import MemoModal from "../components/common/modal/memo";
+import MUser from "../components/common/modal/MUser";
+import Row from "../components/atoms/row";
+import Header from "../components/common/header";
+
 const User = () => {
   const [temp, setTemp] = useState([]);
 
@@ -35,8 +34,35 @@ const User = () => {
 
   const [memoId, setMemoId] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
-  const handlePageChange = (page) => {
-    setPage(page);
+
+  const searchData = () => {
+    if (selected === "분류") {
+      userSearchApi("m", search, sort, page)
+        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+    if (selected === "회원명") {
+      userSearchApi("mn", search, sort, page)
+        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+    if (selected === "핸드폰") {
+      userSearchApi("p", search, sort, page)
+        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const changeData = () => {
+    if (selected === "전체") {
+      userListApi(sort, page)
+        .then((res) => {
+          setTemp(res.data.data.memberResDtoList.dtoList);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      searchData();
+    }
   };
 
   const onModal = (item) => {
@@ -47,27 +73,22 @@ const User = () => {
   };
 
   const onclick = () => {
-    if (selected === "분류") {
-      userSearchApi("m", search)
-        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
-        .catch((err) => console.log(err));
-    }
-    if (selected === "회원명") {
-      userSearchApi("mn", search)
-        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
-        .catch((err) => console.log(err));
-    }
-    if (selected === "핸드폰") {
-      userSearchApi("p", search)
-        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
-        .catch((err) => console.log(err));
-    }
+    setSort("DESC");
+    setPage(1);
+    searchData();
   };
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  const sortData = async (id) => {
+    setSort(id);
+  };
+
   useEffect(() => {
-    userListApi(sort).then((res) => {
-      setTemp(res.data.data.memberResDtoList.dtoList);
-    });
-  }, [sort, page]);
+    changeData();
+  }, [page, sort]);
 
   return (
     <>
@@ -78,11 +99,11 @@ const User = () => {
         style={{ marginBottom: "20px" }}
       >
         <Row gap={15}>
-          <S.Sbtn id="DESC" onClick={(e) => setSort(e.target.id)}>
+          <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
             최신순
             {sort === "DESC" && <Check />}
           </S.Sbtn>
-          <S.Sbtn id="ASC" onClick={(e) => setSort(e.target.id)}>
+          <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
             오래된 순{sort === "ASC" && <Check />}
           </S.Sbtn>
         </Row>

@@ -65,8 +65,8 @@ export const feedDetailDataApi = async (id) => {
 };
 
 //피드 검색어
-export const feedSearchApi = async (keyword, sub) => {
+export const feedSearchApi = async (keyword, sub, page, sort) => {
   return await withAuthInstance.get(
-    `/stores?searchType=${sub}&keyword=${keyword}`
+    `/stores?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );
 };

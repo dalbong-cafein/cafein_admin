@@ -18,6 +18,7 @@ import {
 import DropBox from "./common/dropbox";
 import RedAlert from "./common/modal/redAlert";
 import MarketingsTemp from "./marketingsTemp";
+import MemoModal from "./common/modal/memo";
 const Marketings = () => {
   const [search, setSearch] = useState("");
 
@@ -32,60 +33,68 @@ const Marketings = () => {
   const [reportId, setReportId] = useState(null);
 
   const [alert, setAlert] = useState(false);
-  const handlePageChange = (page) => {
-    setPage(page);
-    if (selected === "전체") {
-      marketingListApi(page, sort)
-        .then((res) => {
-          setCount(res.data.data.couponCnt);
-          setTemp(res.data.data.couponResDtoList.dtoList);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      onclick();
-    }
-  };
 
-  const sortData = async (id) => {
-    await setSort(id);
-    if (selected === "전체") {
-      marketingListApi(page, sort)
-        .then((res) => {
-          setCount(res.data.data.couponCnt);
-          setTemp(res.data.data.couponResDtoList.dtoList);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      onclick();
-    }
-  };
+  const [memoId, setMemoId] = useState(null);
+  const [memoModal, setMemoModal] = useState(false);
+  const [selectItem, setSelectItem] = useState([]);
 
   //drop
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState("전체");
   const [arr, setArr] = useState(["분류", "회원 번호", "핸드폰"]);
 
-  const onclick = () => {
-    setSort("DESC");
-    setPage(1);
+  const searchData = () => {
     if (selected === "회원 번호") {
       marketingSearchApi("m", search, page, sort)
         .then((res) => {
           setTemp(res.data.data.couponResDtoList.dtoList);
-          console.log(res);
+          console.log(res.data.data);
+          setCount(res.data.data.couponCnt);
         })
         .catch((err) => console.log(err));
     }
     if (selected === "분류") {
       marketingSearchApi("cp", search, page, sort)
-        .then((res) => setTemp(res.data.data.couponResDtoList.dtoList))
+        .then((res) => {
+          setTemp(res.data.data.couponResDtoList.dtoList);
+          setCount(res.data.data.couponCnt);
+        })
         .catch((err) => console.log(err));
     }
     if (selected === "핸드폰") {
       marketingSearchApi("p", search, page, sort)
-        .then((res) => setTemp(res.data.data.couponResDtoList.dtoList))
+        .then((res) => {
+          setTemp(res.data.data.couponResDtoList.dtoList);
+          setCount(res.data.data.couponCnt);
+        })
         .catch((err) => console.log(err));
     }
+  };
+
+  const changeData = () => {
+    if (selected === "전체") {
+      marketingListApi(page, sort)
+        .then((res) => {
+          setCount(res.data.data.couponCnt);
+          setTemp(res.data.data.couponResDtoList.dtoList);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      searchData();
+    }
+  };
+  const onclick = () => {
+    setSort("DESC");
+    setPage(1);
+    searchData();
+  };
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  const sortData = async (id) => {
+    setSort(id);
   };
 
   const changeState = (id) => {
@@ -95,13 +104,8 @@ const Marketings = () => {
   };
 
   useEffect(() => {
-    marketingListApi(page, sort)
-      .then((res) => {
-        setCount(res.data.data.couponCnt);
-        setTemp(res.data.data.couponResDtoList.dtoList);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    changeData();
+  }, [page, sort]);
 
   return (
     <>
@@ -170,6 +174,9 @@ const Marketings = () => {
             items={items}
             setAlert={setAlert}
             setReportId={setReportId}
+            setMemoId={setMemoId}
+            setSelectItem={setSelectItem}
+            setMemoModal={setMemoModal}
           />
         </S.TableHeader>
       </S.Wrapper>
@@ -183,6 +190,14 @@ const Marketings = () => {
           forFunc={reportId}
         />
       )}
+
+      {/* {memoModal && (
+        <MemoModal
+          memoId={memoId}
+          setModal={setMemoModal}
+          selectItem={selectItem}
+        />
+      )} */}
       {temp.length === 0 && <None text={"마케팅 서비스"} />}
     </>
   );
