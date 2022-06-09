@@ -7,11 +7,13 @@ import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
 
 import HoverContent from "../../hoverContent";
+import { useNavigate } from "react-router-dom";
 
 export default function CafeDetailModal({ data, setDModal, dSelected }) {
   const closeModal = () => {
     setDModal(false);
   };
+  const navigate = useNavigate();
 
   const totalfunc = (title) => {
     if (title) {
@@ -77,31 +79,31 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                     <Column>
                       <p>
                         월
-                        {` ${dSelected?.businessHoursResDto?.onMon?.open}-${dSelected?.businessHoursResDto?.onMon?.close}`}
+                        {` ${dSelected?.businessHoursResDto?.onMon?.open}-${dSelected?.businessHoursResDto?.onMon?.closed}`}
                       </p>
                       <p>
                         화
-                        {` ${dSelected?.businessHoursResDto?.onTue?.open}-${dSelected?.businessHoursResDto?.onTue?.close}`}
+                        {` ${dSelected?.businessHoursResDto?.onTue?.open}-${dSelected?.businessHoursResDto?.onTue?.closed}`}
                       </p>
                       <p>
                         수
-                        {` ${dSelected?.businessHoursResDto?.onWed?.open}-${dSelected?.businessHoursResDto?.onWed?.close}`}
+                        {` ${dSelected?.businessHoursResDto?.onWed?.open}-${dSelected?.businessHoursResDto?.onWed?.closed}`}
                       </p>
                       <p>
                         목
-                        {` ${dSelected?.businessHoursResDto?.onThu?.open}-${dSelected?.businessHoursResDto?.onThu?.close}`}
+                        {` ${dSelected?.businessHoursResDto?.onThu?.open}-${dSelected?.businessHoursResDto?.onThu?.closed}`}
                       </p>
                       <p>
                         금
-                        {` ${dSelected?.businessHoursResDto?.onFri?.open}-${dSelected?.businessHoursResDto?.onFri?.close}`}
+                        {` ${dSelected?.businessHoursResDto?.onFri?.open}-${dSelected?.businessHoursResDto?.onFri?.closed}`}
                       </p>
                       <p>
                         토
-                        {` ${dSelected?.businessHoursResDto?.onSat?.open}-${dSelected?.businessHoursResDto?.onSat?.close}`}
+                        {` ${dSelected?.businessHoursResDto?.onSat?.open}-${dSelected?.businessHoursResDto?.onSat?.closed}`}
                       </p>
                       <p>
                         일
-                        {` ${dSelected?.businessHoursResDto?.onSun?.open}-${dSelected?.businessHoursResDto?.onSun?.close}`}
+                        {` ${dSelected?.businessHoursResDto?.onSun?.open}-${dSelected?.businessHoursResDto?.onSun?.closed}`}
                       </p>
                     </Column>
                   )}
@@ -160,7 +162,7 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
           <Title style={{ padding: "40px 0" }} size={16}>
             카공 정보
           </Title>
-          <Columnbox style={{ paddingBottom: "70px" }}>
+          <Columnbox style={{ paddingBottom: "190px" }}>
             <Line color={"#515151"}>
               <span>전체</span>
               <p>{data?.recommendPercent}% 추천</p>
@@ -196,8 +198,17 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
             </HoverBox>
           </Columnbox>
           <Row gap={24}>
-            <S.Btn color={"#515151"}>삭제</S.Btn>
-            <S.Btn color={"#2563eb"}>수정</S.Btn>
+            <S.Btn style={{ border: "1px solid #515151" }}>삭제</S.Btn>
+            <S.Btn
+              color={"#515151"}
+              onClick={() =>
+                navigate("/management/editCafe", {
+                  state: dSelected,
+                })
+              }
+            >
+              수정
+            </S.Btn>
           </Row>
         </ModalBoxs>
       </ModalBox>

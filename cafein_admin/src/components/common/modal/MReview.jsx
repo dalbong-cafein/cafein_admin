@@ -11,11 +11,13 @@ export default function MReview({ setModal, selectItem2 }) {
     setModal(false);
   };
 
-  // useEffect(() => {
-  //   if (selectItem2.reviewId) {
-  //     reviewDetailApi(selectItem2.reviewId).then((res) => console.log(res));
-  //   }
-  // }, []);
+  // console.log(selectItem2);
+
+  useEffect(() => {
+    if (selectItem2.reviewId) {
+      reviewDetailApi(selectItem2.reviewId).then((res) => console.log(res));
+    }
+  }, []);
 
   return (
     <Portal>

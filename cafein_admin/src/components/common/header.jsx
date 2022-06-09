@@ -35,7 +35,7 @@ const Row = styled.div`
 
 const Menu = styled.div`
   color: ${(props) => props.mcolor};
-  font-size: ${(props) => (props.mSize ? props.mSize : 24)}px;
+  font-size: ${(props) => (props.mSize ? props.mSize : 22)}px;
   font-weight: bold;
 `;
 

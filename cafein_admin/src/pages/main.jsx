@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import ManagementCafe from "./managementCafe";
 import Register from "./register";
+import EditCafe from "./editcafe";
 import Review from "./review";
 import User from "./user";
 import Desh from "./desh";
@@ -17,6 +18,7 @@ const Main = ({}) => {
         <Route path="/" exact element={<Desh />} />
         <Route path="/management" exact element={<ManagementCafe />} />
         <Route path="/management/register" exact element={<Register />} />
+        <Route path="/management/editCafe" exact element={<EditCafe />} />
         <Route path="/review" exact element={<Review />} />
         <Route path="/user" exact element={<User />} />
         <Route path="/marketing" exact element={<Marketing />} />

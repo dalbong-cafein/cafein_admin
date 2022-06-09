@@ -127,7 +127,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 72px;
+  gap: 40px;
   & > svg {
     width: 93px;
     height: 26px;
@@ -176,7 +176,7 @@ const Column = styled.div`
 const MenuBox = styled.div`
   width: 156px;
   height: 40px;
-  padding: 0 5px;
+  // padding: 0 5px;
   color: #fff;
   display: flex;
   justify-content: flex-start;

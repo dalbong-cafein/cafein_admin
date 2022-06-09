@@ -28,7 +28,7 @@ const Headers = styled.div`
 
 const Menu = styled.div`
   color: ${(props) => (props.menustate ? "#fff" : "#8B8B8B")};
-  font-size: 24px;
+  font-size: 22px;
   ${(props) =>
     props.menustate && "font-weight:bold; border-bottom:2px solid #fff"};
   padding-bottom: 8px;

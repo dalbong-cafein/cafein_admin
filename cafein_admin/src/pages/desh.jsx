@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { memoListApi } from "../util/memo";
 import DeshMemo from "../components/deshMemobox";
 import MemoModal from "../components/common/modal/memo";
-import { marketingDListApi, marketingListApi } from "../util/events";
+import { marketingDListApi } from "../util/events";
 import DeshMarketing from "../components/deshMarketing";
 import { useNavigate } from "react-router-dom";
 import { deshDataApi } from "../util/admin";

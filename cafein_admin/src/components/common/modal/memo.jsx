@@ -9,6 +9,7 @@ import {
   memoDataApi,
   registerMemoApi,
 } from "../../../util/memo";
+import RedAlert from "./redAlert";
 
 export default function MemoModal({ setModal, memoId, selectItem }) {
   const closeModal = () => {
@@ -17,6 +18,7 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
 
   const [memo, setMemo] = useState([]);
   const [editMode, setEditMode] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [content, setContent] = useState("");
   const txt = window.location.pathname;
 
@@ -43,7 +45,11 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
   };
   const onDel = () => {
     delMemoApi(memoId)
-      .then((res) => setModal(false))
+      .then((res) => {
+        setModal(false);
+        setAlert(false);
+        window.location.reload();
+      })
       .catch((err) => console.log(err));
   };
 
@@ -126,11 +132,14 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
                   </>
                 ) : (
                   <>
-                    <S.Btn color={"#515151"} onClick={onDel}>
+                    <S.Btn
+                      style={{ border: "1px solid #515151" }}
+                      onClick={() => setAlert(true)}
+                    >
                       삭제
                     </S.Btn>
                     <S.Btn
-                      color={"#2563eb"}
+                      color={"#515151"}
                       onClick={() => setEditMode(!editMode)}
                     >
                       수정
@@ -160,6 +169,17 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
               </Row>
             </S.ModalFooter>
           </>
+        )}
+        {alert && (
+          <RedAlert
+            text={"메모 삭제"}
+            text1={"메모를"}
+            text2={"삭제"}
+            text3={"하시겠습니까?"}
+            setAlert={setAlert}
+            func={onDel}
+            forFunc={null}
+          />
         )}
       </S.ModalBox>
     </Portal>
