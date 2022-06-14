@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 import ManagementCafe from "./managementCafe";
 import Register from "./register";

@@ -12,10 +12,42 @@ import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
 import { useNavigate } from "react-router-dom";
 
-// document.cookie = "crossCookie=bar; ";
 axios.defaults.withCredentials = true;
 
 const LogIn = ({ KAKAO_AUTH_URL }) => {
+  const getKakaoTokenHandler = async (code) => {
+    const data = {
+      grant_type: "authorization_code",
+      client_id: process.env.REACT_APP_REST_API_KEY,
+      redirect_uri: "http://localhost:3000/login", //수정
+      code: code,
+    };
+    const queryString = Object.keys(data)
+      .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
+      .join("&");
+
+    //카카오 토큰 발급 REST API
+    axios
+      .post("https://kauth.kakao.com/oauth/token", queryString, {
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+        withCredentials: false,
+      })
+      .then((res) => {
+        authApi(res.data.access_token) //우리 토큰 발급 API
+          .then((res) => {
+            const copy = { ...admin };
+            copy.image = res.data.data.imageDto.imageUrl;
+            copy.email = res.data.data.email;
+            setAdmin(copy);
+            navigate("/");
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
+
   const navigate = useNavigate();
 
   const [admin, setAdmin] = useRecoilState(adminState);
@@ -27,40 +59,6 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
       getKakaoTokenHandler(query.code.toString());
     }
   }, []);
-
-  const getKakaoTokenHandler = async (code) => {
-    const data = {
-      grant_type: "authorization_code",
-      client_id: process.env.REACT_APP_REST_API_KEY,
-      redirect_uri: "https://cafeinofficial.com/login", //수정
-      code: code,
-    };
-    const queryString = Object.keys(data)
-      .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
-      .join("&");
-
-    //토큰 발급 REST API
-    axios
-      .post("https://kauth.kakao.com/oauth/token", queryString, {
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        withCredentials: false,
-      })
-      .then((res) => {
-        authApi(res.data.access_token)
-          .then((res) => {
-            console.log(res.headers);
-            const copy = { ...admin };
-            copy.image = res.data.data.imageDto.imageUrl;
-            copy.email = res.data.data.email;
-            setAdmin(copy);
-            navigate("/");
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-  };
   return (
     <Background>
       <Logo />

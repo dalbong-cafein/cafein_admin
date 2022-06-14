@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import Row from "../components/atoms/row";
-import Header from "../components/common/header";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
+
+import { useRecoilState } from "recoil";
 import { registerState } from "../recoil/NcafeRegister";
 
 import { ReactComponent as Cgood } from "../svg/Cgood.svg";
@@ -18,11 +19,12 @@ import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 import { ReactComponent as ArrowUp } from "../svg/ArrowUp.svg";
 import { ReactComponent as Search } from "../svg/Search.svg";
 
-import { useState, useRef } from "react";
+import { feedCreateApi } from "../util/management";
+
+import Row from "../components/atoms/row";
+import Header from "../components/common/header";
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
-import { feedCreateApi } from "../util/management";
-import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -61,6 +63,13 @@ const Register = () => {
     "매우 편하게 사용 가능해요",
   ];
 
+  const onChange = (e) => {
+    const name = e.target.name;
+    const copy = { ...register };
+    copy[name] = e.target.value;
+    setRegister(copy);
+  };
+
   const onLoadFile = (e) => {
     let copy = [...file];
     if (copy.length >= 5) {
@@ -83,25 +92,10 @@ const Register = () => {
     setFile(copy);
   };
 
-  const onChange = (e) => {
-    const name = e.target.name;
-    const copy = { ...register };
-    copy[name] = e.target.value;
-    setRegister(copy);
-  };
-
   const recommendChange = (e) => {
     const copy = { ...register };
     copy.recommendation = e.currentTarget.id;
     setRegister(copy);
-  };
-
-  const submit = async (register) => {
-    console.log(register);
-
-    feedCreateApi(register)
-      .then((res) => navigate("/management"))
-      .catch((err) => console.log(err));
   };
 
   const starChange = (e) => {
@@ -134,6 +128,7 @@ const Register = () => {
     copy.splice(i, 1);
     setDayarr(copy);
   };
+
   const updateDay = (j, copy, open, close) => {
     if (j === "월") {
       copy.monOpen = open;
@@ -187,6 +182,14 @@ const Register = () => {
     setCloseTime("");
     setDays([]);
     setSelectOn(false);
+  };
+
+  const submit = async (register) => {
+    console.log(register);
+
+    feedCreateApi(register)
+      .then((res) => navigate("/management"))
+      .catch((err) => console.log(err));
   };
   const input = useRef();
 

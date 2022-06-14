@@ -20,6 +20,7 @@ import { adminState } from "../../recoil/admin";
 const SideBar = () => {
   const navigate = useNavigate();
   const [admin] = useRecoilState(adminState);
+
   const menu = window.location.pathname.split("/")[1];
   return (
     <Container>

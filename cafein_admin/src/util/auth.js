@@ -8,11 +8,7 @@ const authAPi = async (code) => {
       headers: {
         authProvider: "KAKAO",
         oAuthAccessToken: code,
-        withCredentials: true,
-        // // crossDomain: true,
-        // // credentials: "include",
       },
-      withCredentials: true,
     }
   );
 };

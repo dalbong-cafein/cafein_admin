@@ -1,51 +1,52 @@
 import { useEffect, useState } from "react";
 import * as S from "./style";
-import Row from "../components/atoms/row";
-
-import Paging from "../components/common/Pagination";
-
-import { ReactComponent as Search } from "../svg/Search.svg";
-import { ReactComponent as Memo } from "../svg/memo.svg";
-import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
-import { ReactComponent as Check } from "../svg/check.svg";
 import { useNavigate } from "react-router-dom";
+
+import Row from "../components/atoms/row";
+import Paging from "../components/common/Pagination";
 import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
 import DropBox from "../components/common/dropbox";
+import None from "../components/None";
+import CafeDetailModal from "../components/common/modal/cafeDetail";
+import ManagementTemp from "../components/managementTemp";
+
+import { ReactComponent as Search } from "../svg/Search.svg";
+import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
+import { ReactComponent as Check } from "../svg/check.svg";
+
 import {
   feedDataApi,
   feedDetailApi,
   feedDetailDataApi,
   feedSearchApi,
 } from "../util/management";
-import None from "../components/None";
-import CafeDetailModal from "../components/common/modal/cafeDetail";
-import ManagementTemp from "../components/managementTemp";
 
 const ManagementCafe = () => {
   const navigate = useNavigate();
-
   const [sort, setSort] = useState("DESC");
-  const [modal, setModal] = useState(false);
-  const [dModal, setDModal] = useState(false);
   const [temp, setTemp] = useState([]);
-
   const [search, setSearch] = useState("");
+
+  //detail
+  const [dModal, setDModal] = useState(false);
   const [dSelected, setDSelected] = useState([]);
+  const [reviewData, setReviewData] = useState([]);
 
   //drop
   const [isDrop, setIsDrop] = useState(false);
   const [selected, setSelected] = useState("전체");
   const [arr, setArr] = useState(["분류", "카페명", "위치"]);
 
+  //memo
   const [memoId, setMemoId] = useState(null);
+  const [modal, setModal] = useState(false);
   const [selectItem, setSelectItem] = useState([]);
 
   // pagination
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [items, setItems] = useState(9);
-  const [reviewData, setReviewData] = useState([]);
 
   const changeData = () => {
     if (selected === "전체") {

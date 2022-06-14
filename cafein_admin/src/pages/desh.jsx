@@ -1,23 +1,27 @@
-import Header from "../components/common/header";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { ReactComponent as Cup } from "../svg/Cup.svg";
 import { ReactComponent as User } from "../svg/user.svg";
 import { ReactComponent as Review } from "../svg/review.svg";
 import { ReactComponent as Mail } from "../svg/mail.svg";
-import NoneDiv from "../components/common/Nonediv";
-import { useEffect, useState } from "react";
+
+import { deshDataApi } from "../util/admin";
 import { memoListApi } from "../util/memo";
+import { marketingDListApi } from "../util/events";
+
+import NoneDiv from "../components/common/Nonediv";
+import Row from "../components/atoms/row";
+import Header from "../components/common/header";
+import DeshMarketing from "../components/deshMarketing";
 import DeshMemo from "../components/deshMemobox";
 import MemoModal from "../components/common/modal/memo";
-import { marketingDListApi } from "../util/events";
-import DeshMarketing from "../components/deshMarketing";
-import { useNavigate } from "react-router-dom";
-import { deshDataApi } from "../util/admin";
-import Row from "../components/atoms/row";
 
 const Desh = () => {
   const navigate = useNavigate();
+
+  //메모 관련 state
   const [memoArr, setMemoArr] = useState([]);
   const [memoId, setMemoId] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
@@ -36,7 +40,6 @@ const Desh = () => {
     const target = new Date("2022-06-02 00:00:00+0900"); //출시일
     const today = new Date();
     const gap = today - target;
-
     return Math.floor(gap / (1000 * 60 * 60 * 24));
   }
 
