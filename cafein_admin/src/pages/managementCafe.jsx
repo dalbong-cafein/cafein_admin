@@ -119,7 +119,11 @@ const ManagementCafe = () => {
   }, [page, sort]);
   return (
     <>
-      <Header mcolor={"#fff"} text={"카페 관리"} subText={"등록된 카페 00건"} />
+      <Header
+        mcolor={"#fff"}
+        text={"카페 관리"}
+        subText={`등록된 카페 ${count}건`}
+      />
       <Row
         justify={"space-between"}
         align={"baseline"}

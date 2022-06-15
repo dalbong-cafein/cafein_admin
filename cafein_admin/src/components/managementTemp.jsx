@@ -15,7 +15,7 @@ const ManagementTemp = ({
         temp.map((item, i) => (
           <tr key={i}>
             <td onClick={() => detailModal(item)}>
-              <span>{String(item.storeId).padStart(5, "0")}</span>
+              <span>{String(item.storeId).padStart(6, "0")}</span>
             </td>
             <td onClick={() => detailModal(item)}>
               <Row gap={16} align={"center"}>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import * as S from "./regSt";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 
@@ -26,6 +26,8 @@ import Header from "../components/common/header";
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
 
+import { convertTime, updateDay } from "../hooks/registerHook";
+
 const Register = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState([]);
@@ -51,7 +53,7 @@ const Register = () => {
     "빵빵 잘 터져요",
   ];
   const restroomText = [
-    "바닥을 기어봐도 없어요",
+    "없어요 그냥 없어요",
     "이용하기가 꺼려져요",
     "그냥 저냥 쓸 만해요",
     "화장실 맛집이에요",
@@ -129,44 +131,6 @@ const Register = () => {
     setDayarr(copy);
   };
 
-  const updateDay = (j, copy, open, close) => {
-    if (j === "월") {
-      copy.monOpen = open;
-      copy.monClose = close;
-    }
-    if (j === "화") {
-      copy.tueOpen = open;
-      copy.tueClose = close;
-    }
-    if (j === "수") {
-      copy.wedOpen = open;
-      copy.wedClose = close;
-    }
-    if (j === "목") {
-      copy.thuOpen = open;
-      copy.thuClose = close;
-    }
-    if (j === "금") {
-      copy.friOpen = open;
-      copy.friClose = close;
-    }
-    if (j === "토") {
-      copy.satOpen = open;
-      copy.satClose = close;
-    }
-    if (j === "일") {
-      copy.sunOpen = open;
-      copy.sunClose = close;
-    }
-  };
-  const convertTime = (time) => {
-    time = time.padStart(2, "0");
-    if (!time.includes(":")) {
-      time += ":00";
-    }
-    return time;
-  };
-
   const addTime = async () => {
     const copy = [...dayarr];
     const copy2 = { ...register };
@@ -185,7 +149,19 @@ const Register = () => {
   };
 
   const submit = async (register) => {
-    console.log(register);
+    if (!register.storeName || !register.siNm) {
+      window.alert("카페명, 주소를 확인해주세요!");
+    } else if (
+      !register.recommendation ||
+      !register.wifi ||
+      !register.restroom ||
+      !register.tableSize ||
+      !register.socket
+    ) {
+      window.alert(
+        "카공 카페로 추천하시겠어요? 카페에 대한 만족도를 알려주세요"
+      );
+    }
 
     feedCreateApi(register)
       .then((res) => navigate("/management"))
@@ -201,7 +177,7 @@ const Register = () => {
         text={"카페 관리"}
         inner={"새 카페 등록"}
       >
-        <Submit
+        <S.Submit
           disalbed={
             register.storeName == null ||
             register.siNm == null ||
@@ -212,23 +188,23 @@ const Register = () => {
             register.socket == null
           }
           isFill={
-            register.storeName !== null &&
-            register.siNm !== null &&
-            register.recommendation !== null &&
-            register.wifi !== null &&
-            register.restroom !== null &&
-            register.tableSize !== null &&
-            register.socket !== null
+            register.storeName &&
+            register.siNm &&
+            register.recommendation &&
+            register.wifi &&
+            register.restroom &&
+            register.tableSize &&
+            register.socket
           }
           onClick={() => submit(register)}
         >
           등록
-        </Submit>
+        </S.Submit>
       </Header>
-      <Containaer>
+      <S.Containaer>
         <Row gap={20}>
-          <Column>
-            <InputBox>
+          <S.Column>
+            <S.InputBox>
               <span>카페명</span>
               <Search onClick={() => setSearchModal(!searchModal)} />
               <input
@@ -240,15 +216,15 @@ const Register = () => {
                   setSearch(e.target.value);
                 }}
               />
-            </InputBox>
-            <InputBox>
+            </S.InputBox>
+            <S.InputBox>
               <span>주소</span>
               <div>{loc.address_name} </div>
-            </InputBox>
+            </S.InputBox>
 
-            <Box height={176}>
+            <S.Box height={176}>
               <p>카공 카페로 추천하시겠어요?</p>
-              <RowBox>
+              <S.RowBox>
                 <div
                   id="BAD"
                   onClick={(e) => {
@@ -276,71 +252,71 @@ const Register = () => {
                   {register.recommendation === "GOOD" ? <CCgood /> : <Cgood />}
                   <p>추천해요</p>
                 </div>
-              </RowBox>
-            </Box>
-            <Box height={304}>
+              </S.RowBox>
+            </S.Box>
+            <S.Box height={304}>
               <p>카페에 대한 만족도를 알려주세요</p>
-              <ColumnBox>
+              <S.ColumnBox>
                 <div>
                   <p>콘센트</p>
-                  <StarBox id="socket" isFill={register.socket}>
+                  <S.StarBox id="socket" isFill={register.socket}>
                     <Star id={1} onClick={(e) => starChange(e)} />
                     <Star id={2} onClick={(e) => starChange(e)} />
                     <Star id={3} onClick={(e) => starChange(e)} />
                     <Star id={4} onClick={(e) => starChange(e)} />
-                  </StarBox>
+                  </S.StarBox>
                   {register.socket && <p>{socketText[register.socket - 1]}</p>}
                 </div>
                 <div>
                   <p>와이파이</p>
-                  <StarBox id="wifi" isFill={register.wifi}>
+                  <S.StarBox id="wifi" isFill={register.wifi}>
                     <Star id={1} onClick={(e) => starChange(e)} />
                     <Star id={2} onClick={(e) => starChange(e)} />
                     <Star id={3} onClick={(e) => starChange(e)} />
                     <Star id={4} onClick={(e) => starChange(e)} />
-                  </StarBox>
+                  </S.StarBox>
                   {register.wifi && <p>{wifiText[register.wifi - 1]}</p>}
                 </div>
                 <div>
                   <p>화장실</p>
-                  <StarBox id="restroom" isFill={register.restroom}>
+                  <S.StarBox id="restroom" isFill={register.restroom}>
                     <Star id={1} onClick={(e) => starChange(e)} />
                     <Star id={2} onClick={(e) => starChange(e)} />
                     <Star id={3} onClick={(e) => starChange(e)} />
                     <Star id={4} onClick={(e) => starChange(e)} />
-                  </StarBox>
+                  </S.StarBox>
                   {register.restroom && (
                     <p>{restroomText[register.restroom - 1]}</p>
                   )}
                 </div>
                 <div>
                   <p>테이블</p>
-                  <StarBox id="tableSize" isFill={register.tableSize}>
+                  <S.StarBox id="tableSize" isFill={register.tableSize}>
                     <Star id={1} onClick={(e) => starChange(e)} />
                     <Star id={2} onClick={(e) => starChange(e)} />
                     <Star id={3} onClick={(e) => starChange(e)} />
                     <Star id={4} onClick={(e) => starChange(e)} />
-                  </StarBox>
+                  </S.StarBox>
                   {register.tableSize && (
                     <p>{tableSizeText[register.tableSize - 1]}</p>
                   )}
                 </div>
-              </ColumnBox>
-            </Box>
-            <TextBox>
+              </S.ColumnBox>
+            </S.Box>
+            <S.TextBox>
               <p>안내사항</p>
               <p>카공인에게 도움이 될 수 있는 정보를 공유해 주세요.</p>
               <p>
                 부적절한 정보가 등록될 경우 카페인 운영정책에 따라 삭제될 수
                 있어요.
               </p>
-            </TextBox>
-          </Column>
-          <Column>
-            <Box height={168}>
+            </S.TextBox>
+          </S.Column>
+          <S.Column>
+            <S.Box height={168}>
               <p>장소 사진</p>
-              <PhotoBox>
-                <FileUpload
+              <S.PhotoBox>
+                <S.FileUpload
                   onClick={() => {
                     input.current?.click();
                   }}
@@ -354,22 +330,22 @@ const Register = () => {
                     style={{ display: "none" }}
                     onChange={(e) => onLoadFile(e)}
                   />
-                </FileUpload>
+                </S.FileUpload>
                 {file?.map((a, i) => {
                   return (
-                    <ImgBox key={i}>
+                    <S.ImgBox key={i}>
                       <CloseIcon name={a.name} onClick={() => deleteImg(i)} />
                       <PVImg img={a} />
-                    </ImgBox>
+                    </S.ImgBox>
                   );
                 })}
-              </PhotoBox>
-            </Box>
-            <Box height={128}>
+              </S.PhotoBox>
+            </S.Box>
+            <S.Box height={128}>
               <p>운영시간</p>
-              <TimeBox>
-                <BtnRow gap={13}>
-                  <Btn>
+              <S.TimeBox>
+                <S.BtnRow gap={13}>
+                  <S.Btn>
                     {openTime && (
                       <p>{openTime.slice(0, 2) > 12 ? "오후" : "오전"}</p>
                     )}
@@ -380,8 +356,8 @@ const Register = () => {
                         setOpenTime(e.target.value);
                       }}
                     />
-                  </Btn>
-                  <Btn>
+                  </S.Btn>
+                  <S.Btn>
                     {closeTime && (
                       <p>{closeTime.slice(0, 2) > 12 ? "오후" : "오전"}</p>
                     )}
@@ -392,8 +368,8 @@ const Register = () => {
                         setCloseTime(e.target.value);
                       }}
                     />
-                  </Btn>
-                  <Btn2 isT={selectOn} onClick={() => setSelectOn(!selectOn)}>
+                  </S.Btn>
+                  <S.Btn2 isT={selectOn} onClick={() => setSelectOn(!selectOn)}>
                     {days.length === 0 ? (
                       <Row gap={13} align={"center"}>
                         <p>반복</p> {selectOn ? <ArrowUp /> : <ArrowDown />}
@@ -401,11 +377,11 @@ const Register = () => {
                     ) : (
                       <p>{days.join(" ")}</p>
                     )}
-                  </Btn2>
+                  </S.Btn2>
                   <Plus onClick={addTime} />
-                </BtnRow>
+                </S.BtnRow>
                 {dayarr.map((item, i) => (
-                  <Day key={i}>
+                  <S.Day key={i}>
                     <div>
                       {item[0].slice(0, 2) > 12 ? "오후" : "오전"}{" "}
                       {item[0].slice(0, 2) > 12
@@ -434,12 +410,12 @@ const Register = () => {
                     >
                       삭제
                     </p>
-                  </Day>
+                  </S.Day>
                 ))}
-              </TimeBox>
-            </Box>
+              </S.TimeBox>
+            </S.Box>
             {selectOn && (
-              <ComboBox>
+              <S.ComboBox>
                 <div id="월" onClick={(e) => dayPush(e)}>
                   월요일
                 </div>
@@ -461,9 +437,9 @@ const Register = () => {
                 <div id="일" onClick={(e) => dayPush(e)}>
                   일요일
                 </div>
-              </ComboBox>
+              </S.ComboBox>
             )}
-            <InputBox>
+            <S.InputBox>
               <span>기타 운영 시간</span>
               <input
                 type="text"
@@ -472,8 +448,8 @@ const Register = () => {
                 defaultValue={register.etcTime}
                 onChange={(e) => onChange(e)}
               />
-            </InputBox>
-            <InputBox>
+            </S.InputBox>
+            <S.InputBox>
               <span>전화번호</span>
               <input
                 type="text"
@@ -482,8 +458,8 @@ const Register = () => {
                 onChange={(e) => onChange(e)}
                 placeholder="카페 전화번호를 입력해주세요"
               />
-            </InputBox>
-            <InputBox>
+            </S.InputBox>
+            <S.InputBox>
               <span>웹사이트</span>
               <input
                 type="text"
@@ -492,8 +468,8 @@ const Register = () => {
                 onChange={(e) => onChange(e)}
                 placeholder="카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
               />
-            </InputBox>
-            <InputBox>
+            </S.InputBox>
+            <S.InputBox>
               <span>와이파이 비밀번호</span>
               <input
                 type="text"
@@ -502,10 +478,10 @@ const Register = () => {
                 defaultValue={register.wifiPassword}
                 onChange={(e) => onChange(e)}
               />
-            </InputBox>
-          </Column>
+            </S.InputBox>
+          </S.Column>
         </Row>
-      </Containaer>
+      </S.Containaer>
       {searchModal && (
         <SearchModal
           setModal={setSearchModal}
@@ -519,323 +495,5 @@ const Register = () => {
     </>
   );
 };
-
-const Containaer = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-`;
-const Submit = styled.button`
-  width: 88px;
-  height: 36px;
-  line-height: 34px;
-  text-align: center;
-  border-radius: 6px;
-  background-color: ${(props) => (props.isFill ? "#2563EB" : "#333333")};
-  color: #fff;
-  transform: translate(20px, 0);
-`;
-const Input1 = styled.input`
-  width: 100%;
-  height: 48px;
-  background-color: #333333;
-  color: #8b8b8b;
-  border-radius: 6px;
-  border: 0;
-  font-weight: 500;
-  font-size: 16px;
-  box-sizing: border-box;
-  padding: 16px;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const InputBox = styled.div`
-  width: 100%;
-  height: 48px;
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  padding: 16px;
-  box-sizing: border-box;
-  border-radius: 6px;
-  color: #8b8b8b;
-  font-weight: 500;
-  background-color: #333333;
-  & > svg {
-  }
-  & > input {
-    width: 70%;
-    border: 0;
-    color: #e3e3e3;
-    background-color: inherit;
-    font-size: 16px;
-    font-weight: 400;
-    &:focus {
-      outline: none;
-    }
-  }
-  & > div {
-    color: #e3e3e3;
-  }
-`;
-const Column = styled.div`
-  display: flex;
-  width: 50%;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const Box = styled.div`
-  background-color: #333333;
-  color: #8b8b8b;
-  width: 100%;
-  box-sizing: border-box;
-
-  min-height: ${(props) => props.height}px;
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  & > p {
-    padding: 16px 0 16px 16px;
-    font-weight: 500;
-  }
-`;
-
-const PhotoBox = styled.div`
-  padding: 0 24px;
-  display: flex;
-  gap: 12px;
-`;
-
-const FileUpload = styled.div`
-  width: 80px;
-  height: 80px;
-  background: #c4c4c4;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 9.5px;
-  cursor: pointer;
-  & > div {
-    color: #646464;
-    font-size: 13px;
-    font-weight: 500;
-  }
-`;
-
-const ImgBox = styled.div`
-  width: 80px;
-  height: 80px;
-  position: relative;
-  display: inline-block;
-  border-radius: 6px;
-  & > svg {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    position: absolute;
-    border-radius: 50%;
-    background-color: #fff;
-    transform: translate(50px, 5px);
-  }
-`;
-
-const TimeBox = styled.div`
-  width: 100%;
-  display: flex;
-  max-height: 155px;
-  overflow-y: scroll;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: none;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: gray;
-  }
-  ::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-  }
-`;
-
-const Day = styled.div`
-  display: flex;
-  padding-left: 16px;
-  align-items: center;
-  gap: 12px;
-  & > p {
-    cursor: pointer;
-    font-size: 14px;
-    color: #ff5c50;
-  }
-  & > div {
-    padding: 13px 16px 13px 16px;
-    border: 1px solid #acacac;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #e3e3e3;
-    box-sizing: border-box;
-  }
-  & > div:first-child,
-  div:nth-child(2) {
-    min-width: 135px;
-  }
-`;
-
-const BtnRow = styled.div`
-  display: flex;
-  gap: 13px;
-  padding-left: 16px;
-  & > svg {
-    padding: 15px;
-    border-radius: 6px;
-    background-color: #fc7521;
-  }
-`;
-
-const Btn = styled.div`
-  padding: 13px 0 13px 16px;
-  border: 1px solid #acacac;
-  border-radius: 6px;
-  font-size: 14px;
-  width: 135px;
-  box-sizing: border-box;
-  background-color: #333333;
-  display: flex;
-  align-items: baseline;
-  color: #fff;
-  gap: 24px;
-  & > p {
-  }
-  & > input {
-    max-width: 60px;
-    border: 0;
-    background-color: #333333;
-    color: #fff;
-    &:focus {
-      outline: none;
-    }
-  }
-`;
-
-const Btn2 = styled.div`
-  padding: 13px 21px 13px 16px;
-  border: 1px solid #acacac;
-  color: ${(props) => (props.isT ? "#E3E3E3" : "#8b8b8b")};
-  font-size: 14px;
-  min-width: 86px;
-  box-sizing: border-box;
-  position: relative;
-  border-radius: 6px;
-`;
-
-const ComboBox = styled.div`
-  width: 94px;
-  height: 230px;
-  margin: 0 10px;
-  background-color: #646464;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
-  border-radius: 8px;
-  position: absolute;
-  transform: translate(320%, 130%);
-  padding: 15px 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  & > div {
-    text-align: center;
-    padding: 3px;
-    cursor: pointer;
-  }
-`;
-const RowBox = styled.div`
-  display: flex;
-  padding: 0 125px;
-  justify-content: center;
-  gap: 100px;
-  & > div {
-    & > p {
-      padding-top: 12px;
-      color: #acacac;
-      font-size: 14px;
-      text-align: center;
-      font-weight: 500;
-    }
-    & > svg {
-      cursor: pointer;
-    }
-  }
-`;
-
-const ColumnBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-  justify-content: baseline;
-  & > div {
-    display: flex;
-    align-items: center;
-    padding-left: 24px;
-
-    & > p:first-child {
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 33px;
-      min-width: 100px;
-      color: #d1d1d1;
-    }
-    & > div {
-      display: flex;
-      gap: 16px;
-      margin-right: 18px;
-    }
-    & > p:nth-child(3) {
-      font-size: 14px;
-      color: #fff;
-    }
-  }
-`;
-
-const StarBox = styled.div`
-  & > svg:first-child {
-    path {
-      fill: ${(props) => props.isFill >= 1 && "#ffce4a"};
-    }
-  }
-  & > svg:nth-child(2) {
-    path {
-      fill: ${(props) => props.isFill >= 2 && "#ffce4a"};
-    }
-  }
-  & > svg:nth-child(3) {
-    path {
-      fill: ${(props) => props.isFill >= 3 && "#ffce4a"};
-    }
-  }
-  & > svg:nth-child(4) {
-    path {
-      fill: ${(props) => props.isFill >= 4 && "#ffce4a"};
-    }
-  }
-`;
-const TextBox = styled.div`
-  color: #646464;
-  font-size: 14px;
-  line-height: 18px;
-  & > p:first-child {
-    font-weight: bold;
-  }
-`;
 
 export default Register;

@@ -19,12 +19,12 @@ const MarketingsTemp = ({
           .map((item, i) => (
             <tr key={i}>
               <td style={{ textAlign: "center" }}>
-                {String(item.couponId).padStart(5, "0")}
+                {String(item.couponId).padStart(6, "0")}
               </td>
               <td>{item.brandName}</td>
               <td>{item.itemName}</td>
               <td style={{ textAlign: "center" }}>
-                {String(item.memberId).padStart(5, "0")}
+                {String(item.memberId).padStart(6, "0")}
               </td>
               <td>{item.phone || "-"}</td>
               <td>{item.regDateTime}</td>

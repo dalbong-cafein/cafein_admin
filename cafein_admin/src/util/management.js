@@ -43,7 +43,6 @@ export const feedCreateApi = async (register) => {
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${axios.defaults.headers.common["Authorization"]}`,
     },
     // withCredentials: true,
   });

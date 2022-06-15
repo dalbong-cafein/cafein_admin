@@ -20,7 +20,7 @@ const UserTemp = ({
           .map((item, i) => (
             <tr key={i}>
               <td onClick={() => onModal(item)}>
-                <div>{String(item.memberId).padStart(5, "0")}</div>
+                <div>{String(item.memberId).padStart(6, "0")}</div>
               </td>
               <td onClick={() => onModal(item)}>
                 <p style={{ color: "#FC7521" }}>{item.socialTypeList[0]}</p>

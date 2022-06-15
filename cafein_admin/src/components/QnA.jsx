@@ -144,7 +144,7 @@ const QnA = ({ menu }) => {
                         setSelectItem(item);
                       }}
                     >
-                      <td>{String(item.boardId).padStart(5, "0")}</td>
+                      <td>{String(item.boardId).padStart(6, "0")}</td>
                       <td style={{ textAlign: "left" }}>
                         <p style={{ fontWeight: "bold" }}>{item.title}</p>
                         <p>

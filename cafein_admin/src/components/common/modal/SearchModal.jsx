@@ -120,7 +120,7 @@ export default function SearchModal({
     <Portal>
       <S.ModalBox>
         <S.ModalHeader>
-          <p>카페검색</p>
+          <p>카페 검색</p>
           <Close onClick={() => setModal(false)} />
         </S.ModalHeader>
         <Row style={{ borderBottom: "1px solid #fff" }}>

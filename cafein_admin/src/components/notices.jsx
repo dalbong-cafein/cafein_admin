@@ -148,7 +148,7 @@ const Notices = ({ menu }) => {
                         setSelectItem(item);
                       }}
                     >
-                      <td>{String(item.boardId).padStart(5, "0")}</td>
+                      <td>{String(item.boardId).padStart(6, "0")}</td>
                       <td>
                         <p style={{ fontWeight: "bold", marginBottom: "5px" }}>
                           {item.title}

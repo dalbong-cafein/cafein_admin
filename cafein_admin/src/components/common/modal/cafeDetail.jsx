@@ -34,10 +34,10 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
           <Columnbox gap={14}>
             <Line>
               <span>분류</span>
-              <p>{String(dSelected.storeId).padStart(5, "0")}</p>
+              <p>{String(dSelected.storeId).padStart(6, "0")}</p>
             </Line>
             <Line>
-              <span>회원명</span>
+              <span>회원 번호</span>
               <p>{dSelected.modMemberId}</p>
             </Line>
             <Line>
@@ -46,25 +46,37 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
             </Line>
             <Line>
               <span>등록일</span>
-              <p>{String(dSelected.regDateTime).split("T"[0])}</p>
+              <p>{`${dSelected.regDateTime.replace("T", " ")}`}</p>
             </Line>
             <Line>
               <span>최종수정일</span>
-              <p>{String(dSelected.modDateTime).split("T"[0])}</p>
+              <p>{`${dSelected.modDateTime.replace("T", " ")}`}</p>
             </Line>
 
-            <Title style={{ padding: "40px 0" }} size={16}>
+            <Title style={{ padding: "40px 0 20px" }} size={16}>
               기본 정보
             </Title>
-            <Columnbox style={{ paddingBottom: "70px" }}>
+            <Columnbox>
               <StateRow>
                 <div>
-                  <span>사진</span>
-                  <Row gap={8} style={{ flexWrap: "wrap", maxWidth: "230px" }}>
+                  <Row justify={"center"} gap={8} style={{ padding: "0 auto" }}>
                     {dSelected.storeImageDtoList &&
+                    dSelected.storeImageDtoList.length > 4 ? (
+                      <>
+                        {dSelected.storeImageDtoList
+                          .slice(0, 4)
+                          .map((item, i) => (
+                            <Photo key={i} img={item.imageUrl} />
+                          ))}
+                        <PhotoPlus>
+                          +{dSelected?.storeImageDtoList?.length}
+                        </PhotoPlus>
+                      </>
+                    ) : (
                       dSelected.storeImageDtoList.map((item, i) => (
                         <Photo key={i} img={item.imageUrl} />
-                      ))}
+                      ))
+                    )}
                   </Row>
                 </div>
               </StateRow>
@@ -248,7 +260,7 @@ const Line = styled.div`
   display: flex;
   gap: 32px;
   width: 100%;
-  padding-bottom: 13px;
+  padding-bottom: 12px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
     width: 80px;
@@ -299,7 +311,7 @@ const Columnbox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 0 20px;
+  padding: 0 10px 0 10px;
 `;
 
 const Pic = styled.div`
@@ -331,14 +343,27 @@ const Btn = styled.div`
 `;
 
 const Photo = styled.div`
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height:72px;
   background: ${({ img }) =>
     img && `url(${img})`} no-repeat center center/cover;
   border-radius: 6px;
   }
 `;
 
+const PhotoPlus = styled.div`
+width: 72px;
+height:72px;
+  background-color: #333333;
+  display:flex;
+  color:#ACACAC;
+  font-size:14px;
+  justify-content: center;
+  align-items:center;
+  border-radius: 6px;
+  line-height: 14px;
+  }
+`;
 const Column = styled.div`
   display: flex;
   flex-direction: column;

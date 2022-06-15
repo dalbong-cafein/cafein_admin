@@ -34,7 +34,7 @@ export default function MUser({ setModal, selectItem }) {
               <Columnbox gap={14}>
                 <Line>
                   <span>분류</span>
-                  <p>{String(selectItem.memberId).padStart(5, "0")}</p>
+                  <p>{String(selectItem.memberId).padStart(6, "0")}</p>
                 </Line>
                 <Line>
                   <span>소셜</span>

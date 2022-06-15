@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
 import { useNavigate } from "react-router-dom";
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 const LogIn = ({ KAKAO_AUTH_URL }) => {
   const getKakaoTokenHandler = async (code) => {
@@ -32,7 +32,7 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-        withCredentials: false,
+        // withCredentials: false,
       })
       .then((res) => {
         authApi(res.data.access_token) //우리 토큰 발급 API

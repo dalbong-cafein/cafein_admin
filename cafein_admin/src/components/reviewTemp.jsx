@@ -32,13 +32,13 @@ const ReviewTemp = ({
             </td>
             <td onClick={() => onModal(item)}>
               <Row gap={16}>
-                <p>{String(item.writerId).padStart(5, "0")}</p>
+                <p>{String(item.writerId).padStart(6, "0")}</p>
                 <p>{item.nicknameOfWriter}</p>
               </Row>
             </td>
             <td onClick={() => onModal(item)}>
               <Row gap={16}>
-                <p>{String(item.storeId).padStart(5, "0")}</p>
+                <p>{String(item.storeId).padStart(6, "0")}</p>
                 <p>{item.storeName}</p>
               </Row>
             </td>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 const DeshMarketing = ({ item }) => {
   return (
     <Box>
-      <div>{String(item.memberId).padStart(5, "0")}</div>
+      <div>{String(item.memberId).padStart(6, "0")}</div>
       <div style={{ textAlign: "center" }}>{item.itemName}</div>
       <div>{String(item.regDateTime).split("T")[0]}</div>
       <div>
