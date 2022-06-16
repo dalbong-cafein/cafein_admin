@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
-
 import HoverContent from "../../hoverContent";
-import { useNavigate } from "react-router-dom";
+import Sliders from "./carousel";
 
 export default function CafeDetailModal({ data, setDModal, dSelected }) {
   const closeModal = () => {
     setDModal(false);
   };
+
+  const [slider, setSlider] = useState(false);
   const navigate = useNavigate();
 
   const totalfunc = (title) => {
@@ -23,208 +25,219 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
     }
   };
   return (
-    <Portal>
-      <ModalBox>
-        <ModalBoxs
-          style={{ borderRadius: "16px 0 0 16px" }}
-          color={"#131313"}
-          width={516}
-        >
-          <Title size={20}>카페 상세</Title>
-          <Columnbox gap={14}>
-            <Line>
-              <span>분류</span>
-              <p>{String(dSelected.storeId).padStart(6, "0")}</p>
-            </Line>
-            <Line>
-              <span>회원 번호</span>
-              <p>{dSelected.modMemberId}</p>
-            </Line>
-            <Line>
-              <span>카페명</span>
-              <p>{dSelected.storeName}</p>
-            </Line>
-            <Line>
-              <span>등록일</span>
-              <p>{`${dSelected.regDateTime.replace("T", " ")}`}</p>
-            </Line>
-            <Line>
-              <span>최종수정일</span>
-              <p>{`${dSelected.modDateTime.replace("T", " ")}`}</p>
-            </Line>
+    <>
+      <Portal>
+        <ModalBox>
+          <ModalBoxs
+            style={{ borderRadius: "16px 0 0 16px" }}
+            color={"#131313"}
+            width={516}
+          >
+            <Title size={20}>카페 상세</Title>
+            <Columnbox gap={14}>
+              <Line>
+                <span>분류</span>
+                <p>{String(dSelected.storeId).padStart(6, "0")}</p>
+              </Line>
+              <Line>
+                <span>회원 번호</span>
+                <p>{dSelected.modMemberId}</p>
+              </Line>
+              <Line>
+                <span>카페명</span>
+                <p>{dSelected.storeName}</p>
+              </Line>
+              <Line>
+                <span>등록일</span>
+                <p>{`${String(dSelected.regDateTime).replace("T", " ")}`}</p>
+              </Line>
+              <Line>
+                <span>최종수정일</span>
+                <p>{`${String(dSelected.modDateTime).replace("T", " ")}`}</p>
+              </Line>
 
-            <Title style={{ padding: "40px 0 20px" }} size={16}>
-              기본 정보
-            </Title>
-            <Columnbox>
-              <StateRow>
-                <div>
-                  <Row justify={"center"} gap={8} style={{ padding: "0 auto" }}>
-                    {dSelected.storeImageDtoList &&
-                    dSelected.storeImageDtoList.length > 4 ? (
-                      <>
-                        {dSelected.storeImageDtoList
-                          .slice(0, 4)
-                          .map((item, i) => (
+              <Title style={{ padding: "40px 0 20px" }} size={16}>
+                기본 정보
+              </Title>
+              <Columnbox>
+                <StateRow>
+                  <div>
+                    <Row
+                      justify={"center"}
+                      gap={8}
+                      style={{ padding: "0 auto" }}
+                    >
+                      {dSelected.storeImageDtoList &&
+                      dSelected.storeImageDtoList.length > 4 ? (
+                        <>
+                          {dSelected.storeImageDtoList
+                            .slice(0, 4)
+                            .map((item, i) => (
+                              <Photo key={i} img={item.imageUrl} />
+                            ))}
+                          <PhotoPlus onClick={() => setSlider(true)}>
+                            +{dSelected?.storeImageDtoList?.length}
+                          </PhotoPlus>
+                        </>
+                      ) : (
+                        <>
+                          {dSelected?.storeImageDtoList?.map((item, i) => (
                             <Photo key={i} img={item.imageUrl} />
                           ))}
-                        <PhotoPlus>
-                          +{dSelected?.storeImageDtoList?.length}
-                        </PhotoPlus>
-                      </>
-                    ) : (
-                      dSelected.storeImageDtoList.map((item, i) => (
-                        <Photo key={i} img={item.imageUrl} />
-                      ))
+                        </>
+                      )}
+                    </Row>
+                  </div>
+                </StateRow>
+                <Line color={"#515151"}>
+                  <span>위치</span>
+                  <p>{String(dSelected?.address?.fullAddress)}</p>
+                </Line>
+                <StateRow>
+                  <div>
+                    <span>운영시간</span>
+                    {dSelected?.businessHoursResDto && (
+                      <Column>
+                        <p>
+                          월
+                          {` ${dSelected?.businessHoursResDto?.onMon?.open}-${dSelected?.businessHoursResDto?.onMon?.closed}`}
+                        </p>
+                        <p>
+                          화
+                          {` ${dSelected?.businessHoursResDto?.onTue?.open}-${dSelected?.businessHoursResDto?.onTue?.closed}`}
+                        </p>
+                        <p>
+                          수
+                          {` ${dSelected?.businessHoursResDto?.onWed?.open}-${dSelected?.businessHoursResDto?.onWed?.closed}`}
+                        </p>
+                        <p>
+                          목
+                          {` ${dSelected?.businessHoursResDto?.onThu?.open}-${dSelected?.businessHoursResDto?.onThu?.closed}`}
+                        </p>
+                        <p>
+                          금
+                          {` ${dSelected?.businessHoursResDto?.onFri?.open}-${dSelected?.businessHoursResDto?.onFri?.closed}`}
+                        </p>
+                        <p>
+                          토
+                          {` ${dSelected?.businessHoursResDto?.onSat?.open}-${dSelected?.businessHoursResDto?.onSat?.closed}`}
+                        </p>
+                        <p>
+                          일
+                          {` ${dSelected?.businessHoursResDto?.onSun?.open}-${dSelected?.businessHoursResDto?.onSun?.closed}`}
+                        </p>
+                      </Column>
                     )}
-                  </Row>
-                </div>
-              </StateRow>
+                  </div>
+                </StateRow>
+                <Line color={"#515151"}>
+                  <span>기타 시간</span>
+                  <p>{dSelected?.businessHoursResDto?.etcTime}</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>와이파이</span>
+                  <p>{dSelected?.wifiPassword}</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>전화번호</span>
+                  <p>{dSelected?.phone}</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>웹사이트</span>
+                  <p>{dSelected?.website}</p>
+                </Line>
+              </Columnbox>
+            </Columnbox>
+          </ModalBoxs>
+          <ModalBoxs
+            style={{ borderRadius: "0 16px 16px 0" }}
+            color={"#333333"}
+            width={476}
+          >
+            <Row justify={"space-between"}>
+              <Title size={16}>활동정보</Title>
+              <Close onClick={closeModal} />
+            </Row>
+            <Columnbox style={{ paddingBottom: "40px" }}>
               <Line color={"#515151"}>
-                <span>위치</span>
-                <p>{String(dSelected?.address?.fullAddress)}</p>
-              </Line>
-              <StateRow>
-                <div>
-                  <span>운영시간</span>
-                  {dSelected?.businessHoursResDto && (
-                    <Column>
-                      <p>
-                        월
-                        {` ${dSelected?.businessHoursResDto?.onMon?.open}-${dSelected?.businessHoursResDto?.onMon?.closed}`}
-                      </p>
-                      <p>
-                        화
-                        {` ${dSelected?.businessHoursResDto?.onTue?.open}-${dSelected?.businessHoursResDto?.onTue?.closed}`}
-                      </p>
-                      <p>
-                        수
-                        {` ${dSelected?.businessHoursResDto?.onWed?.open}-${dSelected?.businessHoursResDto?.onWed?.closed}`}
-                      </p>
-                      <p>
-                        목
-                        {` ${dSelected?.businessHoursResDto?.onThu?.open}-${dSelected?.businessHoursResDto?.onThu?.closed}`}
-                      </p>
-                      <p>
-                        금
-                        {` ${dSelected?.businessHoursResDto?.onFri?.open}-${dSelected?.businessHoursResDto?.onFri?.closed}`}
-                      </p>
-                      <p>
-                        토
-                        {` ${dSelected?.businessHoursResDto?.onSat?.open}-${dSelected?.businessHoursResDto?.onSat?.closed}`}
-                      </p>
-                      <p>
-                        일
-                        {` ${dSelected?.businessHoursResDto?.onSun?.open}-${dSelected?.businessHoursResDto?.onSun?.closed}`}
-                      </p>
-                    </Column>
-                  )}
-                </div>
-              </StateRow>
-              <Line color={"#515151"}>
-                <span>기타 시간</span>
-                <p>{dSelected?.businessHoursResDto?.etcTime}</p>
+                <span>조회</span>
+                <p>{dSelected?.viewCnt}</p>
               </Line>
               <Line color={"#515151"}>
-                <span>와이파이</span>
-                <p>{dSelected?.wifiPassword}</p>
+                <span>저장</span>
+                <p>{dSelected?.heartCnt}</p>
               </Line>
               <Line color={"#515151"}>
-                <span>전화번호</span>
-                <p>{dSelected?.phone}</p>
+                <span>공유</span>
+                <p>{dSelected?.congestionCnt}</p>
               </Line>
               <Line color={"#515151"}>
-                <span>웹사이트</span>
-                <p>{dSelected?.website}</p>
+                <span>혼잡도</span>
+                <p>{dSelected?.congestionCnt}</p>
+              </Line>
+              <Line color={"#515151"}>
+                <span>리뷰</span>
+                <p>{dSelected?.reviewCnt}</p>
               </Line>
             </Columnbox>
-          </Columnbox>
-        </ModalBoxs>
-        <ModalBoxs
-          style={{ borderRadius: "0 16px 16px 0" }}
-          color={"#333333"}
-          width={476}
-        >
-          <Row justify={"space-between"}>
-            <Title size={16}>활동정보</Title>
-            <Close onClick={closeModal} />
-          </Row>
-          <Columnbox style={{ paddingBottom: "40px" }}>
-            <Line color={"#515151"}>
-              <span>조회</span>
-              <p>{dSelected?.viewCnt}</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>저장</span>
-              <p>{dSelected?.heartCnt}</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>공유</span>
-              <p>{dSelected?.congestionCnt}</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>혼잡도</span>
-              <p>{dSelected?.congestionCnt}</p>
-            </Line>
-            <Line color={"#515151"}>
-              <span>리뷰</span>
-              <p>{dSelected?.reviewCnt}</p>
-            </Line>
-          </Columnbox>
-          <Title style={{ padding: "40px 0" }} size={16}>
-            카공 정보
-          </Title>
-          <Columnbox style={{ paddingBottom: "190px" }}>
-            <Line color={"#515151"}>
-              <span>전체</span>
-              <p>{data?.recommendPercent}% 추천</p>
-            </Line>
-            <HoverLine color={"#515151"}>
-              <span>콘센트</span>
-              <p>{totalfunc(data?.socket)}</p>
-            </HoverLine>
-            <HoverBox late={20}>
-              <HoverContent obj={data?.socket} />
-            </HoverBox>
+            <Title style={{ padding: "40px 0" }} size={16}>
+              카공 정보
+            </Title>
+            <Columnbox style={{ paddingBottom: "190px" }}>
+              <Line color={"#515151"}>
+                <span>전체</span>
+                <p>{data?.recommendPercent}% 추천</p>
+              </Line>
+              <HoverLine color={"#515151"}>
+                <span>콘센트</span>
+                <p>{totalfunc(data?.socket)}</p>
+              </HoverLine>
+              <HoverBox late={20}>
+                <HoverContent obj={data?.socket} />
+              </HoverBox>
 
-            <HoverLine color={"#515151"}>
-              <span>화장실</span>
-              <p>{totalfunc(data?.restroom)}</p>
-            </HoverLine>
-            <HoverBox late={55}>
-              <HoverContent obj={data?.restroom} />
-            </HoverBox>
-            <HoverLine color={"#515151"}>
-              <span>테이블</span>
-              <p>{totalfunc(data?.tableSize)}</p>
-            </HoverLine>
-            <HoverBox late={90}>
-              <HoverContent obj={data?.tableSize} />
-            </HoverBox>
-            <HoverLine color={"#515151"}>
-              <span>와이파이</span>
-              <p>{totalfunc(data?.wifi)}</p>
-            </HoverLine>
-            <HoverBox late={120}>
-              <HoverContent obj={data?.wifi} />
-            </HoverBox>
-          </Columnbox>
-          <Row gap={24}>
-            <S.Btn style={{ border: "1px solid #515151" }}>삭제</S.Btn>
-            <S.Btn
-              color={"#515151"}
-              onClick={() =>
-                navigate("/management/editCafe", {
-                  state: dSelected,
-                })
-              }
-            >
-              수정
-            </S.Btn>
-          </Row>
-        </ModalBoxs>
-      </ModalBox>
-    </Portal>
+              <HoverLine color={"#515151"}>
+                <span>화장실</span>
+                <p>{totalfunc(data?.restroom)}</p>
+              </HoverLine>
+              <HoverBox late={55}>
+                <HoverContent obj={data?.restroom} />
+              </HoverBox>
+              <HoverLine color={"#515151"}>
+                <span>테이블</span>
+                <p>{totalfunc(data?.tableSize)}</p>
+              </HoverLine>
+              <HoverBox late={90}>
+                <HoverContent obj={data?.tableSize} />
+              </HoverBox>
+              <HoverLine color={"#515151"}>
+                <span>와이파이</span>
+                <p>{totalfunc(data?.wifi)}</p>
+              </HoverLine>
+              <HoverBox late={120}>
+                <HoverContent obj={data?.wifi} />
+              </HoverBox>
+            </Columnbox>
+            <Row gap={24}>
+              <S.Btn style={{ border: "1px solid #515151" }}>삭제</S.Btn>
+              <S.Btn
+                color={"#515151"}
+                onClick={() =>
+                  navigate("/management/editCafe", {
+                    state: dSelected,
+                  })
+                }
+              >
+                수정
+              </S.Btn>
+            </Row>
+          </ModalBoxs>
+        </ModalBox>
+      </Portal>
+      {slider && (
+        <Sliders setModal={setSlider} imgs={dSelected?.storeImageDtoList} />
+      )}
+    </>
   );
 }
 
@@ -352,17 +365,17 @@ const Photo = styled.div`
 `;
 
 const PhotoPlus = styled.div`
-width: 72px;
-height:72px;
+  width: 72px;
+  height: 72px;
+  cursor: pointer;
   background-color: #333333;
-  display:flex;
-  color:#ACACAC;
-  font-size:14px;
+  display: flex;
+  color: #acacac;
+  font-size: 14px;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   border-radius: 6px;
   line-height: 14px;
-  }
 `;
 const Column = styled.div`
   display: flex;

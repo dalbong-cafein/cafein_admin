@@ -12,14 +12,12 @@ import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
 import { useNavigate } from "react-router-dom";
 
-// axios.defaults.withCredentials = true;
-
 const LogIn = ({ KAKAO_AUTH_URL }) => {
   const getKakaoTokenHandler = async (code) => {
     const data = {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_REST_API_KEY,
-      redirect_uri: "http://localhost:3000/login", //수정
+      redirect_uri: "https://cafeinofficial.com/login", //수정
       code: code,
     };
     const queryString = Object.keys(data)
@@ -32,7 +30,7 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-        // withCredentials: false,
+        withCredentials: false,
       })
       .then((res) => {
         authApi(res.data.access_token) //우리 토큰 발급 API

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { withAuthInstance } from "./index";
+axios.defaults.withCredentials = true;
 
 export const feedCreateApi = async (register) => {
   const formData = new FormData();
@@ -39,7 +40,7 @@ export const feedCreateApi = async (register) => {
 
   return axios({
     method: "POST",
-    url: process.env.REACT_APP_API_URL + "/stores",
+    url: process.env.REACT_APP_API_URL + "/admin/stores",
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",
