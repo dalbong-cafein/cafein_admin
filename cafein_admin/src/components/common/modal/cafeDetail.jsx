@@ -76,7 +76,7 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                               <Photo key={i} img={item.imageUrl} />
                             ))}
                           <PhotoPlus onClick={() => setSlider(true)}>
-                            +{dSelected?.storeImageDtoList?.length}
+                            +{dSelected?.storeImageDtoList?.length - 4}
                           </PhotoPlus>
                         </>
                       ) : (
