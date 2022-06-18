@@ -13,6 +13,7 @@ export default function Sliders({ setModal, imgs }) {
   useEffect(() => {
     if (imgs) {
       for (let i = 0; i < imgs.length; i++) {
+        console.log(imgs[i].imageUrl);
         file.push({ image: imgs[i].imageUrl, caption: null });
       }
     }

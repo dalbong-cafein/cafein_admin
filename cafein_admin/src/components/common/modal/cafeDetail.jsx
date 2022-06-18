@@ -179,6 +179,11 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                 <span>리뷰</span>
                 <p>{dSelected?.reviewCnt}</p>
               </Line>
+              <Line color={"#515151"}>
+                <span>스티커</span>
+                {/* 수정 */}
+                <p>{dSelected?.reviewCnt}</p>
+              </Line>
             </Columnbox>
             <Title style={{ padding: "40px 0" }} size={16}>
               카공 정보
