@@ -18,19 +18,13 @@ const MarketingsTemp = ({
           .slice(items * (page - 1), items * (page - 1) + items)
           .map((item, i) => (
             <tr key={i}>
-              <td style={{ textAlign: "center" }}>
-                {String(item.couponId).padStart(6, "0")}
-              </td>
+              <td>{String(item.couponId).padStart(6, "0")}</td>
               <td>{item.brandName}</td>
               <td>{item.itemName}</td>
-              <td style={{ textAlign: "center" }}>
-                {String(item.memberId).padStart(6, "0")}
-              </td>
+              <td>{String(item.memberId).padStart(6, "0")}</td>
               <td>{item.phone || "-"}</td>
               <td>{item.regDateTime}</td>
-              <td style={{ textAlign: "center" }}>
-                {item.processingDateTime || "-"}
-              </td>
+              <td>{item.processingDateTime || "-"}</td>
               <td>
                 <S.Btn
                   content={item.status}
@@ -43,7 +37,7 @@ const MarketingsTemp = ({
                   {item.processingDateTime !== null ? "완료" : "미완료"}
                 </S.Btn>
               </td>
-              <td style={{ textAlign: "center" }}>
+              <td>
                 <Memo
                   onClick={() => {
                     setSelectItem(item);

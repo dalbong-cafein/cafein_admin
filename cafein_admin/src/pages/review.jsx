@@ -1,5 +1,6 @@
 import Header from "../components/common/header";
-import * as S from "./style";
+import * as S from "./style copy";
+import styled from "styled-components";
 
 import Row from "../components/atoms/row";
 
@@ -144,24 +145,23 @@ const Review = () => {
         </Row>
       </Row>
       <S.Wrapper isNull={temp.length === 0}>
-        <S.TableHeader>
-          <tr>
-            <td>분류</td>
-            <td>리뷰 내용</td>
-            <td>회원 번호</td>
-            <td>카페 번호</td>
-            <td>등록일</td>
-            <td>최종 수정일</td>
-            <td>메모</td>
-          </tr>
-          <ReviewTemp
-            temp={temp}
-            onModal={onModal}
-            setMemoModal={setMemoModal}
-            setMemoId={setMemoId}
-            setSelectItem={setSelectItem2}
-          />
-        </S.TableHeader>
+        <TableHeader>
+          <div>분류</div>
+          <div>리뷰 내용</div>
+          <div>회원 번호</div>
+          <div>카페 번호</div>
+          <div>등록일</div>
+          <div>최종 수정일</div>
+          <div>메모</div>
+        </TableHeader>
+
+        <ReviewTemp
+          temp={temp}
+          onModal={onModal}
+          setMemoModal={setMemoModal}
+          setMemoId={setMemoId}
+          setSelectItem={setSelectItem2}
+        />
       </S.Wrapper>
 
       {memoModal && (
@@ -176,5 +176,29 @@ const Review = () => {
     </>
   );
 };
+
+const TableHeader = styled.div`
+  font-size: 14px;
+  display: flex;
+  width: 100%;
+  color: #8b8b8b;
+  text-align: center;
+  line-height: 42px;
+  border-bottom: 1px solid #515151;
+  & > div {
+    flex: 1;
+    border-right: 1px solid #515151;
+  }
+  & > div:nth-child(2) {
+    flex: 3;
+  }
+  & > div:nth-child(4) {
+    flex: 1.5;
+  }
+
+  & > div:last-child {
+    border-right: none;
+  }
+`;
 
 export default Review;

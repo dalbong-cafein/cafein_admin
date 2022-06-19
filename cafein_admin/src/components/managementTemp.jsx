@@ -1,125 +1,25 @@
+import styled from "styled-components";
 import Row from "./atoms/row";
 import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 
 const ManagementTemp = ({
-  // temp,
+  temp,
   detailModal,
   setModal,
   setMemoId,
   setSelectItem,
 }) => {
-  const temp = [
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-    {
-      storeId: 1,
-      address: { fullAddress: "어쩌구" },
-      storeName: "카페카페",
-      phone: "01012345678",
-      congestionScoreAvg: "22",
-      regDateTime: "2020.06.23",
-      modDateTime: "2020.06.23",
-    },
-  ];
   return (
     <S.DataBox>
       {temp &&
         temp.map((item, i) => (
-          <S.ItemRow key={i}>
+          <ItemRow key={i}>
             <div onClick={() => detailModal(item)}>
-              <span>{String(item.storeId).padStart(6, "0")}</span>
+              {String(item.storeId).padStart(6, "0")}
             </div>
             <div onClick={() => detailModal(item)}>
-              <Row gap={16} align={"center"}>
+              <Row gap={16} align={"center"} style={{ marginLeft: "16px" }}>
                 {item.storeImageDto ? (
                   <S.Photo img={item.storeImageDto.imageUrl} />
                 ) : (
@@ -159,10 +59,42 @@ const ManagementTemp = ({
                 }}
               />
             </div>
-          </S.ItemRow>
+          </ItemRow>
         ))}
     </S.DataBox>
   );
 };
+
+const ItemRow = styled.div`
+  display: flex;
+  color: #e3e3e3;
+  font-size: 14px;
+  height: 72px;
+  cursor: pointer;
+  border-bottom: 1px solid #515151;
+
+  & > div {
+    // padding: 0 0 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 18px;
+    box-sizing: border-box;
+    flex: 1;
+    border-right: 1px solid #515151;
+  }
+  & > div:nth-child(3),
+  div:nth-child(2) {
+    flex: 2.5;
+  }
+  & > div:last-child {
+    border-right: none;
+    border-bottom: none;
+  }
+  & > div:nth-child(2) {
+    justify-content: start;
+  }
+`;
 
 export default ManagementTemp;

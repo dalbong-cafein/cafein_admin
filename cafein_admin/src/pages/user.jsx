@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-import * as S from "./style";
+import * as S from "./style copy";
+import styled from "styled-components";
 
 import Paging from "../components/common/Pagination";
 
@@ -139,29 +140,28 @@ const User = () => {
         </Row>
       </Row>
       <S.Wrapper isNull={temp.length === 0}>
-        <S.TableHeader>
-          <tr>
-            <td>분류</td>
-            <td>소셜</td>
-            <td>회원명</td>
-            <td>핸드폰</td>
-            <td>이메일</td>
-            <td>APP</td>
-            <td>DIVICE/IP</td>
-            <td>가입일</td>
-            <td>상태</td>
-            <td>메모</td>
-          </tr>
-          <UserTemp
-            temp={temp}
-            setMemoModal={setMemoModal}
-            onModal={onModal}
-            page={page}
-            items={items}
-            setMemoId={setMemoId}
-            setSelectItem={setSelectItem}
-          />
-        </S.TableHeader>
+        <TableHeader>
+          <div>분류</div>
+          <div>소셜</div>
+          <div>회원명</div>
+          <div>핸드폰</div>
+          <div>이메일</div>
+          <div>APP</div>
+          <div>DIVICE/IP</div>
+          <div>가입일</div>
+          <div>상태</div>
+          <div>메모</div>
+        </TableHeader>
+
+        <UserTemp
+          temp={temp}
+          setMemoModal={setMemoModal}
+          onModal={onModal}
+          page={page}
+          items={items}
+          setMemoId={setMemoId}
+          setSelectItem={setSelectItem}
+        />
       </S.Wrapper>
       {temp.length === 0 && <None text={"유저"} />}
       {memoModal && (
@@ -175,5 +175,35 @@ const User = () => {
     </>
   );
 };
+
+const TableHeader = styled.div`
+  font-size: 14px;
+  display: flex;
+  width: 100%;
+  color: #8b8b8b;
+  text-align: center;
+  line-height: 42px;
+  border-bottom: 1px solid #515151;
+  & > div {
+    flex: 0.5;
+    border-right: 1px solid #515151;
+  }
+  & > div:nth-child(3),
+  div:nth-child(5) {
+    flex: 2;
+  }
+  & > div:nth-child(9) {
+    flex: 1.2;
+  }
+  & > div:nth-child(4),
+  div:nth-child(7),
+  div:nth-child(8) {
+    flex: 0.9;
+  }
+
+  & > div:last-child {
+    border-right: none;
+  }
+`;
 
 export default User;

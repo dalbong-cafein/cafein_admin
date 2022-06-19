@@ -40,7 +40,10 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
 
   const onEdit = () => {
     editMemoApi(memoId, content)
-      .then((res) => setEditMode(false))
+      .then((res) => {
+        setEditMode(false);
+        memoDataApi(memoId).then((res) => setMemo(res.data.data));
+      })
       .catch((err) => console.log(err));
   };
   const onDel = () => {

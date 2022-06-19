@@ -6,58 +6,6 @@ export const Wrapper = styled.div`
   border: 1px solid #404040;
 `;
 
-export const TableHeader = styled.div`
-  font-size: 14px;
-  display: flex;
-  color: #e3e3e3;
-  width: 100%;
-  text-align: center;
-  line-height: 32px;
-
-  & > div {
-    flex: 1;
-    border-right: 1px solid #515151;
-  }
-  & > div:nth-child(3),
-  div:nth-child(2) {
-    flex: 2;
-  }
-
-  & > div:last-child {
-    border-right: none;
-  }
-
-  // & > th,
-  // td {
-  //   padding: 12px;
-  //   border: 1px solid #404040;
-  //   box-sizing: border-box;
-  // }
-  // & > td {
-  //   // height: 72px;
-  //   position: relative;
-  // }
-
-  // & > tr:first-child {
-  //   color: #8b8b8b;
-  // }
-`;
-
-export const ItemRow = styled.div`
-  display: flex;
-  // padding: 4px 0;
-  font-size: 14px;
-  & > div {
-    // padding: 0 16px;
-    flex: 1;
-    border-right: 1px solid #515151;
-  }
-  & > div:nth-child(3),
-  div:nth-child(2) {
-    flex: 2;
-  }
-`;
-
 export const DataBox = styled.div`
   display: flex;
   flex-direction: column;

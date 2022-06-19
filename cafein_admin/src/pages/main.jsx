@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 
-// import ManagementCafe from "./managementCafe";
-import ManagementCafe from "./managementCafe copy";
+import ManagementCafe from "./managementCafe";
 import Register from "./register";
 import EditCafe from "./editcafe";
 import Review from "./review";

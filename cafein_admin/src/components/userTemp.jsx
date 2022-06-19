@@ -1,6 +1,6 @@
 import Row from "./atoms/row";
 import styled from "styled-components";
-import * as S from "../pages/style";
+import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 
 const UserTemp = ({
@@ -13,21 +13,21 @@ const UserTemp = ({
   setMemoId,
 }) => {
   return (
-    <tbody>
+    <S.DataBox>
       {temp &&
         temp
           .slice(items * (page - 1), items * (page - 1) + items)
           .map((item, i) => (
-            <tr key={i}>
-              <td onClick={() => onModal(item)}>
-                <div>{String(item.memberId).padStart(6, "0")}</div>
-              </td>
-              <td onClick={() => onModal(item)}>
+            <ItemRow key={i}>
+              <div onClick={() => onModal(item)}>
+                {String(item.memberId).padStart(6, "0")}
+              </div>
+              <div onClick={() => onModal(item)}>
                 <p style={{ color: "#FC7521" }}>{item.socialTypeList[0]}</p>
                 {item.socialTypeList[1] && <p>{item.socialTypeList[1]}</p>}
-              </td>
-              <td onClick={() => onModal(item)}>
-                <Row gap={16} align={"center"}>
+              </div>
+              <div onClick={() => onModal(item)}>
+                <Row gap={16} align={"center"} style={{ marginLeft: "16px" }}>
                   {item.memberImageDto ? (
                     <S.Photo img={item.memberImageDto.imageUrl} />
                   ) : (
@@ -35,18 +35,18 @@ const UserTemp = ({
                   )}
                   <p>{item.nickname || "-"}</p>
                 </Row>
-              </td>
-              <td onClick={() => onModal(item)}>{item.phone || "-"}</td>
-              <td onClick={() => onModal(item)}>{item.email}</td>
-              <td onClick={() => onModal(item)}>{item.app || "-"}</td>
-              <td onClick={() => onModal(item)}>
+              </div>
+              <div onClick={() => onModal(item)}>{item.phone || "-"}</div>
+              <div onClick={() => onModal(item)}>{item.email}</div>
+              <div onClick={() => onModal(item)}>{item.app || "-"}</div>
+              <div onClick={() => onModal(item)}>
                 <Row gap={16}>
                   <p>{item.divice || "-"}</p>
                   <p>{item.ip || "-"}</p>
                 </Row>
-              </td>
-              <td onClick={() => onModal(item)}>{item.regDateTime || "-"}</td>
-              <td onClick={() => onModal(item)}>
+              </div>
+              <div onClick={() => onModal(item)}>{item.regDateTime || "-"}</div>
+              <div onClick={() => onModal(item)}>
                 <Btn
                   content={
                     !item.isReported && !item.isDeleted
@@ -62,8 +62,8 @@ const UserTemp = ({
                     ? "신고"
                     : "탈퇴"}
                 </Btn>
-              </td>
-              <td>
+              </div>
+              <div>
                 <Memo
                   onClick={() => {
                     setSelectItem(item);
@@ -71,12 +71,53 @@ const UserTemp = ({
                     setMemoModal(true);
                   }}
                 />
-              </td>
-            </tr>
+              </div>
+            </ItemRow>
           ))}
-    </tbody>
+    </S.DataBox>
   );
 };
+
+const ItemRow = styled.div`
+  display: flex;
+  color: #e3e3e3;
+  font-size: 14px;
+  height: 72px;
+  cursor: pointer;
+  border-bottom: 1px solid #515151;
+
+  & > div {
+    // padding: 0 0 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 18px;
+    box-sizing: border-box;
+    flex: 0.5;
+    border-right: 1px solid #515151;
+  }
+  & > div:nth-child(3),
+  div:nth-child(5) {
+    flex: 2;
+  }
+  & > div:nth-child(4),
+  div:nth-child(7),
+  div:nth-child(8) {
+    flex: 0.9;
+  }
+
+  & > div:nth-child(9) {
+    flex: 1.2;
+  }
+  & > div:last-child {
+    border-right: none;
+    border-bottom: none;
+  }
+  & > div:nth-child(3) {
+    justify-content: start;
+  }
+`;
 
 const Btn = styled.div`
   background-color: ${(props) =>
