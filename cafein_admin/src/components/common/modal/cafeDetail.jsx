@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
 import HoverContent from "../../hoverContent";
-import Sliders from "./carousel";
+import Sliders from "../carousel/carousel";
 
 export default function CafeDetailModal({ data, setDModal, dSelected }) {
   const closeModal = () => {
@@ -41,7 +41,7 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
               </Line>
               <Line>
                 <span>회원 번호</span>
-                <p>{dSelected.modMemberId}</p>
+                <p>{String(dSelected.modMemberId).padStart(6, "0")}</p>
               </Line>
               <Line>
                 <span>카페명</span>
@@ -177,11 +177,6 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
               </Line>
               <Line color={"#515151"}>
                 <span>리뷰</span>
-                <p>{dSelected?.reviewCnt}</p>
-              </Line>
-              <Line color={"#515151"}>
-                <span>스티커</span>
-                {/* 수정 */}
                 <p>{dSelected?.reviewCnt}</p>
               </Line>
             </Columnbox>

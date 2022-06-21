@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import "./index.css";
 export default class AsNavFor extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +22,6 @@ export default class AsNavFor extends Component {
   }
 
   render() {
-    console.log(this.props.imgs);
     return (
       <div>
         <Slider
@@ -39,13 +38,13 @@ export default class AsNavFor extends Component {
         <Slider
           asNavFor={this.state.nav1}
           ref={(slider) => (this.slider2 = slider)}
-          slidesToShow={6}
+          slidesToShow={5}
           swipeToSlide={true}
           focusOnSelect={true}
         >
           {this.props.imgs &&
             this.props.imgs.map((item, i) => (
-              <SBox key={i}>
+              <SBox key={i} style={{ margin: "0 5px" }}>
                 <img src={item} alt="" />
               </SBox>
             ))}
@@ -58,14 +57,21 @@ export default class AsNavFor extends Component {
 const Box = styled.div`
   width: 420px;
   height: 420px;
+  padding: 10px 0;
   & > img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 4px;
   }
 `;
-const SBox = styled(Box)`
-  width: 96px;
+const SBox = styled.div`
+  width: 96px !important;
   height: 96px;
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+  }
 `;

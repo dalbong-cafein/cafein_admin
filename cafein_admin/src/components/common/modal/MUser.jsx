@@ -4,164 +4,214 @@ import * as S from "./style";
 import styled from "styled-components";
 
 import { ReactComponent as Close } from "../../../svg/close2.svg";
+import { ReactComponent as Page } from "../../../svg/page.svg";
+
 import Row from "../../atoms/row";
 import { userReportApi } from "../../../util/user";
+import MUReport from "./MUReport";
 
 export default function MUser({ setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
   };
   const [data, setData] = useState([]);
+  const [SItem, setItems] = useState([]);
+  const [RModal, setRModal] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     if (selectItem.memberId) {
-      userReportApi(selectItem.memberId).then((res) => setData(res.data.data));
+      userReportApi(selectItem.memberId).then((res) =>
+        setData(res.data.data.adminReportResDtoList)
+      );
     }
-  }, []);
-  console.log(data);
+  }, [selectItem]);
 
   return (
-    <Portal>
-      <ModalBox>
-        {selectItem && (
-          <>
-            <ModalBoxs
-              style={{ borderRadius: "16px 0 0 16px" }}
-              color={"#131313"}
-              width={516}
-            >
-              <Title size={20}>회원정보</Title>
-              <Columnbox gap={14}>
-                <Line>
-                  <span>분류</span>
-                  <p>{String(selectItem.memberId).padStart(6, "0")}</p>
-                </Line>
-                <Line>
-                  <span>소셜</span>
-                  <p style={{ color: "#FC7521" }}>
-                    {selectItem?.socialTypeList?.length >= 1 &&
-                      selectItem?.socialTypeList[0]}
-                  </p>
-                  {selectItem?.socialTypeList?.length === 2 && (
-                    <p style={{ color: "#e3e3e3" }}>
-                      {selectItem.socialTypeList[1]}
+    <>
+      <Portal>
+        <ModalBox>
+          {selectItem && (
+            <>
+              <ModalBoxs
+                style={{ borderRadius: "16px 0 0 16px" }}
+                color={"#131313"}
+                width={516}
+              >
+                <Title size={20}>회원정보</Title>
+                <Columnbox gap={14}>
+                  <Line>
+                    <span>분류</span>
+                    <p>{String(selectItem.memberId).padStart(6, "0")}</p>
+                  </Line>
+                  <Line>
+                    <span>소셜</span>
+                    <p style={{ color: "#FC7521" }}>
+                      {selectItem?.socialTypeList?.length >= 1 &&
+                        selectItem?.socialTypeList[0]}
                     </p>
-                  )}
-                </Line>
-                <Line>
-                  <span>회원명</span>
-                  <Row gap={16} align={"center"}>
-                    {selectItem.memberImageDto && (
-                      <Photo img={selectItem.memberImageDto.imageUrl} />
+                    {selectItem?.socialTypeList?.length === 2 && (
+                      <p style={{ color: "#e3e3e3" }}>
+                        {selectItem.socialTypeList[1]}
+                      </p>
                     )}
-                    <p>{selectItem.nickname || "-"}</p>
-                  </Row>
-                </Line>
-                <Line>
-                  <span>핸드폰</span>
-                  <p>{selectItem.phone || "-"}</p>
-                </Line>
-                <Line>
-                  <span>이메일</span>
-                  <p>{selectItem.email || "-"}</p>
-                </Line>
-                <Line>
-                  <span>생년월일</span>
-                  <p>{selectItem.birth || "-"}</p>
-                </Line>
-                <Line>
-                  <span>성별</span>
-                  <p>{selectItem.gender || "-"}</p>
-                </Line>
-                <Line>
-                  <span>APP</span>
-                  <p>{selectItem.app || "-"}</p>
-                </Line>
-                <Line>
-                  <span>DEVICE IP</span>
-                  <p>
-                    {selectItem.divice || "-"}
-                    <br />
-                    {selectItem.ip || "-"}
-                  </p>
-                </Line>
-              </Columnbox>
-            </ModalBoxs>
-            <ModalBoxs
-              style={{ borderRadius: "0 16px 16px 0" }}
-              color={"#333333"}
-              width={476}
-            >
-              <Row justify={"space-between"}>
-                <Title size={16}>활동정보</Title>
-                <Close onClick={closeModal} />
-              </Row>
-              <Columnbox>
-                <Line color={"#515151"}>
-                  <span>방문</span>
-                  <p>{"-"}</p>
-                </Line>
-                <Line color={"#515151"}>
-                  <span>저장</span>
-                  <p>{selectItem?.heartCnt || "-"}</p>
-                </Line>
-                <Line color={"#515151"}>
-                  <span>공유</span>
-                  <p>{"-"}</p>
-                </Line>
-                <Line color={"#515151"}>
-                  <span>혼잡도</span>
-                  <p>{selectItem?.congestionCnt || "-"}</p>
-                </Line>
-                <Line color={"#515151"}>
-                  <span>리뷰</span>
-                  <p>{selectItem?.reviewCnt || "-"}</p>
-                </Line>
-                <Line color={"#515151"}>
-                  <span>스티커</span>
-                  <p>{selectItem?.stickerCnt || "-"}</p>
-                </Line>
-              </Columnbox>
-              <Title style={{ padding: "40px 0" }} size={16}>
-                기타
-              </Title>
-              <Columnbox style={{ paddingBottom: "90px" }}>
-                <Line color={"#515151"}>
-                  <span>가입일</span>
-                  <p>{selectItem.joinDateTime || "-"}</p>
-                </Line>
-                <StateRow>
-                  <div>
-                    <span>상태</span>
-                    <Btn
-                      content={
-                        !selectItem.isReported && !selectItem.isDeleted
+                  </Line>
+                  <Line>
+                    <span>회원명</span>
+                    <p style={{ width: "220px" }}>
+                      {selectItem.nickname || "-"}
+                    </p>
+                    <Row gap={16} align={"center"}>
+                      {selectItem.memberImageDto && (
+                        <Photo img={selectItem.memberImageDto.imageUrl} />
+                      )}
+                    </Row>
+                  </Line>
+                  <Line>
+                    <span>핸드폰</span>
+                    {!edit ? (
+                      <p>{selectItem.phone || "-"}</p>
+                    ) : (
+                      <input defaultValue={selectItem.phone} />
+                    )}
+                  </Line>
+                  <Line>
+                    <span>이메일</span>
+                    {!edit ? (
+                      <p>{selectItem.email || "-"}</p>
+                    ) : (
+                      <input defaultValue={selectItem.email} />
+                    )}
+                  </Line>
+                  <Line>
+                    <span>생년월일</span>
+                    {!edit ? (
+                      <p>{selectItem.birth || "-"}</p>
+                    ) : (
+                      <input defaultValue={selectItem.birth} />
+                    )}
+                  </Line>
+                  <Line>
+                    <span>성별</span>
+                    {!edit ? (
+                      <p>{selectItem.gender || "-"}</p>
+                    ) : (
+                      <input defaultValue={selectItem.gender} />
+                    )}
+                  </Line>
+                  <Line>
+                    <span>APP</span>
+                    <p>{selectItem.app || "-"}</p>
+                  </Line>
+                  <Line>
+                    <span>DEVICE IP</span>
+                    <p>
+                      {selectItem.divice || "-"}
+                      <br />
+                      {selectItem.ip || "-"}
+                    </p>
+                  </Line>
+                </Columnbox>
+              </ModalBoxs>
+              <ModalBoxs
+                style={{ borderRadius: "0 16px 16px 0", position: "relative" }}
+                color={"#333333"}
+                width={476}
+              >
+                <Row justify={"space-between"}>
+                  <Title size={16}>활동정보</Title>
+                  <Close onClick={closeModal} />
+                </Row>
+                <Columnbox>
+                  <Line color={"#515151"}>
+                    <span>방문</span>
+                    <p>{"-"}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>저장</span>
+                    <p>{selectItem?.heartCnt || "-"}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>공유</span>
+                    <p>{"-"}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>혼잡도</span>
+                    <p>{selectItem?.congestionCnt || "-"}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>리뷰</span>
+                    <p>{selectItem?.reviewCnt || "-"}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>스티커</span>
+                    <p>{selectItem?.stickerCnt || "-"}</p>
+                  </Line>
+                </Columnbox>
+                <Title style={{ padding: "40px 0 20px" }} size={16}>
+                  기타
+                </Title>
+                <Columnbox>
+                  <Line color={"#515151"}>
+                    <span>가입일</span>
+                    <p>
+                      {String(selectItem.joinDateTime).replace("T", " ") || "-"}
+                    </p>
+                  </Line>
+                  <StateRow>
+                    <div>
+                      <span>상태</span>
+                      <Btn
+                        content={
+                          !selectItem.isReported && !selectItem.isDeleted
+                            ? "기본"
+                            : selectItem.isReported
+                            ? "신고"
+                            : "탈퇴"
+                        }
+                      >
+                        {!selectItem.isReported && !selectItem.isDeleted
                           ? "기본"
                           : selectItem.isReported
                           ? "신고"
-                          : "탈퇴"
-                      }
-                    >
-                      {!selectItem.isReported && !selectItem.isDeleted
-                        ? "기본"
-                        : selectItem.isReported
-                        ? "신고"
-                        : "탈퇴"}
-                    </Btn>
-                    <p>탈퇴</p>
-                  </div>
-                </StateRow>
-                {/* {data && data.map((item, i) => <div key={i}>{item}</div>)} */}
-              </Columnbox>
-              <Row gap={24}>
-                <S.Btn color={"#515151"}>삭제</S.Btn>
-                <S.Btn color={"#2563eb"}>수정</S.Btn>
-              </Row>
-            </ModalBoxs>
-          </>
-        )}
-      </ModalBox>
-    </Portal>
+                          : "탈퇴"}
+                      </Btn>
+                      <p>탈퇴</p>
+                    </div>
+                    <div>
+                      {data &&
+                        data.map((item, i) => (
+                          <div key={i}>
+                            {i + 1}.{item.categoryName}{" "}
+                            <Page
+                              onClick={() => {
+                                setRModal(true);
+                                setItems(item);
+                              }}
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </StateRow>
+                </Columnbox>
+                <BtnRow>
+                  {!edit ? (
+                    <S.Btn color={"#515151"} onClick={() => setEdit(true)}>
+                      수정
+                    </S.Btn>
+                  ) : (
+                    <S.Btn color={"#2563eb"} onClick={() => setEdit(false)}>
+                      저장
+                    </S.Btn>
+                  )}
+                </BtnRow>
+              </ModalBoxs>
+            </>
+          )}
+        </ModalBox>
+      </Portal>
+      {RModal && <MUReport selectItem={SItem} setModal={setRModal} />}
+    </>
   );
 }
 
@@ -197,7 +247,7 @@ const Line = styled.div`
   display: flex;
   gap: 32px;
   width: 100%;
-  padding-bottom: 13px;
+  padding: 5px 0 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
     width: 69px;
@@ -209,14 +259,25 @@ const Line = styled.div`
   & > p:nth-child(2) {
     color: #e3e3e3;
   }
+
+  & > input {
+    border: 0;
+    width: 216px;
+    color: #e3e3e3;
+    background-color: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    &:focus {
+      outline: none;
+    }
+  }
 `;
 
 const StateRow = styled.div`
-  display: flex;
+  // display: flex;
 
-  padding-bottom: 70px;
   border-bottom: 1px solid #515151;
-  & > div {
+  & > div:first-child {
     display: flex;
     gap: 32px;
     align-items: baseline;
@@ -233,6 +294,32 @@ const StateRow = styled.div`
       color: #f44336;
     }
   }
+  & > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    max-height: 100px;
+    margin-left: 110px;
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: none;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: gray;
+    }
+    ::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
+    & > div {
+      color: #e3e3e3;
+      line-height: 24px;
+    }
+  }
 `;
 const Columnbox = styled.div`
   display: flex;
@@ -241,36 +328,38 @@ const Columnbox = styled.div`
   padding: 0 20px;
 `;
 
-const Pic = styled.div`
-  width: 64px;
-  height: 64px;
-  background-color: #c4c4c4;
-  & > div {
-    background-img: ${(props) => props.img && props.img};
-    z-index: 9;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
 const Btn = styled.div`
   background-color: ${(props) =>
     props.content === "기본"
-      ? "#26BA6A"
+      ? "#18452e"
       : props.content === "신고"
-      ? "#f44336"
-      : "#ff9800"};
-  width: 96px;
+      ? "#56211d"
+      : "#5a3b0d"};
+  width: 86px;
   height: 26px;
   text-align: center;
-  opacity: 0.3;
+  margin: 0 auto;
+
   border-radius: 6px;
-  color: #fff;
+  color: ${(props) =>
+    props.content === "기본"
+      ? "#20a45c"
+      : props.content === "신고"
+      ? "#d24035"
+      : "#e59116"};
   line-height: 26px;
 `;
 
-export const Photo = styled.div`
+const Photo = styled.div`
   width: 40px;
   height: 40px;
   background: ${({ img }) => img && `url(${img})`} no-repeat center center/cover;
+`;
+
+const BtnRow = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: right;
+  width: 85%;
+  top: 700px;
 `;

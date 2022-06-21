@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Portal from "./Portal";
-import * as S from "./style";
+import Portal from "../modal/Portal";
+import * as S from "../modal/style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Slider from "../../slider";
+import Slider from "./slider";
 
 export default function Sliders({ imgs, setModal }) {
   const closeModal = () => {

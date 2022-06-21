@@ -14,3 +14,7 @@ export const userReportApi = async (id) => {
 export const userDetailApi = async (id) => {
   return await withAuthInstance.get(`/members/${id}`);
 };
+
+export const stickerApi = async (id) => {
+  return await withAuthInstance.get(`/stickers?memberId=${id}`);
+};
