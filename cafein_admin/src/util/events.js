@@ -44,3 +44,17 @@ export const registerNoticeApi = async (register) => {
     },
   });
 };
+
+export const regImgApi = async (file) => {
+  const formData = new FormData();
+  formData.append("imageFile", file);
+
+  return axios({
+    method: "POST",
+    url: process.env.REACT_APP_API_URL + "/admin/event-image",
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

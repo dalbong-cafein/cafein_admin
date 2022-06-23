@@ -10,7 +10,15 @@ const MarketingsTemp = ({
   setSelectItem,
   setMemoModal,
   setMemoId,
+  alert,
 }) => {
+  const changeState = (id, state) => {
+    if (!state) {
+      console.log("hi");
+      setAlert(!alert);
+      setReportId(id);
+    }
+  };
   return (
     <tbody>
       {temp &&
@@ -28,10 +36,8 @@ const MarketingsTemp = ({
               <td>
                 <S.Btn
                   content={item.status}
-                  disabled={item.status}
                   onClick={() => {
-                    setAlert(!alert);
-                    setReportId(item.couponId);
+                    changeState(item.couponId, item.state);
                   }}
                 >
                   {item.processingDateTime !== null ? "완료" : "미완료"}

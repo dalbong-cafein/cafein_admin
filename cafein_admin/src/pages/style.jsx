@@ -87,16 +87,14 @@ export const Sbtn = styled.div`
   }
 `;
 
-export const Btn = styled.button`
+export const Btn = styled.div`
   margin: 0 auto;
-  background-color: ${(props) => (props.content ? "#26BA6A" : "#f44336")};
+  background-color: ${(props) => (props.content ? "#18452e" : "#56211d")};
   width: 96px;
   height: 28px;
   text-align: center;
-  opacity: 0.3;
-
+  color: ${(props) => (props.content ? "#20a45c" : "#d24035")};
   border-radius: 6px;
-  color: #fff;
   line-height: 26px;
   cursor: pointer;
 `;

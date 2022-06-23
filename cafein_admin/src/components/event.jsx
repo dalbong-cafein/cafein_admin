@@ -4,7 +4,7 @@ import None from "./None";
 import * as S from "../pages/style";
 import Paging from "../components/common/Pagination";
 import * as SS from "./noticesStyle";
-import { eventListApi } from "../util/events";
+import { eventListApi, regImgApi } from "../util/events";
 import styled from "styled-components";
 import PVImg from "./common/PVImg";
 import EventMapBox from "./eventMapBox";
@@ -55,12 +55,20 @@ const Event = () => {
   const [file, setFile] = useState();
 
   const onLoadFile = (e) => {
+    if (file) {
+      alert("이미지는 하나만 등록해주세요");
+    }
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
     }
   };
+  const regImg = () => {
+    regImgApi(file)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
-    // eventListApi().then((res) => console.log(res));
+    // eventListApi().then((res) => console.log(res)); api아직없음
   }, []);
   const input = useRef();
   return (
@@ -127,7 +135,9 @@ const Event = () => {
             <SS.Btn back={"#515151"} onClick={() => setPreview(true)}>
               미리보기
             </SS.Btn>
-            <SS.Btn back={"#2563eb"}>등록</SS.Btn>
+            <SS.Btn back={"#2563eb"} onClick={regImg}>
+              등록
+            </SS.Btn>
           </Row>
         </SS.NewNotice>
       </SS.Container>

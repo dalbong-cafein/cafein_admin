@@ -17,7 +17,11 @@ const Notice = () => {
         Tmenu1={"공지사항"}
         Tmenu2={"자주 묻는 질문"}
       />
-      {menu === "Notice" ? <Notices menu={menu} /> : <QnA menu={menu} />}
+      {menu === "Notice" ? (
+        <Notices menu={menu} />
+      ) : (
+        <QnA menu={menu} setMenu={setMenu} />
+      )}
     </>
   );
 };

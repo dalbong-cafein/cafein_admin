@@ -7,8 +7,9 @@ import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { ReactComponent as Page } from "../../../svg/page.svg";
 
 import Row from "../../atoms/row";
-import { userReportApi } from "../../../util/user";
+import { stickerApi, userReportApi } from "../../../util/user";
 import MUReport from "./MUReport";
+import Sticker from "./sticker";
 
 export default function MUser({ setModal, selectItem }) {
   const closeModal = () => {
@@ -18,7 +19,17 @@ export default function MUser({ setModal, selectItem }) {
   const [SItem, setItems] = useState([]);
   const [RModal, setRModal] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [sticker, setSticker] = useState(false);
+  const [sItem, setSItem] = useState([]);
 
+  const stickerView = () => {
+    stickerApi(selectItem.memberId)
+      .then((res) => {
+        setSItem(res.data.data);
+        setSticker(true);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     if (selectItem.memberId) {
       userReportApi(selectItem.memberId).then((res) =>
@@ -145,7 +156,8 @@ export default function MUser({ setModal, selectItem }) {
                   </Line>
                   <Line color={"#515151"}>
                     <span>스티커</span>
-                    <p>{selectItem?.stickerCnt || "-"}</p>
+                    <p>{selectItem?.stickerCnt || "-"}</p>{" "}
+                    <Page onClick={stickerView} />
                   </Line>
                 </Columnbox>
                 <Title style={{ padding: "40px 0 20px" }} size={16}>
@@ -211,6 +223,13 @@ export default function MUser({ setModal, selectItem }) {
         </ModalBox>
       </Portal>
       {RModal && <MUReport selectItem={SItem} setModal={setRModal} />}
+      {sticker && (
+        <Sticker
+          setModal={setSticker}
+          selectItem={sItem}
+          id={selectItem.memberId}
+        />
+      )}
     </>
   );
 }
@@ -245,11 +264,12 @@ const Title = styled.p`
 `;
 const Line = styled.div`
   display: flex;
-  gap: 32px;
+
   width: 100%;
   padding: 5px 0 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
+    padding-right: 32px;
     width: 69px;
     text-align: right;
     font-size: 16px;
@@ -258,6 +278,10 @@ const Line = styled.div`
   }
   & > p:nth-child(2) {
     color: #e3e3e3;
+    padding-right: 10px;
+  }
+  & > svg {
+    cursor: pointer;
   }
 
   & > input {
@@ -299,6 +323,7 @@ const StateRow = styled.div`
     flex-direction: column;
     margin-top: 20px;
     max-height: 100px;
+    padding-bottom: 15px;
     margin-left: 110px;
     overflow-y: scroll;
     ::-webkit-scrollbar {

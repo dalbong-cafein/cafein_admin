@@ -173,6 +173,7 @@ const Marketings = () => {
             page={page}
             items={items}
             setAlert={setAlert}
+            alert={alert}
             setReportId={setReportId}
             setMemoId={setMemoId}
             setSelectItem={setSelectItem}
@@ -180,7 +181,7 @@ const Marketings = () => {
           />
         </S.TableHeader>
       </S.Wrapper>
-      {alert && reportId && (
+      {alert && (
         <RedAlert
           text={"마케팅 서비스 상태 변경"}
           text2={"'완료'"}
@@ -191,13 +192,13 @@ const Marketings = () => {
         />
       )}
 
-      {/* {memoModal && (
+      {memoModal && (
         <MemoModal
           memoId={memoId}
           setModal={setMemoModal}
           selectItem={selectItem}
         />
-      )} */}
+      )}
       {temp.length === 0 && <None text={"마케팅 서비스"} />}
     </>
   );

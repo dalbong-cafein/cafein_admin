@@ -26,7 +26,7 @@ import Preview from "./common/modal/preview";
 import NoticeModal from "./common/modal/noticeModal";
 import RedAlert from "./common/modal/redAlert";
 
-const QnA = ({ menu }) => {
+const QnA = ({ menu, setMenu }) => {
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -80,7 +80,11 @@ const QnA = ({ menu }) => {
     copy.boardCategoryId = 2;
     setRegister(copy);
     registerNoticeApi(register)
-      .then((res) => setAlert(false))
+      .then((res) => {
+        setAlert(false);
+        window.location.reload();
+        setMenu("event");
+      })
       .catch((err) => console.log(err));
   };
   const input = useRef();
