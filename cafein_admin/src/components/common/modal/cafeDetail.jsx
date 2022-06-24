@@ -82,7 +82,11 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                       ) : (
                         <>
                           {dSelected?.storeImageDtoList?.map((item, i) => (
-                            <Photo key={i} img={item.imageUrl} />
+                            <Photo
+                              key={i}
+                              img={item.imageUrl}
+                              onClick={() => setSlider(true)}
+                            />
                           ))}
                         </>
                       )}

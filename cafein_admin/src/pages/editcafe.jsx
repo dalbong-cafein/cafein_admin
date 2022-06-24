@@ -164,7 +164,12 @@ const Register = () => {
         inner={"카페 상세 수정"}
       >
         <div>
-          <S.Submit>취소</S.Submit>
+          <S.Submit
+            style={{ marginRight: "15px" }}
+            onClick={() => window.history.back()}
+          >
+            취소
+          </S.Submit>
           <S.Submit
             disalbed={
               register.storeName == null ||

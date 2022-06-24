@@ -1,17 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
 import styled from "styled-components";
-import { reviewDetailApi } from "../../../util/review";
+import { reviewDelApi, reviewDetailApi } from "../../../util/review";
+import RedAlert from "./redAlert";
+import ReportReason from "./ReportReason";
 
 export default function MReview({ setModal, selectItem2 }) {
   const closeModal = () => {
     setModal(false);
   };
 
-  // console.log(selectItem2);
+  const [report, setReport] = useState(false);
+  const [del, setDel] = useState(false);
+  const [rReason, setRReason] = useState(false);
+
+  const onDel = () => {
+    reviewDelApi(selectItem2.reviewId)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     if (selectItem2.reviewId) {
@@ -20,37 +32,38 @@ export default function MReview({ setModal, selectItem2 }) {
   }, []);
 
   return (
-    <Portal>
-      <S.ModalBox>
-        <S.ModalHeader>
-          <p>리뷰 상세</p>
-          <Close onClick={closeModal} />
-        </S.ModalHeader>
-        <S.ModalContent>
-          <Columnbox>
-            <Line>
-              <span>분류</span>
-              <p>{String(selectItem2.reviewId).padStart(6, "0")}</p>
-            </Line>
-            <Line>
-              <span>회원명</span>
-              <p>{selectItem2.nicknameOfWriter || "-"}</p>
-            </Line>
-            <Line>
-              <span>카페명</span>
-              <p>{selectItem2.storeName}</p>
-            </Line>
-            <Line>
-              <span>등록일</span>
-              <p>{selectItem2.regDateTime}</p>
-            </Line>
-            <Line>
-              <span>최종수정일</span>
-              <p>{selectItem2.modDateTime}</p>
-            </Line>
-          </Columnbox>
-          <Text>{selectItem2.content || "-"}</Text>
-          {/* {selectItem2?.reviewImageDto &&
+    <>
+      <Portal>
+        <S.ModalBox>
+          <S.ModalHeader>
+            <p>리뷰 상세</p>
+            <Close onClick={closeModal} />
+          </S.ModalHeader>
+          <S.ModalContent>
+            <Columnbox>
+              <Line>
+                <span>분류</span>
+                <p>{String(selectItem2.reviewId).padStart(6, "0")}</p>
+              </Line>
+              <Line>
+                <span>회원명</span>
+                <p>{selectItem2.nicknameOfWriter || "-"}</p>
+              </Line>
+              <Line>
+                <span>카페명</span>
+                <p>{selectItem2.storeName}</p>
+              </Line>
+              <Line>
+                <span>등록일</span>
+                <p>{selectItem2.regDateTime}</p>
+              </Line>
+              <Line>
+                <span>최종수정일</span>
+                <p>{selectItem2.modDateTime}</p>
+              </Line>
+            </Columnbox>
+            <Text>{selectItem2.content || "-"}</Text>
+            {/* {selectItem2?.reviewImageDto &&
           selectItem2?.reviewImageDto.length === 1 ? (
             <Row gap={10}>
               <Pic>
@@ -75,28 +88,56 @@ export default function MReview({ setModal, selectItem2 }) {
               </Row>
             ))
           )} */}
-          {selectItem2.reviewImageDto && (
-            <Row gap={10}>
-              <Pic>
-                <img
-                  src={
-                    process.env.PUBLIC_URL +
-                    selectItem2?.reviewImageDto.imageUrl
-                  }
-                  alt="img"
-                />
-              </Pic>
+            {selectItem2.reviewImageDto && (
+              <Row gap={10}>
+                <Pic>
+                  <img
+                    src={
+                      process.env.PUBLIC_URL +
+                      selectItem2?.reviewImageDto.imageUrl
+                    }
+                    alt="img"
+                  />
+                </Pic>
+              </Row>
+            )}
+          </S.ModalContent>
+          <S.ModalFooter style={{ justifyContent: "end" }}>
+            <Row gap={24}>
+              <S.Btn color={"#515151"} onClick={() => setReport(true)}>
+                신고
+              </S.Btn>
+              <S.Btn color={"#2563eb"} onClick={() => setDel(true)}>
+                삭제
+              </S.Btn>
             </Row>
-          )}
-        </S.ModalContent>
-        <S.ModalFooter style={{ justifyContent: "end" }}>
-          <Row gap={24}>
-            <S.Btn color={"#515151"}>신고</S.Btn>
-            <S.Btn color={"#2563eb"}>삭제</S.Btn>
-          </Row>
-        </S.ModalFooter>
-      </S.ModalBox>
-    </Portal>
+          </S.ModalFooter>
+        </S.ModalBox>
+      </Portal>
+      {report && (
+        <RedAlert
+          text={"리뷰 신고"}
+          text1={"리뷰를"}
+          text2={" 신고"}
+          text3={"하시겠습니까?"}
+          setAlert={setReport}
+          func={setRReason}
+          forFunc={true}
+        />
+      )}
+      {del && (
+        <RedAlert
+          text={"리뷰 삭제"}
+          text1={"리뷰를"}
+          text2={" 삭제"}
+          text3={"하시겠습니까?"}
+          setAlert={setDel}
+          func={onDel}
+          forFunc={selectItem2.reviewId}
+        />
+      )}
+      {rReason && <ReportReason setModal={setRReason} />}
+    </>
   );
 }
 const Columnbox = styled.div`

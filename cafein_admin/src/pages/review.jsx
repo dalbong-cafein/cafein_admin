@@ -68,9 +68,10 @@ const Review = () => {
       });
     }
     if (selected === "회원 번호") {
-      reviewSearchApi(search, "c", page, sort).then((res) =>
-        setTemp(res.data.data.reviewResDtoList.dtoList)
-      );
+      reviewSearchApi(search, "c", page, sort).then((res) => {
+        console.log(res);
+        setTemp(res.data.data.reviewResDtoList.dtoList);
+      });
     }
     if (selected === "카페 번호") {
       reviewSearchApi(search, "s", page, sort).then((res) =>

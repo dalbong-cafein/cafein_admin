@@ -14,3 +14,7 @@ export const reviewSearchApi = async (keyword, sub, page, sort) => {
     `/reviews?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );
 };
+
+export const reviewDelApi = async (id) => {
+  return await withAuthInstance.delete(`/reviews/${id}`);
+};
