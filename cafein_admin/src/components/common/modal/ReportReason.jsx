@@ -5,13 +5,14 @@ import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { ReactComponent as Check } from "../../../svg/check.svg";
 import Row from "../../atoms/row";
+import RedAlert from "./redAlert";
 
 export default function ReportReason({ setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
-    console.log("hi");
   };
   const [selected, setSelected] = useState(null);
+  const [report, setReport] = useState(false);
 
   const list = [
     "카페와 관련 없는 내용",
@@ -22,42 +23,55 @@ export default function ReportReason({ setModal, selectItem }) {
     "저작권 도용 의심",
     "기타",
   ];
-  // console.log(selectItem);
 
   const onSelect = (item) => {
     setSelected(item);
-    console.log(selected === item);
   };
 
   return (
-    <Portal>
-      <S.ModalBox>
-        <S.ModalHeader>
-          <p>리뷰 신고</p>
-          <Close onClick={closeModal} />
-        </S.ModalHeader>
-        <S.ModalContent>
-          <TextBox>
-            <p>신고하려는 이유를 알려주세요.</p>
-            <p>신고 이유가 타당하지 않으면 반영되지 않을 수 있습니다.</p>
-          </TextBox>
+    <>
+      <Portal>
+        <S.ModalBox>
+          <S.ModalHeader>
+            <p>리뷰 신고</p>
+            <Close onClick={closeModal} />
+          </S.ModalHeader>
+          <S.ModalContent>
+            <TextBox>
+              <p>신고하려는 이유를 알려주세요.</p>
+              <p>신고 이유가 타당하지 않으면 반영되지 않을 수 있습니다.</p>
+            </TextBox>
 
-          {list.map((item, i) => (
-            <RItem
-              key={i}
-              onClick={() => onSelect(item)}
-              isSelected={selectItem === item}
-            >
-              <p>{item}</p>
-              <Check />
-            </RItem>
-          ))}
-        </S.ModalContent>
-        <ModalFooter>
-          <S.Btn color={"#2563eb"}>신고</S.Btn>
-        </ModalFooter>
-      </S.ModalBox>
-    </Portal>
+            {list.map((item, i) => (
+              <RItem
+                key={i}
+                onClick={() => onSelect(item)}
+                isSelected={selected === item}
+              >
+                <p>{item}</p>
+                <Check />
+              </RItem>
+            ))}
+          </S.ModalContent>
+          <ModalFooter>
+            <S.Btn color={"#2563eb"} onClick={() => setReport(true)}>
+              신고
+            </S.Btn>
+          </ModalFooter>
+        </S.ModalBox>
+      </Portal>
+      {report && (
+        <RedAlert
+          text={"리뷰 신고"}
+          text1={"리뷰를"}
+          text2={" 신고"}
+          text3={"하시겠습니까?"}
+          setAlert={setReport}
+          // func={setRReason}
+          // forFunc={true}
+        />
+      )}
+    </>
   );
 }
 

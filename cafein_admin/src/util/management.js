@@ -70,3 +70,8 @@ export const feedSearchApi = async (keyword, sub, page, sort) => {
     `/stores?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );
 };
+
+//카페 삭제
+export const cafeDelApi = async (id) => {
+  return await withAuthInstance.delete(`/stores/${id}`);
+};

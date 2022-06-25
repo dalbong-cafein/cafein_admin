@@ -7,9 +7,10 @@ import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { ReactComponent as Page } from "../../../svg/page.svg";
 
 import Row from "../../atoms/row";
-import { stickerApi, userReportApi } from "../../../util/user";
+import { stickerApi, userLeaveApi, userReportApi } from "../../../util/user";
 import MUReport from "./MUReport";
 import Sticker from "./sticker";
+import RedAlert from "./redAlert";
 
 export default function MUser({ setModal, selectItem }) {
   const closeModal = () => {
@@ -21,6 +22,7 @@ export default function MUser({ setModal, selectItem }) {
   const [edit, setEdit] = useState(false);
   const [sticker, setSticker] = useState(false);
   const [sItem, setSItem] = useState([]);
+  const [alert, setAlert] = useState(false);
 
   const stickerView = () => {
     stickerApi(selectItem.memberId)
@@ -28,6 +30,12 @@ export default function MUser({ setModal, selectItem }) {
         setSItem(res.data.data);
         setSticker(true);
       })
+      .catch((err) => console.log(err));
+  };
+
+  const onDel = () => {
+    userLeaveApi(selectItem.memberId)
+      .then((res) => window.location.reload())
       .catch((err) => console.log(err));
   };
   useEffect(() => {
@@ -175,20 +183,20 @@ export default function MUser({ setModal, selectItem }) {
                       <span>상태</span>
                       <Btn
                         content={
-                          !selectItem.isReported && !selectItem.isDeleted
+                          selectItem.memberState === "NORMAL"
                             ? "기본"
-                            : selectItem.isReported
+                            : selectItem.memberState === "SUSPENSION"
                             ? "신고"
                             : "탈퇴"
                         }
                       >
-                        {!selectItem.isReported && !selectItem.isDeleted
+                        {selectItem.memberState === "NORMAL"
                           ? "기본"
-                          : selectItem.isReported
+                          : selectItem.memberState === "SUSPENSION"
                           ? "신고"
                           : "탈퇴"}
                       </Btn>
-                      <p>탈퇴</p>
+                      <p onClick={() => setAlert(true)}>탈퇴</p>
                     </div>
                     <div>
                       {data &&
@@ -228,6 +236,17 @@ export default function MUser({ setModal, selectItem }) {
           setModal={setSticker}
           selectItem={sItem}
           id={selectItem.memberId}
+        />
+      )}
+
+      {alert && (
+        <RedAlert
+          text={"회원 탈퇴"}
+          text2={"'탈퇴'"}
+          text3={"로 상태를 변경 하시겠습니까?"}
+          setAlert={setAlert}
+          func={onDel}
+          forFunc={null}
         />
       )}
     </>
@@ -316,6 +335,7 @@ const StateRow = styled.div`
       margin-left: 80px;
       font-weight: 700;
       color: #f44336;
+      cursor: pointer;
     }
   }
   & > div:nth-child(2) {

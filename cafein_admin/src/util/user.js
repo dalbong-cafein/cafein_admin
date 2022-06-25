@@ -34,3 +34,8 @@ export const stickerDelApi = async (id, type, sId) => {
     );
   }
 };
+
+//회원 탈퇴
+export const userLeaveApi = async (id) => {
+  return await withAuthInstance.delete(`/members/${id}`);
+};

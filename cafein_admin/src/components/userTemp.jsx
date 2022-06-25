@@ -49,16 +49,16 @@ const UserTemp = ({
               <div onClick={() => onModal(item)}>
                 <Btn
                   content={
-                    !item.isReported && !item.isDeleted
+                    item.memberState === "NORMAL"
                       ? "기본"
-                      : item.isReported
+                      : item.memberState === "SUSPENSION"
                       ? "신고"
                       : "탈퇴"
                   }
                 >
-                  {!item.isReported && !item.isDeleted
+                  {item.memberState === "NORMAL"
                     ? "기본"
-                    : item.isReported
+                    : item.memberState === "SUSPENSION"
                     ? "신고"
                     : "탈퇴"}
                 </Btn>

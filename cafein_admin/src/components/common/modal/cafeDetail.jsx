@@ -8,6 +8,8 @@ import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
 import HoverContent from "../../hoverContent";
 import Sliders from "../carousel/carousel";
+import RedAlert from "./redAlert";
+import { cafeDelApi } from "../../../util/management";
 
 export default function CafeDetailModal({ data, setDModal, dSelected }) {
   const closeModal = () => {
@@ -15,6 +17,7 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
   };
 
   const [slider, setSlider] = useState(false);
+  const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
 
   const totalfunc = (title) => {
@@ -23,6 +26,13 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
 
       return values.reduce((a, b) => a + b);
     }
+  };
+
+  const onDel = () => {
+    cafeDelApi(dSelected.storeId).then((res) => {
+      setAlert(false);
+      window.location.reload();
+    });
   };
   return (
     <>
@@ -223,13 +233,21 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
               </HoverBox>
             </Columnbox>
             <Row gap={24}>
-              <S.Btn style={{ border: "1px solid #515151" }}>삭제</S.Btn>
+              <S.Btn
+                style={{ border: "1px solid #515151" }}
+                onClick={() => setAlert(true)}
+              >
+                삭제
+              </S.Btn>
               <S.Btn
                 color={"#515151"}
                 onClick={() =>
-                  navigate("/management/editCafe", {
-                    state: dSelected,
-                  })
+                  // navigate("/management/editCafe", {
+                  //   state: dSelected,
+                  // })
+                  window.alert(
+                    "서비스 준비중입니다. 카페를 삭제 후 다시 등록해주세요."
+                  )
                 }
               >
                 수정
@@ -240,6 +258,17 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
       </Portal>
       {slider && (
         <Sliders setModal={setSlider} imgs={dSelected?.storeImageDtoList} />
+      )}
+      {alert && (
+        <RedAlert
+          text={"카페 삭제"}
+          text1={"카페를"}
+          text2={" 삭제"}
+          text3={"하시겠습니까?"}
+          setAlert={setAlert}
+          func={onDel}
+          forFunc={null}
+        />
       )}
     </>
   );

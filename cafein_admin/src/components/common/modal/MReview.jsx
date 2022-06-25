@@ -2,34 +2,28 @@ import React, { useEffect, useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Row from "../../atoms/row";
 import styled from "styled-components";
-import { reviewDelApi, reviewDetailApi } from "../../../util/review";
+import { reviewDelApi } from "../../../util/review";
+
 import RedAlert from "./redAlert";
 import ReportReason from "./ReportReason";
+import Row from "../../atoms/row";
 
 export default function MReview({ setModal, selectItem2 }) {
   const closeModal = () => {
     setModal(false);
   };
 
-  const [report, setReport] = useState(false);
   const [del, setDel] = useState(false);
   const [rReason, setRReason] = useState(false);
 
   const onDel = () => {
     reviewDelApi(selectItem2.reviewId)
       .then((res) => {
-        console.log(res);
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    if (selectItem2.reviewId) {
-      reviewDetailApi(selectItem2.reviewId).then((res) => console.log(res));
-    }
-  }, []);
 
   return (
     <>
@@ -63,48 +57,23 @@ export default function MReview({ setModal, selectItem2 }) {
               </Line>
             </Columnbox>
             <Text>{selectItem2.content || "-"}</Text>
-            {/* {selectItem2?.reviewImageDto &&
-          selectItem2?.reviewImageDto.length === 1 ? (
-            <Row gap={10}>
-              <Pic>
-                <img
-                  src={
-                    process.env.PUBLIC_URL +
-                    selectItem2?.reviewImageDto.imageUrl
-                  }
-                  alt="img"
-                />
-              </Pic>
-            </Row>
-          ) : (
-            selectItem2?.reviewImageDto.map((item, i) => (
-              <Row gap={10} key={i}>
-                <Pic>
-                  <img
-                    src={process.env.PUBLIC_URL + item?.imageUrl}
-                    alt="img"
-                  />
-                </Pic>
-              </Row>
-            ))
-          )} */}
-            {selectItem2.reviewImageDto && (
+
+            {selectItem2.reviewImageDtoList && (
               <Row gap={10}>
-                <Pic>
-                  <img
-                    src={
-                      process.env.PUBLIC_URL +
-                      selectItem2?.reviewImageDto.imageUrl
-                    }
-                    alt="img"
-                  />
-                </Pic>
+                {selectItem2.reviewImageDtoList.map((item, i) => (
+                  <Pic key={i}>
+                    <img
+                      src={process.env.PUBLIC_URL + item.imageUrl}
+                      alt="img"
+                    />
+                  </Pic>
+                ))}
               </Row>
             )}
           </S.ModalContent>
           <S.ModalFooter style={{ justifyContent: "end" }}>
             <Row gap={24}>
-              <S.Btn color={"#515151"} onClick={() => setReport(true)}>
+              <S.Btn color={"#515151"} onClick={() => setRReason(true)}>
                 신고
               </S.Btn>
               <S.Btn color={"#2563eb"} onClick={() => setDel(true)}>
@@ -114,17 +83,7 @@ export default function MReview({ setModal, selectItem2 }) {
           </S.ModalFooter>
         </S.ModalBox>
       </Portal>
-      {report && (
-        <RedAlert
-          text={"리뷰 신고"}
-          text1={"리뷰를"}
-          text2={" 신고"}
-          text3={"하시겠습니까?"}
-          setAlert={setReport}
-          func={setRReason}
-          forFunc={true}
-        />
-      )}
+
       {del && (
         <RedAlert
           text={"리뷰 삭제"}

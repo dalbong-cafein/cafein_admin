@@ -14,7 +14,11 @@ import { ReactComponent as Check } from "../svg/check.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
 import MReview from "../components/common/modal/MReview";
-import { reviewDataApi, reviewSearchApi } from "../util/review";
+import {
+  reviewDataApi,
+  reviewDetailApi,
+  reviewSearchApi,
+} from "../util/review";
 import None from "../components/None";
 import DropBox from "../components/common/dropbox";
 import ReviewTemp from "../components/reviewTemp";
@@ -48,7 +52,7 @@ const Review = () => {
 
   const onModal = (item) => {
     setModal(!modal);
-    setSelectItem2(item);
+    reviewDetailApi(item.reviewId).then((res) => setSelectItem2(res.data.data));
   };
 
   const sortData = (id) => {
