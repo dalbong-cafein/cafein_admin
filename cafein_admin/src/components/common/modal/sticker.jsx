@@ -12,12 +12,14 @@ export default function Sticker({ setModal, selectItem, id }) {
   };
 
   const stickerDel = (item) => {
-    stickerDelApi(id, item.stickerType, item.stickerId)
-      .then((res) => {
-        alert("삭제 완료!");
-        window.location.reload();
-      })
-      .catch((err) => alert("잠시후에 다시 시도해주세요"));
+    window.alert("서비스 준비중입니다.");
+    //후순위
+    // stickerDelApi(id, item.stickerType, item.stickerId)
+    //   .then((res) => {
+    //     alert("삭제 완료!");
+    //     window.location.reload();
+    //   })
+    //   .catch((err) => alert("잠시후에 다시 시도해주세요"));
   };
   return (
     <Portal>

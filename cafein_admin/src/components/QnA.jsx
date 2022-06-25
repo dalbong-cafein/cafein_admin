@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
 import { registerNotice } from "../recoil/NNotice";
-import { registerNoticeApi } from "../util/events";
+import { postDelApi, registerNoticeApi } from "../util/events";
 import { useRecoilState } from "recoil";
 
 import PVImg from "./common/PVImg";
@@ -49,8 +49,8 @@ const QnA = ({ menu, setMenu }) => {
   const [file, setFile] = useState([]);
   const onLoadFile = (e) => {
     let copy = [...file];
-    if (copy.length >= 5) {
-      window.alert("이미지는 5개만 추가 가능합니다");
+    if (copy.length >= 1) {
+      window.alert("이미지는 1개만 추가 가능합니다");
       return;
     } else {
       if (e.target.files[0]) {
@@ -83,11 +83,18 @@ const QnA = ({ menu, setMenu }) => {
       .then((res) => {
         setAlert(false);
         window.location.reload();
-        setMenu("event");
       })
       .catch((err) => console.log(err));
   };
   const input = useRef();
+
+  const onDel = () => {
+    postDelApi(selectItem.boardId)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     eventListApi(page, sort).then((res) => {
@@ -158,7 +165,7 @@ const QnA = ({ menu, setMenu }) => {
                         </p>
                       </td>
 
-                      <td>{item.regDateTime}</td>
+                      <td>{String(item.regDateTime).split("T")[0]}</td>
                     </tr>
                   ))}
               </tbody>
@@ -193,7 +200,7 @@ const QnA = ({ menu, setMenu }) => {
                   }}
                 >
                   <Photo />
-                  <div>{file.length}/5</div>
+                  <div>{file.length}/1</div>
                   <input
                     ref={input}
                     type="file"
@@ -253,8 +260,10 @@ const QnA = ({ menu, setMenu }) => {
           text={"자주 묻는 질문 삭제"}
           text1={"자주 묻는 질문을 "}
           text2={"삭제"}
-          text3={"하시겠습니까"}
+          text3={"하시겠습니까?"}
           setAlert={setDAlert}
+          func={onDel}
+          forFunc={null}
         />
       )}
     </>

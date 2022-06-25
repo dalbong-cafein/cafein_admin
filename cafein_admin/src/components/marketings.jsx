@@ -48,7 +48,6 @@ const Marketings = () => {
       marketingSearchApi("m", search, page, sort)
         .then((res) => {
           setTemp(res.data.data.couponResDtoList.dtoList);
-          console.log(res.data.data);
           setCount(res.data.data.couponCnt);
         })
         .catch((err) => console.log(err));

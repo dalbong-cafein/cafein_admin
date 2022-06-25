@@ -31,11 +31,14 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
     if (txt === "/management") id = selectItem.storeId;
     else if (txt === "/review") id = selectItem.reviewId;
     else if (txt === "/user") id = selectItem.memberId;
-    //쿠폰이면
-    registerMemoApi(id, content, txt).then((res) => {
-      alert("등록되었습니다");
-      setModal(false);
-    });
+    else if (txt === "/marketing") id = selectItem.couponId;
+
+    registerMemoApi(id, content, txt)
+      .then((res) => {
+        window.alert("등록되었습니다");
+        setModal(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   const onEdit = () => {
@@ -96,12 +99,16 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
               ? "카페관리_"
               : txt === "/review"
               ? "리뷰관리_"
-              : "회원관리_"}
+              : txt === "/user"
+              ? "회원관리_"
+              : "쿠폰관리_"}
             {txt === "/management"
               ? memo.storeId || selectItem.storeId
               : txt === "/review"
               ? memo.reviewId || selectItem.reviewId
-              : memo.memberId || selectItem.memberId}
+              : txt === "/user"
+              ? memo.memberId || selectItem.memberId
+              : memo.couponId || selectItem.couponId}
           </p>
           <Close onClick={closeModal} />
         </S.ModalHeader>

@@ -64,7 +64,7 @@ const ManagementCafe = () => {
 
   const searchData = () => {
     if (selected === "카페명") {
-      feedSearchApi(search, "sn")
+      feedSearchApi(search, "sn", page, sort)
         .then((res) => {
           setTemp(res.data.data.storeResDtoList.dtoList);
           setCount(res.data.data.storeCnt);
@@ -72,7 +72,7 @@ const ManagementCafe = () => {
         .catch((err) => console.log(err));
     }
     if (selected === "분류") {
-      feedSearchApi(search, "s")
+      feedSearchApi(search, "s", page, sort)
         .then((res) => {
           setTemp(res.data.data.storeResDtoList.dtoList);
           setCount(res.data.data.storeCnt);
@@ -80,7 +80,7 @@ const ManagementCafe = () => {
         .catch((err) => console.log(err));
     }
     if (selected === "위치") {
-      feedSearchApi(search, "a")
+      feedSearchApi(search, "a", page, sort)
         .then((res) => {
           setTemp(res.data.data.storeResDtoList.dtoList);
           setCount(res.data.data.storeCnt);
@@ -101,9 +101,9 @@ const ManagementCafe = () => {
     setDModal(!dModal);
   };
 
-  const onclick = () => {
-    setSort("DESC");
-    setPage(1);
+  const onclick = async () => {
+    await setSort("DESC");
+    await setPage(1);
     searchData();
   };
 

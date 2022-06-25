@@ -102,10 +102,10 @@ export default function SearchModal({
     setLoc(item);
     const copy = { ...register };
     const sp = item.road_address_name.split(" ");
-    copy.siNm = sp[0];
-    copy.sggNm = sp[1];
-    copy.rNm = sp[2];
-    copy.rNum = sp[3];
+    copy.siNm = sp[0] || "";
+    copy.sggNm = sp[1] || "";
+    copy.rNm = sp[2] || "";
+    copy.rNum = sp[3] || "";
     copy.detail = sp[4] || "";
     copy.lngX = Number(item.x);
     copy.latY = Number(item.y);

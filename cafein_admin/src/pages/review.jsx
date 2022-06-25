@@ -72,7 +72,6 @@ const Review = () => {
   const searchData = () => {
     if (selected === "내용") {
       reviewSearchApi(search, "w", page, sort).then((res) => {
-        console.log(res);
         setTemp(res.data.data.reviewResDtoList.dtoList);
       });
     }

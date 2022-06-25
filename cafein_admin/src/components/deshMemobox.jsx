@@ -31,7 +31,8 @@ const DeshMemo = ({ item, memoClick }) => {
     <Box onClick={() => memoClick(item)}>
       <Row gap={10} style={{ padding: "10px 0" }}>
         <p style={{ color: "#f6f6f6" }}>
-          {item.memoType} {item.storeId || item.memberId || item.reviewId}
+          {item.memoType}
+          {item.storeId || item.memberId || item.reviewId || item.couponId}
         </p>
         <p style={{ color: "#acacac", fontSize: "14px" }}>{getTime()}</p>
       </Row>

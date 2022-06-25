@@ -20,6 +20,10 @@ export const eventListApi = async (page, sort) => {
   return await withAuthInstance.get(`/boards?boardCategoryId=2`);
 };
 
+//게시글 삭제
+export const postDelApi = async (id) => {
+  return await withAuthInstance.delete(`/boards/${id}`);
+};
 export const changeStateApi = async (id) => {
   return await withAuthInstance.patch(`/coupons/${id}`);
 };

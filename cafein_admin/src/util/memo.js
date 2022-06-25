@@ -18,6 +18,11 @@ export const registerMemoApi = async (id, content, where) => {
       memberId: id,
       content: content,
     };
+  } else if (where === "/marketing") {
+    body = {
+      couponId: id,
+      content: content,
+    };
   }
 
   return await withAuthInstance.post(`/memos`, body);

@@ -9,8 +9,11 @@ import styled from "styled-components";
 import PVImg from "./common/PVImg";
 import EventMapBox from "./eventMapBox";
 import BPreview from "./common/modal/Bpreview";
+import { useNavigate } from "react-router-dom";
 
 const Event = () => {
+  const navigate = useNavigate();
+
   const [isActive, setIsActive] = useState(1);
   const [page, setPage] = useState(1);
   const [temp, setTemp] = useState([
@@ -69,6 +72,10 @@ const Event = () => {
   };
   useEffect(() => {
     // eventListApi().then((res) => console.log(res)); api아직없음
+
+    window.alert("서비스 준비중입니다.");
+
+    window.location.reload();
   }, []);
   const input = useRef();
   return (

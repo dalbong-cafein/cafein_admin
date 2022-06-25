@@ -216,7 +216,13 @@ export default function MUser({ setModal, selectItem }) {
                 </Columnbox>
                 <BtnRow>
                   {!edit ? (
-                    <S.Btn color={"#515151"} onClick={() => setEdit(true)}>
+                    <S.Btn
+                      color={"#515151"}
+                      onClick={() =>
+                        // setEdit(true)
+                        window.alert("서비스 준비중입니다.")
+                      }
+                    >
                       수정
                     </S.Btn>
                   ) : (

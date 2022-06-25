@@ -13,7 +13,6 @@ export default function NoticeModal({ menu, setModal, item, setAlert }) {
   const closeModal = () => {
     setModal(false);
   };
-
   return (
     <Portal>
       <ModalBox>
@@ -28,9 +27,9 @@ export default function NoticeModal({ menu, setModal, item, setAlert }) {
               </TitleBox>
               <ContentBox>
                 <div>{item.content}</div>
-                {item?.imageFile && (
+                {item?.boardImageDtoList && (
                   <div>
-                    <PVImg img={item?.imageFile[0]} />
+                    <PVImg img={item?.boardImageDtoList[0]?.imageUrl} />
                   </div>
                 )}
               </ContentBox>

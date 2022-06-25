@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 
 export const TableHeader = styled.table`
   font-size: 14px;
-
+  cursor: pointer;
   color: #e3e3e3;
   width: 100%;
   table-layout: auto;
@@ -17,7 +17,6 @@ export const TableHeader = styled.table`
   border-spacing: 0;
   border-collapse: collapse;
   border-style: hidden;
-  text-align: center;
 
   & > th,
   td {

@@ -73,7 +73,13 @@ export default function MReview({ setModal, selectItem2 }) {
           </S.ModalContent>
           <S.ModalFooter style={{ justifyContent: "end" }}>
             <Row gap={24}>
-              <S.Btn color={"#515151"} onClick={() => setRReason(true)}>
+              <S.Btn
+                color={"#515151"}
+                onClick={() =>
+                  // setRReason(true)
+                  window.alert("서비스 준비중입니다.")
+                }
+              >
                 신고
               </S.Btn>
               <S.Btn color={"#2563eb"} onClick={() => setDel(true)}>
