@@ -83,7 +83,11 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                           {dSelected.storeImageDtoList
                             .slice(0, 4)
                             .map((item, i) => (
-                              <Photo key={i} img={item.imageUrl} />
+                              <Photo
+                                key={i}
+                                img={item.imageUrl}
+                                onClick={() => setSlider(true)}
+                              />
                             ))}
                           <PhotoPlus onClick={() => setSlider(true)}>
                             +{dSelected?.storeImageDtoList?.length - 4}
@@ -170,7 +174,7 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
           >
             <Row justify={"space-between"}>
               <Title size={16}>활동정보</Title>
-              <Close onClick={closeModal} />
+              <Close style={{ cursor: "pointer" }} onClick={closeModal} />
             </Row>
             <Columnbox style={{ paddingBottom: "40px" }}>
               <Line color={"#515151"}>
@@ -394,6 +398,7 @@ const Photo = styled.div`
   background: ${({ img }) =>
     img && `url(${img})`} no-repeat center center/cover;
   border-radius: 6px;
+  cursor:pointer;
   }
 `;
 

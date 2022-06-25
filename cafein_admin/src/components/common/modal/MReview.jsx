@@ -49,11 +49,11 @@ export default function MReview({ setModal, selectItem2 }) {
               </Line>
               <Line>
                 <span>등록일</span>
-                <p>{selectItem2.regDateTime}</p>
+                <p>{String(selectItem2.regDateTime).replace("T", " ")}</p>
               </Line>
               <Line>
                 <span>최종수정일</span>
-                <p>{selectItem2.modDateTime}</p>
+                <p>{String(selectItem2.modDateTime).replace("T", " ")}</p>
               </Line>
             </Columnbox>
             <Text>{selectItem2.content || "-"}</Text>

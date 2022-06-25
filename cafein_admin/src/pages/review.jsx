@@ -51,8 +51,13 @@ const Review = () => {
   };
 
   const onModal = (item) => {
-    setModal(!modal);
-    reviewDetailApi(item.reviewId).then((res) => setSelectItem2(res.data.data));
+    reviewDetailApi(item.reviewId)
+      .then((res) => {
+        console.log(res);
+        setSelectItem2(res.data.data);
+        setModal(!modal);
+      })
+      .catch((err) => console.log(err));
   };
 
   const sortData = (id) => {
@@ -102,7 +107,11 @@ const Review = () => {
   }, [page, sort]);
   return (
     <>
-      <Header mcolor={"#fff"} text={"카페 리뷰"} subText={"등록된 리뷰 00건"} />
+      <Header
+        mcolor={"#fff"}
+        text={"카페 리뷰"}
+        subText={`등록된 리뷰 ${count}건`}
+      />
       <Row
         justify={"space-between"}
         align={"baseline"}

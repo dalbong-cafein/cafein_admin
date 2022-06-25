@@ -39,17 +39,26 @@ const User = () => {
   const searchData = () => {
     if (selected === "분류") {
       userSearchApi("m", search, sort, page)
-        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .then((res) => {
+          setTemp(res.data.data.memberResDtoList.dtoList);
+          setCount(res.data.data.memberCnt);
+        })
         .catch((err) => console.log(err));
     }
     if (selected === "회원명") {
       userSearchApi("mn", search, sort, page)
-        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .then((res) => {
+          setTemp(res.data.data.memberResDtoList.dtoList);
+          setCount(res.data.data.memberCnt);
+        })
         .catch((err) => console.log(err));
     }
     if (selected === "핸드폰") {
       userSearchApi("p", search, sort, page)
-        .then((res) => setTemp(res.data.data.memberResDtoList.dtoList))
+        .then((res) => {
+          setTemp(res.data.data.memberResDtoList.dtoList);
+          setCount(res.data.data.memberCnt);
+        })
         .catch((err) => console.log(err));
     }
   };
@@ -59,6 +68,7 @@ const User = () => {
       userListApi(sort, page)
         .then((res) => {
           setTemp(res.data.data.memberResDtoList.dtoList);
+          setCount(res.data.data.memberCnt);
         })
         .catch((err) => console.log(err));
     } else {
@@ -93,7 +103,11 @@ const User = () => {
 
   return (
     <>
-      <Header mcolor={"#fff"} text={"회원정보"} subText={"등록된 회원 00건"} />
+      <Header
+        mcolor={"#fff"}
+        text={"회원 정보"}
+        subText={`등록된 회원 ${count}건`}
+      />
       <Row
         justify={"space-between"}
         align={"baseline"}

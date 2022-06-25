@@ -57,7 +57,7 @@ export default function MUser({ setModal, selectItem }) {
                 color={"#131313"}
                 width={516}
               >
-                <Title size={20}>회원정보</Title>
+                <Title size={20}>회원 상세</Title>
                 <Columnbox gap={14}>
                   <Line>
                     <span>분류</span>
