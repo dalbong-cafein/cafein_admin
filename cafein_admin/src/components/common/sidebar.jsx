@@ -41,7 +41,7 @@ const SideBar = () => {
             <div>
               <Cup />
             </div>
-            카페관리
+            카페 관리
           </MenuBox>
           <MenuBox
             svgW={16.6}
@@ -51,7 +51,7 @@ const SideBar = () => {
             <div>
               <Review />
             </div>
-            카페리뷰
+            카페 리뷰
           </MenuBox>
           <MenuBox
             svgW={13.3}
@@ -61,7 +61,7 @@ const SideBar = () => {
             <div>
               <User />
             </div>
-            회원정보
+            회원 정보
           </MenuBox>
           <MenuBox
             svgW={18.5}
