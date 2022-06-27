@@ -149,6 +149,7 @@ const Register = () => {
   };
 
   const submit = async (register) => {
+    console.log(register);
     if (!register.storeName || !register.siNm) {
       window.alert("카페명, 주소를 확인해주세요!");
     } else if (
@@ -235,12 +236,16 @@ const Register = () => {
                   <p>별로예요</p>
                 </div>
                 <div
-                  id="SOSO"
+                  id="NORAML"
                   onClick={(e) => {
                     recommendChange(e);
                   }}
                 >
-                  {register.recommendation === "SOSO" ? <CCsoso /> : <Csoso />}
+                  {register.recommendation === "NORAML" ? (
+                    <CCsoso />
+                  ) : (
+                    <Csoso />
+                  )}
                   <p>그저 그래요</p>
                 </div>
                 <div
