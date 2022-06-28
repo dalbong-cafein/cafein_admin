@@ -76,21 +76,36 @@ const Desh = () => {
 
       <Container>
         <RowBox>
-          <Box colorS={"#FC6406"}>
+          <Box
+            colorS={"#FC6406"}
+            onClick={() => {
+              navigate("/management");
+            }}
+          >
             <div>
               <p>오늘 등록된 카페</p>
               <Cup />
             </div>
             <p>{deshData?.storeCnt}곳</p>
           </Box>
-          <Box colorS={"#2563eb"}>
+          <Box
+            colorS={"#2563eb"}
+            onClick={() => {
+              navigate("/user");
+            }}
+          >
             <div>
               <p>오늘 등록된 회원</p>
               <User />
             </div>
             <p>{deshData?.memberCnt}명</p>
           </Box>
-          <Box colorS={"#26ba6a"}>
+          <Box
+            colorS={"#26ba6a"}
+            onClick={() => {
+              navigate("/review");
+            }}
+          >
             <div>
               <p>오늘 등록된 리뷰</p>
               <Review />
@@ -113,12 +128,12 @@ const Desh = () => {
                 <NoneDiv text={"통계"} loc={"statistics"} />
               </div>
             </LongBox2>
-            <LongBox2 height={60}>
+            <LongBox2 height={60} isNull={marketingArr.length === 0}>
               <p>마케팅 서비스</p>
 
               <div>
                 <Table>
-                  <THead>
+                  <THead isNull={marketingArr.length === 0}>
                     <div>회원번호</div>
                     <div>상품명</div>
                     <div>신청 날짜</div>
@@ -128,7 +143,7 @@ const Desh = () => {
 
                   {marketingArr && marketingArr.length === 0 ? (
                     <NoneDiv
-                      padding={80}
+                      padding={100}
                       text={"마케팅 서비스"}
                       loc={"marketing"}
                     />
@@ -199,6 +214,7 @@ const Box = styled.div`
   margin: 32px 0;
   padding: 0 56px;
   display: flex;
+  cursor: pointer;
   flex-direction: column;
   gap: 32px;
   & > div {
@@ -282,7 +298,7 @@ const LongBox2 = styled.div`
   }
   & > div {
     display: flex;
-    height: 100%;
+    height: ${(props) => (props.isNull ? "50%" : "100%")};
     flex-direction: column;
     justify-content: center;
     align-itema: center;
@@ -304,10 +320,11 @@ const Table = styled.div`
 const THead = styled.div`
   width: 100%;
   display: flex;
-  padding: 15px 0;
+  height: 40px;
+  line-height: 40px;
   background-color: #333333;
   border-radius: 20px;
-  margin: 10px 0;
+  margin: ${(props) => (props.isNull ? "32px 0" : "10px 0")};
   box-sizing: border-box;
   font-size: 14px;
 

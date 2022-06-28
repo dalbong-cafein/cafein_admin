@@ -58,6 +58,7 @@ export const ModalContent = styled.div`
   & > textarea {
     width: 90%;
     heigth: 350px;
+    font-size: 16px;
     background-color: #131313;
     color: #e3e3e3;
     border: 0;

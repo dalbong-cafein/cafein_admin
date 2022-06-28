@@ -88,6 +88,7 @@ const ItemRow = styled.div`
   div:nth-child(2) {
     flex: 2.5;
   }
+
   & > div:last-child {
     border-right: none;
     border-bottom: none;

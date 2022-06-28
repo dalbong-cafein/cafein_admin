@@ -40,11 +40,11 @@ export default function MReview({ setModal, selectItem2 }) {
                 <p>{String(selectItem2.reviewId).padStart(6, "0")}</p>
               </Line>
               <Line>
-                <span>회원명</span>
+                <span>회원 정보</span>
                 <p>{selectItem2.nicknameOfWriter || "-"}</p>
               </Line>
               <Line>
-                <span>카페명</span>
+                <span>카페 정보</span>
                 <p>{selectItem2.storeName}</p>
               </Line>
               <Line>

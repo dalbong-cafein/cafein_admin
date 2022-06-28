@@ -320,7 +320,8 @@ const Line = styled.div`
     color: #8b8b8b;
   }
   & > p:nth-child(2) {
-    width: 230px;
+    width: 270px;
+    line-height: 18px;
     color: #e3e3e3;
   }
 `;

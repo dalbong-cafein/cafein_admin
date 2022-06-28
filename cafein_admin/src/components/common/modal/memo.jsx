@@ -184,7 +184,7 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
           <RedAlert
             text={"메모 삭제"}
             text1={"메모를"}
-            text2={"삭제"}
+            text2={" 삭제"}
             text3={"하시겠습니까?"}
             setAlert={setAlert}
             func={onDel}
