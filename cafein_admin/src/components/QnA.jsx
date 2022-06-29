@@ -76,9 +76,6 @@ const QnA = ({ menu, setMenu }) => {
   };
 
   const onSubmit = (register) => {
-    const copy = { ...register };
-    copy.boardCategoryId = 2;
-    setRegister(copy);
     registerNoticeApi(register)
       .then((res) => {
         setAlert(false);
@@ -97,6 +94,9 @@ const QnA = ({ menu, setMenu }) => {
   };
 
   useEffect(() => {
+    const copy = { ...register };
+    copy.boardCategoryId = 2;
+    setRegister(copy);
     eventListApi(page, sort).then((res) => {
       setCount(res.data.data.boardCnt);
       setTemp(res.data.data.boardResDtoList.dtoList);

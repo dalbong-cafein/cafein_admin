@@ -7,7 +7,10 @@ export function setInterceptors(instance) {
   );
   instance.interceptors.response.use(
     (res) => res,
-    (err) => Promise.reject(err)
+    (err) => {
+      Promise.reject(err);
+      console.log(err);
+    }
   );
   return instance;
 }

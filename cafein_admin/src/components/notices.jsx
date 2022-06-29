@@ -69,9 +69,6 @@ const Notices = ({ menu }) => {
   };
 
   const onSubmit = (register) => {
-    const copy = { ...register };
-    copy.boardCategoryId = 1;
-    setRegister(copy);
     registerNoticeApi(register)
       .then((res) => {
         setAlert(false);
@@ -99,6 +96,9 @@ const Notices = ({ menu }) => {
       .catch((err) => console.log(err));
   };
   useEffect(() => {
+    const copy = { ...register };
+    copy.boardCategoryId = 1;
+    setRegister(copy);
     adminFeedListApi(page, sort).then((res) => {
       setCount(res.data.data.boardCnt);
       setTemp(res.data.data.boardResDtoList.dtoList);
