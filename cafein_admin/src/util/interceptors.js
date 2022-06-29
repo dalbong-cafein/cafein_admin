@@ -8,14 +8,20 @@ export function setInterceptors(instance) {
   instance.interceptors.response.use(
     (res) => res,
     (err) => {
-      if (err.response.data.error === "Unauthorized") {
+      const { config, response } = err;
+      let originalRequest = config;
+      if (response.data.error === "Unauthorized") {
         return axios
           .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
-          .then((res) => {})
+          .then((res) => {
+            return axios(originalRequest);
+          })
           .catch((err) => {
             window.location.replace("/");
             localStorage.clear();
           });
+      } else {
+        return Promise.reject(err);
       }
     }
   );
