@@ -13,7 +13,7 @@ export function setInterceptors(instance) {
       if (response.data.error === "Unauthorized") {
         return axios
           .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
-          .then((res) => {
+          .then(() => {
             return axios(originalRequest);
           })
           .catch((err) => {
