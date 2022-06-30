@@ -10,19 +10,18 @@ export function setInterceptors(instance) {
     (err) => {
       const { config, response } = err;
       let originalRequest = config;
-      console.log(response);
-      // if (response.data.error === "Unauthorized") {
-      //   return axios
-      //     .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
-      //     .then(() => {
-      //       return axios(originalRequest);
-      //     })
-      //     .catch((err) => {
-      //       localStorage.clear();
-      //     });
-      // } else {
-      //   return Promise.reject(err);
-      // }
+      console.log(err);
+      if (response.data.error === "Unauthorized") {
+        return axios
+          .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
+          .then(() => {
+            return axios(originalRequest);
+          })
+          .catch((err) => {
+            localStorage.clear();
+          });
+      }
+      return Promise.reject(err);
     }
   );
   return instance;
