@@ -18,6 +18,7 @@ export function setInterceptors(instance) {
             return axios(originalRequest);
           })
           .catch((err) => {
+            window.location.replace("/login");
             localStorage.clear();
           });
       }
