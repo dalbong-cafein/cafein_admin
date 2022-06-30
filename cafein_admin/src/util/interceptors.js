@@ -10,7 +10,7 @@ export function setInterceptors(instance) {
     (err) => {
       const { config, response } = err;
       let originalRequest = config;
-      console.log(response.data.error);
+      console.log(response);
       // if (response.data.error === "Unauthorized") {
       //   return axios
       //     .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
