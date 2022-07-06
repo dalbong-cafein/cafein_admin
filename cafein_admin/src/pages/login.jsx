@@ -79,11 +79,11 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
   & > svg:first-child {
-    width: 164px;
-    height: 41px;
+    width: 147.58px;
+    height: 40px;
   }
   & > svg:nth-child(2) {
-    margin: 76px 0 16px;
+    margin: 76px 0 57px;
   }
 `;
 

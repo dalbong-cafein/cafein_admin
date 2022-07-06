@@ -14,7 +14,7 @@ const ManagementTemp = ({
     <S.DataBox>
       {temp &&
         temp.map((item, i) => (
-          <ItemRow key={i}>
+          <ItemRow key={i} hasMemoId={item.memoId}>
             <div onClick={() => detailModal(item)}>
               {String(item.storeId).padStart(6, "0")}
             </div>
@@ -95,6 +95,13 @@ const ItemRow = styled.div`
   }
   & > div:nth-child(2) {
     justify-content: start;
+  }
+  & > div:last-child {
+    & > svg {
+      path {
+        fill: ${(props) => (props.hasMemoId ? "#E3E3E3" : "#646464")};
+      }
+    }
   }
 `;
 

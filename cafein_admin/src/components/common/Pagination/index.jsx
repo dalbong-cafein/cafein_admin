@@ -11,6 +11,8 @@ const Paging = ({ page, count, setPage, handlePageChange }) => {
       pageRangeDisplayed={4}
       prevPageText={"‹"}
       nextPageText={"›"}
+      firstPageText={"«"}
+      lastPageText={"»"}
       onChange={handlePageChange}
     />
   );

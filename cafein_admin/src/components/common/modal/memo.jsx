@@ -37,6 +37,7 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
       .then((res) => {
         window.alert("등록되었습니다");
         setModal(false);
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   };

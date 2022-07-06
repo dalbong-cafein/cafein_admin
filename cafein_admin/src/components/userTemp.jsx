@@ -18,7 +18,7 @@ const UserTemp = ({
         temp
           .slice(items * (page - 1), items * (page - 1) + items)
           .map((item, i) => (
-            <ItemRow key={i}>
+            <ItemRow key={i} hasMemoId={item.memoId}>
               <div onClick={() => onModal(item)}>
                 {String(item.memberId).padStart(6, "0")}
               </div>
@@ -116,6 +116,13 @@ const ItemRow = styled.div`
   }
   & > div:nth-child(3) {
     justify-content: start;
+  }
+  & > div:last-child {
+    & > svg {
+      path {
+        fill: ${(props) => (props.hasMemoId ? "#E3E3E3" : "#646464")};
+      }
+    }
   }
 `;
 
