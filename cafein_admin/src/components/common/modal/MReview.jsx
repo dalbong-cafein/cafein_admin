@@ -8,6 +8,7 @@ import { reviewDelApi } from "../../../util/review";
 import RedAlert from "./redAlert";
 import ReportReason from "./ReportReason";
 import Row from "../../atoms/row";
+import Sliders from "../carousel/carousel";
 
 export default function MReview({ setModal, selectItem2 }) {
   const closeModal = () => {
@@ -16,6 +17,7 @@ export default function MReview({ setModal, selectItem2 }) {
 
   const [del, setDel] = useState(false);
   const [rReason, setRReason] = useState(false);
+  const [slider, setSlider] = useState(false);
 
   const onDel = () => {
     reviewDelApi(selectItem2.reviewId)
@@ -24,6 +26,8 @@ export default function MReview({ setModal, selectItem2 }) {
       })
       .catch((err) => console.log(err));
   };
+
+  console.log(selectItem2);
 
   return (
     <>
@@ -61,7 +65,7 @@ export default function MReview({ setModal, selectItem2 }) {
             {selectItem2.reviewImageDtoList && (
               <Row gap={10}>
                 {selectItem2.reviewImageDtoList.map((item, i) => (
-                  <Pic key={i}>
+                  <Pic key={i} onClick={() => setSlider(true)}>
                     <img
                       src={process.env.PUBLIC_URL + item.imageUrl}
                       alt="img"
@@ -73,13 +77,7 @@ export default function MReview({ setModal, selectItem2 }) {
           </S.ModalContent>
           <S.ModalFooter style={{ justifyContent: "end" }}>
             <Row gap={24}>
-              <S.Btn
-                color={"#515151"}
-                onClick={() =>
-                  // setRReason(true)
-                  window.alert("서비스 준비중입니다.")
-                }
-              >
+              <S.Btn color={"#515151"} onClick={() => setRReason(true)}>
                 신고
               </S.Btn>
               <S.Btn color={"#2563eb"} onClick={() => setDel(true)}>
@@ -101,7 +99,12 @@ export default function MReview({ setModal, selectItem2 }) {
           forFunc={selectItem2.reviewId}
         />
       )}
-      {rReason && <ReportReason setModal={setRReason} />}
+      {rReason && (
+        <ReportReason setModal={setRReason} id={selectItem2.reviewId} />
+      )}
+      {slider && (
+        <Sliders setModal={setSlider} imgs={selectItem2?.reviewImageDtoList} />
+      )}
     </>
   );
 }

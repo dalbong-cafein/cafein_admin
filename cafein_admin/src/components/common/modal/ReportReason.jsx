@@ -4,14 +4,14 @@ import styled from "styled-components";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { ReactComponent as Check } from "../../../svg/check.svg";
-import Row from "../../atoms/row";
 import RedAlert from "./redAlert";
+import { reviewReportApi } from "../../../util/review";
 
-export default function ReportReason({ setModal, selectItem }) {
+export default function ReportReason({ setModal, id }) {
   const closeModal = () => {
     setModal(false);
   };
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState({});
   const [report, setReport] = useState(false);
 
   const list = [
@@ -24,8 +24,19 @@ export default function ReportReason({ setModal, selectItem }) {
     "기타",
   ];
 
-  const onSelect = (item) => {
-    setSelected(item);
+  const onSelect = (item, i) => {
+    setSelected({ content: item, id: i + 1 });
+  };
+
+  const onReport = () => {
+    reviewReportApi(id, selected.id)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        window.alert("나중에 다시 시도해주세요");
+        window.location.reload();
+      });
   };
 
   return (
@@ -45,8 +56,8 @@ export default function ReportReason({ setModal, selectItem }) {
             {list.map((item, i) => (
               <RItem
                 key={i}
-                onClick={() => onSelect(item)}
-                isSelected={selected === item}
+                onClick={() => onSelect(item, i)}
+                isSelected={selected.content === item}
               >
                 <p>{item}</p>
                 <Check />
@@ -67,8 +78,8 @@ export default function ReportReason({ setModal, selectItem }) {
           text2={" 신고"}
           text3={"하시겠습니까?"}
           setAlert={setReport}
-          // func={setRReason}
-          // forFunc={true}
+          func={onReport}
+          forFunc={null}
         />
       )}
     </>

@@ -18,3 +18,9 @@ export const reviewSearchApi = async (keyword, sub, page, sort) => {
 export const reviewDelApi = async (id) => {
   return await withAuthInstance.delete(`/reviews/${id}`);
 };
+
+export const reviewReportApi = async (id, reportCId) => {
+  const data = { reviewId: id, reportCategoryId: reportCId };
+
+  return await withAuthInstance.post(`/reviews/${id}/reports`, data);
+};
