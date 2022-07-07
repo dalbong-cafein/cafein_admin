@@ -7,15 +7,22 @@ import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { ReactComponent as Page } from "../../../svg/page.svg";
 
 import Row from "../../atoms/row";
-import { stickerApi, userLeaveApi, userReportApi } from "../../../util/user";
+import {
+  stickerApi,
+  userDataUpdateApi,
+  userLeaveApi,
+  userReportApi,
+} from "../../../util/user";
 import MUReport from "./MUReport";
 import Sticker from "./sticker";
 import RedAlert from "./redAlert";
+import { useNavigate } from "react-router-dom";
 
 export default function MUser({ setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
   };
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [SItem, setItems] = useState([]);
   const [RModal, setRModal] = useState(false);
@@ -23,6 +30,12 @@ export default function MUser({ setModal, selectItem }) {
   const [sticker, setSticker] = useState(false);
   const [sItem, setSItem] = useState([]);
   const [alert, setAlert] = useState(false);
+  const [eUData, setEUData] = useState({
+    memberId: selectItem.memberId,
+    phone: selectItem.phone,
+    genderType: selectItem.gender,
+    birth: selectItem.birth,
+  });
 
   const stickerView = () => {
     stickerApi(selectItem.memberId)
@@ -33,16 +46,33 @@ export default function MUser({ setModal, selectItem }) {
       .catch((err) => console.log(err));
   };
 
+  const onChange = (e) => {
+    const name = e.target.name;
+    const copy = { ...eUData };
+    copy[name] = e.target.value;
+    setEUData(copy);
+  };
+
   const onDel = () => {
     userLeaveApi(selectItem.memberId)
       .then((res) => window.location.reload())
       .catch((err) => console.log(err));
   };
+
+  const updateUserData = () => {
+    userDataUpdateApi(eUData).then((res) => {
+      console.log(res);
+    });
+  };
+
+  const editData = () => {
+    setEdit(true);
+  };
   useEffect(() => {
     if (selectItem.memberId) {
-      userReportApi(selectItem.memberId).then((res) =>
-        setData(res.data.data.adminReportResDtoList)
-      );
+      userReportApi(selectItem.memberId)
+        .then((res) => setData(res.data.data.adminReportResDtoList))
+        .catch((err) => navigate("/"));
     }
   }, [selectItem]);
 
@@ -91,23 +121,27 @@ export default function MUser({ setModal, selectItem }) {
                     {!edit ? (
                       <p>{selectItem.phone || "-"}</p>
                     ) : (
-                      <input defaultValue={selectItem.phone} />
+                      <input
+                        name="phone"
+                        defaultValue={selectItem.phone}
+                        onChange={(e) => onChange(e)}
+                      />
                     )}
                   </Line>
                   <Line>
                     <span>이메일</span>
-                    {!edit ? (
-                      <p>{selectItem.email || "-"}</p>
-                    ) : (
-                      <input defaultValue={selectItem.email} />
-                    )}
+                    <p>{selectItem.email || "-"}</p>
                   </Line>
                   <Line>
                     <span>생년월일</span>
                     {!edit ? (
                       <p>{selectItem.birth || "-"}</p>
                     ) : (
-                      <input defaultValue={selectItem.birth} />
+                      <input
+                        name="birth"
+                        defaultValue={selectItem.birth}
+                        onChange={(e) => onChange(e)}
+                      />
                     )}
                   </Line>
                   <Line>
@@ -115,7 +149,11 @@ export default function MUser({ setModal, selectItem }) {
                     {!edit ? (
                       <p>{selectItem.gender || "-"}</p>
                     ) : (
-                      <input defaultValue={selectItem.gender} />
+                      <input
+                        name="genderType"
+                        defaultValue={selectItem.gender}
+                        onChange={(e) => onChange(e)}
+                      />
                     )}
                   </Line>
                   <Line>
@@ -216,17 +254,11 @@ export default function MUser({ setModal, selectItem }) {
                 </Columnbox>
                 <BtnRow>
                   {!edit ? (
-                    <S.Btn
-                      color={"#515151"}
-                      onClick={() =>
-                        // setEdit(true)
-                        window.alert("서비스 준비중입니다.")
-                      }
-                    >
+                    <S.Btn color={"#515151"} onClick={() => editData()}>
                       수정
                     </S.Btn>
                   ) : (
-                    <S.Btn color={"#2563eb"} onClick={() => setEdit(false)}>
+                    <S.Btn color={"#2563eb"} onClick={() => updateUserData()}>
                       저장
                     </S.Btn>
                   )}

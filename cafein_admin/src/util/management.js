@@ -45,7 +45,6 @@ export const feedCreateApi = async (register) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    // withCredentials: true,
   });
 };
 

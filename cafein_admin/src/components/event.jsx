@@ -1,61 +1,37 @@
 import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import Paging from "../components/common/Pagination";
+import { useNavigate } from "react-router-dom";
+
+import * as S from "../pages/style";
+import * as SS from "./noticesStyle";
+
+import { eventImgApi, regImgApi } from "../util/events";
+
+import { ReactComponent as Check } from "../svg/check.svg";
+
+import BPreview from "./common/modal/Bpreview";
+import PVImg from "./common/PVImg";
 import Row from "../components/atoms/row";
 import None from "./None";
-import * as S from "../pages/style";
-import Paging from "../components/common/Pagination";
-import * as SS from "./noticesStyle";
-import { eventListApi, regImgApi } from "../util/events";
-import styled from "styled-components";
-import PVImg from "./common/PVImg";
 import EventMapBox from "./eventMapBox";
-import BPreview from "./common/modal/Bpreview";
-import { useNavigate } from "react-router-dom";
 
 const Event = () => {
   const navigate = useNavigate();
 
-  const [isActive, setIsActive] = useState(1);
   const [page, setPage] = useState(1);
-  const [temp, setTemp] = useState([
-    { date: "2022.03.28" },
-    { date: "2022.03.28" },
-    { date: "2022.03.28" },
-    { date: "2022.03.28" },
-    { date: "2022.03.28" },
-    // { date: "2022.03.28" },
-    // { date: "2022.03.28" },
-    // { date: "2022.03.28" },
-    // { date: "2022.03.28" },
-    // { date: "2022.03.28" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "2페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-    // { date: "3페이지입니다" },
-  ]);
-  const [count, setCount] = useState(temp.length - 1);
-  const [preview, setPreview] = useState(false);
+  const [sort, setSort] = useState("DESC");
+  const [count, setCount] = useState(0);
   const [items, setItems] = useState(10);
-  const handlePageChange = (page) => {
-    setPage(page);
-    console.log(page);
-  };
+
+  const [temp, setTemp] = useState([]);
+  const [preview, setPreview] = useState(false);
 
   const [file, setFile] = useState();
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
   const onLoadFile = (e) => {
     if (file) {
@@ -66,17 +42,37 @@ const Event = () => {
     }
   };
   const regImg = () => {
-    regImgApi(file)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    if (!file) {
+      window.alert("첨부파일이 없습니다.");
+    } else {
+      regImgApi(file)
+        .then((res) => {
+          loadData();
+          setFile();
+        })
+        .catch((err) => console.log(err));
+    }
   };
+
+  const sortData = (id) => {
+    setSort(id);
+  };
+
+  const loadData = () => {
+    eventImgApi(page, sort)
+      .then((res) => {
+        setTemp(res.data.data.eventImageResDtoList.dtoList);
+        setCount(res.data.data.eventImageCnt);
+      })
+      .catch((err) => {
+        window.alert("나중에 다시 시도해주세요");
+        navigate("/");
+      });
+  };
+
   useEffect(() => {
-    // eventListApi().then((res) => console.log(res)); api아직없음
-
-    window.alert("서비스 준비중입니다.");
-
-    window.location.reload();
-  }, []);
+    loadData();
+  }, [page, sort]);
   const input = useRef();
   return (
     <>
@@ -88,11 +84,12 @@ const Event = () => {
             style={{ marginBottom: "20px" }}
           >
             <Row gap={15}>
-              <S.Sbtn onClick={() => setIsActive(2)} isTrue={isActive === 2}>
+              <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
                 최신순
+                {sort === "DESC" && <Check />}
               </S.Sbtn>
-              <S.Sbtn onClick={() => setIsActive(3)} isTrue={isActive === 3}>
-                오래된 순
+              <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
+                오래된 순{sort === "ASC" && <Check />}
               </S.Sbtn>
             </Row>
 
@@ -103,11 +100,46 @@ const Event = () => {
               page={page}
             />
           </Row>
-          <EventMapBox temp={temp} items={items} page={page} i={0} />
-          <EventMapBox temp={temp} items={items} page={page} i={2} />
-          <EventMapBox temp={temp} items={items} page={page} i={4} />
-          <EventMapBox temp={temp} items={items} page={page} i={6} />
-          <EventMapBox temp={temp} items={items} page={page} i={8} />
+          {temp && (
+            <>
+              <EventMapBox
+                temp={temp}
+                items={items}
+                page={page}
+                i={0}
+                loadData={loadData}
+              />
+              <EventMapBox
+                temp={temp}
+                items={items}
+                page={page}
+                i={2}
+                loadData={loadData}
+              />
+              <EventMapBox
+                temp={temp}
+                items={items}
+                page={page}
+                i={4}
+                loadData={loadData}
+              />
+              <EventMapBox
+                temp={temp}
+                items={items}
+                page={page}
+                i={6}
+                loadData={loadData}
+              />
+              <EventMapBox
+                temp={temp}
+                items={items}
+                page={page}
+                i={8}
+                loadData={loadData}
+              />
+            </>
+          )}
+
           {temp.length === 0 && <None text={"마케팅 서비스"} />}
         </div>
         <SS.NewNotice>

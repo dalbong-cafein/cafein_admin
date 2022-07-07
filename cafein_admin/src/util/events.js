@@ -62,3 +62,13 @@ export const regImgApi = async (file) => {
     },
   });
 };
+
+export const eventImgApi = (page, sort) => {
+  return withAuthInstance.get(
+    `/event-images?size=12&page=${page}&sort=${sort}`
+  );
+};
+
+export const delEventImgApi = (id) => {
+  return withAuthInstance.delete(`/event-image?eventImageId=${id}`);
+};

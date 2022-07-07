@@ -157,10 +157,12 @@ const QnA = ({ menu, setMenu }) => {
                     >
                       <td>{String(item.boardId).padStart(6, "0")}</td>
                       <td style={{ textAlign: "left" }}>
-                        <p style={{ fontWeight: "bold" }}>{item.title}</p>
+                        <p style={{ fontWeight: "bold", lineHeight: "22px" }}>
+                          {item.title}
+                        </p>
                         <p>
-                          {item.content.length > 30
-                            ? item.content.slice(0, 30)
+                          {item.content.length > 35
+                            ? item.content.slice(0, 35)
                             : item.content}
                         </p>
                       </td>

@@ -39,3 +39,8 @@ export const stickerDelApi = async (id, type, sId) => {
 export const userLeaveApi = async (id) => {
   return await withAuthInstance.delete(`/members/${id}`);
 };
+
+//회원정보 수정
+export const userDataUpdateApi = async (data) => {
+  return await withAuthInstance.put(`/members`, data);
+};

@@ -142,4 +142,5 @@ export const Btn = styled.div`
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
+  cursor: pointer;
 `;
