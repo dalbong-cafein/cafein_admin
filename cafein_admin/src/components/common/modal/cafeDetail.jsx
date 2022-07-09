@@ -246,12 +246,9 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
               <S.Btn
                 color={"#515151"}
                 onClick={() =>
-                  // navigate("/management/editCafe", {
-                  //   state: dSelected,
-                  // })
-                  window.alert(
-                    "서비스 준비중입니다. 카페를 삭제 후 다시 등록해주세요."
-                  )
+                  navigate("/management/editCafe", {
+                    state: dSelected,
+                  })
                 }
               >
                 수정

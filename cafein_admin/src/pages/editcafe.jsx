@@ -32,6 +32,7 @@ const Register = () => {
   const [searchModal, setSearchModal] = useState(false);
   const [days, setDays] = useState([]);
   const [dayarr, setDayarr] = useState([]);
+  console.log(state);
 
   const onLoadFile = (e) => {
     let copy = [...file];
@@ -127,12 +128,14 @@ const Register = () => {
       const copy = [...dayarr];
       const copy2 = { ...register };
       obj.map((item, i) => {
-        if (item !== "etcTime") {
-          const day = convertDay(item);
-          const open = state?.businessHoursResDto[item]?.open;
-          const close = state?.businessHoursResDto[item]?.closed;
-          copy.push([open, close, day]);
-          updateDay(day, copy2, open, close);
+        if (state?.businessHoursResDto) {
+          if (item !== "etcTime") {
+            const day = convertDay(item);
+            const open = state?.businessHoursResDto[item]?.open;
+            const close = state?.businessHoursResDto[item]?.closed;
+            copy.push([open, close, day]);
+            updateDay(day, copy2, open, close);
+          }
         }
       });
 
@@ -200,16 +203,7 @@ const Register = () => {
           <S.Column>
             <S.InputBox>
               <span>카페명</span>
-              <Search onClick={() => setSearchModal(!searchModal)} />
-              <input
-                name="storeName"
-                type="text"
-                defaultValue={state.storeName}
-                onChange={(e) => {
-                  onChange(e);
-                  setSearch(e.target.value);
-                }}
-              />
+              <div>{state.storeName}</div>
             </S.InputBox>
             <S.InputBox>
               <span>주소</span>
@@ -358,7 +352,7 @@ const Register = () => {
                 type="text"
                 placeholder="Ex. 매달 첫째주 수요일"
                 name="etcTime"
-                defaultValue={state.businessHoursResDto.etcTime}
+                defaultValue={state?.businessHoursResDto?.etcTime}
                 onChange={(e) => onChange(e)}
               />
             </S.InputBox>

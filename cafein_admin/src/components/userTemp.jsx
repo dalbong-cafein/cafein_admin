@@ -45,7 +45,9 @@ const UserTemp = ({
                   <p>{item.ip || "-"}</p>
                 </Row>
               </div>
-              <div onClick={() => onModal(item)}>{item.regDateTime || "-"}</div>
+              <div onClick={() => onModal(item)}>
+                {String(item.regDateTime).split("T")[0] || "-"}
+              </div>
               <div onClick={() => onModal(item)}>
                 <Btn
                   content={

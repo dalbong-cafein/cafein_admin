@@ -30,12 +30,7 @@ export default function MUser({ setModal, selectItem }) {
   const [sticker, setSticker] = useState(false);
   const [sItem, setSItem] = useState([]);
   const [alert, setAlert] = useState(false);
-  const [eUData, setEUData] = useState({
-    memberId: selectItem.memberId,
-    phone: selectItem.phone,
-    genderType: selectItem.gender,
-    birth: selectItem.birth,
-  });
+  const [eUData, setEUData] = useState({});
 
   const stickerView = () => {
     stickerApi(selectItem.memberId)
@@ -60,20 +55,32 @@ export default function MUser({ setModal, selectItem }) {
   };
 
   const updateUserData = () => {
-    userDataUpdateApi(eUData).then((res) => {
-      console.log(res);
-    });
+    userDataUpdateApi(eUData)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        window.alert("나중에 다시 시도해주세요");
+        setEdit(false);
+      });
   };
 
   const editData = () => {
     setEdit(true);
   };
+
   useEffect(() => {
     if (selectItem.memberId) {
       userReportApi(selectItem.memberId)
         .then((res) => setData(res.data.data.adminReportResDtoList))
         .catch((err) => navigate("/"));
     }
+    setEUData({
+      memberId: selectItem.memberId,
+      phone: selectItem.phone,
+      genderType: selectItem.gender,
+      birth: selectItem.birth,
+    });
   }, [selectItem]);
 
   return (
