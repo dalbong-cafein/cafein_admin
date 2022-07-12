@@ -23,7 +23,7 @@ const Register = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [file, setFile] = useState([]);
-  const [register, setRegister] = useState({});
+  const [register, setRegister] = useState({ storeId: state.storeId });
   const [openTime, setOpenTime] = useState("");
   const [closeTime, setCloseTime] = useState("");
   const [selectOn, setSelectOn] = useState(false);
@@ -32,7 +32,6 @@ const Register = () => {
   const [searchModal, setSearchModal] = useState(false);
   const [days, setDays] = useState([]);
   const [dayarr, setDayarr] = useState([]);
-  console.log(state);
 
   const onLoadFile = (e) => {
     let copy = [...file];
@@ -44,7 +43,7 @@ const Register = () => {
         copy = [...copy, e.target.files[0]];
         setFile(copy);
         const copy2 = { ...register };
-        copy2.imageFiles = copy;
+        copy2.updateImageFiles = copy;
         setRegister(copy2);
       }
     }
@@ -151,7 +150,7 @@ const Register = () => {
         }
       }
       setFile(copy);
-      copy2.imageFiles = copy;
+      copy2.updateImageFiles = copy;
       setRegister(copy2);
     };
     fetching();

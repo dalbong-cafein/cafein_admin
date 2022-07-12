@@ -160,6 +160,7 @@ const Review = () => {
       <S.Wrapper isNull={temp.length === 0}>
         <TableHeader>
           <div>분류</div>
+          <div>추천</div>
           <div>리뷰 내용</div>
           <div>회원 번호</div>
           <div>카페 번호</div>
@@ -199,13 +200,13 @@ const TableHeader = styled.div`
   line-height: 42px;
   border-bottom: 1px solid #515151;
   & > div {
-    flex: 1;
+    flex: 0.7;
     border-right: 1px solid #515151;
   }
-  & > div:nth-child(2) {
-    flex: 3;
+  & > div:nth-child(3) {
+    flex: 3.5;
   }
-  & > div:nth-child(4) {
+  & > div:nth-child(5) {
     flex: 1.5;
   }
 
