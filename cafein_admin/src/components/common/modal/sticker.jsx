@@ -1,26 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
-import { stickerDelApi } from "../../../util/user";
+import { stickerApi, stickerDelApi } from "../../../util/user";
+import { useEffect } from "react";
 
-export default function Sticker({ setModal, selectItem, id }) {
+export default function Sticker({ setModal, id }) {
+  const [temp, setTemp] = useState([]);
   const closeModal = () => {
     setModal(false);
   };
 
-  const stickerDel = (item) => {
-    window.alert("서비스 준비중입니다.");
-    //후순위
-    // stickerDelApi(id, item.stickerType, item.stickerId)
-    //   .then((res) => {
-    //     alert("삭제 완료!");
-    //     window.location.reload();
-    //   })
-    //   .catch((err) => alert("잠시후에 다시 시도해주세요"));
+  const loadData = () => {
+    stickerApi(id)
+      .then((res) => {
+        setTemp(res.data.data);
+      })
+      .catch((err) => console.log(err));
   };
+
+  const stickerDel = (item) => {
+    stickerDelApi(item.stickerId)
+      .then((res) => {
+        alert("삭제 완료!");
+        loadData();
+      })
+      .catch((err) => alert("잠시후에 다시 시도해주세요"));
+  };
+
+  useEffect(() => {
+    loadData();
+  });
   return (
     <Portal>
       <S.ModalBox>
@@ -33,17 +45,18 @@ export default function Sticker({ setModal, selectItem, id }) {
             <span>회원번호</span>
             <p>{String(id).padStart(6, "0")}</p>
           </HLine>
-          {selectItem.map((item, i) => (
-            <IRow key={i}>
-              <p>{i + 1}</p>
-              <Row gap={9}>
-                <p>{item.stickerType}</p>
-                <p>{item.storeName}</p>
-              </Row>
-              <p>{String(item.regDateTime).split("T")[0]}</p>
-              <p onClick={() => stickerDel(item)}>삭제</p>
-            </IRow>
-          ))}
+          {temp &&
+            temp.map((item, i) => (
+              <IRow key={i}>
+                <p>{i + 1}</p>
+                <Row gap={9}>
+                  <p>{item.stickerType}</p>
+                  <p>{item.storeName}</p>
+                </Row>
+                <p>{String(item.regDateTime).split("T")[0]}</p>
+                <p onClick={() => stickerDel(item)}>삭제</p>
+              </IRow>
+            ))}
         </S.ModalContent>
       </S.ModalBox>
     </Portal>

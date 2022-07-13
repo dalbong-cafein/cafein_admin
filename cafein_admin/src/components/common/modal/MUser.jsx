@@ -8,7 +8,6 @@ import { ReactComponent as Page } from "../../../svg/page.svg";
 
 import Row from "../../atoms/row";
 import {
-  stickerApi,
   userDataUpdateApi,
   userLeaveApi,
   userReportApi,
@@ -28,17 +27,11 @@ export default function MUser({ setModal, selectItem }) {
   const [RModal, setRModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [sticker, setSticker] = useState(false);
-  const [sItem, setSItem] = useState([]);
   const [alert, setAlert] = useState(false);
   const [eUData, setEUData] = useState({});
 
   const stickerView = () => {
-    stickerApi(selectItem.memberId)
-      .then((res) => {
-        setSItem(res.data.data);
-        setSticker(true);
-      })
-      .catch((err) => console.log(err));
+    setSticker(true);
   };
 
   const onChange = (e) => {
@@ -276,13 +269,7 @@ export default function MUser({ setModal, selectItem }) {
         </ModalBox>
       </Portal>
       {RModal && <MUReport selectItem={SItem} setModal={setRModal} />}
-      {sticker && (
-        <Sticker
-          setModal={setSticker}
-          selectItem={sItem}
-          id={selectItem.memberId}
-        />
-      )}
+      {sticker && <Sticker setModal={setSticker} id={selectItem.memberId} />}
 
       {alert && (
         <RedAlert
