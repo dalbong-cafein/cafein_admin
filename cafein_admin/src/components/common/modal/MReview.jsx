@@ -9,6 +9,7 @@ import RedAlert from "./redAlert";
 import ReportReason from "./ReportReason";
 import Row from "../../atoms/row";
 import Sliders from "../carousel/carousel";
+import Stars from "../../atoms/stars";
 
 export default function MReview({ setModal, selectItem2 }) {
   const closeModal = () => {
@@ -27,17 +28,15 @@ export default function MReview({ setModal, selectItem2 }) {
       .catch((err) => console.log(err));
   };
 
-  console.log(selectItem2);
-
   return (
     <>
       <Portal>
-        <S.ModalBox>
+        <S.ModalBox height={"776px"}>
           <S.ModalHeader>
             <p>리뷰 상세</p>
             <Close onClick={closeModal} />
           </S.ModalHeader>
-          <S.ModalContent>
+          <S.ModalContent height={"602px"}>
             <Columnbox>
               <Line>
                 <span>분류</span>
@@ -45,10 +44,13 @@ export default function MReview({ setModal, selectItem2 }) {
               </Line>
               <Line>
                 <span>회원 정보</span>
+                <p>{String(selectItem2.writerId).padStart(6, "0")}</p>
                 <p>{selectItem2.nicknameOfWriter || "-"}</p>
+                <p>{`방문 ${selectItem2?.visitCnt}번째`}</p>
               </Line>
               <Line>
                 <span>카페 정보</span>
+                <p>{String(selectItem2.storeId).padStart(6, "0")}</p>
                 <p>{selectItem2.storeName}</p>
               </Line>
               <Line>
@@ -60,6 +62,57 @@ export default function MReview({ setModal, selectItem2 }) {
                 <p>{String(selectItem2.modDateTime).replace("T", " ")}</p>
               </Line>
             </Columnbox>
+            <RecommendBox>
+              {selectItem2.recommendation === "GOOD"
+                ? "추천해요"
+                : selectItem2.recommendation === "NORMAL"
+                ? "그저그래요"
+                : "별로예요"}
+            </RecommendBox>
+            <Row
+              gap={16}
+              align={"baseline"}
+              style={{ margin: "10px 0 0", fontSize: "14px" }}
+            >
+              <Row gap={8} align={"baseline"} style={{ width: "120px" }}>
+                와이파이
+                <Stars
+                  width={11}
+                  gap={2}
+                  num={selectItem2.detailEvaluation.wifi}
+                  color={"#FD9759"}
+                />
+              </Row>
+              <Row gap={8} align={"baseline"}>
+                콘센트
+                <Stars
+                  color={"#FD9759"}
+                  width={11}
+                  gap={2}
+                  num={selectItem2.detailEvaluation.socket}
+                />
+              </Row>
+            </Row>
+            <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
+              <Row gap={8} align={"baseline"} style={{ width: "120px" }}>
+                화장실
+                <Stars
+                  color={"#FD9759"}
+                  width={11}
+                  gap={2}
+                  num={selectItem2.detailEvaluation.restroom}
+                />
+              </Row>
+              <Row gap={8} align={"baseline"}>
+                테이블
+                <Stars
+                  color={"#FD9759"}
+                  width={11}
+                  gap={2}
+                  num={selectItem2.detailEvaluation.tableSize}
+                />
+              </Row>
+            </Row>
             <Text>{selectItem2.content || "-"}</Text>
 
             {selectItem2.reviewImageDtoList && (
@@ -112,7 +165,6 @@ const Columnbox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
-  // padding: 0 20px;
 `;
 
 const Line = styled.div`
@@ -131,10 +183,16 @@ const Line = styled.div`
   & > p:nth-child(2) {
     color: #e3e3e3;
   }
+  & > p:nth-child(3) {
+    color: #fc7521;
+  }
+  & > p:nth-child(4) {
+    color: #acacac;
+  }
 `;
 
 const Text = styled.div`
-  padding: 40px 0;
+  padding: 24px 0;
   white-space: pre-line;
 `;
 
@@ -148,4 +206,14 @@ const Pic = styled.div`
     height: 100%;
     border-radius: 6px;
   }
+`;
+
+const RecommendBox = styled.p`
+  margin-top: 32px;
+  width: 60px;
+  border-radius: 20px;
+  color: #fc6406;
+  font-size: 13px;
+  background-color: #fff0e6;
+  padding: 4px 8px;
 `;

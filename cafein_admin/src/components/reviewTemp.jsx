@@ -31,11 +31,17 @@ const ReviewTemp = ({
               <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
                 <Row gap={8} align={"baseline"}>
                   와이파이
-                  <Stars width={11} gap={2} num={item.detailEvaluation.wifi} />
+                  <Stars
+                    width={11}
+                    gap={2}
+                    num={item.detailEvaluation.wifi}
+                    color={"#FD9759"}
+                  />
                 </Row>
                 <Row gap={8} align={"baseline"}>
                   콘센트
                   <Stars
+                    color={"#FD9759"}
                     width={11}
                     gap={2}
                     num={item.detailEvaluation.socket}
@@ -44,6 +50,7 @@ const ReviewTemp = ({
                 <Row gap={8} align={"baseline"}>
                   화장실
                   <Stars
+                    color={"#FD9759"}
                     width={11}
                     gap={2}
                     num={item.detailEvaluation.restroom}
@@ -52,6 +59,7 @@ const ReviewTemp = ({
                 <Row gap={8} align={"baseline"}>
                   테이블
                   <Stars
+                    color={"#FD9759"}
                     width={11}
                     gap={2}
                     num={item.detailEvaluation.tableSize}

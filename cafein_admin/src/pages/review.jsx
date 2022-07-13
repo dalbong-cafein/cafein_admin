@@ -53,7 +53,6 @@ const Review = () => {
   const onModal = (item) => {
     reviewDetailApi(item.reviewId)
       .then((res) => {
-        console.log(res);
         setSelectItem2(res.data.data);
         setModal(!modal);
       })

@@ -1,9 +1,9 @@
 import { ReactComponent as Star } from "../../svg/Star.svg";
 import styled from "styled-components";
 
-const Stars = ({ width, gap, num, isNum }) => {
+const Stars = ({ width, gap, num, isNum, color }) => {
   return (
-    <Row width={width} gap={gap} isFill={num}>
+    <Row width={width} gap={gap} isFill={num} color={color}>
       <Star />
       <Star />
       <Star />
@@ -26,22 +26,22 @@ const Row = styled.div`
 
   & > svg:first-child {
     path {
-      fill: ${(props) => props.isFill >= 1 && "#ffce4a"};
+      fill: ${(props) => props.isFill >= 1 && props.color};
     }
   }
   & > svg:nth-child(2) {
     path {
-      fill: ${(props) => props.isFill >= 2 && "#ffce4a"};
+      fill: ${(props) => props.isFill >= 2 && props.color};
     }
   }
   & > svg:nth-child(3) {
     path {
-      fill: ${(props) => props.isFill >= 3 && "#ffce4a"};
+      fill: ${(props) => props.isFill >= 3 && props.color};
     }
   }
   & > svg:nth-child(4) {
     path {
-      fill: ${(props) => props.isFill >= 4 && "#ffce4a"};
+      fill: ${(props) => props.isFill >= 4 && props.color};
     }
   }
 `;

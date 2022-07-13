@@ -11,7 +11,7 @@ export const ModalBox = styled.div`
   border: 1px solid #515151;
   border-radius: 16px;
   width: 727px;
-  height: 694px;
+  height: ${(props) => (props.height ? props.height : "694px")};
 `;
 export const ModalHeader = styled.div`
   display: flex;
@@ -53,7 +53,7 @@ export const Btn = styled.div`
 `;
 export const ModalContent = styled.div`
   color: #fff;
-  height: 520px;
+  height: ${(props) => (props.height ? props.height : "520px")};
 
   & > textarea {
     width: 90%;
