@@ -89,9 +89,12 @@ const Register = () => {
   };
 
   const deleteImg = (idx) => {
-    let copy = [...file];
+    const copy = [...file];
+    const copy2 = { ...register };
     copy.splice(idx, 1);
+    copy2.imageFiles = copy;
     setFile(copy);
+    setRegister(copy2);
   };
 
   const recommendChange = (e) => {

@@ -101,6 +101,7 @@ const User = () => {
     changeData();
   }, [page, sort]);
 
+  console.log(temp);
   return (
     <>
       <Header

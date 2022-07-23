@@ -49,6 +49,7 @@ export const feedCreateApi = async (register) => {
 };
 export const feedEditApi = async (register) => {
   const formData = new FormData();
+  formData.append("storeId", register.storeId);
   formData.append("monOpen", register.monOpen);
   formData.append("monClose", register.monClose);
   formData.append("tueOpen", register.tueOpen);
@@ -64,16 +65,23 @@ export const feedEditApi = async (register) => {
   formData.append("sunOpen", register.sunOpen);
   formData.append("sunClose", register.sunClose);
   formData.append("wifiPassword", register.wifiPassword);
+  formData.append("phone", register.phone);
+  formData.append("website", register.website);
   formData.append("etcTime", register.etcTime);
   if (register.updateImageFiles.length > 0) {
     for (let i = 0; i < register.updateImageFiles.length; i++) {
       formData.append("updateImageFiles", register.updateImageFiles[i]);
     }
   }
+  if (register.deleteImageIdList.length > 0) {
+    for (let i = 0; i < register.deleteImageIdList.length; i++) {
+      formData.append("deleteImageIdList", register.deleteImageIdList[i]);
+    }
+  }
 
   return axios({
-    method: "POST",
-    url: process.env.REACT_APP_API_URL + "/admin/stores",
+    method: "PUT",
+    url: process.env.REACT_APP_API_URL + `/admin/stores/${register.storeId}`,
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",

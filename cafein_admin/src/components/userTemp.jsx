@@ -15,67 +15,65 @@ const UserTemp = ({
   return (
     <S.DataBox>
       {temp &&
-        temp
-          .slice(items * (page - 1), items * (page - 1) + items)
-          .map((item, i) => (
-            <ItemRow key={i} hasMemoId={item.memoId}>
-              <div onClick={() => onModal(item)}>
-                {String(item.memberId).padStart(6, "0")}
-              </div>
-              <div onClick={() => onModal(item)}>
-                <p style={{ color: "#FC7521" }}>{item.socialTypeList[0]}</p>
-                {item.socialTypeList[1] && <p>{item.socialTypeList[1]}</p>}
-              </div>
-              <div onClick={() => onModal(item)}>
-                <Row gap={16} align={"center"} style={{ marginLeft: "16px" }}>
-                  {item.memberImageDto ? (
-                    <S.Photo img={item.memberImageDto.imageUrl} />
-                  ) : (
-                    <S.NonePic />
-                  )}
-                  <p>{item.nickname || "-"}</p>
-                </Row>
-              </div>
-              <div onClick={() => onModal(item)}>{item.phone || "-"}</div>
-              <div onClick={() => onModal(item)}>{item.email}</div>
-              <div onClick={() => onModal(item)}>{item.app || "-"}</div>
-              <div onClick={() => onModal(item)}>
-                <Row gap={16}>
-                  <p>{item.divice || "-"}</p>
-                  <p>{item.ip || "-"}</p>
-                </Row>
-              </div>
-              <div onClick={() => onModal(item)}>
-                {String(item.regDateTime).split("T")[0] || "-"}
-              </div>
-              <div onClick={() => onModal(item)}>
-                <Btn
-                  content={
-                    item.memberState === "NORMAL"
-                      ? "기본"
-                      : item.memberState === "SUSPENSION"
-                      ? "신고"
-                      : "탈퇴"
-                  }
-                >
-                  {item.memberState === "NORMAL"
+        temp.map((item, i) => (
+          <ItemRow key={i} hasMemoId={item.memoId}>
+            <div onClick={() => onModal(item)}>
+              {String(item.memberId).padStart(6, "0")}
+            </div>
+            <div onClick={() => onModal(item)}>
+              <p style={{ color: "#FC7521" }}>{item.socialTypeList[0]}</p>
+              {item.socialTypeList[1] && <p>{item.socialTypeList[1]}</p>}
+            </div>
+            <div onClick={() => onModal(item)}>
+              <Row gap={16} align={"center"} style={{ marginLeft: "16px" }}>
+                {item.memberImageDto ? (
+                  <S.Photo img={item.memberImageDto.imageUrl} />
+                ) : (
+                  <S.NonePic />
+                )}
+                <p>{item.nickname || "-"}</p>
+              </Row>
+            </div>
+            <div onClick={() => onModal(item)}>{item.phone || "-"}</div>
+            <div onClick={() => onModal(item)}>{item.email}</div>
+            <div onClick={() => onModal(item)}>{item.app || "-"}</div>
+            <div onClick={() => onModal(item)}>
+              <Row gap={16}>
+                <p>{item.divice || "-"}</p>
+                <p>{item.ip || "-"}</p>
+              </Row>
+            </div>
+            <div onClick={() => onModal(item)}>
+              {String(item.regDateTime).split("T")[0] || "-"}
+            </div>
+            <div onClick={() => onModal(item)}>
+              <Btn
+                content={
+                  item.memberState === "NORMAL"
                     ? "기본"
                     : item.memberState === "SUSPENSION"
                     ? "신고"
-                    : "탈퇴"}
-                </Btn>
-              </div>
-              <div>
-                <Memo
-                  onClick={() => {
-                    setSelectItem(item);
-                    setMemoId(item.memoId);
-                    setMemoModal(true);
-                  }}
-                />
-              </div>
-            </ItemRow>
-          ))}
+                    : "탈퇴"
+                }
+              >
+                {item.memberState === "NORMAL"
+                  ? "기본"
+                  : item.memberState === "SUSPENSION"
+                  ? "신고"
+                  : "탈퇴"}
+              </Btn>
+            </div>
+            <div>
+              <Memo
+                onClick={() => {
+                  setSelectItem(item);
+                  setMemoId(item.memoId);
+                  setMemoModal(true);
+                }}
+              />
+            </div>
+          </ItemRow>
+        ))}
     </S.DataBox>
   );
 };

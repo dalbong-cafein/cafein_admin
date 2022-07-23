@@ -194,6 +194,7 @@ const Line = styled.div`
 const Text = styled.div`
   padding: 24px 0;
   white-space: pre-line;
+  line-height: 20px;
 `;
 
 const Pic = styled.div`

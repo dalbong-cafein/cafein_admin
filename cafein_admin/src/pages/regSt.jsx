@@ -233,7 +233,10 @@ export const ComboBox = styled.div`
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
   border-radius: 8px;
   position: absolute;
-  transform: translate(320%, 130%);
+  transform: translate(
+    ${(props) => (props.x ? props.x : "320%")},
+    ${(props) => (props.y ? props.y : "130%")}
+  );
   padding: 15px 20px;
   box-sizing: border-box;
   display: flex;

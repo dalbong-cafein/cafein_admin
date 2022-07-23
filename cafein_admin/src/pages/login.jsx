@@ -17,7 +17,7 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
     const data = {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_REST_API_KEY,
-      redirect_uri: "https://cafeinofficial.com/login", //수정
+      redirect_uri: "http://localhost:3000/login", //수정
       code: code,
     };
     const queryString = Object.keys(data)

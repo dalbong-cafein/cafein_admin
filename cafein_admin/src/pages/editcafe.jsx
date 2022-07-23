@@ -2,15 +2,14 @@ import * as S from "./regSt";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-// import { useRecoilState } from "recoil";
-// import { registerState } from "../recoil/NcafeRegister";
+import { useRecoilState } from "recoil";
+import { editcafe } from "../recoil/editcafe";
 
 import { ReactComponent as Photo } from "../svg/photo.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
 import { ReactComponent as Plus } from "../svg/plus.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 import { ReactComponent as ArrowUp } from "../svg/ArrowUp.svg";
-import { ReactComponent as Search } from "../svg/Search.svg";
 
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
@@ -18,12 +17,13 @@ import Row from "../components/atoms/row";
 import Header from "../components/common/header";
 
 import { convertTime, updateDay } from "../hooks/registerHook";
+import { feedEditApi } from "../util/management";
 
-const Register = () => {
+const Editcafe = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [file, setFile] = useState([]);
-  const [register, setRegister] = useState({ storeId: state.storeId });
+  const [register, setRegister] = useRecoilState(editcafe);
   const [openTime, setOpenTime] = useState("");
   const [closeTime, setCloseTime] = useState("");
   const [selectOn, setSelectOn] = useState(false);
@@ -32,6 +32,7 @@ const Register = () => {
   const [searchModal, setSearchModal] = useState(false);
   const [days, setDays] = useState([]);
   const [dayarr, setDayarr] = useState([]);
+  const [delImg, setDelImg] = useState([]);
 
   const onLoadFile = (e) => {
     let copy = [...file];
@@ -43,16 +44,26 @@ const Register = () => {
         copy = [...copy, e.target.files[0]];
         setFile(copy);
         const copy2 = { ...register };
-        copy2.updateImageFiles = copy;
+        copy2.updateImageFiles.push(e.target.files[0]);
         setRegister(copy2);
       }
     }
   };
 
-  const deleteImg = (idx) => {
-    let copy = [...file];
+  const deleteImg = (a, idx) => {
+    const copy = [...file];
+    const copy2 = { ...register };
+    let copy3 = [...delImg];
+    const hasfile = state.storeImageDtoList.filter(
+      (item) => item.imageUrl === a
+    );
+    if (hasfile) {
+      copy3 = [...copy3, hasfile[0].imageId];
+    }
     copy.splice(idx, 1);
+    copy2.deleteImageIdList = copy3;
     setFile(copy);
+    setRegister(copy2);
   };
 
   const onChange = (e) => {
@@ -116,12 +127,31 @@ const Register = () => {
   const submit = async (register) => {
     console.log(register);
 
-    // feedCreateApi(register)
-    //   .then((res) => navigate("/management"))
-    //   .catch((err) => console.log(err));
+    feedEditApi(register)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        window.alert("조금 이따가 다시 시도해주세요");
+        // navigate("/management");
+      });
   };
 
   useEffect(() => {
+    const fetchingData = async () => {
+      const copy = { ...register };
+      copy.storeId = state.storeId;
+      const obj = Object.keys(copy);
+      obj.map((item) => {
+        if (state[item]) {
+          console.log(copy.item);
+          copy.item = state[item];
+        }
+      });
+
+      setRegister(copy);
+    };
+
     const fetching = async () => {
       const obj = Object.keys(state.businessHoursResDto);
       const copy = [...dayarr];
@@ -143,18 +173,18 @@ const Register = () => {
     };
     const fetchingImg = async () => {
       const copy = [...file];
-      const copy2 = { ...register };
       if (state.storeImageDtoList) {
         for (let i = 0; i < state.storeImageDtoList.length; i++) {
           copy.push(state.storeImageDtoList[i].imageUrl);
         }
       }
       setFile(copy);
-      copy2.updateImageFiles = copy;
-      setRegister(copy2);
     };
-    fetching();
-    fetchingImg();
+    if (state) {
+      fetching();
+      fetchingImg();
+      fetchingData();
+    }
   }, []);
 
   return (
@@ -226,10 +256,13 @@ const Register = () => {
                     onChange={(e) => onLoadFile(e)}
                   />
                 </S.FileUpload>
-                {file?.map((a, i) => {
+                {file?.map((a, idx) => {
                   return (
-                    <S.ImgBox key={i}>
-                      <CloseIcon name={a.name} onClick={() => deleteImg(i)} />
+                    <S.ImgBox key={idx}>
+                      <CloseIcon
+                        name={a.name}
+                        onClick={() => deleteImg(a, idx)}
+                      />
                       <PVImg img={a} />
                     </S.ImgBox>
                   );
@@ -321,7 +354,7 @@ const Register = () => {
           </S.Column>
           <S.Column>
             {selectOn && (
-              <S.ComboBox>
+              <S.ComboBox x={"-400%"} y={"185%"}>
                 <div id="월" onClick={(e) => dayPush(e)}>
                   월요일
                 </div>
@@ -402,4 +435,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Editcafe;
