@@ -32,3 +32,8 @@ export const userLeaveApi = async (id) => {
 export const userDataUpdateApi = async (data) => {
   return await withAuthInstance.put(`/members`, data);
 };
+
+//회원 하트 리스트 조회
+export const userHeartListApi = async (id) => {
+  return await withAuthInstance.get(`/members/${id}/hearts`);
+};

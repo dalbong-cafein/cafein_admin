@@ -5,6 +5,11 @@ export const reviewDataApi = async (page, sort) => {
   return await withAuthInstance.get(`/reviews?page=${page}&sort=${sort}`);
 };
 
+//회원별
+export const reviewUserDataApi = async (id) => {
+  return await withAuthInstance.get(`/members/${id}/reviews`);
+};
+
 export const reviewDetailApi = async (id) => {
   return await withAuthInstance.get(`/reviews/${id}`);
 };

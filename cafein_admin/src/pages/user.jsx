@@ -76,10 +76,17 @@ const User = () => {
     }
   };
 
-  const onModal = (item) => {
-    userDetailApi(item.memberId)
+  const loadD = (id) => {
+    userDetailApi(id)
       .then((res) => setSelectItem(res.data.data))
-      .catch((err) => alert("존재하지 않는 회원입니다."));
+      .catch((err) => {
+        alert("존재하지 않는 회원입니다.");
+        setModal(false);
+      });
+  };
+
+  const onModal = (item) => {
+    loadD(item.memberId);
     setModal(!modal);
   };
 
@@ -101,7 +108,6 @@ const User = () => {
     changeData();
   }, [page, sort]);
 
-  console.log(temp);
   return (
     <>
       <Header
@@ -186,7 +192,9 @@ const User = () => {
           selectItem={selectItem}
         />
       )}
-      {modal && <MUser setModal={setModal} selectItem={selectItem} />}
+      {modal && (
+        <MUser setModal={setModal} selectItem={selectItem} loadD={loadD} />
+      )}
     </>
   );
 };

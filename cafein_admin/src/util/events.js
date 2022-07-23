@@ -55,7 +55,7 @@ export const regImgApi = async (file) => {
 
   return axios({
     method: "POST",
-    url: process.env.REACT_APP_API_URL + "/admin/event-image",
+    url: process.env.REACT_APP_API_URL + "/admin/events",
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",
@@ -64,11 +64,9 @@ export const regImgApi = async (file) => {
 };
 
 export const eventImgApi = (page, sort) => {
-  return withAuthInstance.get(
-    `/event-images?size=12&page=${page}&sort=${sort}`
-  );
+  return withAuthInstance.get(`/events?size=12&page=${page}&sort=${sort}`);
 };
 
 export const delEventImgApi = (id) => {
-  return withAuthInstance.delete(`/event-image?eventImageId=${id}`);
+  return withAuthInstance.delete(`/events/${id}`);
 };

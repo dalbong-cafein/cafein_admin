@@ -61,10 +61,11 @@ const Event = () => {
   const loadData = () => {
     eventImgApi(page, sort)
       .then((res) => {
-        setTemp(res.data.data.eventImageResDtoList.dtoList);
-        setCount(res.data.data.eventImageCnt);
+        setTemp(res.data.data.eventResDtoList.dtoList);
+        setCount(res.data.data.eventCnt);
       })
       .catch((err) => {
+        console.log(err);
         window.alert("나중에 다시 시도해주세요");
         navigate("/");
       });

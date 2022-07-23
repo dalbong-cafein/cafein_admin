@@ -9,6 +9,7 @@ import { ReactComponent as Page } from "../../../svg/page.svg";
 import Row from "../../atoms/row";
 import {
   userDataUpdateApi,
+  userDetailApi,
   userLeaveApi,
   userReportApi,
 } from "../../../util/user";
@@ -16,8 +17,10 @@ import MUReport from "./MUReport";
 import Sticker from "./sticker";
 import RedAlert from "./redAlert";
 import { useNavigate } from "react-router-dom";
+import ReviewView from "./reviewView";
+import HeartView from "./heartView";
 
-export default function MUser({ setModal, selectItem }) {
+export default function MUser({ setModal, selectItem, loadD }) {
   const closeModal = () => {
     setModal(false);
   };
@@ -27,11 +30,19 @@ export default function MUser({ setModal, selectItem }) {
   const [RModal, setRModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [sticker, setSticker] = useState(false);
+  const [review, setReview] = useState(false);
+  const [heart, setHeart] = useState(false);
   const [alert, setAlert] = useState(false);
   const [eUData, setEUData] = useState({});
 
   const stickerView = () => {
     setSticker(true);
+  };
+  const reviewView = () => {
+    setReview(true);
+  };
+  const heartView = () => {
+    setHeart(true);
   };
 
   const onChange = (e) => {
@@ -187,6 +198,7 @@ export default function MUser({ setModal, selectItem }) {
                   <Line color={"#515151"}>
                     <span>저장</span>
                     <p>{selectItem?.heartCnt || "-"}</p>
+                    <Page onClick={heartView} />
                   </Line>
                   <Line color={"#515151"}>
                     <span>공유</span>
@@ -199,6 +211,7 @@ export default function MUser({ setModal, selectItem }) {
                   <Line color={"#515151"}>
                     <span>리뷰</span>
                     <p>{selectItem?.reviewCnt || "-"}</p>
+                    <Page onClick={reviewView} />
                   </Line>
                   <Line color={"#515151"}>
                     <span>스티커</span>
@@ -269,7 +282,17 @@ export default function MUser({ setModal, selectItem }) {
         </ModalBox>
       </Portal>
       {RModal && <MUReport selectItem={SItem} setModal={setRModal} />}
-      {sticker && <Sticker setModal={setSticker} id={selectItem.memberId} />}
+      {sticker && (
+        <Sticker setModal={setSticker} id={selectItem.memberId} loadD={loadD} />
+      )}
+      {review && (
+        <ReviewView
+          setModal={setReview}
+          id={selectItem.memberId}
+          loadD={loadD}
+        />
+      )}
+      {heart && <HeartView setModal={setHeart} id={selectItem.memberId} />}
 
       {alert && (
         <RedAlert

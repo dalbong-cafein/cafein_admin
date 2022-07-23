@@ -28,7 +28,7 @@ export default function MUReport({ setModal, selectItem }) {
           </Line>
           <Line>
             <span>신고 사유</span>
-            <p>{selectItem.content}</p>
+            <p>{selectItem.categoryName}</p>
           </Line>
         </S.ModalContent>
       </S.ModalBox>

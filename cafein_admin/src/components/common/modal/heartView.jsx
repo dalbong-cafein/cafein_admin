@@ -4,31 +4,24 @@ import * as S from "./style";
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
-import { stickerApi, stickerDelApi } from "../../../util/user";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { userHeartListApi } from "../../../util/user";
 
-export default function Sticker({ setModal, id, loadD }) {
+export default function HeartView({ setModal, id }) {
   const [temp, setTemp] = useState([]);
   const closeModal = () => {
     setModal(false);
-    loadD(id);
   };
 
+  const navigate = useNavigate();
+
   const loadData = () => {
-    stickerApi(id)
+    userHeartListApi(id)
       .then((res) => {
         setTemp(res.data.data);
       })
       .catch((err) => console.log(err));
-  };
-
-  const stickerDel = (item) => {
-    stickerDelApi(item.stickerId)
-      .then((res) => {
-        alert("삭제 완료!");
-        loadData();
-      })
-      .catch((err) => alert("잠시후에 다시 시도해주세요"));
   };
 
   useEffect(() => {
@@ -38,7 +31,7 @@ export default function Sticker({ setModal, id, loadD }) {
     <Portal>
       <S.ModalBox>
         <S.ModalHeader>
-          <p>스티커 내역</p>
+          <p>저장 내역</p>
           <Close onClick={closeModal} />
         </S.ModalHeader>
         <S.ModalContent>
@@ -55,7 +48,9 @@ export default function Sticker({ setModal, id, loadD }) {
                   <p>{item.storeName}</p>
                 </Row>
                 <p>{String(item.regDateTime).split("T")[0]}</p>
-                <p onClick={() => stickerDel(item)}>삭제</p>
+                <p
+                // onClick={() => reviewDel(item)}
+                ></p>
               </IRow>
             ))}
         </S.ModalContent>
