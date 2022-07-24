@@ -203,13 +203,14 @@ const TableHeader = styled.div`
     border-right: 1px solid #515151;
   }
   & > div:nth-child(3) {
-    flex: 3.5;
+    flex: 4;
   }
   & > div:nth-child(5) {
     flex: 1.5;
   }
 
   & > div:last-child {
+    flex: 0.5;
     border-right: none;
   }
 `;

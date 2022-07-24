@@ -31,7 +31,8 @@ export default function ReportReason({ setModal, id }) {
   const onReport = () => {
     reviewReportApi(id, selected.id)
       .then((res) => {
-        window.location.reload();
+        window.alert("신고되었습니다");
+        setModal(false);
       })
       .catch((err) => {
         window.alert("나중에 다시 시도해주세요");

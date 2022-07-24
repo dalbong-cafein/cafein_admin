@@ -3,9 +3,7 @@ import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Row from "../../atoms/row";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { userHeartListApi } from "../../../util/user";
 
 export default function HeartView({ setModal, id }) {
@@ -13,8 +11,6 @@ export default function HeartView({ setModal, id }) {
   const closeModal = () => {
     setModal(false);
   };
-
-  const navigate = useNavigate();
 
   const loadData = () => {
     userHeartListApi(id)
@@ -43,14 +39,9 @@ export default function HeartView({ setModal, id }) {
             temp.map((item, i) => (
               <IRow key={i}>
                 <p>{i + 1}</p>
-                <Row gap={9}>
-                  <p>{item.stickerType}</p>
-                  <p>{item.storeName}</p>
-                </Row>
+                <p>{item.storeName}</p>
+                <p>{String(item.storeId).padStart(6, "0")}</p>
                 <p>{String(item.regDateTime).split("T")[0]}</p>
-                <p
-                // onClick={() => reviewDel(item)}
-                ></p>
               </IRow>
             ))}
         </S.ModalContent>
@@ -91,21 +82,11 @@ const IRow = styled.div`
 
     font-weight: 500;
   }
-  & > div:nth-child(2) {
+  & > p:nth-child(2) {
     width: 300px;
-    & > p:first-child {
-      color: #e3e3e3;
-    }
-    & > p:nth-child(2) {
-      color: #acacac;
-    }
   }
   & > p:nth-child(3) {
     color: #e3e3e3;
     width: 100px;
-  }
-  & > p:last-child {
-    color: #ff5c50;
-    cursor: pointer;
   }
 `;

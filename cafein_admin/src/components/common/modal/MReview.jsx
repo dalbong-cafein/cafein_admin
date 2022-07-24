@@ -63,11 +63,13 @@ export default function MReview({ setModal, selectItem2 }) {
               </Line>
             </Columnbox>
             <RecommendBox>
-              {selectItem2.recommendation === "GOOD"
-                ? "추천해요"
-                : selectItem2.recommendation === "NORMAL"
-                ? "그저그래요"
-                : "별로예요"}
+              <p>
+                {selectItem2.recommendation === "GOOD"
+                  ? "추천해요"
+                  : selectItem2.recommendation === "NORMAL"
+                  ? "그저그래요"
+                  : "별로예요"}
+              </p>
             </RecommendBox>
             <Row
               gap={16}
@@ -209,12 +211,18 @@ const Pic = styled.div`
   }
 `;
 
-const RecommendBox = styled.p`
+const RecommendBox = styled.div`
   margin-top: 32px;
-  width: 60px;
+  max-width: 63px;
+  height: 22px;
   border-radius: 20px;
-  color: #fc6406;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 13px;
   background-color: #fff0e6;
   padding: 4px 8px;
+  & > p {
+    color: #fc6406;
+  }
 `;

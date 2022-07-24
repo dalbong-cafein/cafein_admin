@@ -3,10 +3,8 @@ import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Row from "../../atoms/row";
 import { useEffect } from "react";
 import { reviewDelApi, reviewUserDataApi } from "../../../util/review";
-import { useNavigate } from "react-router-dom";
 
 export default function ReviewView({ setModal, id, loadD }) {
   const [temp, setTemp] = useState([]);
@@ -14,8 +12,6 @@ export default function ReviewView({ setModal, id, loadD }) {
     setModal(false);
     loadD(id);
   };
-
-  const navigate = useNavigate();
 
   const loadData = () => {
     reviewUserDataApi(id)
@@ -33,10 +29,18 @@ export default function ReviewView({ setModal, id, loadD }) {
       })
       .catch((err) => alert("잠시후에 다시 시도해주세요"));
   };
+  const onCopyId = (item) => {
+    //     navigator.clipboard.writeText(item.reviewId);
+    //     window.alert(
+    //       `리뷰 아이디가 복사 되었습니다.
+    // 리뷰 상세는 리뷰 페이지에서 아이디로 검색해주세요`
+    //     );
+  };
 
   useEffect(() => {
     loadData();
   }, []);
+
   return (
     <Portal>
       <S.ModalBox>
@@ -53,11 +57,13 @@ export default function ReviewView({ setModal, id, loadD }) {
             temp.map((item, i) => (
               <IRow key={i}>
                 <p>{i + 1}</p>
-                <Row gap={9}>
-                  <p>{item.stickerType}</p>
-                  <p>{item.storeName}</p>
-                </Row>
-                <p>{String(item.regDateTime).split("T")[0]}</p>
+                <p onClick={() => onCopyId(item)}>{item.storeName}</p>
+                <p onClick={() => onCopyId(item)}>
+                  {String(item.reviewId).padStart(6, "0")}
+                </p>
+                <p onClick={() => onCopyId(item)}>
+                  {String(item.regDateTime).split("T")[0]}
+                </p>
                 <p onClick={() => reviewDel(item.reviewId)}>삭제</p>
               </IRow>
             ))}
@@ -93,24 +99,20 @@ const IRow = styled.div`
   justify-content: space-between;
   font-size: 14px;
   & > p:first-child {
-    width: 100px;
+    width: 50px;
     text-align: center;
     color: #8b8b8b;
 
     font-weight: 500;
   }
-  & > div:nth-child(2) {
-    width: 300px;
-    & > p:first-child {
-      color: #e3e3e3;
-    }
-    & > p:nth-child(2) {
-      color: #acacac;
-    }
+  & > p:nth-child(2) {
+    width: 220px;
+    cursor: pointer;
   }
   & > p:nth-child(3) {
     color: #e3e3e3;
     width: 100px;
+    cursor: pointer;
   }
   & > p:last-child {
     color: #ff5c50;

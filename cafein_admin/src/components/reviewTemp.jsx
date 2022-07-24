@@ -133,7 +133,7 @@ const ItemRow = styled.div`
     flex-direction: column;
     align-items: baseline;
     text-aline: left;
-    flex: 3.5;
+    flex: 4;
     gap: 8px;
     & > div {
       padding-left: 12px;
@@ -151,6 +151,7 @@ const ItemRow = styled.div`
     justify-content: start;
   }
   & > div:last-child {
+    flex: 0.5;
     & > svg {
       path {
         fill: ${(props) => (props.hasMemoId ? "#E3E3E3" : "#646464")};

@@ -380,7 +380,7 @@ const StateRow = styled.div`
     gap: 32px;
     align-items: baseline;
     & > span {
-      width: 59px;
+      width: 69px;
       text-align: right;
       font-size: 16px;
       font-weight: 700;
@@ -438,7 +438,6 @@ const Btn = styled.div`
   width: 86px;
   height: 26px;
   text-align: center;
-  margin: 0 auto;
 
   border-radius: 6px;
   color: ${(props) =>

@@ -74,20 +74,20 @@ export const ModalContent = styled.div`
     heigth: 350px;
     max-height: 450px;
     color: #e3e3e3;
-    // overflow-y: scroll;
-    // ::-webkit-scrollbar {
-    //   width: 6px;
-    // }
-    // ::-webkit-scrollbar-track {
-    //   background-color: none;
-    // }
-    // ::-webkit-scrollbar-thumb {
-    //   border-radius: 3px;
-    //   background-color: gray;
-    // }
-    // ::-webkit-scrollbar-button {
-    //   width: 0;
-    //   height: 0;
-    // }
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: none;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: gray;
+    }
+    ::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
   }
 `;
