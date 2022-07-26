@@ -36,7 +36,7 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
         authApi(res.data.access_token) //우리 토큰 발급 API
           .then((res) => {
             const copy = { ...admin };
-            copy.image = res.data.data.imageDto.imageUrl;
+            copy.image = res.data.data?.imageDto?.imageUrl;
             copy.email = res.data.data.email;
             setAdmin(copy);
             navigate("/");
