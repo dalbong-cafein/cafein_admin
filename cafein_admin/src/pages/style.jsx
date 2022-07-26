@@ -17,6 +17,7 @@ export const TableHeader = styled.table`
   border-spacing: 0;
   border-collapse: collapse;
   border-style: hidden;
+  text-align: center;
 
   & > th,
   td {
