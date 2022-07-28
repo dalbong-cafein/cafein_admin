@@ -13,6 +13,12 @@ export const ModalBox = styled.div`
   width: 727px;
   height: ${(props) => (props.height ? props.height : "694px")};
 `;
+
+export const ModalBigBox = styled(ModalBox)`
+  width: ${(props) => (props.double ? "1454px" : "727px")};
+  height: 700px;
+  padding: 0;
+`;
 export const ModalHeader = styled.div`
   display: flex;
   width: 100%;
