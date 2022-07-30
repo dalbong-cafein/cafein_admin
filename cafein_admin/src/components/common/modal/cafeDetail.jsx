@@ -362,34 +362,6 @@ const Columnbox = styled.div`
   padding: 0 10px 0 10px;
 `;
 
-const Pic = styled.div`
-  width: 64px;
-  height: 64px;
-  background-color: #c4c4c4;
-  & > div {
-    background-img: ${(props) => props.img && props.img};
-    z-index: 9;
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const Btn = styled.div`
-  background-color: ${(props) =>
-    props.content === "기본"
-      ? "#26BA6A"
-      : props.content === "신고"
-      ? "#f44336"
-      : "#ff9800"};
-  width: 96px;
-  height: 26px;
-  text-align: center;
-  opacity: 0.3;
-  border-radius: 6px;
-  color: #fff;
-  line-height: 26px;
-`;
-
 const Photo = styled.div`
   width: 72px;
   height:72px;

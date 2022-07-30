@@ -21,7 +21,7 @@ export default function ReviewView({ setModal, id, loadD }) {
   const [del, setDel] = useState(false);
   const [rReason, setRReason] = useState(false);
   const [slider, setSlider] = useState(false);
-  const [isSelect, setIsSelect] = useState(false);
+  const [isSelect, setIsSelect] = useState(null);
 
   const [detail, setDetail] = useState(false);
   const closeModal = () => {
@@ -71,15 +71,15 @@ export default function ReviewView({ setModal, id, loadD }) {
                 boxSizing: "border-box",
               }}
             >
-              <S.ModalHeader>
-                <p>리뷰 내역</p>
-                <Close onClick={closeModal} />
-              </S.ModalHeader>
-              <S.ModalContent>
-                <HLine>
-                  <span>회원번호</span>
+              <S.ViewHeader>
+                <div>
+                  <p>리뷰 내역</p>
+                  <p>회원번호</p>
                   <p>{String(id).padStart(6, "0")}</p>
-                </HLine>
+                </div>
+                <Close onClick={closeModal} />
+              </S.ViewHeader>
+              <S.ModalContent>
                 {temp &&
                   temp.map((item, i) => (
                     <IRow key={i} color={i == isSelect}>
@@ -242,26 +242,6 @@ export default function ReviewView({ setModal, id, loadD }) {
   );
 }
 
-const HLine = styled.div`
-  display: flex;
-
-  width: 100%;
-  padding: 5px 0 13px;
-  border-bottom: 1px solid #333333;
-  & > span {
-    padding-right: 32px;
-    width: 69px;
-    text-align: right;
-    font-size: 16px;
-    font-weight: 700;
-    color: #8b8b8b;
-  }
-  & > p:nth-child(2) {
-    color: #e3e3e3;
-    padding-right: 10px;
-  }
-`;
-
 const IRow = styled.div`
   display: flex;
   padding: 10px 0;
@@ -270,7 +250,7 @@ const IRow = styled.div`
 
   & > p:first-child {
     width: 50px;
-    text-align: center;
+    text-align: left;
     color: ${(props) => (props.color ? "#FC7521" : "#8b8b8b")};
     font-weight: 500;
   }
@@ -328,6 +308,22 @@ const Text = styled.div`
   padding: 24px 0;
   white-space: pre-line;
   line-height: 20px;
+  height: 50px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: gray;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
 `;
 
 const Pic = styled.div`

@@ -26,15 +26,16 @@ export default function HeartView({ setModal, id }) {
   return (
     <Portal>
       <S.ModalBox>
-        <S.ModalHeader>
-          <p>저장 내역</p>
-          <Close onClick={closeModal} />
-        </S.ModalHeader>
-        <S.ModalContent>
-          <HLine>
-            <span>회원번호</span>
+        <S.ViewHeader>
+          <div>
+            <p>저장 내역</p>
+            <p>회원번호</p>
             <p>{String(id).padStart(6, "0")}</p>
-          </HLine>
+          </div>
+
+          <Close onClick={closeModal} />
+        </S.ViewHeader>
+        <S.ModalContent>
           {temp &&
             temp.map((item, i) => (
               <IRow key={i}>
@@ -50,36 +51,16 @@ export default function HeartView({ setModal, id }) {
   );
 }
 
-const HLine = styled.div`
-  display: flex;
-
-  width: 100%;
-  padding: 5px 0 13px;
-  border-bottom: 1px solid #333333;
-  & > span {
-    padding-right: 32px;
-    width: 69px;
-    text-align: right;
-    font-size: 16px;
-    font-weight: 700;
-    color: #8b8b8b;
-  }
-  & > p:nth-child(2) {
-    color: #e3e3e3;
-    padding-right: 10px;
-  }
-`;
-
 const IRow = styled.div`
   display: flex;
   padding: 10px 0;
   justify-content: space-between;
   font-size: 14px;
-  & > p:first-child {
-    width: 100px;
-    text-align: center;
-    color: #8b8b8b;
 
+  & > p:first-child {
+    width: 50px;
+    text-align: left;
+    color: #8b8b8b;
     font-weight: 500;
   }
   & > p:nth-child(2) {

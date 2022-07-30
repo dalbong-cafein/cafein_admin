@@ -2,6 +2,7 @@ import Row from "./atoms/row";
 import styled from "styled-components";
 import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
+import StateBtn from "./atoms/btn";
 
 const UserTemp = ({
   temp,
@@ -47,21 +48,7 @@ const UserTemp = ({
               {String(item.regDateTime).split("T")[0] || "-"}
             </div>
             <div onClick={() => onModal(item)}>
-              <Btn
-                content={
-                  item.memberState === "NORMAL"
-                    ? "기본"
-                    : item.memberState === "SUSPENSION"
-                    ? "신고"
-                    : "탈퇴"
-                }
-              >
-                {item.memberState === "NORMAL"
-                  ? "기본"
-                  : item.memberState === "SUSPENSION"
-                  ? "신고"
-                  : "탈퇴"}
-              </Btn>
+              <StateBtn content={item.memberState} />
             </div>
             <div>
               <Memo
@@ -126,21 +113,4 @@ const ItemRow = styled.div`
   }
 `;
 
-const Btn = styled.div`
-  background-color: ${(props) =>
-    props.content === "기본"
-      ? "#26BA6A"
-      : props.content === "신고"
-      ? "#f44336"
-      : "#ff9800"};
-  width: 86px;
-  height: 26px;
-  text-align: center;
-  margin: 0 auto;
-  opacity: 0.3;
-
-  border-radius: 6px;
-  color: #fff;
-  line-height: 26px;
-`;
 export default UserTemp;

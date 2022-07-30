@@ -26,13 +26,37 @@ export const ModalHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-  & > p {
+  & > p:first-child {
     color: #f6f6f6;
     font-size: 20px;
     font-weight: bold;
   }
   & > svg {
     cursor: pointer;
+  }
+`;
+
+export const ViewHeader = styled(ModalHeader)`
+  & > div:first-child {
+    display: flex;
+    align-items: baseline;
+
+    & > p:first-child {
+      color: #f6f6f6;
+      font-size: 20px;
+      font-weight: bold;
+      margin-right: 24px;
+    }
+    & > p:nth-child(2) {
+      color: #e3e3e3;
+      font-size: 16px;
+      font-weight: bold;
+      margin-right: 16px;
+    }
+    & > p:nth-child(3) {
+      font-size: 16px;
+      color: #e3e3e3;
+    }
   }
 `;
 export const ModalFooter = styled.div`
@@ -60,6 +84,21 @@ export const Btn = styled.div`
 export const ModalContent = styled.div`
   color: #fff;
   height: ${(props) => (props.height ? props.height : "520px")};
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: gray;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+  }
 
   & > textarea {
     width: 90%;
@@ -80,20 +119,5 @@ export const ModalContent = styled.div`
     heigth: 350px;
     max-height: 450px;
     color: #e3e3e3;
-    overflow-y: scroll;
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background-color: none;
-    }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: gray;
-    }
-    ::-webkit-scrollbar-button {
-      width: 0;
-      height: 0;
-    }
   }
 `;

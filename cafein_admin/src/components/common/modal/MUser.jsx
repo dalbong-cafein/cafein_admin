@@ -172,7 +172,7 @@ export default function MUser({ setModal, selectItem, loadD }) {
                     <p>{selectItem.app || "-"}</p>
                   </Line>
                   <Line>
-                    <span>DEVICE IP</span>
+                    <span>DEVICE/IP</span>
                     <p>
                       {selectItem.divice || "-"}
                       <br />
@@ -215,7 +215,7 @@ export default function MUser({ setModal, selectItem, loadD }) {
                   </Line>
                   <Line color={"#515151"}>
                     <span>스티커</span>
-                    <p>{selectItem?.stickerCnt || "-"}</p>{" "}
+                    <p>{selectItem?.stickerCnt || "-"}</p>
                     <Page onClick={stickerView} />
                   </Line>
                 </Columnbox>
@@ -241,6 +241,7 @@ export default function MUser({ setModal, selectItem, loadD }) {
                             : "탈퇴"
                         }
                       >
+                        <div />
                         {selectItem.memberState === "NORMAL"
                           ? "기본"
                           : selectItem.memberState === "SUSPENSION"
@@ -253,7 +254,7 @@ export default function MUser({ setModal, selectItem, loadD }) {
                       {data &&
                         data.map((item, i) => (
                           <div key={i}>
-                            {i + 1}.{item.categoryName}{" "}
+                            {`${i + 1}. ${item.categoryName}`}
                             <Page
                               onClick={() => {
                                 setRModal(true);
@@ -338,9 +339,9 @@ const Title = styled.p`
 `;
 const Line = styled.div`
   display: flex;
-
+  align-items: center;
   width: 100%;
-  padding: 5px 0 13px;
+  padding: 2px 0 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
     padding-right: 32px;
@@ -416,7 +417,11 @@ const StateRow = styled.div`
       height: 0;
     }
     & > div {
+      display: flex;
+      font-size: 14px;
+      align-items: center;
       color: #e3e3e3;
+      gap: 10px;
       line-height: 24px;
     }
   }
@@ -429,24 +434,32 @@ const Columnbox = styled.div`
 `;
 
 const Btn = styled.div`
-  background-color: ${(props) =>
-    props.content === "기본"
-      ? "#18452e"
-      : props.content === "신고"
-      ? "#56211d"
-      : "#5a3b0d"};
+  position: relative;
   width: 86px;
   height: 26px;
   text-align: center;
-
+  margin: 0 auto;
   border-radius: 6px;
   color: ${(props) =>
     props.content === "기본"
-      ? "#20a45c"
+      ? "#26BA6A"
       : props.content === "신고"
-      ? "#d24035"
-      : "#e59116"};
+      ? "#f44336"
+      : "#ff9800"};
   line-height: 26px;
+  & > div:first-child {
+    position: absolute;
+    width: 86px;
+    height: 26px;
+    background-color: ${(props) =>
+      props.content === "기본"
+        ? "#26BA6A"
+        : props.content === "신고"
+        ? "#f44336"
+        : "#ff9800"};
+    opacity: 0.3;
+    border-radius: 4px;
+  }
 `;
 
 const Photo = styled.div`
