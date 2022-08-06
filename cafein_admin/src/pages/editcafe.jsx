@@ -60,13 +60,14 @@ const Editcafe = () => {
     const hasfile = state.storeImageDtoList.filter(
       (item) => item.imageUrl === a
     );
-    if (hasfile) {
+    if (hasfile[0]) {
       copy3 = [...copy3, hasfile[0].imageId];
     }
     copy.splice(idx, 1);
     copy2.deleteImageIdList = copy3;
     setFile(copy);
     setRegister(copy2);
+    console.log(file);
   };
 
   const onChange = (e) => {
@@ -133,6 +134,7 @@ const Editcafe = () => {
     feedEditApi(register)
       .then((res) => {
         console.log(res);
+        navigate("/management");
       })
       .catch((err) => {
         window.alert("조금 이따가 다시 시도해주세요");
@@ -147,7 +149,6 @@ const Editcafe = () => {
       const obj = Object.keys(copy);
       obj.map((item) => {
         if (state[item]) {
-          console.log(copy.item);
           copy.item = state[item];
         }
       });
@@ -159,7 +160,7 @@ const Editcafe = () => {
       const obj = Object.keys(state.businessHoursResDto);
       const copy = [...dayarr];
       const copy2 = { ...register };
-      obj.map((item, i) => {
+      obj?.map((item, i) => {
         if (state?.businessHoursResDto) {
           if (item !== "etcTime") {
             const day = convertDay(item);
