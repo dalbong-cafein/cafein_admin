@@ -68,8 +68,8 @@ const ReviewTemp = ({
               </Row>
               <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
                 {item.content
-                  ? item.content.length > 80
-                    ? `${item.content.slice(0, 80)}...`
+                  ? item.content.length > 45
+                    ? `${item.content.slice(0, 45)}...`
                     : item.content
                   : "-"}
               </Row>

@@ -1,12 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const SelectHeader = ({ menu, menu1, menu2, setMenu, Tmenu2, Tmenu1 }) => {
+  const navigate = useNavigate();
   return (
     <Headers>
       <div>
-        <Menu menustate={menu === menu1} onClick={() => setMenu(menu1)}>
+        <Menu menustate={menu === menu1} onClick={() => navigate(`/${menu1}`)}>
           {Tmenu1}
         </Menu>
-        <Menu menustate={menu === menu2} onClick={() => setMenu(menu2)}>
+        <Menu menustate={menu === menu2} onClick={() => navigate(`/${menu2}`)}>
           {Tmenu2}
         </Menu>
       </div>

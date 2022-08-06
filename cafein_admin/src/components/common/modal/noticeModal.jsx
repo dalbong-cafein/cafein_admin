@@ -17,7 +17,7 @@ export default function NoticeModal({ menu, setModal, item, setAlert }) {
     <Portal>
       <ModalBox>
         <ModalContent>
-          {menu === "Notice" ? (
+          {menu === "notice" ? (
             <>
               <Header1 />
               <Header2 />

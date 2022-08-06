@@ -31,12 +31,12 @@ export default function MReview({ setModal, selectItem2 }) {
   return (
     <>
       <Portal>
-        <S.ModalBox height={"776px"}>
+        <S.ModalBox height={"790px"}>
           <S.ModalHeader>
             <p>리뷰 상세</p>
             <Close onClick={closeModal} />
           </S.ModalHeader>
-          <S.ModalContent height={"602px"}>
+          <S.ModalContent height={"620px"}>
             <Columnbox>
               <Line>
                 <span>분류</span>
@@ -118,7 +118,7 @@ export default function MReview({ setModal, selectItem2 }) {
             <Text>{selectItem2.content || "-"}</Text>
 
             {selectItem2.reviewImageDtoList && (
-              <Row gap={10}>
+              <Row justify="space-between">
                 {selectItem2.reviewImageDtoList.map((item, i) => (
                   <Pic key={i} onClick={() => setSlider(true)}>
                     <img
@@ -132,11 +132,11 @@ export default function MReview({ setModal, selectItem2 }) {
           </S.ModalContent>
           <S.ModalFooter style={{ justifyContent: "end" }}>
             <Row gap={24}>
-              <S.Btn color={"#515151"} onClick={() => setRReason(true)}>
-                신고
-              </S.Btn>
               <S.Btn color={"#2563eb"} onClick={() => setDel(true)}>
                 삭제
+              </S.Btn>
+              <S.Btn color={"#515151"} onClick={() => setRReason(true)}>
+                신고
               </S.Btn>
             </Row>
           </S.ModalFooter>

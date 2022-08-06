@@ -67,7 +67,7 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
     const betweenTime = Math.floor(
       (today.getTime() - timeValue.getTime()) / 1000 / 60
     );
-    if (betweenTime < 1) return "방금전";
+    if (betweenTime < 1) return "방금 전";
     if (betweenTime < 60) {
       return `${betweenTime}분전`;
     }
@@ -96,20 +96,12 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
       <S.ModalBox>
         <S.ModalHeader>
           <p>
-            {txt === "/management"
-              ? "카페관리_"
-              : txt === "/review"
-              ? "리뷰관리_"
-              : txt === "/user"
-              ? "회원관리_"
-              : "쿠폰관리_"}
-            {txt === "/management"
-              ? memo.storeId || selectItem.storeId
-              : txt === "/review"
-              ? memo.reviewId || selectItem.reviewId
-              : txt === "/user"
-              ? memo.memberId || selectItem.memberId
-              : memo.couponId || selectItem.couponId}
+            {`${selectItem.memoType}_${
+              selectItem.storeId ||
+              selectItem.reviewId ||
+              selectItem.memberId ||
+              selectItem.couponId
+            }`}
           </p>
           <Close onClick={closeModal} />
         </S.ModalHeader>

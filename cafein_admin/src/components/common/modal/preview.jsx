@@ -13,12 +13,12 @@ export default function Preview({ setModal, item, file, menu }) {
   const closeModal = () => {
     setModal(false);
   };
-  console.log(menu);
+
   return (
     <Portal>
       <ModalBox>
         <ModalContent>
-          {menu === "Notice" ? (
+          {menu === "notice" ? (
             <>
               <Header1 />
               <Header2 />

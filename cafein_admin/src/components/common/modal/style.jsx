@@ -113,7 +113,7 @@ export const ModalContent = styled.div`
   }
 
   & > div {
-    width: 90%;
+    width: 100%;
     white-space: pre-line;
     line-height: 22.4px;
     heigth: 350px;

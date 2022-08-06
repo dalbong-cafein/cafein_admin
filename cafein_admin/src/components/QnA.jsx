@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
-import * as S from "../pages/style";
+import * as S from "../pages/style copy";
+import styled from "styled-components";
 import * as SS from "./noticesStyle";
 
 import Row from "./atoms/row";
@@ -12,7 +13,6 @@ import { ReactComponent as Photo } from "../svg/photo.svg";
 import { ReactComponent as Check } from "../svg/check.svg";
 
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Square } from "../svg/square.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
 import { registerNotice } from "../recoil/NNotice";
 import { postDelApi, registerNoticeApi } from "../util/events";
@@ -23,10 +23,11 @@ import { eventListApi } from "../util/events";
 import Alert from "./common/modal/alert";
 import None from "./None";
 import Preview from "./common/modal/preview";
-import NoticeModal from "./common/modal/noticeModal";
 import RedAlert from "./common/modal/redAlert";
+import NoticeM from "./common/modal/noticeM";
 
-const QnA = ({ menu, setMenu }) => {
+const QnA = () => {
+  const menu = window.location.pathname;
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -139,39 +140,36 @@ const QnA = ({ menu, setMenu }) => {
             </Row>
           </Row>
           <S.Wrapper isNull={temp.length === 0}>
-            <S.TableHeader>
-              <tr>
-                <td>분류</td>
-                <td>제목</td>
-                <td>등록일</td>
-              </tr>
-              <tbody>
-                {temp
-                  .slice(items * (page - 1), items * (page - 1) + items)
-                  .map((item) => (
-                    <tr
-                      onClick={() => {
-                        setModal(true);
-                        setSelectItem(item);
-                      }}
-                    >
-                      <td>{String(item.boardId).padStart(6, "0")}</td>
-                      <td style={{ textAlign: "left" }}>
-                        <p style={{ fontWeight: "bold", lineHeight: "22px" }}>
-                          {item.title}
-                        </p>
-                        <p>
-                          {item.content.length > 35
-                            ? item.content.slice(0, 35)
-                            : item.content}
-                        </p>
-                      </td>
+            <TableHeader>
+              <div>분류</div>
+              <div>제목</div>
+              <div>등록일</div>
+            </TableHeader>
+            {temp
+              .slice(items * (page - 1), items * (page - 1) + items)
+              .map((item, i) => (
+                <ItemRow
+                  key={i}
+                  onClick={() => {
+                    setModal(true);
+                    setSelectItem(item);
+                  }}
+                >
+                  <div>{String(item.boardId).padStart(6, "0")}</div>
+                  <div style={{ textAlign: "left" }}>
+                    <p style={{ fontWeight: "bold", lineHeight: "22px" }}>
+                      {item.title}
+                    </p>
+                    <p>
+                      {item.content.length > 30
+                        ? `${item.content.slice(0, 30)}...`
+                        : item.content}
+                    </p>
+                  </div>
 
-                      <td>{String(item.regDateTime).split("T")[0]}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </S.TableHeader>
+                  <div>{String(item.regDateTime).split("T")[0]}</div>
+                </ItemRow>
+              ))}
           </S.Wrapper>
           {temp.length == 0 && <None text={"QnA"} />}
         </div>
@@ -250,11 +248,17 @@ const QnA = ({ menu, setMenu }) => {
         />
       )}
       {modal && (
-        <NoticeModal
+        // <NoticeModal
+        //   setModal={setModal}
+        //   item={selectItem}
+        //   setAlert={setDAlert}
+        //   menu={menu}
+        // />
+        <NoticeM
+          selectItem2={selectItem}
           setModal={setModal}
-          item={selectItem}
-          setAlert={setDAlert}
           menu={menu}
+          setAlert={setAlert}
         />
       )}
       {Dalert && (
@@ -271,5 +275,65 @@ const QnA = ({ menu, setMenu }) => {
     </>
   );
 };
+
+const TableHeader = styled.div`
+  font-size: 14px;
+  display: flex;
+  width: 100%;
+  color: #8b8b8b;
+  text-align: center;
+  line-height: 42px;
+  border-bottom: 1px solid #515151;
+  & > div {
+    flex: 0.5;
+    border-right: 1px solid #515151;
+  }
+  & div:nth-child(2) {
+    flex: 2.5;
+  }
+
+  & > div:last-child {
+    flex: 1;
+    border-right: none;
+  }
+`;
+
+const ItemRow = styled.div`
+  display: flex;
+  color: #e3e3e3;
+  font-size: 14px;
+  height: 72px;
+  cursor: pointer;
+  border-bottom: 1px solid #515151;
+
+  & > div {
+    // padding: 0 0 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    line-height: 18px;
+    box-sizing: border-box;
+    flex: 0.5;
+    border-right: 1px solid #515151;
+  }
+
+  & div:nth-child(2) {
+    flex: 2.5;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    & > p {
+      margin: 0 0 0 16px;
+    }
+  }
+
+  & > div:last-child {
+    flex: 1;
+    border-right: none;
+    border-bottom: none;
+  }
+`;
 
 export default QnA;

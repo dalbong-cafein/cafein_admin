@@ -27,6 +27,7 @@ const DeshMemo = ({ item, memoClick }) => {
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
 
+  console.log(item);
   return (
     <Box onClick={() => memoClick(item)}>
       <Row gap={10} style={{ padding: "10px 0" }}>

@@ -4,16 +4,16 @@
   line-height: 0;
 
   position: absolute;
-  top: 113%;
+  top: 60% !important;
 
   display: block;
 
   width: 20px;
   height: 20px;
   padding: 0;
-  -webkit-transform: translate(0, -113%);
-  -ms-transform: translate(0, -113%);
-  transform: translate(0, -113%);
+  /* -webkit-transform: translate(0, -75%) !important;
+  -ms-transform: translate(0, 75%) !important; */
+  /* transform: translate(0, 0) !important; */
 
   cursor: pointer;
 
@@ -22,7 +22,6 @@
   outline: none;
   background: transparent;
 }
-
 .slick-list {
   position: relative;
 
@@ -31,4 +30,8 @@
 
   margin: 0 5px 0 0 !important;
   padding: 0;
+}
+
+.slick-slide {
+  margin: 0;
 }

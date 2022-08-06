@@ -9,6 +9,8 @@ import User from "./user";
 import Desh from "./desh";
 import Marketing from "./marketing";
 import Notice from "./notice";
+import QnAs from "./qna";
+import Events from "./event";
 
 const Main = ({}) => {
   return (
@@ -21,7 +23,9 @@ const Main = ({}) => {
         <Route path="/review" exact element={<Review />} />
         <Route path="/user" exact element={<User />} />
         <Route path="/marketing" exact element={<Marketing />} />
+        <Route path="/event" exact element={<Events />} />
         <Route path="/notice" exact element={<Notice />} />
+        <Route path="/qna" exact element={<QnAs />} />
       </Routes>
     </Containaer>
   );

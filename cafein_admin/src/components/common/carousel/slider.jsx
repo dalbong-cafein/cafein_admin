@@ -25,8 +25,10 @@ export default class AsNavFor extends Component {
     return (
       <div>
         <Slider
+          className=".slider-for"
           asNavFor={this.state.nav2}
           ref={(slider) => (this.slider1 = slider)}
+          arrows={false}
         >
           {this.props.imgs &&
             this.props.imgs.map((item, i) => (
@@ -36,9 +38,10 @@ export default class AsNavFor extends Component {
             ))}
         </Slider>
         <Slider
+          className=".slider-nav"
           asNavFor={this.state.nav1}
           ref={(slider) => (this.slider2 = slider)}
-          slidesToShow={this.props.imgs.length < 5 ? this.props.imgs.length : 5}
+          slidesToShow={this.props.imgs.length < 6 ? this.props.imgs.length : 6}
           swipeToSlide={true}
           focusOnSelect={true}
         >
@@ -71,7 +74,7 @@ const SBox = styled.div`
   & > img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 4px;
   }
 `;

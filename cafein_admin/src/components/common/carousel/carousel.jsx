@@ -12,10 +12,12 @@ export default function Sliders({ imgs, setModal }) {
   let file = [];
   useEffect(() => {
     if (imgs) {
+      imgs = imgs.concat(imgs);
       for (let i = 0; i < imgs.length; i++) {
         file.push(imgs[i].imageUrl);
       }
     }
+    console.log(file);
   });
 
   return (
