@@ -24,6 +24,22 @@ export const eventListApi = async (page, sort) => {
 export const postDelApi = async (id) => {
   return await withAuthInstance.delete(`/boards/${id}`);
 };
+
+//게시글 수정
+export const editNoticeApi = async (register) => {
+  const formData = new FormData();
+  formData.append("title", register.title);
+  formData.append("content", register.content);
+  formData.append("boardId", register.boardId);
+  formData.append("deleteImageId", register.deleteImageId);
+  if (register.imageFiles.length > 0) {
+    for (let i = 0; i < register.imageFiles.length; i++) {
+      formData.append("imageFiles", register.imageFiles[i]);
+    }
+  }
+
+  return withAuthInstance.put(`/boards/${register.boardId}`, formData);
+};
 export const changeStateApi = async (id) => {
   return await withAuthInstance.patch(`/coupons/${id}`);
 };
