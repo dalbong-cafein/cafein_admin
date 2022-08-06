@@ -68,7 +68,7 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
         .catch((err) => {
           console.log(err);
           window.alert("나중에 다시 해주세요");
-          window.location.reload();
+          // window.location.reload();
         });
     }
   };
