@@ -33,11 +33,9 @@ export const editNoticeApi = async (register) => {
   formData.append("boardId", register.boardId);
   formData.append("deleteImageId", register.deleteImageId);
   if (register.imageFiles.length > 0) {
-    for (let i = 0; i < register.imageFiles.length; i++) {
-      formData.append("imageFiles", register.imageFiles[i]);
-    }
+    formData.append("imageFiles", register.imageFiles[0]);
   }
-
+  console.log(formData);
   return withAuthInstance.put(`/boards/${register.boardId}`, formData);
 };
 export const changeStateApi = async (id) => {
