@@ -35,8 +35,15 @@ export const editNoticeApi = async (register) => {
   if (register.imageFiles.length > 0) {
     formData.append("imageFiles", register.imageFiles[0]);
   }
-  console.log(formData);
-  return withAuthInstance.put(`/boards/${register.boardId}`, formData);
+
+  return axios({
+    method: "put",
+    url: process.env.REACT_APP_API_URL + `/admin/boards/${register.boardId}`,
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 export const changeStateApi = async (id) => {
   return await withAuthInstance.patch(`/coupons/${id}`);
