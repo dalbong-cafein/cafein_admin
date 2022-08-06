@@ -73,8 +73,9 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
     }
   };
 
+  console.log(selectItem2);
   useEffect(() => {
-    if (selectItem2.boardImageDtoList) {
+    if (selectItem2.boardImageDtoList[0]) {
       setFile([selectItem2.boardImageDtoList[0].imageUrl]);
     }
   }, []);
@@ -151,8 +152,11 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
                 )}
               </SS.PhotoBox>
             ) : (
-              <Row gap={10} style={{ marginBottom: "30px" }}>
-                {file && (
+              <Row
+                gap={10}
+                style={{ minHeight: "120px", marginBottom: "30px" }}
+              >
+                {file[0] && (
                   <Pic>
                     <img src={process.env.PUBLIC_URL + file[0]} alt="img" />
                   </Pic>
