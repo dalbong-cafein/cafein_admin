@@ -33,6 +33,7 @@ const Editcafe = () => {
   const [days, setDays] = useState([]);
   const [dayarr, setDayarr] = useState([]);
   const [delImg, setDelImg] = useState([]);
+  const [updateImg, setUpdata] = useState([]);
 
   const onLoadFile = (e) => {
     let copy = [...file];
@@ -43,8 +44,10 @@ const Editcafe = () => {
       if (e.target.files[0]) {
         copy = [...copy, e.target.files[0]];
         setFile(copy);
+        let coppy = [...updateImg, e.target.files[0]];
+
         const copy2 = { ...register };
-        copy2.updateImageFiles.push(e.target.files[0]);
+        copy2.updateImageFiles = coppy;
         setRegister(copy2);
       }
     }

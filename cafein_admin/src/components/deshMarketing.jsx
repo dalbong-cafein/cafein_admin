@@ -13,6 +13,7 @@ const DeshMarketing = ({ item }) => {
       </div>
       <div>
         <Btn content={item.status}>
+          <div />
           {item.processingDateTime !== null ? "완료" : "미완료"}
         </Btn>
       </div>
@@ -34,16 +35,22 @@ const Box = styled.div`
 `;
 
 const Btn = styled.div`
-  margin: 0 auto;
-  background-color: ${(props) => (props.content ? "#26BA6A" : "#f44336")};
-  width: 96px;
-  height: 28px;
+  position: relative;
+  width: 86px;
+  height: 26px;
   text-align: center;
-  opacity: 0.3;
-
+  margin: 0 auto;
   border-radius: 6px;
-  color: #fff;
+  color: ${(props) => (props.content ? "#26BA6A" : "#f44336")};
   line-height: 26px;
+  & > div:first-child {
+    position: absolute;
+    width: 86px;
+    height: 26px;
+    background-color: ${(props) => (props.content ? "#26BA6A" : "#f44336")};
+    opacity: 0.3;
+    border-radius: 4px;
+  }
 `;
 
 export default DeshMarketing;

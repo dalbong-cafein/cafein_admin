@@ -34,14 +34,10 @@ export const editNoticeApi = async (register) => {
   formData.append("deleteImageId", register.deleteImageId);
   if (register.imageFiles) {
     for (let i = 0; i < register.imageFiles.length; i++) {
-      formData.append("imageFiles", register.imageFiles[i]);
+      formData.append("imageFile", register.imageFiles[i]);
     }
   }
 
-  /* value 확인하기 */
-  for (let value of formData.values()) {
-    console.log(value);
-  }
   return await axios({
     method: "put",
     url: process.env.REACT_APP_API_URL + `/admin/boards/${register.boardId}`,

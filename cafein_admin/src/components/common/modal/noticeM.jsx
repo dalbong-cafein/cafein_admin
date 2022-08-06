@@ -77,6 +77,7 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
     if (selectItem2.boardImageDtoList[0]) {
       setFile([selectItem2.boardImageDtoList[0].imageUrl]);
     }
+    console.log(selectItem2);
   }, []);
 
   const input = useRef();

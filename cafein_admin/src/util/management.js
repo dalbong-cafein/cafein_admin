@@ -48,6 +48,7 @@ export const feedCreateApi = async (register) => {
   });
 };
 export const feedEditApi = async (register) => {
+  console.log(register);
   const formData = new FormData();
   formData.append("storeId", register.storeId);
   formData.append("monOpen", register.monOpen);
@@ -68,7 +69,7 @@ export const feedEditApi = async (register) => {
   formData.append("phone", register.phone);
   formData.append("website", register.website);
   formData.append("etcTime", register.etcTime);
-  if (register.updateImageFiles.length > 0) {
+  if (register.updateImageFiles) {
     for (let i = 0; i < register.updateImageFiles.length; i++) {
       formData.append("updateImageFiles", register.updateImageFiles[i]);
     }
