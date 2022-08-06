@@ -101,6 +101,7 @@ export const ModalContent = styled.div`
   }
 
   & > textarea {
+    padding: 24px 0;
     width: 90%;
 
     height: 250px;

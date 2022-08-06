@@ -23,7 +23,7 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState({
     ...selectItem2,
-    deleteImageId: null,
+    deleteImageId: "",
     imageFiles: [],
   });
   const [file, setFile] = useState([]);
@@ -73,7 +73,6 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
     }
   };
 
-  console.log(selectItem2);
   useEffect(() => {
     if (selectItem2.boardImageDtoList[0]) {
       setFile([selectItem2.boardImageDtoList[0].imageUrl]);
