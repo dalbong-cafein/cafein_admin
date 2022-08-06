@@ -258,7 +258,7 @@ const QnA = () => {
           selectItem2={selectItem}
           setModal={setModal}
           menu={menu}
-          setAlert={setAlert}
+          setAlert={setDAlert}
         />
       )}
       {Dalert && (
