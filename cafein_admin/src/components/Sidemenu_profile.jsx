@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Row from "./atoms/row";
 
 import { ReactComponent as Exit } from "../svg/exit.svg";
+import { ReactComponent as NonePic } from "../svg/nonePic.svg";
 
 import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
@@ -18,7 +19,8 @@ export default function SidemenuProfile() {
   return (
     <Row align="center" gap={60}>
       <Row gap={12}>
-        <Pic img={admin.image} />
+        {admin.image ? <Pic img={admin.image} /> : <NonePic />}
+
         <Column>
           <p>카페인</p>
           <p>관리자</p>
@@ -39,10 +41,9 @@ const Pic = styled.div`
   height: 40px;
   border-radius: 50%;
   background: ${({ img }) =>
-    img
-      ? `url(${img}) no-repeat center
-  center/contain`
-      : "#a7a7a7"};
+    img &&
+    `url(${img}) no-repeat center
+  center/contain`};
 `;
 
 const Column = styled.div`
