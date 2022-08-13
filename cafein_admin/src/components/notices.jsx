@@ -17,7 +17,7 @@ import { ReactComponent as CloseIcon } from "../svg/close.svg";
 
 import PVImg from "../components/common/PVImg";
 import Alert from "./common/modal/alert";
-import { adminFeedListApi } from "../util/admin";
+import { adminFeedListApi } from "../util/desh";
 import None from "./None";
 
 import { useRecoilState } from "recoil";

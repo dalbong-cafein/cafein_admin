@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const DeshMarketing = ({ item }) => {
+const TableItem = ({ item }) => {
   return (
     <Box>
       <div>{String(item.memberId).padStart(6, "0")}</div>
@@ -25,6 +25,7 @@ const Box = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  cursor: pointer;
   & > div {
     flex: 1;
     text-align: center;
@@ -53,4 +54,4 @@ const Btn = styled.div`
   }
 `;
 
-export default DeshMarketing;
+export default TableItem;
