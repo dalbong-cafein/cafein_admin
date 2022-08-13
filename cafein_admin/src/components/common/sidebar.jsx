@@ -8,18 +8,14 @@ import { ReactComponent as Review } from "../../svg/review.svg";
 import { ReactComponent as Marketing } from "../../svg/marketing.svg";
 import { ReactComponent as Notice } from "../../svg/notice.svg";
 import { ReactComponent as Statictis } from "../../svg/statictis.svg";
-import { ReactComponent as Exit } from "../../svg/exit.svg";
 import { ReactComponent as LogoIcon } from "../../svg/Logo.svg";
 
-import Row from "../atoms/row";
-import { useNavigate } from "react-router-dom";
+import SidemenuProfile from "../Sidemenu_profile";
 
-import { useRecoilState } from "recoil";
-import { adminState } from "../../recoil/admin";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
   const navigate = useNavigate();
-  const [admin] = useRecoilState(adminState);
 
   const menu = window.location.pathname.split("/")[1];
   return (
@@ -96,24 +92,8 @@ const SideBar = () => {
             </MenuBox>
           </a>
         </div>
-        <Profile>
-          <Row align={"center"} gap={60}>
-            <Row gap={12}>
-              <Pic img={admin.image} />
-              <Column>
-                <p>카페인</p>
-                <p>관리자</p>
-              </Column>
-            </Row>
-            <Exit
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                window.location.replace("/");
-                localStorage.clear();
-              }}
-            />
-          </Row>
-        </Profile>
+
+        <SidemenuProfile />
       </Box>
     </Container>
   );
@@ -149,35 +129,9 @@ const Box = styled.div`
   }
 `;
 
-const Profile = styled.div``;
-const Pic = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: ${({ img }) => img && `url(${img})`} no-repeat center
-    center/contain;
-`;
-
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  & > p:first-child {
-    font-size: 16px;
-    font-weigth: bold;
-    color: #fff;
-  }
-  & > p:last-child {
-    font-size: 14px;
-    color: #acacac;
-  }
-`;
-
 const MenuBox = styled.div`
   width: 156px;
   height: 40px;
-  // padding: 0 5px;
   color: #fff;
   display: flex;
   justify-content: flex-start;
