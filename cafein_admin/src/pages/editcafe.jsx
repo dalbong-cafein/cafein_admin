@@ -53,21 +53,21 @@ const Editcafe = () => {
     }
   };
 
-  const deleteImg = (a, idx) => {
+  const deleteImg = async (a, idx) => {
     const copy = [...file];
     const copy2 = { ...register };
-    let copy3 = [...delImg];
-    const hasfile = state.storeImageDtoList.filter(
+    let coppy = [...delImg];
+    const hasfile = await state.storeImageDtoList.filter(
       (item) => item.imageUrl === a
     );
     if (hasfile[0]) {
-      copy3 = [...copy3, hasfile[0].imageId];
+      coppy.push(hasfile[0].imageId);
     }
     copy.splice(idx, 1);
-    copy2.deleteImageIdList = copy3;
+    copy2.deleteImageIdList = coppy;
     setFile(copy);
     setRegister(copy2);
-    console.log(file);
+    setDelImg(coppy);
   };
 
   const onChange = (e) => {

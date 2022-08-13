@@ -1,8 +1,11 @@
-import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
-import reset from "styled-reset";
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+
+//reset style
+import reset from "styled-reset";
+import { createGlobalStyle } from "styled-components";
+
 import { useRecoilState } from "recoil";
 import { adminState } from "./recoil/admin";
 
@@ -18,8 +21,6 @@ function App() {
   const navigate = useNavigate();
 
   const [admin] = useRecoilState(adminState);
-  const REDIRECT_URI = "https://cafeinofficial.com/login"; //수정바람 https://cafeinofficial.com/login
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   useEffect(() => {
     if (
@@ -31,35 +32,29 @@ function App() {
   });
 
   return (
-    <div
-      style={{
-        backgroundColor: "#131313",
-        height: "100vh",
-        width: "100vw",
-        overflow: "hidden",
-      }}
-    >
+    <Container>
       <GlobalStyle />
       <Routes>
-        <Route
-          path="/login"
-          exact
-          element={<LogIn KAKAO_AUTH_URL={KAKAO_AUTH_URL} />}
-        />
+        <Route path="/login" exact element={<LogIn />} />
       </Routes>
       <Row>
         <SideBar menu={menu} setMenu={setMenu} />
         <Main menu={menu} />
       </Row>
-    </div>
+    </Container>
   );
 }
 
 const GlobalStyle = createGlobalStyle` 
 ${reset} 
 `;
+const Container = styled.div`
+  background-color: #131313;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+`;
 const Row = styled.div`
   display: flex;
 `;
-
 export default App;

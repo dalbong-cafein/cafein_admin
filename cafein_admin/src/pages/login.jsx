@@ -3,37 +3,24 @@ import { ReactComponent as Emoji } from "../svg/login.svg";
 import { ReactComponent as Logo } from "../svg/Logo.svg";
 import { ReactComponent as Kakao } from "../svg/kakao.svg";
 
-import React from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import queryString from "query-string";
-import authApi from "../util/auth";
+import { cafeinAuthApi, kakaoAuthApi } from "../util/auth";
 
 import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
 import { useNavigate } from "react-router-dom";
 
-const LogIn = ({ KAKAO_AUTH_URL }) => {
-  const getKakaoTokenHandler = async (code) => {
-    const data = {
-      grant_type: "authorization_code",
-      client_id: process.env.REACT_APP_REST_API_KEY,
-      redirect_uri: "https://cafeinofficial.com/login", //수정
-      code: code,
-    };
-    const queryString = Object.keys(data)
-      .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
-      .join("&");
+const LogIn = ({}) => {
+  const redirect_uri = "https://admin.cafeinofficial.com/login"; //수정
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
+  const [admin, setAdmin] = useRecoilState(adminState);
+  const navigate = useNavigate();
 
-    //카카오 토큰 발급 REST API
-    axios
-      .post("https://kauth.kakao.com/oauth/token", queryString, {
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        withCredentials: false,
-      })
+  const getKakaoTokenHandler = async (code) => {
+    kakaoAuthApi(code)
       .then((res) => {
-        authApi(res.data.access_token) //우리 토큰 발급 API
+        cafeinAuthApi(res.data.access_token)
           .then((res) => {
             const copy = { ...admin };
             copy.image = res.data.data?.imageDto?.imageUrl;
@@ -41,22 +28,18 @@ const LogIn = ({ KAKAO_AUTH_URL }) => {
             setAdmin(copy);
             navigate("/");
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log("cafein 토큰 발급 오류"));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("kakao 토큰 발급 오류", err));
   };
 
-  const navigate = useNavigate();
-
-  const [admin, setAdmin] = useRecoilState(adminState);
   const query = queryString.parse(window.location.search);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (query.code) {
-      console.log(query);
       getKakaoTokenHandler(query.code.toString());
     }
   }, []);
+
   return (
     <Background>
       <Logo />

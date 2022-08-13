@@ -30,7 +30,7 @@
     "deploy": "cp build/index.html build/404.html && gh-pages -d build",
     "predeploy": "npm run build"
   },
-  "homepage": "https://cafeinofficial.com",
+  "homepage": "https://admin.cafeinofficial.com",
   "eslintConfig": {
     "extends": [
       "react-app",
