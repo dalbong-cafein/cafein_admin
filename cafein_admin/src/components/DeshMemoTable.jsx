@@ -3,7 +3,7 @@ import useTnF from "../hooks/useTnF";
 import styled from "styled-components";
 
 import NoneDiv from "./common/Nonediv";
-import DeshMemo from "./DeshMemoTable.sx";
+import MemoItem from "./DeshMemoTableItem";
 
 import { memoListApi } from "../util/memo";
 import MemoModal from "./common/modal/memo";
@@ -33,7 +33,7 @@ export default function MemoTable() {
         ) : (
           <>
             {memoArr?.map((item, i) => (
-              <DeshMemo
+              <MemoItem
                 key={i}
                 item={item}
                 memoClick={memoClick}
