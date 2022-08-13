@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
   const navigate = useNavigate();
+
   const menu = window.location.pathname.split("/")[1];
   return (
     <Container>
@@ -91,6 +92,7 @@ const SideBar = () => {
             </MenuBox>
           </a>
         </div>
+
         <SidemenuProfile />
       </Box>
     </Container>

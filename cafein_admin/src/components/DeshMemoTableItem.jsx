@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Row from "./atoms/row";
 
-const DeshMemo = ({ item, memoClick }) => {
+const MemoItem = ({ item, memoClick }) => {
   function getTime() {
     const today = new Date();
     const timeValue = new Date(item?.modDateTime || item?.regDateTime);
@@ -54,4 +54,4 @@ const Box = styled.div`
   cursor: pointer;
 `;
 
-export default DeshMemo;
+export default MemoItem;

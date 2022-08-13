@@ -28,9 +28,11 @@ const LogIn = ({}) => {
             setAdmin(copy);
             navigate("/");
           })
-          .catch((err) => console.log("cafein 토큰 발급 오류", err));
+          .catch((err) => console.log("cafein 토큰 발급 오류"));
       })
-      .catch((err) => console.log("kakao 토큰 발급 오류", err));
+      .catch((err) =>
+        console.log("kakao 토큰 발급 오류", "kakao 토큰 발급 오류", err)
+      );
   };
 
   const query = queryString.parse(window.location.search);
