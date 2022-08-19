@@ -244,7 +244,7 @@ const Register = () => {
                     recommendChange(e);
                   }}
                 >
-                  {register.recommendation === "NORAML" ? (
+                  {register.recommendation === "NORMAL" ? (
                     <CCsoso />
                   ) : (
                     <Csoso />
