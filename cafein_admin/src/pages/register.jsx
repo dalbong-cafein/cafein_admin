@@ -239,7 +239,7 @@ const Register = () => {
                   <p>별로예요</p>
                 </div>
                 <div
-                  id="NORAML"
+                  id="NORMAL"
                   onClick={(e) => {
                     recommendChange(e);
                   }}
