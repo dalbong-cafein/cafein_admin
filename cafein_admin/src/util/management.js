@@ -32,6 +32,8 @@ export const feedCreateApi = async (register) => {
   formData.append("tableSize", register.tableSize);
   formData.append("wifiPassword", register.wifiPassword);
   formData.append("etcTime", register.etcTime);
+  formData.append("phone", register.phone);
+
   if (register.imageFiles.length > 0) {
     for (let i = 0; i < register.imageFiles.length; i++) {
       formData.append("imageFiles", register.imageFiles[i]);
@@ -48,7 +50,6 @@ export const feedCreateApi = async (register) => {
   });
 };
 export const feedEditApi = async (register) => {
-  console.log(register);
   const formData = new FormData();
   formData.append("storeId", register.storeId);
   formData.append("monOpen", register.monOpen);
@@ -106,9 +107,15 @@ export const feedDetailDataApi = async (id) => {
 };
 
 //피드 검색어
-export const feedSearchApi = async (keyword, sub, page, sort) => {
+export const feedSearchApi = async (keyword, searchType, page, sort) => {
+  const type =
+    searchType === "카페명"
+      ? "sn"
+      : searchType === "분류"
+      ? "s"
+      : searchType === "위치" && "a";
   return await withAuthInstance.get(
-    `/stores?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
+    `/stores?page=${page}&sort=${sort}&searchType=${type}&keyword=${keyword}`
   );
 };
 
