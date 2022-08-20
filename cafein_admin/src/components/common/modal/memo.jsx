@@ -20,27 +20,23 @@ export default function MemoModal({ setModal, memoId }) {
   const [editMode, setEditMode] = useState(false);
   const [alert, setAlert] = useState(false);
   const [content, setContent] = useState("");
-  const txt = window.location.pathname;
 
   const onChange = (e) => {
     setContent(e.target.value);
   };
 
-  // const onsubmit = async () => {
-  //   let id = null;
-  //   if (txt === "/management") id = selectItem.storeId;
-  //   else if (txt === "/review") id = selectItem.reviewId;
-  //   else if (txt === "/user") id = selectItem.memberId;
-  //   else if (txt === "/marketing") id = selectItem.couponId;
+  const onsubmit = async () => {
+    const id = memo.storeId || memo.reviewId || memo.memberId || memo.couponId;
+    const where = window.location.pathname;
 
-  //   registerMemoApi(id, content, txt)
-  //     .then((res) => {
-  //       window.alert("등록되었습니다");
-  //       setModal(false);
-  //       window.location.reload();
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+    registerMemoApi(id, content, where)
+      .then((res) => {
+        window.alert("등록되었습니다");
+        setModal(false);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
 
   const onEdit = () => {
     editMemoApi(memoId, content)
@@ -50,9 +46,10 @@ export default function MemoModal({ setModal, memoId }) {
       })
       .catch((err) => console.log(err));
   };
+
   const onDel = () => {
     delMemoApi(memoId)
-      .then((res) => {
+      .then(() => {
         setModal(false);
         setAlert(false);
         window.location.reload();
@@ -88,7 +85,6 @@ export default function MemoModal({ setModal, memoId }) {
   useEffect(() => {
     if (memoId) {
       memoDataApi(memoId).then((res) => setMemo(res.data.data));
-      console.log(memo);
     }
   }, []);
 

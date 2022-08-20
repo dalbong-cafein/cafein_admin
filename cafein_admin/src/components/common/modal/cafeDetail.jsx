@@ -28,16 +28,18 @@ export default function CafeDetailModal({ setDModal, id }) {
   const navigate = useNavigate();
 
   const totalfunc = (title) => {
-    const values = Object.values(title);
-    let max = 0;
-    let maxTitle = null;
-    for (let i = 0; i < values.length; i++) {
-      if (values[i] >= max) {
-        max = values[i];
-        maxTitle = i + 1;
+    if (title) {
+      const values = Object.values(title);
+      let max = 0;
+      let maxTitle = null;
+      for (let i = 0; i < values.length; i++) {
+        if (values[i] >= max) {
+          max = values[i];
+          maxTitle = i + 1;
+        }
       }
+      return maxTitle;
     }
-    return maxTitle;
   };
 
   const onDel = () => {
@@ -60,222 +62,226 @@ export default function CafeDetailModal({ setDModal, id }) {
   return (
     <>
       <Portal>
-        <ModalBox>
-          <ModalBoxs
-            style={{ borderRadius: "16px 0 0 16px" }}
-            color={"#131313"}
-            width={516}
-          >
-            <Title size={20}>카페 상세</Title>
-            <Columnbox gap={14}>
-              <Line>
-                <span>분류</span>
-                <p>{String(data.storeId).padStart(6, "0")}</p>
-              </Line>
-              <Line>
-                <span>회원 번호</span>
-                <p>{String(data.modMemberId).padStart(6, "0")}</p>
-              </Line>
-              <Line>
-                <span>카페명</span>
-                <p>{data.storeName}</p>
-              </Line>
-              <Line>
-                <span>등록일</span>
-                <p>{`${String(data.regDateTime).replace("T", " ")}`}</p>
-              </Line>
-              <Line>
-                <span>최종수정일</span>
-                <p>{`${String(data.modDateTime).replace("T", " ")}`}</p>
-              </Line>
+        {data && reviewData && (
+          <ModalBox>
+            <ModalBoxs
+              style={{ borderRadius: "16px 0 0 16px" }}
+              color={"#131313"}
+              width={516}
+            >
+              <Title size={20}>카페 상세</Title>
+              <Columnbox gap={14}>
+                <Line>
+                  <span>분류</span>
+                  <p>{String(data?.storeId).padStart(6, "0")}</p>
+                </Line>
+                <Line>
+                  <span>회원 번호</span>
+                  <p>{String(data?.modMemberId).padStart(6, "0")}</p>
+                </Line>
+                <Line>
+                  <span>카페명</span>
+                  <p>{data?.storeName}</p>
+                </Line>
+                <Line>
+                  <span>등록일</span>
+                  <p>{`${String(data?.regDateTime).replace("T", " ")}`}</p>
+                </Line>
+                <Line>
+                  <span>최종수정일</span>
+                  <p>{`${String(data?.modDateTime).replace("T", " ")}`}</p>
+                </Line>
 
-              <Title style={{ padding: "40px 0 20px" }} size={16}>
-                기본 정보
-              </Title>
-              <Columnbox>
-                <StateRow>
-                  <div>
-                    <Row
-                      justify={"center"}
-                      gap={8}
-                      style={{ padding: "0 auto" }}
-                    >
-                      {data.storeImageDtoList &&
-                      data.storeImageDtoList.length > 4 ? (
-                        <>
-                          {data.storeImageDtoList.slice(0, 4).map((item, i) => (
-                            <Photo
-                              key={i}
-                              img={item.imageUrl}
-                              onClick={() => setSlider(true)}
-                            />
-                          ))}
-                          <PhotoPlus onClick={() => setSlider(true)}>
-                            +{data?.storeImageDtoList?.length - 4}
-                          </PhotoPlus>
-                        </>
-                      ) : (
-                        <>
-                          {data?.storeImageDtoList?.map((item, i) => (
-                            <Photo
-                              key={i}
-                              img={item.imageUrl}
-                              onClick={() => setSlider(true)}
-                            />
-                          ))}
-                        </>
+                <Title style={{ padding: "40px 0 20px" }} size={16}>
+                  기본 정보
+                </Title>
+                <Columnbox>
+                  <StateRow>
+                    <div>
+                      <Row
+                        justify={"center"}
+                        gap={8}
+                        style={{ padding: "0 auto" }}
+                      >
+                        {data?.storeImageDtoList &&
+                        data?.storeImageDtoList.length > 4 ? (
+                          <>
+                            {data?.storeImageDtoList
+                              .slice(0, 4)
+                              .map((item, i) => (
+                                <Photo
+                                  key={i}
+                                  img={item.imageUrl}
+                                  onClick={() => setSlider(true)}
+                                />
+                              ))}
+                            <PhotoPlus onClick={() => setSlider(true)}>
+                              +{data?.storeImageDtoList?.length - 4}
+                            </PhotoPlus>
+                          </>
+                        ) : (
+                          <>
+                            {data?.storeImageDtoList?.map((item, i) => (
+                              <Photo
+                                key={i}
+                                img={item.imageUrl}
+                                onClick={() => setSlider(true)}
+                              />
+                            ))}
+                          </>
+                        )}
+                      </Row>
+                    </div>
+                  </StateRow>
+                  <Line color={"#515151"}>
+                    <span>위치</span>
+                    <p>{String(data?.address?.fullAddress)}</p>
+                  </Line>
+                  <StateRow>
+                    <div>
+                      <span>운영시간</span>
+                      {data?.businessHoursResDto && (
+                        <Column>
+                          <p>
+                            월
+                            {` ${data?.businessHoursResDto?.onMon?.open}-${data?.businessHoursResDto?.onMon?.closed}`}
+                          </p>
+                          <p>
+                            화
+                            {` ${data?.businessHoursResDto?.onTue?.open}-${data?.businessHoursResDto?.onTue?.closed}`}
+                          </p>
+                          <p>
+                            수
+                            {` ${data?.businessHoursResDto?.onWed?.open}-${data?.businessHoursResDto?.onWed?.closed}`}
+                          </p>
+                          <p>
+                            목
+                            {` ${data?.businessHoursResDto?.onThu?.open}-${data?.businessHoursResDto?.onThu?.closed}`}
+                          </p>
+                          <p>
+                            금
+                            {` ${data?.businessHoursResDto?.onFri?.open}-${data?.businessHoursResDto?.onFri?.closed}`}
+                          </p>
+                          <p>
+                            토
+                            {` ${data?.businessHoursResDto?.onSat?.open}-${data?.businessHoursResDto?.onSat?.closed}`}
+                          </p>
+                          <p>
+                            일
+                            {` ${data?.businessHoursResDto?.onSun?.open}-${data?.businessHoursResDto?.onSun?.closed}`}
+                          </p>
+                        </Column>
                       )}
-                    </Row>
-                  </div>
-                </StateRow>
+                    </div>
+                  </StateRow>
+                  <Line color={"#515151"}>
+                    <span>기타 시간</span>
+                    <p>{data?.businessHoursResDto?.etcTime}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>와이파이</span>
+                    <p>{data?.wifiPassword}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>전화번호</span>
+                    <p>{data?.phone}</p>
+                  </Line>
+                  <Line color={"#515151"}>
+                    <span>웹사이트</span>
+                    <p>{data?.website}</p>
+                  </Line>
+                </Columnbox>
+              </Columnbox>
+            </ModalBoxs>
+            <ModalBoxs
+              style={{ borderRadius: "0 16px 16px 0" }}
+              color={"#333333"}
+              width={476}
+            >
+              <Row justify={"space-between"}>
+                <Title size={16}>활동정보</Title>
+                <Close style={{ cursor: "pointer" }} onClick={closeModal} />
+              </Row>
+              <Columnbox style={{ paddingBottom: "40px" }}>
                 <Line color={"#515151"}>
-                  <span>위치</span>
-                  <p>{String(data?.address?.fullAddress)}</p>
-                </Line>
-                <StateRow>
-                  <div>
-                    <span>운영시간</span>
-                    {data?.businessHoursResDto && (
-                      <Column>
-                        <p>
-                          월
-                          {` ${data?.businessHoursResDto?.onMon?.open}-${data?.businessHoursResDto?.onMon?.closed}`}
-                        </p>
-                        <p>
-                          화
-                          {` ${data?.businessHoursResDto?.onTue?.open}-${data?.businessHoursResDto?.onTue?.closed}`}
-                        </p>
-                        <p>
-                          수
-                          {` ${data?.businessHoursResDto?.onWed?.open}-${data?.businessHoursResDto?.onWed?.closed}`}
-                        </p>
-                        <p>
-                          목
-                          {` ${data?.businessHoursResDto?.onThu?.open}-${data?.businessHoursResDto?.onThu?.closed}`}
-                        </p>
-                        <p>
-                          금
-                          {` ${data?.businessHoursResDto?.onFri?.open}-${data?.businessHoursResDto?.onFri?.closed}`}
-                        </p>
-                        <p>
-                          토
-                          {` ${data?.businessHoursResDto?.onSat?.open}-${data?.businessHoursResDto?.onSat?.closed}`}
-                        </p>
-                        <p>
-                          일
-                          {` ${data?.businessHoursResDto?.onSun?.open}-${data?.businessHoursResDto?.onSun?.closed}`}
-                        </p>
-                      </Column>
-                    )}
-                  </div>
-                </StateRow>
-                <Line color={"#515151"}>
-                  <span>기타 시간</span>
-                  <p>{data?.businessHoursResDto?.etcTime}</p>
+                  <span>조회</span>
+                  <p>{data?.viewCnt}</p>
                 </Line>
                 <Line color={"#515151"}>
-                  <span>와이파이</span>
-                  <p>{data?.wifiPassword}</p>
+                  <span>저장</span>
+                  <p>{data?.heartCnt}</p>
                 </Line>
                 <Line color={"#515151"}>
-                  <span>전화번호</span>
-                  <p>{data?.phone}</p>
+                  <span>공유</span>
+                  <p>{data?.congestionCnt}</p>
                 </Line>
                 <Line color={"#515151"}>
-                  <span>웹사이트</span>
-                  <p>{data?.website}</p>
+                  <span>혼잡도</span>
+                  <p>{data?.congestionCnt}</p>
+                </Line>
+                <Line color={"#515151"}>
+                  <span>리뷰</span>
+                  <p>{data?.reviewCnt}</p>
                 </Line>
               </Columnbox>
-            </Columnbox>
-          </ModalBoxs>
-          <ModalBoxs
-            style={{ borderRadius: "0 16px 16px 0" }}
-            color={"#333333"}
-            width={476}
-          >
-            <Row justify={"space-between"}>
-              <Title size={16}>활동정보</Title>
-              <Close style={{ cursor: "pointer" }} onClick={closeModal} />
-            </Row>
-            <Columnbox style={{ paddingBottom: "40px" }}>
-              <Line color={"#515151"}>
-                <span>조회</span>
-                <p>{data?.viewCnt}</p>
-              </Line>
-              <Line color={"#515151"}>
-                <span>저장</span>
-                <p>{data?.heartCnt}</p>
-              </Line>
-              <Line color={"#515151"}>
-                <span>공유</span>
-                <p>{data?.congestionCnt}</p>
-              </Line>
-              <Line color={"#515151"}>
-                <span>혼잡도</span>
-                <p>{data?.congestionCnt}</p>
-              </Line>
-              <Line color={"#515151"}>
-                <span>리뷰</span>
-                <p>{data?.reviewCnt}</p>
-              </Line>
-            </Columnbox>
-            <Title style={{ padding: "40px 0" }} size={16}>
-              카공 정보
-            </Title>
-            <Columnbox style={{ paddingBottom: "190px" }}>
-              <Line color={"#515151"}>
-                <span>전체</span>
-                <p>{reviewData?.recommendPercent}% 추천</p>
-              </Line>
-              <HoverLine color={"#515151"}>
-                <span>콘센트</span>
-                <p>{totalfunc(reviewData?.socket)}</p>
-              </HoverLine>
-              <HoverBox late={20}>
-                <HoverContent obj={reviewData?.socket} />
-              </HoverBox>
-              <HoverLine color={"#515151"}>
-                <span>화장실</span>
-                <p>{totalfunc(reviewData?.restroom)}</p>
-              </HoverLine>
-              <HoverBox late={55}>
-                <HoverContent obj={reviewData?.restroom} />
-              </HoverBox>
-              <HoverLine color={"#515151"}>
-                <span>테이블</span>
-                <p>{totalfunc(reviewData?.tableSize)}</p>
-              </HoverLine>
-              <HoverBox late={90}>
-                <HoverContent obj={reviewData?.tableSize} />
-              </HoverBox>
-              <HoverLine color={"#515151"}>
-                <span>와이파이</span>
-                <p>{totalfunc(reviewData?.wifi)}</p>
-              </HoverLine>
-              <HoverBox late={120}>
-                <HoverContent obj={reviewData?.wifi} />
-              </HoverBox>
-            </Columnbox>
-            <Row gap={24}>
-              <S.Btn
-                style={{ border: "1px solid #515151" }}
-                onClick={() => setAlert(true)}
-              >
-                삭제
-              </S.Btn>
-              <S.Btn
-                color={"#515151"}
-                onClick={() =>
-                  navigate("/management/editCafe", {
-                    state: data,
-                  })
-                }
-              >
-                수정
-              </S.Btn>
-            </Row>
-          </ModalBoxs>
-        </ModalBox>
+              <Title style={{ padding: "40px 0" }} size={16}>
+                카공 정보
+              </Title>
+              <Columnbox style={{ paddingBottom: "190px" }}>
+                <Line color={"#515151"}>
+                  <span>전체</span>
+                  <p>{reviewData?.recommendPercent}% 추천</p>
+                </Line>
+                <HoverLine color={"#515151"}>
+                  <span>콘센트</span>
+                  <p>{totalfunc(reviewData?.socket)}</p>
+                </HoverLine>
+                <HoverBox late={20}>
+                  <HoverContent obj={reviewData?.socket} />
+                </HoverBox>
+                <HoverLine color={"#515151"}>
+                  <span>화장실</span>
+                  <p>{totalfunc(reviewData?.restroom)}</p>
+                </HoverLine>
+                <HoverBox late={55}>
+                  <HoverContent obj={reviewData?.restroom} />
+                </HoverBox>
+                <HoverLine color={"#515151"}>
+                  <span>테이블</span>
+                  <p>{totalfunc(reviewData?.tableSize)}</p>
+                </HoverLine>
+                <HoverBox late={90}>
+                  <HoverContent obj={reviewData?.tableSize} />
+                </HoverBox>
+                <HoverLine color={"#515151"}>
+                  <span>와이파이</span>
+                  <p>{totalfunc(reviewData?.wifi)}</p>
+                </HoverLine>
+                <HoverBox late={120}>
+                  <HoverContent obj={reviewData?.wifi} />
+                </HoverBox>
+              </Columnbox>
+              <Row gap={24}>
+                <S.Btn
+                  style={{ border: "1px solid #515151" }}
+                  onClick={() => setAlert(true)}
+                >
+                  삭제
+                </S.Btn>
+                <S.Btn
+                  color={"#515151"}
+                  onClick={() =>
+                    navigate("/management/editCafe", {
+                      state: data,
+                    })
+                  }
+                >
+                  수정
+                </S.Btn>
+              </Row>
+            </ModalBoxs>
+          </ModalBox>
+        )}
       </Portal>
       {slider && (
         <Sliders setModal={setSlider} imgs={data?.storeImageDtoList} />
