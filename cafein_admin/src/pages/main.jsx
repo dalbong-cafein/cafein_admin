@@ -7,7 +7,7 @@ const Register = React.lazy(() => import("./register"));
 const EditCafe = React.lazy(() => import("./editcafe"));
 const Review = React.lazy(() => import("./review"));
 const User = React.lazy(() => import("./user"));
-const Desh = React.lazy(() => import("./desh"));
+const Desh = React.lazy(() => import("./Desh"));
 const Marketing = React.lazy(() => import("./marketing"));
 const Notice = React.lazy(() => import("./notice"));
 const QnAs = React.lazy(() => import("./qna"));
