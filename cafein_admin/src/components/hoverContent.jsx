@@ -15,6 +15,7 @@ const HoverContent = ({ obj }) => {
               gap={7}
               num={obj[item]}
               isNum={true}
+              i={i + 1}
               color={"#ffce4a"}
             />
           ))}

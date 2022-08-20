@@ -1,9 +1,9 @@
 import { ReactComponent as Star } from "../../svg/Star.svg";
 import styled from "styled-components";
 
-const Stars = ({ width, gap, num, isNum, color }) => {
+const Stars = ({ width, gap, num, isNum, color, i }) => {
   return (
-    <Row width={width} gap={gap} isFill={num} color={color}>
+    <Row width={width} gap={gap} isFill={i || num} color={color}>
       <Star />
       <Star />
       <Star />

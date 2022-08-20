@@ -101,7 +101,7 @@ export const feedDetailApi = async (id) => {
 };
 
 //피드 평가데이터
-export const feedDetailDataApi = async (id) => {
+export const feedDetailReviewApi = async (id) => {
   return await withAuthInstance.get(`/stores/${id}/reviews/detail-evaluation`);
 };
 
