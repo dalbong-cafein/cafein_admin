@@ -49,9 +49,7 @@ const Store = () => {
   };
 
   const searchData = () => {
-    const sub =
-      searchType == "분류" ? "s" : searchType == "카페명" ? "sn" : "a";
-    feedSearchApi(search, sub, page, sort)
+    feedSearchApi(search, searchType, page, sort)
       .then((res) => {
         setData(res.data.data.storeResDtoList.dtoList);
         setCount(res.data.data.storeCnt);
