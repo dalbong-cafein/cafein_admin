@@ -130,7 +130,6 @@ const Editcafe = () => {
 
   const submit = async (register) => {
     console.log(register);
-
     feedEditApi(register)
       .then((res) => {
         console.log(res);
@@ -138,7 +137,7 @@ const Editcafe = () => {
       })
       .catch((err) => {
         window.alert("조금 이따가 다시 시도해주세요");
-        // navigate("/management");
+        navigate("/management");
       });
   };
 

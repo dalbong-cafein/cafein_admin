@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 
 const Store = React.lazy(() => import("./Store"));
-const Register = React.lazy(() => import("./register"));
+const Register = React.lazy(() => import("./RegisterCafe"));
 const EditCafe = React.lazy(() => import("./editcafe"));
 const Review = React.lazy(() => import("./review"));
 const User = React.lazy(() => import("./user"));

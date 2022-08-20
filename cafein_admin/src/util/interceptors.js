@@ -10,8 +10,7 @@ export function setInterceptors(instance) {
     (err) => {
       const { config, response } = err;
       let originalRequest = config;
-      console.log(err);
-      if (response.data.error === "Unauthorized") {
+      if (response.status == 401) {
         return axios
           .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
           .then(() => {
@@ -21,6 +20,9 @@ export function setInterceptors(instance) {
             window.location.replace("/login");
             localStorage.clear();
           });
+      } else {
+        window.location.replace("/login");
+        localStorage.clear();
       }
       return Promise.reject(err);
     }

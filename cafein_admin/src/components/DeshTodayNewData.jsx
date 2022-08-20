@@ -18,7 +18,7 @@ export default function DeshTodayNewData({}) {
     deshDataApi()
       .then((res) => setDeshData(res.data.data))
       .catch((err) => console.log(err));
-  });
+  }, []);
   return (
     <RowBox>
       <Box

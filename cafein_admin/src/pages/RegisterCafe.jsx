@@ -28,7 +28,7 @@ import SearchModal from "../components/common/modal/SearchModal";
 
 import { convertTime, updateDay } from "../hooks/registerHook";
 
-const Register = () => {
+const RegisterCafe = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState([]);
   const [register, setRegister] = useRecoilState(registerState);
@@ -152,7 +152,6 @@ const Register = () => {
   };
 
   const submit = async (register) => {
-    console.log(register);
     if (!register.storeName || !register.siNm) {
       window.alert("카페명, 주소를 확인해주세요!");
     } else if (
@@ -168,7 +167,10 @@ const Register = () => {
     }
 
     feedCreateApi(register)
-      .then((res) => navigate("/management"))
+      .then((res) => {
+        navigate("/management");
+        setRegister(registerState);
+      })
       .catch((err) => console.log(err));
   };
   const input = useRef();
@@ -504,4 +506,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterCafe;

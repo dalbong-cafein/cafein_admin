@@ -38,7 +38,7 @@ export default function CafeDetailModal({ setDModal, id }) {
           maxTitle = i + 1;
         }
       }
-      return maxTitle;
+      return max == 0 ? "-" : maxTitle;
     }
   };
 
