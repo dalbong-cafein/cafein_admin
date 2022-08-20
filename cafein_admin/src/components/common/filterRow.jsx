@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import styled from "styled-components";
-
 import Row from "../atoms/row";
 import DropBox from "../common/dropbox";
 import * as S from "../../pages/style copy";
@@ -26,7 +24,6 @@ export default function FilterRow({
   onAsc,
   setPage,
   searchData,
-  selectType,
   search,
   setSearch,
 }) {

@@ -10,7 +10,7 @@ import Header from "../components/common/header";
 import MemoModal from "../components/common/modal/memo";
 import FilterRow from "../components/common/filterRow";
 import CafeDetailModal from "../components/common/modal/cafeDetail";
-import ManagementTemp from "../components/managementTemp";
+import StoreItem from "../components/StoreItem";
 
 import { feedDataApi, feedSearchApi } from "../util/management";
 
@@ -19,22 +19,18 @@ const Store = () => {
 
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
-
   //detail
   const [dModal, setDModal] = useState(false);
   const [detailStoreId, setDetailStoreId] = useState(null);
-
   //drop
   const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
     "분류",
     "카페명",
     "위치",
   ]);
-
   //memo
   const [memoId, setMemoId] = useState(null);
   const [modalMemo, setModalMemo] = useState(false);
-
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
     usePagination();
@@ -111,7 +107,7 @@ const Store = () => {
           <div>메모</div>
         </TableHeader>
 
-        <ManagementTemp
+        <StoreItem
           data={data}
           setModalMemo={setModalMemo}
           setDModal={setDModal}

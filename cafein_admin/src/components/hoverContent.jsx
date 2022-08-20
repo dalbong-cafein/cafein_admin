@@ -11,6 +11,7 @@ const HoverContent = ({ obj }) => {
         {keys &&
           keys.map((item, i) => (
             <Stars
+              key={i}
               width={18.4}
               gap={7}
               num={obj[item]}

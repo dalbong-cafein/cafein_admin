@@ -1,4 +1,3 @@
-import axios from "axios";
 import { withAuthInstance } from "./index";
 
 export const registerMemoApi = async (id, content, where) => {

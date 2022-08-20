@@ -3,7 +3,7 @@ import Row from "./atoms/row";
 import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 
-const ManagementTemp = ({
+const StoreItem = ({
   data,
   setDModal,
   setModalMemo,
@@ -100,4 +100,4 @@ const ItemRow = styled.div`
   }
 `;
 
-export default ManagementTemp;
+export default StoreItem;
