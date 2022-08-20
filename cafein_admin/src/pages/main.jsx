@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 
-const ManagementCafe = React.lazy(() => import("./managementCafe"));
+const Store = React.lazy(() => import("./Store"));
 const Register = React.lazy(() => import("./register"));
 const EditCafe = React.lazy(() => import("./editcafe"));
 const Review = React.lazy(() => import("./review"));
@@ -19,7 +19,7 @@ const Main = () => {
       <Suspense fallback={<div />}>
         <Routes>
           <Route path="/" exact element={<Desh />} />
-          <Route path="/management" exact element={<ManagementCafe />} />
+          <Route path="/management" exact element={<Store />} />
           <Route path="/management/register" exact element={<Register />} />
           <Route path="/management/editCafe" exact element={<EditCafe />} />
           <Route path="/review" exact element={<Review />} />

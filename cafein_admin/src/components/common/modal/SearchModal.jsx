@@ -100,6 +100,7 @@ export default function SearchModal({
 
   const onLoc = (item) => {
     setLoc(item);
+    console.log(item);
     const copy = { ...register };
     const sp = item.road_address_name.split(" ");
     copy.siNm = sp[0] || "";
@@ -143,14 +144,10 @@ export default function SearchModal({
             }}
           ></div>
           <ScrollBox id="result-list" style={{ color: "#fff" }}>
-            {Places.map((item, i) => (
+            {Places.filter((item) => item.road_address_name).map((item, i) => (
               <Box key={i} onClick={() => onLoc(item)}>
                 <p>{item.place_name}</p>
-                <p>
-                  {item.road_address_name
-                    ? item.road_address_name
-                    : item.address_name}
-                </p>
+                <p>{item.road_address_name}</p>
               </Box>
             ))}
           </ScrollBox>

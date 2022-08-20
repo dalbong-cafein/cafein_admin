@@ -11,7 +11,7 @@ import {
 } from "../../../util/memo";
 import RedAlert from "./redAlert";
 
-export default function MemoModal({ setModal, memoId, selectItem }) {
+export default function MemoModal({ setModal, memoId }) {
   const closeModal = () => {
     setModal(false);
   };
@@ -26,21 +26,21 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
     setContent(e.target.value);
   };
 
-  const onsubmit = async () => {
-    let id = null;
-    if (txt === "/management") id = selectItem.storeId;
-    else if (txt === "/review") id = selectItem.reviewId;
-    else if (txt === "/user") id = selectItem.memberId;
-    else if (txt === "/marketing") id = selectItem.couponId;
+  // const onsubmit = async () => {
+  //   let id = null;
+  //   if (txt === "/management") id = selectItem.storeId;
+  //   else if (txt === "/review") id = selectItem.reviewId;
+  //   else if (txt === "/user") id = selectItem.memberId;
+  //   else if (txt === "/marketing") id = selectItem.couponId;
 
-    registerMemoApi(id, content, txt)
-      .then((res) => {
-        window.alert("등록되었습니다");
-        setModal(false);
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
-  };
+  //   registerMemoApi(id, content, txt)
+  //     .then((res) => {
+  //       window.alert("등록되었습니다");
+  //       setModal(false);
+  //       window.location.reload();
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   const onEdit = () => {
     editMemoApi(memoId, content)
@@ -88,6 +88,7 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
   useEffect(() => {
     if (memoId) {
       memoDataApi(memoId).then((res) => setMemo(res.data.data));
+      console.log(memo);
     }
   }, []);
 
@@ -96,11 +97,8 @@ export default function MemoModal({ setModal, memoId, selectItem }) {
       <S.ModalBox>
         <S.ModalHeader>
           <p>
-            {`${selectItem.memoType}_${
-              selectItem.storeId ||
-              selectItem.reviewId ||
-              selectItem.memberId ||
-              selectItem.couponId
+            {`${memo.memoType}_${
+              memo.storeId || memo.reviewId || memo.memberId || memo.couponId
             }`}
           </p>
           <Close onClick={closeModal} />

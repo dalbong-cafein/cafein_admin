@@ -4,21 +4,25 @@ import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 
 const ManagementTemp = ({
-  temp,
-  detailModal,
-  setModal,
+  data,
+  setDModal,
+  setModalMemo,
   setMemoId,
-  setSelectItem,
+  setDetailStoreId,
 }) => {
+  const onModal = (item) => {
+    setDetailStoreId(() => item.storeId);
+    setDModal(true);
+  };
   return (
     <S.DataBox>
-      {temp &&
-        temp.map((item, i) => (
+      {data &&
+        data.map((item, i) => (
           <ItemRow key={i} hasMemoId={item.memoId}>
-            <div onClick={() => detailModal(item)}>
+            <div onClick={() => onModal(item)}>
               {String(item.storeId).padStart(6, "0")}
             </div>
-            <div onClick={() => detailModal(item)}>
+            <div onClick={() => onModal(item)}>
               <Row gap={16} align={"center"} style={{ marginLeft: "16px" }}>
                 {item.storeImageDto ? (
                   <S.Photo img={item.storeImageDto.imageUrl} />
@@ -28,34 +32,25 @@ const ManagementTemp = ({
                 <p>{item.storeName}</p>
               </Row>
             </div>
-            <div onClick={() => detailModal(item)}>
-              {item.address.fullAddress}
-            </div>
-            <div
-              onClick={() => detailModal(item)}
-              style={{ textAlign: "center" }}
-            >
+            <div onClick={() => onModal(item)}>{item.address.fullAddress}</div>
+            <div onClick={() => onModal(item)} style={{ textAlign: "center" }}>
               {item.phone || "-"}
             </div>
-            <div
-              onClick={() => detailModal(item)}
-              style={{ textAlign: "center" }}
-            >
+            <div onClick={() => onModal(item)} style={{ textAlign: "center" }}>
               {item.congestionScoreAvg || "-"}
             </div>
-            <div onClick={() => detailModal(item)}>{item.reviewCnt}건</div>
-            <div onClick={() => detailModal(item)}>
+            <div onClick={() => onModal(item)}>{item.reviewCnt}건</div>
+            <div onClick={() => onModal(item)}>
               {item.regDateTime.split("T")[0]}
             </div>
-            <div onClick={() => detailModal(item)}>
+            <div onClick={() => onModal(item)}>
               {item.modDateTime.split("T")[0]}
             </div>
             <div>
               <Memo
                 onClick={() => {
                   setMemoId(item.memoId);
-                  setSelectItem(item);
-                  setModal(true);
+                  setModalMemo(true);
                 }}
               />
             </div>

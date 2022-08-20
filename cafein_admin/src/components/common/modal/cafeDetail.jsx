@@ -9,31 +9,54 @@ import Row from "../../atoms/row";
 import HoverContent from "../../hoverContent";
 import Sliders from "../carousel/carousel";
 import RedAlert from "./redAlert";
-import { cafeDelApi } from "../../../util/management";
+import {
+  cafeDelApi,
+  feedDetailApi,
+  feedDetailReviewApi,
+} from "../../../util/management";
+import { useEffect } from "react";
 
-export default function CafeDetailModal({ data, setDModal, dSelected }) {
+export default function CafeDetailModal({ setDModal, id }) {
   const closeModal = () => {
     setDModal(false);
   };
 
+  const [data, setData] = useState([]);
+  const [reviewData, setReviewData] = useState([]);
   const [slider, setSlider] = useState(false);
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
 
   const totalfunc = (title) => {
-    if (title) {
-      const values = Object.values(title);
-
-      return values.reduce((a, b) => a + b);
+    const values = Object.values(title);
+    let max = 0;
+    let maxTitle = null;
+    for (let i = 0; i < values.length; i++) {
+      if (values[i] >= max) {
+        max = values[i];
+        maxTitle = i + 1;
+      }
     }
+    return maxTitle;
   };
 
   const onDel = () => {
-    cafeDelApi(dSelected.storeId).then((res) => {
+    cafeDelApi(data.storeId).then((res) => {
       setAlert(false);
       window.location.reload();
     });
   };
+
+  useEffect(() => {
+    feedDetailApi(id)
+      .then((res) => {
+        setData(res.data.data);
+        feedDetailReviewApi(res.data.data.storeId).then((res) => {
+          setReviewData(res.data.data);
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
       <Portal>
@@ -47,23 +70,23 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
             <Columnbox gap={14}>
               <Line>
                 <span>분류</span>
-                <p>{String(dSelected.storeId).padStart(6, "0")}</p>
+                <p>{String(data.storeId).padStart(6, "0")}</p>
               </Line>
               <Line>
                 <span>회원 번호</span>
-                <p>{String(dSelected.modMemberId).padStart(6, "0")}</p>
+                <p>{String(data.modMemberId).padStart(6, "0")}</p>
               </Line>
               <Line>
                 <span>카페명</span>
-                <p>{dSelected.storeName}</p>
+                <p>{data.storeName}</p>
               </Line>
               <Line>
                 <span>등록일</span>
-                <p>{`${String(dSelected.regDateTime).replace("T", " ")}`}</p>
+                <p>{`${String(data.regDateTime).replace("T", " ")}`}</p>
               </Line>
               <Line>
                 <span>최종수정일</span>
-                <p>{`${String(dSelected.modDateTime).replace("T", " ")}`}</p>
+                <p>{`${String(data.modDateTime).replace("T", " ")}`}</p>
               </Line>
 
               <Title style={{ padding: "40px 0 20px" }} size={16}>
@@ -77,25 +100,23 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                       gap={8}
                       style={{ padding: "0 auto" }}
                     >
-                      {dSelected.storeImageDtoList &&
-                      dSelected.storeImageDtoList.length > 4 ? (
+                      {data.storeImageDtoList &&
+                      data.storeImageDtoList.length > 4 ? (
                         <>
-                          {dSelected.storeImageDtoList
-                            .slice(0, 4)
-                            .map((item, i) => (
-                              <Photo
-                                key={i}
-                                img={item.imageUrl}
-                                onClick={() => setSlider(true)}
-                              />
-                            ))}
+                          {data.storeImageDtoList.slice(0, 4).map((item, i) => (
+                            <Photo
+                              key={i}
+                              img={item.imageUrl}
+                              onClick={() => setSlider(true)}
+                            />
+                          ))}
                           <PhotoPlus onClick={() => setSlider(true)}>
-                            +{dSelected?.storeImageDtoList?.length - 4}
+                            +{data?.storeImageDtoList?.length - 4}
                           </PhotoPlus>
                         </>
                       ) : (
                         <>
-                          {dSelected?.storeImageDtoList?.map((item, i) => (
+                          {data?.storeImageDtoList?.map((item, i) => (
                             <Photo
                               key={i}
                               img={item.imageUrl}
@@ -109,40 +130,40 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                 </StateRow>
                 <Line color={"#515151"}>
                   <span>위치</span>
-                  <p>{String(dSelected?.address?.fullAddress)}</p>
+                  <p>{String(data?.address?.fullAddress)}</p>
                 </Line>
                 <StateRow>
                   <div>
                     <span>운영시간</span>
-                    {dSelected?.businessHoursResDto && (
+                    {data?.businessHoursResDto && (
                       <Column>
                         <p>
                           월
-                          {` ${dSelected?.businessHoursResDto?.onMon?.open}-${dSelected?.businessHoursResDto?.onMon?.closed}`}
+                          {` ${data?.businessHoursResDto?.onMon?.open}-${data?.businessHoursResDto?.onMon?.closed}`}
                         </p>
                         <p>
                           화
-                          {` ${dSelected?.businessHoursResDto?.onTue?.open}-${dSelected?.businessHoursResDto?.onTue?.closed}`}
+                          {` ${data?.businessHoursResDto?.onTue?.open}-${data?.businessHoursResDto?.onTue?.closed}`}
                         </p>
                         <p>
                           수
-                          {` ${dSelected?.businessHoursResDto?.onWed?.open}-${dSelected?.businessHoursResDto?.onWed?.closed}`}
+                          {` ${data?.businessHoursResDto?.onWed?.open}-${data?.businessHoursResDto?.onWed?.closed}`}
                         </p>
                         <p>
                           목
-                          {` ${dSelected?.businessHoursResDto?.onThu?.open}-${dSelected?.businessHoursResDto?.onThu?.closed}`}
+                          {` ${data?.businessHoursResDto?.onThu?.open}-${data?.businessHoursResDto?.onThu?.closed}`}
                         </p>
                         <p>
                           금
-                          {` ${dSelected?.businessHoursResDto?.onFri?.open}-${dSelected?.businessHoursResDto?.onFri?.closed}`}
+                          {` ${data?.businessHoursResDto?.onFri?.open}-${data?.businessHoursResDto?.onFri?.closed}`}
                         </p>
                         <p>
                           토
-                          {` ${dSelected?.businessHoursResDto?.onSat?.open}-${dSelected?.businessHoursResDto?.onSat?.closed}`}
+                          {` ${data?.businessHoursResDto?.onSat?.open}-${data?.businessHoursResDto?.onSat?.closed}`}
                         </p>
                         <p>
                           일
-                          {` ${dSelected?.businessHoursResDto?.onSun?.open}-${dSelected?.businessHoursResDto?.onSun?.closed}`}
+                          {` ${data?.businessHoursResDto?.onSun?.open}-${data?.businessHoursResDto?.onSun?.closed}`}
                         </p>
                       </Column>
                     )}
@@ -150,19 +171,19 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                 </StateRow>
                 <Line color={"#515151"}>
                   <span>기타 시간</span>
-                  <p>{dSelected?.businessHoursResDto?.etcTime}</p>
+                  <p>{data?.businessHoursResDto?.etcTime}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>와이파이</span>
-                  <p>{dSelected?.wifiPassword}</p>
+                  <p>{data?.wifiPassword}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>전화번호</span>
-                  <p>{dSelected?.phone}</p>
+                  <p>{data?.phone}</p>
                 </Line>
                 <Line color={"#515151"}>
                   <span>웹사이트</span>
-                  <p>{dSelected?.website}</p>
+                  <p>{data?.website}</p>
                 </Line>
               </Columnbox>
             </Columnbox>
@@ -179,23 +200,23 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
             <Columnbox style={{ paddingBottom: "40px" }}>
               <Line color={"#515151"}>
                 <span>조회</span>
-                <p>{dSelected?.viewCnt}</p>
+                <p>{data?.viewCnt}</p>
               </Line>
               <Line color={"#515151"}>
                 <span>저장</span>
-                <p>{dSelected?.heartCnt}</p>
+                <p>{data?.heartCnt}</p>
               </Line>
               <Line color={"#515151"}>
                 <span>공유</span>
-                <p>{dSelected?.congestionCnt}</p>
+                <p>{data?.congestionCnt}</p>
               </Line>
               <Line color={"#515151"}>
                 <span>혼잡도</span>
-                <p>{dSelected?.congestionCnt}</p>
+                <p>{data?.congestionCnt}</p>
               </Line>
               <Line color={"#515151"}>
                 <span>리뷰</span>
-                <p>{dSelected?.reviewCnt}</p>
+                <p>{data?.reviewCnt}</p>
               </Line>
             </Columnbox>
             <Title style={{ padding: "40px 0" }} size={16}>
@@ -204,36 +225,35 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
             <Columnbox style={{ paddingBottom: "190px" }}>
               <Line color={"#515151"}>
                 <span>전체</span>
-                <p>{data?.recommendPercent}% 추천</p>
+                <p>{reviewData?.recommendPercent}% 추천</p>
               </Line>
               <HoverLine color={"#515151"}>
                 <span>콘센트</span>
-                <p>{totalfunc(data?.socket)}</p>
+                <p>{totalfunc(reviewData?.socket)}</p>
               </HoverLine>
               <HoverBox late={20}>
-                <HoverContent obj={data?.socket} />
+                <HoverContent obj={reviewData?.socket} />
               </HoverBox>
-
               <HoverLine color={"#515151"}>
                 <span>화장실</span>
-                <p>{totalfunc(data?.restroom)}</p>
+                <p>{totalfunc(reviewData?.restroom)}</p>
               </HoverLine>
               <HoverBox late={55}>
-                <HoverContent obj={data?.restroom} />
+                <HoverContent obj={reviewData?.restroom} />
               </HoverBox>
               <HoverLine color={"#515151"}>
                 <span>테이블</span>
-                <p>{totalfunc(data?.tableSize)}</p>
+                <p>{totalfunc(reviewData?.tableSize)}</p>
               </HoverLine>
               <HoverBox late={90}>
-                <HoverContent obj={data?.tableSize} />
+                <HoverContent obj={reviewData?.tableSize} />
               </HoverBox>
               <HoverLine color={"#515151"}>
                 <span>와이파이</span>
-                <p>{totalfunc(data?.wifi)}</p>
+                <p>{totalfunc(reviewData?.wifi)}</p>
               </HoverLine>
               <HoverBox late={120}>
-                <HoverContent obj={data?.wifi} />
+                <HoverContent obj={reviewData?.wifi} />
               </HoverBox>
             </Columnbox>
             <Row gap={24}>
@@ -247,7 +267,7 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
                 color={"#515151"}
                 onClick={() =>
                   navigate("/management/editCafe", {
-                    state: dSelected,
+                    state: data,
                   })
                 }
               >
@@ -258,7 +278,7 @@ export default function CafeDetailModal({ data, setDModal, dSelected }) {
         </ModalBox>
       </Portal>
       {slider && (
-        <Sliders setModal={setSlider} imgs={dSelected?.storeImageDtoList} />
+        <Sliders setModal={setSlider} imgs={data?.storeImageDtoList} />
       )}
       {alert && (
         <RedAlert

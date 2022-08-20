@@ -40,6 +40,7 @@ export const NonePic = styled.div`
 `;
 
 export const Sbtn = styled.div`
+  position: relative;
   min-width: 120px;
   height: 36px;
   line-height: 36px;

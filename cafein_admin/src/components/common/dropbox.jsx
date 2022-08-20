@@ -1,24 +1,29 @@
 import styled from "styled-components";
-const DropBox = ({ left, setIsDrop, arr, selected, setSelected, setArr }) => {
+const DropBox = ({
+  searchArr,
+  setIsDrop,
+  setSearchArr,
+  searchType,
+  setSearchType,
+}) => {
   const onclick = (e) => {
     if (e.target.id === "전체") {
       window.location.reload();
     } else {
       const temp = e.target.id;
-      const copy = [...arr];
-      copy.push(selected);
-      copy.splice(arr.indexOf(temp), 1);
-      setSelected(e.target.id);
-      setArr(copy);
+      const copy = [...searchArr, searchType];
+      copy.splice(searchArr.indexOf(temp), 1);
+      setSearchType(temp);
+      setSearchArr(copy);
       setIsDrop(false);
     }
   };
   return (
-    <Box left={left}>
-      {arr.map((item, i) => (
-        <p onClick={(e) => onclick(e)} key={i} id={item}>
+    <Box>
+      {searchArr?.map((item, i) => (
+        <Item onClick={(e) => onclick(e)} key={i} id={item}>
           {item}
-        </p>
+        </Item>
       ))}
     </Box>
   );
@@ -26,23 +31,22 @@ const DropBox = ({ left, setIsDrop, arr, selected, setSelected, setArr }) => {
 
 const Box = styled.div`
   width: 108px;
-  height: 98px;
+  // height: 98px;
   border-radius: 8px;
   background-color: #646464;
   position: absolute;
   box-sizing: border-box;
-  transform: translate(${(props) => (props.left ? props.left : "215%")}, 60%);
-  padding: 16px;
+  transform: translate(0, 70%);
+  padding: 8px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  & > p {
-    font-size: 14px;
-    color: #fff;
-    cursor: pointer;
-  }
+`;
+const Item = styled.div`
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
 `;
 
 export default DropBox;
