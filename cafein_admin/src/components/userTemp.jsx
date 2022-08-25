@@ -11,7 +11,7 @@ const UserTemp = ({
   onModal,
   setSelectItem,
   setMemoModal,
-  setMemoId,
+  setMemoItem,
 }) => {
   return (
     <S.DataBox>
@@ -53,8 +53,7 @@ const UserTemp = ({
             <div>
               <Memo
                 onClick={() => {
-                  setSelectItem(item);
-                  setMemoId(item.memoId);
+                  setMemoItem(item);
                   setMemoModal(true);
                 }}
               />

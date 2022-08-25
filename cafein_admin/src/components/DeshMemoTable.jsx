@@ -45,9 +45,8 @@ export default function MemoTable() {
       </Box>
       {memoModal && (
         <MemoModal
-          memoId={memoId}
+          item={selectMItem}
           setModal={onMemoModalOff}
-          selectItem={selectMItem}
         />
       )}
     </>

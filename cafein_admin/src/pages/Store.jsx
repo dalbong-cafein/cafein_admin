@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePagination from "../hooks/usePagination";
 import useSearch from "../hooks/useSearch";
@@ -29,7 +29,7 @@ const Store = () => {
     "위치",
   ]);
   //memo
-  const [memoId, setMemoId] = useState(null);
+  const [memoItem, setMemoItem] = useState(null);
   const [modalMemo, setModalMemo] = useState(false);
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
@@ -109,7 +109,7 @@ const Store = () => {
           data={data}
           setModalMemo={setModalMemo}
           setDModal={setDModal}
-          setMemoId={setMemoId}
+          setMemoItem={setMemoItem}
           setDetailStoreId={setDetailStoreId}
         />
       </S.Wrapper>
@@ -120,7 +120,7 @@ const Store = () => {
           href={"/management/register"}
         />
       )}
-      {modalMemo && <MemoModal memoId={memoId} setModal={setModalMemo} />}
+      {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
       {dModal && <CafeDetailModal setDModal={setDModal} id={detailStoreId} />}
     </>
   );

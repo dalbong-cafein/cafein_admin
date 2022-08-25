@@ -34,7 +34,7 @@ const Marketings = () => {
 
   const [alert, setAlert] = useState(false);
 
-  const [memoId, setMemoId] = useState(null);
+  const [memoItem, setMemoItem] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
   const [selectItem, setSelectItem] = useState([]);
 
@@ -174,7 +174,7 @@ const Marketings = () => {
             setAlert={setAlert}
             alert={alert}
             setReportId={setReportId}
-            setMemoId={setMemoId}
+            setMemoItem={setMemoItem}
             setSelectItem={setSelectItem}
             setMemoModal={setMemoModal}
           />
@@ -191,13 +191,7 @@ const Marketings = () => {
         />
       )}
 
-      {memoModal && (
-        <MemoModal
-          memoId={memoId}
-          setModal={setMemoModal}
-          selectItem={selectItem}
-        />
-      )}
+      {memoModal && <MemoModal item={memoItem} setModal={setMemoModal} />}
       {temp.length === 0 && <None text={"마케팅 서비스"} />}
     </>
   );

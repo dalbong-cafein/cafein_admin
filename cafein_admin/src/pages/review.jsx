@@ -9,7 +9,6 @@ import Paging from "../components/common/Pagination";
 import { ReactComponent as Search } from "../svg/Search.svg";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { ReactComponent as Memo } from "../svg/memo.svg";
 import { ReactComponent as Check } from "../svg/check.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
@@ -42,7 +41,7 @@ const Review = () => {
 
   const [modal, setModal] = useState(false);
 
-  const [memoId, setMemoId] = useState(null);
+  const [memoItem, setMemoItem] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
   const [selectItem2, setSelectItem2] = useState([]);
 
@@ -172,18 +171,12 @@ const Review = () => {
           temp={temp}
           onModal={onModal}
           setMemoModal={setMemoModal}
-          setMemoId={setMemoId}
+          setMemoItem={setMemoItem}
           setSelectItem={setSelectItem2}
         />
       </S.Wrapper>
 
-      {memoModal && (
-        <MemoModal
-          memoId={memoId}
-          setModal={setMemoModal}
-          selectItem={selectItem2}
-        />
-      )}
+      {memoModal && <MemoModal item={memoItem} setModal={setMemoModal} />}
       {temp.length === 0 && <None text={"리뷰"} />}
       {modal && <MReview setModal={setModal} selectItem2={selectItem2} />}
     </>
