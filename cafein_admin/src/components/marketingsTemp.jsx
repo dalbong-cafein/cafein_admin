@@ -9,7 +9,7 @@ const MarketingsTemp = ({
   setReportId,
   setSelectItem,
   setMemoModal,
-  setMemoId,
+  setMemoItem,
   alert,
 }) => {
   const changeState = (id, state) => {
@@ -47,7 +47,7 @@ const MarketingsTemp = ({
                 <Memo
                   onClick={() => {
                     setSelectItem(item);
-                    setMemoId(item.memoId);
+                    setMemoItem(item);
                     setMemoModal(true);
                   }}
                 />

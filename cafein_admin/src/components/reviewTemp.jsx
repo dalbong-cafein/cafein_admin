@@ -8,7 +8,7 @@ const ReviewTemp = ({
   onModal,
   setSelectItem,
   setMemoModal,
-  setMemoId,
+  setMemoItem,
 }) => {
   return (
     <S.DataBox>
@@ -90,8 +90,7 @@ const ReviewTemp = ({
             <div>
               <Memo
                 onClick={() => {
-                  setSelectItem(item);
-                  setMemoId(item.memoId);
+                  setMemoItem(item);
                   setMemoModal(true);
                 }}
               />

@@ -33,7 +33,7 @@ const User = () => {
   const [selectItem, setSelectItem] = useState([]);
   const [sort, setSort] = useState("DESC");
 
-  const [memoId, setMemoId] = useState(null);
+  const [memoItem, setMemoItem] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
 
   const searchData = () => {
@@ -180,18 +180,12 @@ const User = () => {
           onModal={onModal}
           page={page}
           items={items}
-          setMemoId={setMemoId}
+          setMemoItem={setMemoItem}
           setSelectItem={setSelectItem}
         />
       </S.Wrapper>
       {temp.length === 0 && <None text={"유저"} />}
-      {memoModal && (
-        <MemoModal
-          memoId={memoId}
-          setModal={setMemoModal}
-          selectItem={selectItem}
-        />
-      )}
+      {memoModal && <MemoModal item={memoItem} setModal={setMemoModal} />}
       {modal && (
         <MUser setModal={setModal} selectItem={selectItem} loadD={loadD} />
       )}

@@ -7,7 +7,7 @@ const StoreItem = ({
   data,
   setDModal,
   setModalMemo,
-  setMemoId,
+  setMemoItem,
   setDetailStoreId,
 }) => {
   const onModal = (item) => {
@@ -49,7 +49,7 @@ const StoreItem = ({
             <div>
               <Memo
                 onClick={() => {
-                  setMemoId(item.memoId);
+                  setMemoItem(item);
                   setModalMemo(true);
                 }}
               />

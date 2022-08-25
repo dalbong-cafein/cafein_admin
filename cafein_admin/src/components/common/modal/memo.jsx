@@ -11,7 +11,19 @@ import {
 } from "../../../util/memo";
 import RedAlert from "./redAlert";
 
-export default function MemoModal({ setModal, memoId }) {
+export default function MemoModal({ setModal, item }) {
+  console.log(item);
+  const where =
+    window.location.pathname == "/management"
+      ? "카페관리"
+      : window.location.pathname == "/review"
+      ? "리뷰관리"
+      : window.location.pathname == "/user"
+      ? "회원관리"
+      : window.location.pathname == "/marketing"
+      ? "쿠폰관리"
+      : "rmftpdyd";
+
   const closeModal = () => {
     setModal(false);
   };
@@ -27,8 +39,8 @@ export default function MemoModal({ setModal, memoId }) {
 
   const onsubmit = async () => {
     const where = window.location.pathname;
-
-    registerMemoApi(memoId, content, where)
+    const id = item.storeId || item.memberId;
+    registerMemoApi(id, content, where)
       .then((res) => {
         window.alert("등록되었습니다");
         setModal(false);
@@ -37,19 +49,19 @@ export default function MemoModal({ setModal, memoId }) {
       .catch((err) => console.log(err));
   };
 
-  const onEdit = () => {    
+  const onEdit = () => {
     const id = memo.storeId || memo.reviewId || memo.memberId || memo.couponId;
 
     editMemoApi(id, content)
       .then((res) => {
         setEditMode(false);
-        memoDataApi(memoId).then((res) => setMemo(res.data.data));
+        memoDataApi(item.memoId).then((res) => setMemo(res.data.data));
       })
       .catch((err) => console.log(err));
   };
 
   const onDel = () => {
-    delMemoApi(memoId)
+    delMemoApi(item.memoId)
       .then(() => {
         setModal(false);
         setAlert(false);
@@ -82,10 +94,10 @@ export default function MemoModal({ setModal, memoId }) {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
-console.log(memo)
+
   useEffect(() => {
-    if (memoId) {
-      memoDataApi(memoId).then((res) => setMemo(res.data.data));
+    if (item.memoId) {
+      memoDataApi(item.memoId).then((res) => setMemo(res.data.data));
     }
   }, []);
 
@@ -94,13 +106,18 @@ console.log(memo)
       <S.ModalBox>
         <S.ModalHeader>
           <p>
-            {`${memo.memoType}_${
-              memo.storeId || memo.reviewId || memo.memberId || memo.couponId ||`store id ${memoId}`
+            {`${memo?.memoType || where}`}
+            {`_${
+              memo?.storeId ||
+              memo?.reviewId ||
+              memo?.memberId ||
+              memo?.couponId ||
+              ""
             }`}
           </p>
           <Close onClick={closeModal} />
         </S.ModalHeader>
-        {memoId ? (
+        {item?.memoId ? (
           <>
             <S.ModalContent>
               {editMode ? (

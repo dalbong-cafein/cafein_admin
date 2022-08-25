@@ -10,20 +10,20 @@ export function setInterceptors(instance) {
     (err) => {
       const { config, response } = err;
       let originalRequest = config;
-      if (response.status == 401) {
-        return axios
-          .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
-          .then(() => {
-            return axios(originalRequest);
-          })
-          .catch((err) => {
-            window.location.replace("/login");
-            localStorage.clear();
-          });
-      } else {
-        window.location.replace("/login");
-        localStorage.clear();
-      }
+      // if (response.status == 401) {
+      //   return axios
+      //     .get(process.env.REACT_APP_API_URL + "/auth/refreshToken")
+      //     .then(() => {
+      //       return axios(originalRequest);
+      //     })
+      //     .catch((err) => {
+      //       window.location.replace("/login");
+      //       localStorage.clear();
+      //     });
+      // } else {
+      //   window.location.replace("/login");
+      //   localStorage.clear();
+      // }
       return Promise.reject(err);
     }
   );
