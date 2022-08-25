@@ -12,7 +12,7 @@ import { adminState } from "../recoil/admin";
 import { useNavigate } from "react-router-dom";
 
 const LogIn = () => {
-  const redirect_uri = "http://localhost:3000/login"; //수정
+  const redirect_uri = "https://admin.cafeinofficial.com/login"; //수정
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${redirect_uri}&response_type=code`;
   const [admin, setAdmin] = useRecoilState(adminState);
   const navigate = useNavigate();
