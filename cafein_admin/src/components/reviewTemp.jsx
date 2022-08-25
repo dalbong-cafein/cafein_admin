@@ -66,13 +66,13 @@ const ReviewTemp = ({
                   />
                 </Row>
               </Row>
-              <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
-                {item.content
-                  ? item.content.length > 45
+              {item.content && (
+                <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
+                  {item.content.length > 45
                     ? `${item.content.slice(0, 45)}...`
-                    : item.content
-                  : "-"}
-              </Row>
+                    : item.content}
+                </Row>
+              )}
             </div>
             <div onClick={() => onModal(item)}>
               {String(item.writerId).padStart(6, "0")}

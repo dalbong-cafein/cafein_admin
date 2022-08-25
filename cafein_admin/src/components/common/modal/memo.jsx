@@ -26,10 +26,9 @@ export default function MemoModal({ setModal, memoId }) {
   };
 
   const onsubmit = async () => {
-    const id = memo.storeId || memo.reviewId || memo.memberId || memo.couponId;
     const where = window.location.pathname;
 
-    registerMemoApi(id, content, where)
+    registerMemoApi(memoId, content, where)
       .then((res) => {
         window.alert("등록되었습니다");
         setModal(false);
@@ -38,8 +37,10 @@ export default function MemoModal({ setModal, memoId }) {
       .catch((err) => console.log(err));
   };
 
-  const onEdit = () => {
-    editMemoApi(memoId, content)
+  const onEdit = () => {    
+    const id = memo.storeId || memo.reviewId || memo.memberId || memo.couponId;
+
+    editMemoApi(id, content)
       .then((res) => {
         setEditMode(false);
         memoDataApi(memoId).then((res) => setMemo(res.data.data));
@@ -81,7 +82,7 @@ export default function MemoModal({ setModal, memoId }) {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
-
+console.log(memo)
   useEffect(() => {
     if (memoId) {
       memoDataApi(memoId).then((res) => setMemo(res.data.data));
@@ -94,7 +95,7 @@ export default function MemoModal({ setModal, memoId }) {
         <S.ModalHeader>
           <p>
             {`${memo.memoType}_${
-              memo.storeId || memo.reviewId || memo.memberId || memo.couponId
+              memo.storeId || memo.reviewId || memo.memberId || memo.couponId ||`store id ${memoId}`
             }`}
           </p>
           <Close onClick={closeModal} />
