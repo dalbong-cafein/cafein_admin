@@ -123,3 +123,29 @@ export const ModalContent = styled.div`
     color: #e3e3e3;
   }
 `;
+
+export const Line = styled.div`
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  padding-bottom: 13px;
+  border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
+  & > span {
+    width: 100px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    color: #8b8b8b;
+  }
+  & > p:nth-child(2) {
+    // width: 370px;
+    line-height: 18px;
+    color: #e3e3e3;
+  }
+  & > p:nth-child(3) {
+    color: #fc7521;
+  }
+  & > p:nth-child(4) {
+    color: #acacac;
+  }
+`;

@@ -71,26 +71,26 @@ export default function CafeDetailModal({ setDModal, id }) {
             >
               <Title size={20}>카페 상세</Title>
               <Columnbox gap={14}>
-                <Line>
+                <S.Line>
                   <span>분류</span>
                   <p>{String(data?.storeId).padStart(6, "0")}</p>
-                </Line>
-                <Line>
+                </S.Line>
+                <S.Line>
                   <span>회원 번호</span>
                   <p>{String(data?.modMemberId).padStart(6, "0")}</p>
-                </Line>
-                <Line>
+                </S.Line>
+                <S.Line>
                   <span>카페명</span>
                   <p>{data?.storeName}</p>
-                </Line>
-                <Line>
+                </S.Line>
+                <S.Line>
                   <span>등록일</span>
                   <p>{`${String(data?.regDateTime).replace("T", " ")}`}</p>
-                </Line>
-                <Line>
+                </S.Line>
+                <S.Line>
                   <span>최종수정일</span>
                   <p>{`${String(data?.modDateTime).replace("T", " ")}`}</p>
-                </Line>
+                </S.Line>
 
                 <Title style={{ padding: "40px 0 20px" }} size={16}>
                   기본 정보
@@ -133,10 +133,10 @@ export default function CafeDetailModal({ setDModal, id }) {
                       </Row>
                     </div>
                   </StateRow>
-                  <Line color={"#515151"}>
+                  <S.Line color={"#515151"}>
                     <span>위치</span>
                     <p>{String(data?.address?.fullAddress)}</p>
-                  </Line>
+                  </S.Line>
                   <StateRow>
                     <div>
                       <span>운영시간</span>
@@ -174,22 +174,22 @@ export default function CafeDetailModal({ setDModal, id }) {
                       )}
                     </div>
                   </StateRow>
-                  <Line color={"#515151"}>
+                  <S.Line color={"#515151"}>
                     <span>기타 시간</span>
                     <p>{data?.businessHoursResDto?.etcTime}</p>
-                  </Line>
-                  <Line color={"#515151"}>
+                  </S.Line>
+                  <S.Line color={"#515151"}>
                     <span>와이파이</span>
                     <p>{data?.wifiPassword}</p>
-                  </Line>
-                  <Line color={"#515151"}>
+                  </S.Line>
+                  <S.Line color={"#515151"}>
                     <span>전화번호</span>
                     <p>{data?.phone}</p>
-                  </Line>
-                  <Line color={"#515151"}>
+                  </S.Line>
+                  <S.Line color={"#515151"}>
                     <span>웹사이트</span>
                     <p>{data?.website}</p>
-                  </Line>
+                  </S.Line>
                 </Columnbox>
               </Columnbox>
             </ModalBoxs>
@@ -203,35 +203,35 @@ export default function CafeDetailModal({ setDModal, id }) {
                 <Close style={{ cursor: "pointer" }} onClick={closeModal} />
               </Row>
               <Columnbox style={{ paddingBottom: "40px" }}>
-                <Line color={"#515151"}>
+                <S.Line color={"#515151"}>
                   <span>조회</span>
                   <p>{data?.viewCnt}</p>
-                </Line>
-                <Line color={"#515151"}>
+                </S.Line>
+                <S.Line color={"#515151"}>
                   <span>저장</span>
                   <p>{data?.heartCnt}</p>
-                </Line>
-                <Line color={"#515151"}>
+                </S.Line>
+                <S.Line color={"#515151"}>
                   <span>공유</span>
                   <p>{data?.congestionCnt}</p>
-                </Line>
-                <Line color={"#515151"}>
+                </S.Line>
+                <S.Line color={"#515151"}>
                   <span>혼잡도</span>
                   <p>{data?.congestionCnt}</p>
-                </Line>
-                <Line color={"#515151"}>
+                </S.Line>
+                <S.Line color={"#515151"}>
                   <span>리뷰</span>
                   <p>{data?.reviewCnt}</p>
-                </Line>
+                </S.Line>
               </Columnbox>
               <Title style={{ padding: "40px 0" }} size={16}>
                 카공 정보
               </Title>
               <Columnbox style={{ paddingBottom: "190px" }}>
-                <Line color={"#515151"}>
+                <S.Line color={"#515151"}>
                   <span>전체</span>
                   <p>{reviewData?.recommendPercent}% 추천</p>
-                </Line>
+                </S.Line>
                 <HoverLine color={"#515151"}>
                   <span>콘센트</span>
                   <p>{totalfunc(reviewData?.socket)}</p>
@@ -329,27 +329,8 @@ const Title = styled.p`
   color: #f6f6f6;
   padding-bottom: 60px;
 `;
-const Line = styled.div`
-  display: flex;
-  gap: 32px;
-  width: 100%;
-  padding-bottom: 12px;
-  border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
-  & > span {
-    width: 80px;
-    text-align: right;
-    font-size: 16px;
-    font-weight: 700;
-    color: #8b8b8b;
-  }
-  & > p:nth-child(2) {
-    width: 270px;
-    line-height: 18px;
-    color: #e3e3e3;
-  }
-`;
 
-const HoverLine = styled(Line)`
+const HoverLine = styled(S.Line)`
   :hover {
     & + div {
       display: inline;
@@ -368,7 +349,7 @@ const StateRow = styled.div`
     gap: 32px;
     align-items: start;
     & > span {
-      width: 80px;
+      width: 100px;
       text-align: right;
       font-size: 16px;
       font-weight: 700;

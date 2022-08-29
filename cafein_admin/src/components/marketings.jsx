@@ -18,7 +18,7 @@ import {
 import DropBox from "./common/dropbox";
 import RedAlert from "./common/modal/redAlert";
 import MarketingsTemp from "./marketingsTemp";
-import MemoModal from "./common/modal/memo";
+import MemoModal from "./common/modal/Memo";
 const Marketings = () => {
   const [search, setSearch] = useState("");
 

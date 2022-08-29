@@ -14,7 +14,13 @@ export const reviewDetailApi = async (id) => {
   return await withAuthInstance.get(`/reviews/${id}`);
 };
 
-export const reviewSearchApi = async (keyword, sub, page, sort) => {
+export const reviewSearchApi = async (keyword, searchType, page, sort) => {
+  const sub =
+    searchType === "내용"
+      ? "w"
+      : searchType === "회원 번호"
+      ? "c"
+      : searchType === "카페 번호" && "s";
   return await withAuthInstance.get(
     `/reviews?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );

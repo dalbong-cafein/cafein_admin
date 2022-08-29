@@ -2,96 +2,58 @@ import Header from "../components/common/header";
 import * as S from "./style copy";
 import styled from "styled-components";
 
-import Row from "../components/atoms/row";
-
-import Paging from "../components/common/Pagination";
-
-import { ReactComponent as Search } from "../svg/Search.svg";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { ReactComponent as Check } from "../svg/check.svg";
-import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
+import usePagination from "../hooks/usePagination";
+import useSearch from "../hooks/useSearch";
 
-import MReview from "../components/common/modal/MReview";
+import ReviewModal from "../components/common/modal/ReviewDetailModal";
 import {
   reviewDataApi,
   reviewDetailApi,
   reviewSearchApi,
 } from "../util/review";
 import None from "../components/None";
-import DropBox from "../components/common/dropbox";
-import ReviewTemp from "../components/reviewTemp";
-import MemoModal from "../components/common/modal/memo";
+import ReviewTemp from "../components/ReviewItem";
+import MemoModal from "../components/common/modal/Memo";
+import FilterRow from "../components/common/filterRow";
 
 const Review = () => {
-  const [sort, setSort] = useState("DESC");
-  const navigate = useNavigate();
-  const [temp, setTemp] = useState([]);
-
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   // pagination
-  const [page, setPage] = useState(1);
-  const [count, setCount] = useState(0);
-  const [items, setItems] = useState(9);
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
+    usePagination();
 
   //drop
-  const [isDrop, setIsDrop] = useState(false);
-  const [selected, setSelected] = useState("전체");
-  const [arr, setArr] = useState(["내용", "회원 번호", "카페 번호"]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
+    "내용",
+    "회원 번호",
+    "카페 번호",
+  ]);
 
   const [modal, setModal] = useState(false);
+  const [detailReviewId, setDetailReviewId] = useState([]);
 
   const [memoItem, setMemoItem] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
-  const [selectItem2, setSelectItem2] = useState([]);
-
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
 
   const onModal = (item) => {
-    reviewDetailApi(item.reviewId)
-      .then((res) => {
-        setSelectItem2(res.data.data);
-        setModal(!modal);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const sortData = (id) => {
-    setSort(id);
-  };
-  const onclick = () => {
-    setSort("DESC");
-    setPage(1);
-    searchData();
+    setModal(!modal);
+    setDetailReviewId(item.reviewId);
   };
 
   const searchData = () => {
-    if (selected === "내용") {
-      reviewSearchApi(search, "w", page, sort).then((res) => {
-        setTemp(res.data.data.reviewResDtoList.dtoList);
-      });
-    }
-    if (selected === "회원 번호") {
-      reviewSearchApi(search, "c", page, sort).then((res) => {
-        console.log(res);
-        setTemp(res.data.data.reviewResDtoList.dtoList);
-      });
-    }
-    if (selected === "카페 번호") {
-      reviewSearchApi(search, "s", page, sort).then((res) =>
-        setTemp(res.data.data.reviewResDtoList.dtoList)
-      );
-    }
+    reviewSearchApi(search, searchType, page, sort).then((res) => {
+      setData(res.data.data.reviewResDtoList.dtoList);
+    });
   };
 
   const changeData = () => {
-    if (selected === "전체") {
+    if (searchType === "전체") {
       reviewDataApi(page, sort)
         .then((res) => {
           setCount(res.data.data.reviewCnt);
-          setTemp(res.data.data.reviewResDtoList.dtoList);
+          setData(res.data.data.reviewResDtoList.dtoList);
         })
         .catch((err) => console.log(err));
     } else {
@@ -109,53 +71,23 @@ const Review = () => {
         text={"카페 리뷰"}
         subText={`등록된 리뷰 ${count}건`}
       />
-      <Row
-        justify={"space-between"}
-        align={"baseline"}
-        style={{ marginBottom: "20px" }}
-      >
-        <Row gap={15}>
-          <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
-            최신순
-            {sort === "DESC" && <Check />}
-          </S.Sbtn>
-          <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
-            오래된 순{sort === "ASC" && <Check />}
-          </S.Sbtn>
-        </Row>
-        <Row gap={15} align={"baseline"}>
-          <Paging
-            count={count}
-            handlePageChange={handlePageChange}
-            setPage={setPage}
-            page={page}
-          />
-          <S.Sbtn onClick={() => setIsDrop(!isDrop)}>
-            <p>{selected}</p>
-            <ArrowDown />
-          </S.Sbtn>
-
-          {isDrop && (
-            <DropBox
-              arr={arr}
-              setIsDrop={setIsDrop}
-              setArr={setArr}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          )}
-          <Row style={{ borderBottom: "1px solid #fff" }}>
-            <S.Input
-              placeholder="검색"
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Search onClick={onclick} />
-          </Row>
-        </Row>
-      </Row>
-      <S.Wrapper isNull={temp.length === 0}>
+      <FilterRow
+        searchType={searchType}
+        setSearchType={setSearchType}
+        searchArr={searchArr}
+        setSearchArr={setSearchArr}
+        sort={sort}
+        count={count}
+        page={page}
+        item={item}
+        onAsc={onAsc}
+        onDesc={onDesc}
+        setPage={setPage}
+        searchData={searchData}
+        search={search}
+        setSearch={setSearch}
+      />
+      <S.Wrapper isNull={data.length === 0}>
         <TableHeader>
           <div>분류</div>
           <div>추천</div>
@@ -168,17 +100,18 @@ const Review = () => {
         </TableHeader>
 
         <ReviewTemp
-          temp={temp}
+          data={data}
           onModal={onModal}
           setMemoModal={setMemoModal}
           setMemoItem={setMemoItem}
-          setSelectItem={setSelectItem2}
         />
       </S.Wrapper>
 
+      {data.length === 0 && <None text="리뷰" />}
       {memoModal && <MemoModal item={memoItem} setModal={setMemoModal} />}
-      {temp.length === 0 && <None text={"리뷰"} />}
-      {modal && <MReview setModal={setModal} selectItem2={selectItem2} />}
+      {modal && (
+        <ReviewModal setModal={setModal} detailReviewId={detailReviewId} />
+      )}
     </>
   );
 };

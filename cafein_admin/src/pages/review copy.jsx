@@ -1,74 +1,97 @@
-import { useEffect, useState } from "react";
-
+import Header from "../components/common/header";
 import * as S from "./style copy";
 import styled from "styled-components";
+
+import Row from "../components/atoms/row";
 
 import Paging from "../components/common/Pagination";
 
 import { ReactComponent as Search } from "../svg/Search.svg";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { ReactComponent as Check } from "../svg/check.svg";
 import { ReactComponent as ArrowDown } from "../svg/ArrowDown.svg";
 
-import { userDetailApi, userListApi, userSearchApi } from "../util/user";
+import MReview from "../components/common/modal/MReview";
+import {
+  reviewDataApi,
+  reviewDetailApi,
+  reviewSearchApi,
+} from "../util/review";
 import None from "../components/None";
-import UserTemp from "../components/userTemp";
 import DropBox from "../components/common/dropbox";
+import ReviewTemp from "../components/reviewTemp";
 import MemoModal from "../components/common/modal/Memo";
-import MUser from "../components/common/modal/MUser";
-import Row from "../components/atoms/row";
-import Header from "../components/common/header";
 
-const User = () => {
+const Review = () => {
+  const [sort, setSort] = useState("DESC");
+  const navigate = useNavigate();
   const [temp, setTemp] = useState([]);
 
   const [search, setSearch] = useState("");
-  const [isDrop, setIsDrop] = useState(false);
-  const [selected, setSelected] = useState("전체");
-  const [arr, setArr] = useState(["분류", "회원명", "핸드폰"]);
-
+  // pagination
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [items, setItems] = useState(9);
+
+  //drop
+  const [isDrop, setIsDrop] = useState(false);
+  const [selected, setSelected] = useState("전체");
+  const [arr, setArr] = useState(["내용", "회원 번호", "카페 번호"]);
+
   const [modal, setModal] = useState(false);
-  const [selectItem, setSelectItem] = useState([]);
-  const [sort, setSort] = useState("DESC");
 
   const [memoItem, setMemoItem] = useState(null);
   const [memoModal, setMemoModal] = useState(false);
+  const [selectItem2, setSelectItem2] = useState([]);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  const onModal = (item) => {
+    reviewDetailApi(item.reviewId)
+      .then((res) => {
+        setSelectItem2(res.data.data);
+        setModal(!modal);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const sortData = (id) => {
+    setSort(id);
+  };
+  const onclick = () => {
+    setSort("DESC");
+    setPage(1);
+    searchData();
+  };
 
   const searchData = () => {
-    if (selected === "분류") {
-      userSearchApi("m", search, sort, page)
-        .then((res) => {
-          setTemp(res.data.data.memberResDtoList.dtoList);
-          setCount(res.data.data.memberCnt);
-        })
-        .catch((err) => console.log(err));
+    if (selected === "내용") {
+      reviewSearchApi(search, "w", page, sort).then((res) => {
+        setTemp(res.data.data.reviewResDtoList.dtoList);
+      });
     }
-    if (selected === "회원명") {
-      userSearchApi("mn", search, sort, page)
-        .then((res) => {
-          setTemp(res.data.data.memberResDtoList.dtoList);
-          setCount(res.data.data.memberCnt);
-        })
-        .catch((err) => console.log(err));
+    if (selected === "회원 번호") {
+      reviewSearchApi(search, "c", page, sort).then((res) => {
+        console.log(res);
+        setTemp(res.data.data.reviewResDtoList.dtoList);
+      });
     }
-    if (selected === "핸드폰") {
-      userSearchApi("p", search, sort, page)
-        .then((res) => {
-          setTemp(res.data.data.memberResDtoList.dtoList);
-          setCount(res.data.data.memberCnt);
-        })
-        .catch((err) => console.log(err));
+    if (selected === "카페 번호") {
+      reviewSearchApi(search, "s", page, sort).then((res) =>
+        setTemp(res.data.data.reviewResDtoList.dtoList)
+      );
     }
   };
 
   const changeData = () => {
     if (selected === "전체") {
-      userListApi(sort, page)
+      reviewDataApi(page, sort)
         .then((res) => {
-          setTemp(res.data.data.memberResDtoList.dtoList);
-          setCount(res.data.data.memberCnt);
+          setCount(res.data.data.reviewCnt);
+          setTemp(res.data.data.reviewResDtoList.dtoList);
         })
         .catch((err) => console.log(err));
     } else {
@@ -76,44 +99,15 @@ const User = () => {
     }
   };
 
-  const loadD = (id) => {
-    userDetailApi(id)
-      .then((res) => setSelectItem(res.data.data))
-      .catch((err) => {
-        alert("존재하지 않는 회원입니다.");
-        setModal(false);
-      });
-  };
-
-  const onModal = (item) => {
-    loadD(item.memberId);
-    setModal(!modal);
-  };
-
-  const onclick = () => {
-    setSort("DESC");
-    setPage(1);
-    searchData();
-  };
-
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
-
-  const sortData = async (id) => {
-    setSort(id);
-  };
-
   useEffect(() => {
     changeData();
   }, [page, sort]);
-
   return (
     <>
       <Header
         mcolor={"#fff"}
-        text={"회원 정보"}
-        subText={`등록된 회원 ${count}건`}
+        text={"카페 리뷰"}
+        subText={`등록된 리뷰 ${count}건`}
       />
       <Row
         justify={"space-between"}
@@ -137,12 +131,13 @@ const User = () => {
             page={page}
           />
           <S.Sbtn onClick={() => setIsDrop(!isDrop)}>
-            {selected} <ArrowDown />
+            <p>{selected}</p>
+            <ArrowDown />
           </S.Sbtn>
+
           {isDrop && (
             <DropBox
               arr={arr}
-              left={"85%"}
               setIsDrop={setIsDrop}
               setArr={setArr}
               selected={selected}
@@ -163,32 +158,27 @@ const User = () => {
       <S.Wrapper isNull={temp.length === 0}>
         <TableHeader>
           <div>분류</div>
-          <div>소셜</div>
-          <div>회원명</div>
-          <div>핸드폰</div>
-          <div>이메일</div>
-          <div>APP</div>
-          <div>DIVICE/IP</div>
-          <div>가입일</div>
-          <div>상태</div>
+          <div>추천</div>
+          <div>리뷰 내용</div>
+          <div>회원 번호</div>
+          <div>카페 번호</div>
+          <div>등록일</div>
+          <div>최종 수정일</div>
           <div>메모</div>
         </TableHeader>
 
-        <UserTemp
+        <ReviewTemp
           temp={temp}
-          setMemoModal={setMemoModal}
           onModal={onModal}
-          page={page}
-          items={items}
+          setMemoModal={setMemoModal}
           setMemoItem={setMemoItem}
-          setSelectItem={setSelectItem}
+          setSelectItem={setSelectItem2}
         />
       </S.Wrapper>
-      {temp.length === 0 && <None text={"유저"} />}
+
       {memoModal && <MemoModal item={memoItem} setModal={setMemoModal} />}
-      {modal && (
-        <MUser setModal={setModal} selectItem={selectItem} loadD={loadD} />
-      )}
+      {temp.length === 0 && <None text={"리뷰"} />}
+      {modal && <MReview setModal={setModal} selectItem2={selectItem2} />}
     </>
   );
 };
@@ -202,25 +192,20 @@ const TableHeader = styled.div`
   line-height: 42px;
   border-bottom: 1px solid #515151;
   & > div {
-    flex: 0.5;
+    flex: 0.7;
     border-right: 1px solid #515151;
   }
-  & > div:nth-child(3),
-  div:nth-child(5) {
-    flex: 2;
+  & > div:nth-child(3) {
+    flex: 4;
   }
-  & > div:nth-child(9) {
-    flex: 1.2;
-  }
-  & > div:nth-child(4),
-  div:nth-child(7),
-  div:nth-child(8) {
-    flex: 0.9;
+  & > div:nth-child(5) {
+    flex: 1.5;
   }
 
   & > div:last-child {
+    flex: 0.5;
     border-right: none;
   }
 `;
 
-export default User;
+export default Review;

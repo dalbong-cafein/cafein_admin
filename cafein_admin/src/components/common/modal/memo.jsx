@@ -12,15 +12,16 @@ import {
 import RedAlert from "./redAlert";
 
 export default function MemoModal({ setModal, item }) {
-  console.log(item);
+  const loc = window.location.pathname;
+  const id = item.storeId || item.memberId || item.reviewId || item.couponId;
   const where =
-    window.location.pathname == "/management"
+    loc == "/management"
       ? "카페관리"
-      : window.location.pathname == "/review"
+      : loc == "/review"
       ? "리뷰관리"
-      : window.location.pathname == "/user"
+      : loc == "/user"
       ? "회원관리"
-      : window.location.pathname == "/marketing"
+      : loc == "/marketing"
       ? "쿠폰관리"
       : "rmftpdyd";
 
@@ -38,9 +39,7 @@ export default function MemoModal({ setModal, item }) {
   };
 
   const onsubmit = async () => {
-    const where = window.location.pathname;
-    const id = item.storeId || item.memberId;
-    registerMemoApi(id, content, where)
+    registerMemoApi(id, content, loc)
       .then((res) => {
         window.alert("등록되었습니다");
         setModal(false);
@@ -50,8 +49,6 @@ export default function MemoModal({ setModal, item }) {
   };
 
   const onEdit = () => {
-    const id = memo.storeId || memo.reviewId || memo.memberId || memo.couponId;
-
     editMemoApi(id, content)
       .then((res) => {
         setEditMode(false);
@@ -110,8 +107,8 @@ export default function MemoModal({ setModal, item }) {
             {`_${
               memo?.storeId ||
               memo?.reviewId ||
-              memo?.memberId ||
               memo?.couponId ||
+              memo?.memberId ||
               ""
             }`}
           </p>
@@ -138,10 +135,10 @@ export default function MemoModal({ setModal, item }) {
               <Row gap={24}>
                 {editMode ? (
                   <>
-                    <S.Btn color={"#515151"} onClick={() => setEditMode(false)}>
+                    <S.Btn color="#515151" onClick={() => setEditMode(false)}>
                       취소
                     </S.Btn>
-                    <S.Btn color={"#2563eb"} onClick={onEdit}>
+                    <S.Btn color="#2563eb" onClick={onEdit}>
                       등록
                     </S.Btn>
                   </>
@@ -154,7 +151,7 @@ export default function MemoModal({ setModal, item }) {
                       삭제
                     </S.Btn>
                     <S.Btn
-                      color={"#515151"}
+                      color="#515151"
                       onClick={() => setEditMode(!editMode)}
                     >
                       수정
@@ -178,7 +175,7 @@ export default function MemoModal({ setModal, item }) {
             <S.ModalFooter>
               <p>{new Date().toLocaleDateString()}</p>
               <Row gap={24}>
-                <S.Btn color={"#2563eb"} onClick={onsubmit}>
+                <S.Btn color="#2563eb" onClick={onsubmit}>
                   등록
                 </S.Btn>
               </Row>

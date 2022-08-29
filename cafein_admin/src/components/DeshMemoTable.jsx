@@ -6,7 +6,7 @@ import NoneDiv from "./common/Nonediv";
 import MemoItem from "./DeshMemoTableItem";
 
 import { memoListApi } from "../util/memo";
-import MemoModal from "./common/modal/memo";
+import MemoModal from "./common/modal/Memo";
 
 export default function MemoTable() {
   //메모 관련 state

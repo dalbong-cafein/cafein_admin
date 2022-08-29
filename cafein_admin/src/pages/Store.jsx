@@ -1,4 +1,4 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePagination from "../hooks/usePagination";
 import useSearch from "../hooks/useSearch";
@@ -7,9 +7,9 @@ import * as S from "./style copy";
 
 import None from "../components/None";
 import Header from "../components/common/header";
-import MemoModal from "../components/common/modal/memo";
+import MemoModal from "../components/common/modal/Memo";
 import FilterRow from "../components/common/filterRow";
-import CafeDetailModal from "../components/common/modal/cafeDetail";
+import StoreModal from "../components/common/modal/StoreModal";
 import StoreItem from "../components/StoreItem";
 
 import { feedDataApi, feedSearchApi } from "../util/management";
@@ -114,14 +114,10 @@ const Store = () => {
         />
       </S.Wrapper>
       {data.length === 0 && (
-        <None
-          text={"카페"}
-          text2={"새 카페 등록"}
-          href={"/management/register"}
-        />
+        <None text="카페" text2="새 카페 등록" href="/management/register" />
       )}
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
-      {dModal && <CafeDetailModal setDModal={setDModal} id={detailStoreId} />}
+      {dModal && <StoreModal setDModal={setDModal} id={detailStoreId} />}
     </>
   );
 };

@@ -1,73 +1,41 @@
-import Row from "./atoms/row";
-import * as S from "../pages/style copy";
 import styled from "styled-components";
+
+import * as S from "../pages/style copy";
+import Row from "./atoms/row";
+import ReviewStarRow from "./common/modal/ReviewStarRow";
+import ReviewRecommendationBtn from "./ReviewRecommendationBtn";
+
 import { ReactComponent as Memo } from "../svg/memo.svg";
-import Stars from "./atoms/stars";
-const ReviewTemp = ({
-  temp,
-  onModal,
-  setSelectItem,
-  setMemoModal,
-  setMemoItem,
-}) => {
+
+const ReviewItem = ({ data, onModal, setMemoModal, setMemoItem }) => {
   return (
     <S.DataBox>
-      {temp &&
-        temp.map((item, i) => (
+      {data &&
+        data.map((item, i) => (
           <ItemRow key={i} hasMemoId={item.memoId}>
             <div onClick={() => onModal(item)}>
               {String(item.reviewId).padStart(6, "0")}
             </div>
             <div onClick={() => onModal(item)}>
-              <div>
-                {item.recommendation === "GOOD"
-                  ? "추천해요"
-                  : item.recommendation === "NORMAL"
-                  ? "그저그래요"
-                  : "별로예요"}
-              </div>
+              <ReviewRecommendationBtn recommendation={item.recommendation} />
             </div>
             <div onClick={() => onModal(item)}>
-              <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
-                <Row gap={8} align={"baseline"}>
-                  와이파이
-                  <Stars
-                    width={11}
-                    gap={2}
-                    num={item.detailEvaluation.wifi}
-                    color={"#FD9759"}
-                  />
-                </Row>
-                <Row gap={8} align={"baseline"}>
-                  콘센트
-                  <Stars
-                    color={"#FD9759"}
-                    width={11}
-                    gap={2}
-                    num={item.detailEvaluation.socket}
-                  />
-                </Row>
-                <Row gap={8} align={"baseline"}>
-                  화장실
-                  <Stars
-                    color={"#FD9759"}
-                    width={11}
-                    gap={2}
-                    num={item.detailEvaluation.restroom}
-                  />
-                </Row>
-                <Row gap={8} align={"baseline"}>
-                  테이블
-                  <Stars
-                    color={"#FD9759"}
-                    width={11}
-                    gap={2}
-                    num={item.detailEvaluation.tableSize}
-                  />
-                </Row>
+              <Row gap={16} align="baseline" style={{ fontSize: "14px" }}>
+                <ReviewStarRow
+                  item1Title="와이파이"
+                  item2Title="콘센트"
+                  item1Star={item?.detailEvaluation?.wifi}
+                  item2Star={item?.detailEvaluation?.socket}
+                />
+                <ReviewStarRow
+                  item1Title="화장실"
+                  item2Title="테이블"
+                  item1Star={item?.detailEvaluation?.restroom}
+                  item2Star={item?.detailEvaluation?.tableSize}
+                />
               </Row>
               {item.content && (
-                <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
+                <Row gap={16} align="baseline" style={{ fontSize: "14px" }}>
                   {item.content.length > 45
                     ? `${item.content.slice(0, 45)}...`
                     : item.content}
@@ -119,14 +87,7 @@ const ItemRow = styled.div`
     flex: 0.7;
     border-right: 1px solid #515151;
   }
-  & > div:nth-child(2) > div {
-    margin: auto;
-    border-radius: 20px;
-    color: #fc6406;
-    font-size: 13px;
-    background-color: #fff0e6;
-    padding: 4px 8px;
-  }
+
   & > div:nth-child(3) {
     display: flex;
     flex-direction: column;
@@ -159,4 +120,4 @@ const ItemRow = styled.div`
   }
 `;
 
-export default ReviewTemp;
+export default ReviewItem;
