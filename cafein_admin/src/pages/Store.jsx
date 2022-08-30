@@ -61,7 +61,7 @@ const Store = () => {
     changeData();
   }, [page, sort]);
   return (
-    <>
+    <Container>
       <Header
         mcolor={"#fff"}
         text={"카페 관리"}
@@ -118,9 +118,14 @@ const Store = () => {
       )}
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
       {dModal && <StoreModal setDModal={setDModal} id={detailStoreId} />}
-    </>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const TableHeader = styled.div`
   font-size: 14px;

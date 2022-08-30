@@ -65,6 +65,7 @@ const ItemRow = styled.div`
   color: #e3e3e3;
   font-size: 14px;
   height: 72px;
+  flex-grow: 1;
   cursor: pointer;
   border-bottom: 1px solid #515151;
 
@@ -83,15 +84,12 @@ const ItemRow = styled.div`
   div:nth-child(2) {
     flex: 2.5;
   }
-
-  & > div:last-child {
-    border-right: none;
-    border-bottom: none;
-  }
   & > div:nth-child(2) {
     justify-content: start;
   }
   & > div:last-child {
+    border-right: none;
+    border-bottom: none;
     & > svg {
       path {
         fill: ${(props) => (props.hasMemoId ? "#E3E3E3" : "#646464")};

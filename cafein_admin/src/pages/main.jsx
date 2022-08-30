@@ -36,6 +36,7 @@ const Main = () => {
 
 const Containaer = styled.div`
   width: 100%;
+  height: 100%;
   margin: 0 102px 0 0;
 `;
 
