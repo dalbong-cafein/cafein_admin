@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
 export const DataBox = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 73vh;
 `;
 
 export const FitBox = styled.div`
