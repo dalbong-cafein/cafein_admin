@@ -64,7 +64,8 @@ const ItemRow = styled.div`
   display: flex;
   color: #e3e3e3;
   font-size: 14px;
-  flex: 1;
+  // flex: 1;
+  height: calc(68vh / 9);
   cursor: pointer;
   border-bottom: 1px solid #515151;
 
