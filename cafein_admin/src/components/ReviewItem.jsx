@@ -45,10 +45,14 @@ const ReviewItem = ({ data, onModal, setMemoModal, setMemoItem }) => {
             <div onClick={() => onModal(item)}>
               {String(item.writerId).padStart(6, "0")}
             </div>
-            <S.DataBox onClick={() => onModal(item)}>
+            <div
+              onClick={() => onModal(item)}
+              style={{ display: "flex", flexDirection: "column" }}
+            >
               <div>{String(item.storeId).padStart(6, "0")}</div>
+
               <div>{item.storeName}</div>
-            </S.DataBox>
+            </div>
             <div onClick={() => onModal(item)}>
               {item.regDateTime.split("T")[0]}
             </div>

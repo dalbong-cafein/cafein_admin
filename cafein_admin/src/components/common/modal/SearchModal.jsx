@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import Portal from "./Portal";
 import * as S from "./style";
 import Row from "../../atoms/row";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { ReactComponent as Search } from "../../../svg/Search.svg";
 
 const { kakao } = window;

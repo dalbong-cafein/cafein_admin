@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 const Store = React.lazy(() => import("./Store"));
 const Register = React.lazy(() => import("./RegisterCafe"));
-const EditCafe = React.lazy(() => import("./editcafe"));
+const EditCafe = React.lazy(() => import("./EditCafe"));
 const Review = React.lazy(() => import("./Review"));
 const User = React.lazy(() => import("./user"));
 const Desh = React.lazy(() => import("./Desh"));

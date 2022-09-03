@@ -7,15 +7,11 @@ import usePagination from "../hooks/usePagination";
 import useSearch from "../hooks/useSearch";
 
 import ReviewModal from "../components/common/modal/ReviewDetailModal";
-import {
-  reviewDataApi,
-  reviewDetailApi,
-  reviewSearchApi,
-} from "../util/review";
+import { reviewDataApi, reviewSearchApi } from "../util/review";
 import None from "../components/None";
 import ReviewTemp from "../components/ReviewItem";
 import MemoModal from "../components/common/modal/Memo";
-import FilterRow from "../components/common/filterRow";
+import FilterRow from "../components/common/FilterRow";
 
 const Review = () => {
   const [data, setData] = useState([]);

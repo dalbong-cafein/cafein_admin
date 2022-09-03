@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Row from "../atoms/row";
-import DropBox from "../common/dropbox";
+import DropBox from "./dropbox";
 import * as S from "../../pages/style copy";
 
 import { ReactComponent as Search } from "../../svg/Search.svg";

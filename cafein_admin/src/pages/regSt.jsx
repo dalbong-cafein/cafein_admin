@@ -225,29 +225,6 @@ export const Btn2 = styled.div`
   }
 `;
 
-export const ComboBox = styled.div`
-  width: 94px;
-  height: 230px;
-  margin: 0 10px;
-  background-color: #646464;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
-  border-radius: 8px;
-  position: absolute;
-  transform: translate(
-    ${(props) => (props.x ? props.x : "320%")},
-    ${(props) => (props.y ? props.y : "130%")}
-  );
-  padding: 15px 20px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  & > div {
-    text-align: center;
-    padding: 3px;
-    cursor: pointer;
-  }
-`;
 export const RowBox = styled.div`
   display: flex;
   padding: 0 125px;
@@ -296,28 +273,6 @@ export const ColumnBox = styled.div`
   }
 `;
 
-export const StarBox = styled.div`
-  & > svg:first-child {
-    path {
-      fill: ${(props) => props.isFill >= 1 && "#ffce4a"};
-    }
-  }
-  & > svg:nth-child(2) {
-    path {
-      fill: ${(props) => props.isFill >= 2 && "#ffce4a"};
-    }
-  }
-  & > svg:nth-child(3) {
-    path {
-      fill: ${(props) => props.isFill >= 3 && "#ffce4a"};
-    }
-  }
-  & > svg:nth-child(4) {
-    path {
-      fill: ${(props) => props.isFill >= 4 && "#ffce4a"};
-    }
-  }
-`;
 export const TextBox = styled.div`
   color: #646464;
   font-size: 14px;

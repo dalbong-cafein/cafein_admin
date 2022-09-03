@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
-import HoverContent from "../../hoverContent";
+import HoverContent from "../../HoverContent";
 import Sliders from "../carousel/carousel";
 import RedAlert from "./redAlert";
 import {
