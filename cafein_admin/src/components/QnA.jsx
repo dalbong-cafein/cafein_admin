@@ -20,10 +20,10 @@ import { useRecoilState } from "recoil";
 
 import PVImg from "./common/PVImg";
 import { eventListApi } from "../util/events";
-import Alert from "./common/modal/alert";
+import Alert from "./common/modal/Alert";
 import None from "./None";
 import Preview from "./common/modal/preview";
-import RedAlert from "./common/modal/redAlert";
+import RedAlert from "./common/modal/RedAlert";
 import NoticeM from "./common/modal/noticeM";
 
 const QnA = () => {

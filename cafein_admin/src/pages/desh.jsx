@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import NoneDiv from "../components/common/Nonediv";
-import Header from "../components/common/header";
+import Header from "../components/common/Header";
 import TodayNewData from "../components/DeshTodayNewData";
 import MarketingTable from "../components/DeshMarketingTable";
 import DateColumn from "../components/DeshHeaderDateColumn";

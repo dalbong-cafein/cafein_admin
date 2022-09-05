@@ -1,4 +1,4 @@
-import SelectHeader from "../components/common/selectHeader";
+import SelectHeader from "../components/common/SelectHeader";
 
 import QnA from "../components/QnA";
 

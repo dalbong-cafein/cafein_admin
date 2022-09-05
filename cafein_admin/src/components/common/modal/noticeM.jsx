@@ -9,7 +9,7 @@ import { ReactComponent as Photo } from "../../../svg/photo.svg";
 import { ReactComponent as CloseIcon } from "../../../svg/close.svg";
 import PVImg from "../PVImg";
 
-import RedAlert from "./redAlert";
+import RedAlert from "./RedAlert";
 import ReportReason from "./ReportReason";
 import Row from "../../atoms/row";
 import Preview from "./preview";

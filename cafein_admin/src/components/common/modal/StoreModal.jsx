@@ -8,7 +8,7 @@ import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Row from "../../atoms/row";
 import HoverContent from "../../HoverContent";
 import Sliders from "../carousel/carousel";
-import RedAlert from "./redAlert";
+import RedAlert from "./RedAlert";
 import {
   cafeDelApi,
   feedDetailApi,

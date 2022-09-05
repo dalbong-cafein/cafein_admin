@@ -9,23 +9,22 @@ import { ReactComponent as Page } from "../../../svg/page.svg";
 import Row from "../../atoms/row";
 import {
   userDataUpdateApi,
-  userDetailApi,
   userLeaveApi,
   userReportApi,
 } from "../../../util/user";
 import MUReport from "./MUReport";
 import Sticker from "./sticker";
-import RedAlert from "./redAlert";
+import RedAlert from "./RedAlert";
 import { useNavigate } from "react-router-dom";
 import ReviewView from "./reviewView";
 import HeartView from "./heartView";
 
-export default function MUser({ setModal, selectItem, loadD }) {
+export default function UserDetailModal({ setModal, selectItem, loadD }) {
   const closeModal = () => {
     setModal(false);
   };
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const [reportData, setReportData] = useState([]);
   const [SItem, setItems] = useState([]);
   const [RModal, setRModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -76,7 +75,9 @@ export default function MUser({ setModal, selectItem, loadD }) {
   useEffect(() => {
     if (selectItem.memberId) {
       userReportApi(selectItem.memberId)
-        .then((res) => setData(res.data.data.adminReportResDtoList))
+        .then((res) =>
+          setReportData(res.reportData.reportData.adminReportResDtoList)
+        )
         .catch((err) => navigate("/"));
     }
     setEUData({
@@ -251,8 +252,8 @@ export default function MUser({ setModal, selectItem, loadD }) {
                       <p onClick={() => setAlert(true)}>탈퇴</p>
                     </div>
                     <div>
-                      {data &&
-                        data.map((item, i) => (
+                      {reportData &&
+                        reportData.map((item, i) => (
                           <div key={i}>
                             {`${i + 1}. ${item.categoryName}`}
                             <Page

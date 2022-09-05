@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
 
 import PVImg from "../components/common/PVImg";
-import Alert from "./common/modal/alert";
+import Alert from "./common/modal/Alert";
 import { adminFeedListApi } from "../util/desh";
 import None from "./None";
 
@@ -25,7 +25,7 @@ import { registerNotice } from "../recoil/NNotice";
 import { postDelApi, registerNoticeApi } from "../util/events";
 import Preview from "./common/modal/preview";
 import NoticeModal from "./common/modal/noticeModal";
-import RedAlert from "./common/modal/redAlert";
+import RedAlert from "./common/modal/RedAlert";
 import NoticeM from "./common/modal/noticeM";
 
 const Notices = ({ menu }) => {

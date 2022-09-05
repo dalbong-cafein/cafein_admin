@@ -5,7 +5,7 @@ import * as S from "./style";
 
 import Row from "../../atoms/row";
 import Sliders from "../carousel/carousel";
-import RedAlert from "./redAlert";
+import RedAlert from "./RedAlert";
 import ReportReason from "./ReportReason";
 import ReviewStarRow from "./ReviewStarRow";
 import ReviewRecommendationBtn from "../../ReviewRecommendationBtn";

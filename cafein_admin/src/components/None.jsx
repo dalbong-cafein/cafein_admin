@@ -16,8 +16,6 @@ const None = ({ text, href, text2 }) => {
 const Box = styled.div`
   width: 100%;
   height: 648px;
-  border: 1px solid #404040;
-  border-radius: 0 0 8px 8px;
   display: flex;
   flex-direction: column;
 

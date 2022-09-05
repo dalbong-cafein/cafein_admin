@@ -4,7 +4,7 @@ import styled from "styled-components";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { ReactComponent as Check } from "../../../svg/check.svg";
-import RedAlert from "./redAlert";
+import RedAlert from "./RedAlert";
 import { reviewReportApi } from "../../../util/review";
 
 export default function ReportReason({ setModal, id }) {
