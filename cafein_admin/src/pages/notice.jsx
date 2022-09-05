@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import SelectHeader from "../components/common/selectHeader";
+import SelectHeader from "../components/common/SelectHeader";
 
 import Notices from "../components/notices";
 import QnA from "../components/QnA";

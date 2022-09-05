@@ -4,19 +4,11 @@ import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 import StateBtn from "./atoms/btn";
 
-const UserTemp = ({
-  temp,
-  page,
-  items,
-  onModal,
-  setSelectItem,
-  setMemoModal,
-  setMemoItem,
-}) => {
+const UserItem = ({ data, onModal, setModalMemo, setMemoItem }) => {
   return (
     <S.DataBox>
-      {temp &&
-        temp.map((item, i) => (
+      {data &&
+        data.map((item, i) => (
           <ItemRow key={i} hasMemoId={item.memoId}>
             <div onClick={() => onModal(item)}>
               {String(item.memberId).padStart(6, "0")}
@@ -54,7 +46,7 @@ const UserTemp = ({
               <Memo
                 onClick={() => {
                   setMemoItem(item);
-                  setMemoModal(true);
+                  setModalMemo(true);
                 }}
               />
             </div>
@@ -68,7 +60,7 @@ const ItemRow = styled.div`
   display: flex;
   color: #e3e3e3;
   font-size: 14px;
-  height: 55px;
+  height: calc(65vh / 9);
   cursor: pointer;
   border-bottom: 1px solid #515151;
 
@@ -112,4 +104,4 @@ const ItemRow = styled.div`
   }
 `;
 
-export default UserTemp;
+export default UserItem;

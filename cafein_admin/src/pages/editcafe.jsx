@@ -11,7 +11,7 @@ import { ReactComponent as CloseIcon } from "../svg/close.svg";
 import PVImg from "../components/common/PVImg";
 import SearchModal from "../components/common/modal/SearchModal";
 import Row from "../components/atoms/row";
-import Header from "../components/common/header";
+import Header from "../components/common/Header";
 
 import { updateDay } from "../hooks/registerHook";
 import { feedEditApi } from "../util/management";

@@ -3,7 +3,8 @@ import { withAuthInstance } from "./index";
 export const userListApi = async (sort, page) => {
   return await withAuthInstance.get(`/members?page=${page}&sort=${sort}`);
 };
-export const userSearchApi = async (sub, keyword, sort, page) => {
+export const userSearchApi = async (searchType, keyword, sort, page) => {
+  const sub = searchType == "분류" ? "m" : searchType == "회원명" ? "mn" : "p";
   return await withAuthInstance.get(
     `/members?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );

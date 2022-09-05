@@ -3,13 +3,11 @@ import Portal from "./Portal";
 import styled from "styled-components";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Row from "../../atoms/row";
 
 export default function MUReport({ setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
   };
-  console.log(selectItem);
   return (
     <Portal>
       <S.ModalBox>

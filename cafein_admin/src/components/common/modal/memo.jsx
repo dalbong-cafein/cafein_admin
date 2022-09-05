@@ -9,7 +9,7 @@ import {
   memoDataApi,
   registerMemoApi,
 } from "../../../util/memo";
-import RedAlert from "./redAlert";
+import RedAlert from "./RedAlert";
 
 export default function MemoModal({ setModal, item }) {
   const loc = window.location.pathname;

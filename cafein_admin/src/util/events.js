@@ -11,7 +11,9 @@ export const marketingDListApi = async () => {
 };
 
 //쿠폰리스트 검색
-export const marketingSearchApi = async (sub, keyword, page, sort) => {
+export const marketingSearchApi = async (searchType, keyword, page, sort) => {
+  const sub =
+    searchType === "분류" ? "cp" : searchType === "회원 번호" ? "m" : "p";
   return await withAuthInstance.get(
     `/coupons?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
   );

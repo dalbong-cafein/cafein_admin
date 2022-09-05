@@ -10,7 +10,7 @@ import {
   reviewDetailApi,
   reviewUserDataApi,
 } from "../../../util/review";
-import RedAlert from "./redAlert";
+import RedAlert from "./RedAlert";
 import ReportReason from "./ReportReason";
 import Sliders from "../carousel/carousel";
 import Stars from "../../atoms/stars";
