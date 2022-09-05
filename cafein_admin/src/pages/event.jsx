@@ -4,7 +4,7 @@ import Paging from "../components/common/Pagination";
 import { useNavigate } from "react-router-dom";
 
 import * as S from "../pages/style";
-import * as SS from "../conponents/noticesStyle";
+import * as SS from "../components/noticesStyle";
 
 import { eventImgApi, regImgApi } from "../util/events";
 
