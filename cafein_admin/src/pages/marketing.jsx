@@ -5,7 +5,7 @@ import useSearch from "../hooks/useSearch";
 import * as S from "./style copy";
 import styled from "styled-components";
 
-import None from "../components/None";
+import None from "../components/common/None";
 
 import {
   changeStateApi,
@@ -115,6 +115,7 @@ const Marketing = () => {
           setAlert={setAlert}
           alert={alert}
           setReportId={setReportId}
+          page={page}
         />
       </S.Wrapper>
       {alert && (

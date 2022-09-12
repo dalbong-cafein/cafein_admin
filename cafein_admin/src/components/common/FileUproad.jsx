@@ -5,22 +5,30 @@ import { ReactComponent as CloseIcon } from "../../svg/close.svg";
 import { useState } from "react";
 import { useRef } from "react";
 
-export default function FileUpload({ register, setRegister }) {
+export default function FileUpload({
+  register,
+  setRegister,
+  num = 5,
+  submitFunc,
+}) {
   const [file, setFile] = useState([]);
   const input = useRef();
 
   const onLoadFile = (e) => {
-    let copy = [...file];
-    if (copy.length >= 5) {
-      window.alert("이미지는 5개만 추가 가능합니다");
-      return;
-    } else {
-      if (e.target.files[0]) {
-        copy = [...copy, e.target.files[0]];
-        setFile(copy);
-        const copy2 = { ...register };
-        copy2.imageFiles = copy;
-        setRegister(copy2);
+    if (submitFunc) submitFunc();
+    else {
+      let copy = [...file];
+      if (copy.length >= num) {
+        window.alert(`이미지는 ${num}개만 추가 가능합니다`);
+        return;
+      } else {
+        if (e.target.files[0]) {
+          copy = [...copy, e.target.files[0]];
+          setFile(copy);
+          const copy2 = { ...register };
+          copy2.imageFiles = copy;
+          setRegister(copy2);
+        }
       }
     }
   };
@@ -41,7 +49,9 @@ export default function FileUpload({ register, setRegister }) {
         }}
       >
         <Photo />
-        <div>{file.length}/5</div>
+        <div>
+          {file.length}/{num}
+        </div>
         <input
           ref={input}
           type="file"

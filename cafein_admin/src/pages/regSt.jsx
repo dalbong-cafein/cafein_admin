@@ -72,6 +72,7 @@ export const Box = styled.div`
   color: #8b8b8b;
   width: 100%;
   box-sizing: border-box;
+  padding: 0 16px;
 
   min-height: ${(props) => props.height}px;
   border-radius: 6px;
@@ -79,13 +80,13 @@ export const Box = styled.div`
   flex-direction: column;
   gap: 16px;
   & > p {
-    padding: 16px 0 16px 16px;
+    padding: 16px 0;
     font-weight: 500;
   }
 `;
 
 export const PhotoBox = styled.div`
-  padding: 0 24px;
+  // padding: 0 24px;
   display: flex;
   gap: 12px;
 `;

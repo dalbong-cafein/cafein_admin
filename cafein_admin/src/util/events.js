@@ -5,11 +5,6 @@ export const marketingListApi = async (page, sort) => {
   return await withAuthInstance.get(`/coupons?page=${page}&sort=${sort}`);
 };
 
-//대시용
-export const marketingDListApi = async () => {
-  return await withAuthInstance.get(`/coupons/limit`);
-};
-
 //쿠폰리스트 검색
 export const marketingSearchApi = async (searchType, keyword, page, sort) => {
   const sub =

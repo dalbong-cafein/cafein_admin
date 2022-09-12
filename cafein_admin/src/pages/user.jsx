@@ -6,7 +6,7 @@ import * as S from "./style copy";
 import styled from "styled-components";
 
 import { userDetailApi, userListApi, userSearchApi } from "../util/user";
-import None from "../components/None";
+import None from "../components/common/None";
 import UserItem from "../components/UserItem";
 import MemoModal from "../components/common/modal/Memo";
 import UserDetailModal from "../components/common/modal/UserDetailModal";

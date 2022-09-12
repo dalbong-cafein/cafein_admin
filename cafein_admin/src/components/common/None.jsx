@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { ReactComponent as Cafe } from "../svg/emojicafe.svg";
+import { ReactComponent as Cafe } from "../../svg/emojicafe.svg";
 
 const None = ({ text, href, text2 }) => {
   const navigate = useNavigate();

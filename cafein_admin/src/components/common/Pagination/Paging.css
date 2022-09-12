@@ -23,14 +23,6 @@ ul.pagination li {
   margin: 0.1em;
 }
 
-ul.pagination li:first-child {
-  display: none;
-}
-
-ul.pagination li:last-child {
-  display: none;
-}
-
 ul.pagination li a {
   text-decoration: none;
   color: #fff;

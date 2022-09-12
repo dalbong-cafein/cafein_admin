@@ -9,9 +9,9 @@ const Review = React.lazy(() => import("./Review"));
 const User = React.lazy(() => import("./User"));
 const Desh = React.lazy(() => import("./Desh"));
 const Marketing = React.lazy(() => import("./Marketing"));
-const Notice = React.lazy(() => import("./notice"));
-const QnAs = React.lazy(() => import("./qna"));
-const Events = React.lazy(() => import("./event"));
+const Notice = React.lazy(() => import("./Notice"));
+const QnAs = React.lazy(() => import("./QnA"));
+const Events = React.lazy(() => import("./Event"));
 
 const Main = () => {
   return (

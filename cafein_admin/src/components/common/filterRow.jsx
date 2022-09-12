@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Row from "../atoms/row";
 import DropBox from "./dropbox";
@@ -26,9 +25,9 @@ export default function FilterRow({
   searchData,
   search,
   setSearch,
+  nodrop,
 }) {
   const [isDrop, setIsDrop] = useState(false);
-  const navigate = useNavigate();
   const onclick = () => {
     onDesc();
     setPage(1);
@@ -61,19 +60,21 @@ export default function FilterRow({
           page={page}
           item={item}
         />
-        <S.Sbtn onClick={() => setIsDrop(!isDrop)}>
-          <p>{searchType}</p>
-          <ArrowDown />
-          {isDrop && (
-            <DropBox
-              searchArr={searchArr}
-              setIsDrop={setIsDrop}
-              setSearchArr={setSearchArr}
-              searchType={searchType}
-              setSearchType={setSearchType}
-            />
-          )}
-        </S.Sbtn>
+        {!nodrop && (
+          <S.Sbtn onClick={() => setIsDrop(!isDrop)}>
+            <p>{searchType}</p>
+            <ArrowDown />
+            {isDrop && (
+              <DropBox
+                searchArr={searchArr}
+                setIsDrop={setIsDrop}
+                setSearchArr={setSearchArr}
+                searchType={searchType}
+                setSearchType={setSearchType}
+              />
+            )}
+          </S.Sbtn>
+        )}
 
         <Row style={{ borderBottom: "1px solid #fff" }}>
           <S.Input

@@ -2,7 +2,7 @@ import Row from "./atoms/row";
 import styled from "styled-components";
 import { delEventImgApi } from "../util/events";
 
-const EventMapBox = ({ temp, items, page, i, loadData }) => {
+const EventMapBox = ({ data, item, page, i, loadData }) => {
   const delImg = (id) => {
     delEventImgApi(id)
       .then((res) => {
@@ -12,8 +12,8 @@ const EventMapBox = ({ temp, items, page, i, loadData }) => {
   };
   return (
     <Row gap={40}>
-      {temp
-        .slice(items * (page - 1), items * (page - 1) + items)
+      {data
+        .slice(item * (page - 1), item * (page - 1) + item)
         .slice(i, i + 2)
         .map((item, i) => (
           <EventBox key={i}>
@@ -60,4 +60,39 @@ const EventBox = styled.div`
   }
 `;
 
-export default EventMapBox;
+const EventMapBoxs = ({ data, item, page, loadData }) => {
+  return (
+    <>
+      <EventMapBox
+        data={data}
+        item={item}
+        page={page}
+        i={2}
+        loadData={loadData}
+      />
+      <EventMapBox
+        data={data}
+        item={item}
+        page={page}
+        i={4}
+        loadData={loadData}
+      />
+      <EventMapBox
+        data={data}
+        item={item}
+        page={page}
+        i={6}
+        loadData={loadData}
+      />
+      <EventMapBox
+        data={data}
+        item={item}
+        page={page}
+        i={8}
+        loadData={loadData}
+      />
+    </>
+  );
+};
+
+export default EventMapBoxs;

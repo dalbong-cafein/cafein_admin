@@ -1,38 +1,33 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import Paging from "../components/common/Pagination";
 import { useNavigate } from "react-router-dom";
 
-import * as S from "../pages/style";
 import * as SS from "../components/noticesStyle";
 
 import { eventImgApi, regImgApi } from "../util/events";
-
-import { ReactComponent as Check } from "../svg/check.svg";
 
 import BPreview from "../components/common/modal/Bpreview";
 import PVImg from "../components/common/PVImg";
 import SelectHeader from "../components/common/SelectHeader";
 import Row from "../components/atoms/row";
-import None from "../components/None";
-import EventMapBox from "../components/eventMapBox";
+import None from "../components/common/None";
+import EventMapBoxs from "../components/EventMapBox";
+import usePagination from "../hooks/usePagination";
+import FilterRow from "../components/common/FilterRow";
 
 const Events = () => {
   const navigate = useNavigate();
 
-  const [page, setPage] = useState(1);
-  const [sort, setSort] = useState("DESC");
-  const [count, setCount] = useState(0);
-  const [items, setItems] = useState(10);
+  const [search, setSearch] = useState("");
 
-  const [temp, setTemp] = useState([]);
+  const [data, setData] = useState([]);
+  // pagination
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
+    usePagination(10);
+
   const [preview, setPreview] = useState(false);
 
   const [file, setFile] = useState();
-
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
 
   const onLoadFile = (e) => {
     if (file) {
@@ -47,7 +42,7 @@ const Events = () => {
       window.alert("첨부파일이 없습니다.");
     } else {
       regImgApi(file)
-        .then((res) => {
+        .then(() => {
           loadData();
           setFile();
         })
@@ -55,14 +50,10 @@ const Events = () => {
     }
   };
 
-  const sortData = (id) => {
-    setSort(id);
-  };
-
   const loadData = () => {
     eventImgApi(page, sort)
       .then((res) => {
-        setTemp(res.data.data.eventResDtoList.dtoList);
+        setData(res.data.data.eventResDtoList.dtoList);
         setCount(res.data.data.eventCnt);
       })
       .catch((err) => {
@@ -87,69 +78,28 @@ const Events = () => {
       />
       <SS.Container>
         <div>
-          <Row
-            justify={"space-between"}
-            align={"baseline"}
-            style={{ marginBottom: "20px" }}
-          >
-            <Row gap={15}>
-              <S.Sbtn id="DESC" onClick={(e) => sortData(e.target.id)}>
-                최신순
-                {sort === "DESC" && <Check />}
-              </S.Sbtn>
-              <S.Sbtn id="ASC" onClick={(e) => sortData(e.target.id)}>
-                오래된 순{sort === "ASC" && <Check />}
-              </S.Sbtn>
-            </Row>
-
-            <Paging
-              count={count}
-              handlePageChange={handlePageChange}
-              setPage={setPage}
+          <FilterRow
+            sort={sort}
+            count={count}
+            page={page}
+            item={item}
+            onAsc={onAsc}
+            onDesc={onDesc}
+            setPage={setPage}
+            search={search}
+            setSearch={setSearch}
+            nodrop
+          />
+          {data && (
+            <EventMapBoxs
+              data={data}
+              item={item}
               page={page}
+              loadData={loadData}
             />
-          </Row>
-          {temp && (
-            <>
-              <EventMapBox
-                temp={temp}
-                items={items}
-                page={page}
-                i={0}
-                loadData={loadData}
-              />
-              <EventMapBox
-                temp={temp}
-                items={items}
-                page={page}
-                i={2}
-                loadData={loadData}
-              />
-              <EventMapBox
-                temp={temp}
-                items={items}
-                page={page}
-                i={4}
-                loadData={loadData}
-              />
-              <EventMapBox
-                temp={temp}
-                items={items}
-                page={page}
-                i={6}
-                loadData={loadData}
-              />
-              <EventMapBox
-                temp={temp}
-                items={items}
-                page={page}
-                i={8}
-                loadData={loadData}
-              />
-            </>
           )}
 
-          {temp.length === 0 && <None text={"마케팅 서비스"} />}
+          {data.length === 0 && <None text={"마케팅 서비스"} />}
         </div>
         <SS.NewNotice>
           <p>새 배너 등록</p>

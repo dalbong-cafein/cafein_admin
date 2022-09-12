@@ -9,6 +9,7 @@ const MarketingsItem = ({
   setSelectItem,
   setMemoModal,
   setMemoItem,
+  page,
   alert,
 }) => {
   const changeState = (id, state) => {
@@ -20,7 +21,7 @@ const MarketingsItem = ({
   return (
     <S.DataBox>
       {data &&
-        data.map((item, i) => (
+        data.slice((page - 1) * 9, (page - 1) * 9 + 10).map((item, i) => (
           <ItemRow key={i}>
             <div>{String(item.couponId).padStart(6, "0")}</div>
             <div>{item.brandName}</div>

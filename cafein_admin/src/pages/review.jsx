@@ -8,7 +8,7 @@ import useSearch from "../hooks/useSearch";
 
 import ReviewModal from "../components/common/modal/ReviewDetailModal";
 import { reviewDataApi, reviewSearchApi } from "../util/review";
-import None from "../components/None";
+import None from "../components/common/None";
 import ReviewTemp from "../components/ReviewItem";
 import MemoModal from "../components/common/modal/Memo";
 import FilterRow from "../components/common/FilterRow";

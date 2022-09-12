@@ -5,7 +5,7 @@ import useSearch from "../hooks/useSearch";
 import styled from "styled-components";
 import * as S from "./style copy";
 
-import None from "../components/None";
+import None from "../components/common/None";
 import Header from "../components/common/Header";
 import MemoModal from "../components/common/modal/Memo";
 import FilterRow from "../components/common/FilterRow";
