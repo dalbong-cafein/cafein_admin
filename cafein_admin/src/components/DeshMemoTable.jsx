@@ -6,7 +6,7 @@ import NoneDiv from "./common/Nonediv";
 import MemoItem from "./DeshMemoTableItem";
 
 import { memoListApi } from "../util/memo";
-import MemoModal from "./common/modal/Memo";
+import MemoModal from "./modal/Memo";
 
 export default function MemoTable() {
   //메모 관련 state
@@ -43,12 +43,7 @@ export default function MemoTable() {
           </>
         )}
       </Box>
-      {memoModal && (
-        <MemoModal
-          item={selectMItem}
-          setModal={onMemoModalOff}
-        />
-      )}
+      {memoModal && <MemoModal item={selectMItem} setModal={onMemoModalOff} />}
     </>
   );
 }

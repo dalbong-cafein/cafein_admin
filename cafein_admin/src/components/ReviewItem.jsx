@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import * as S from "../pages/style copy";
 import Row from "./atoms/row";
-import ReviewStarRow from "./common/modal/ReviewStarRow";
+import ReviewStarRow from "./common/ReviewStarRow";
 import ReviewRecommendationBtn from "./ReviewRecommendationBtn";
 
 import { ReactComponent as Memo } from "../svg/memo.svg";

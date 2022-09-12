@@ -3,15 +3,15 @@ import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
 
-import { ReactComponent as Close } from "../../../svg/close2.svg";
-import { ReactComponent as Page } from "../../../svg/page.svg";
+import { ReactComponent as Close } from "../../svg/close2.svg";
+import { ReactComponent as Page } from "../../svg/page.svg";
 
-import Row from "../../atoms/row";
+import Row from "../atoms/row";
 import {
   userDataUpdateApi,
   userLeaveApi,
   userReportApi,
-} from "../../../util/user";
+} from "../../util/user";
 import MUReport from "./MUReport";
 import Sticker from "./sticker";
 import RedAlert from "./RedAlert";

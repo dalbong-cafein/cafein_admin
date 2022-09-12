@@ -1,7 +1,7 @@
 import React from "react";
 import Portal from "./Portal";
 import * as S from "./alertstyle";
-import Row from "../../atoms/row";
+import Row from "../atoms/row";
 
 const Alert = ({ setAlert, text, subtext, func, forFunc }) => {
   const closeModal = () => {

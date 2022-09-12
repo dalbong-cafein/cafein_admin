@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
-import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Row from "../../atoms/row";
+import { ReactComponent as Close } from "../../svg/close2.svg";
+import Row from "../atoms/row";
 import { useEffect } from "react";
 import {
   reviewDelApi,
   reviewDetailApi,
   reviewUserDataApi,
-} from "../../../util/review";
+} from "../../util/review";
 import RedAlert from "./RedAlert";
 import ReportReason from "./ReportReason";
-import Sliders from "../carousel/carousel";
-import Stars from "../../atoms/stars";
+import Sliders from "../common/carousel/carousel";
+import Stars from "../atoms/stars";
 
 export default function ReviewView({ setModal, id, loadD }) {
   const [temp, setTemp] = useState([]);

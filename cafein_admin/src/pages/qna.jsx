@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import * as S from "./style copy";
 import * as SS from "../components/noticesStyle";
@@ -9,14 +9,13 @@ import SelectHeader from "../components/common/SelectHeader";
 import { registerNotice } from "../recoil/NNotice";
 import { postDelApi, registerNoticeApi, eventListApi } from "../util/events";
 import { useRecoilState } from "recoil";
-import Alert from "../components/common/modal/Alert";
+import Alert from "../components/modal/Alert";
 import None from "../components/common/None";
-import Preview from "../components/common/modal/preview";
-import RedAlert from "../components/common/modal/RedAlert";
-import NoticeM from "../components/common/modal/noticeM";
+import Preview from "../components/modal/preview";
+import RedAlert from "../components/modal/RedAlert";
+import NoticeM from "../components/modal/noticeM";
 import usePagination from "../hooks/usePagination";
 import FilterRow from "../components/common/FilterRow";
-import FileUpload from "../components/common/FileUproad";
 import RegNoticeBox from "../components/RegNoticeBox";
 
 const QnAs = () => {
@@ -35,13 +34,6 @@ const QnAs = () => {
   const [preview, setPreview] = useState(false);
   const [register, setRegister] = useRecoilState(registerNotice);
 
-  const onChange = (e) => {
-    const name = e.target.name;
-    const copy = { ...register };
-    copy[name] = e.target.value;
-    setRegister(copy);
-  };
-
   const onSubmit = (register) => {
     registerNoticeApi(register)
       .then((res) => {
@@ -50,7 +42,6 @@ const QnAs = () => {
       })
       .catch((err) => console.log(err));
   };
-  const input = useRef();
 
   const onDel = () => {
     postDelApi(selectItem.boardId)
@@ -98,7 +89,6 @@ const QnAs = () => {
               <div>제목</div>
               <div>등록일</div>
             </TableHeader>
-            {/* <S.DataBox> */}
             {data
               .slice(item * (page - 1), item * (page - 1) + item)
               .map((item, i) => (
@@ -124,7 +114,6 @@ const QnAs = () => {
                   <div>{String(item.regDateTime).split("T")[0]}</div>
                 </ItemRow>
               ))}
-            {/* </S.DataBox> */}
           </S.Wrapper>
           {data.length == 0 && <None text="QnA" />}
         </div>

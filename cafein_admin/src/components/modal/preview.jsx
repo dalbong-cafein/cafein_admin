@@ -1,13 +1,13 @@
 import React from "react";
 import Portal from "./Portal";
 import styled from "styled-components";
-import { ReactComponent as Header1 } from "../../../svg/header1.svg";
-import { ReactComponent as Header2 } from "../../../svg/header2.svg";
-import { ReactComponent as Footer } from "../../../svg/footer.svg";
-import { ReactComponent as HeaderE } from "../../../svg/headerE.svg";
-import { ReactComponent as Arrow } from "../../../svg/ArrowUp.svg";
-import Row from "../../atoms/row";
-import PVImg from "../PVImg";
+import { ReactComponent as Header1 } from "../../svg/header1.svg";
+import { ReactComponent as Header2 } from "../../svg/header2.svg";
+import { ReactComponent as Footer } from "../../svg/footer.svg";
+import { ReactComponent as HeaderE } from "../../svg/headerE.svg";
+import { ReactComponent as Arrow } from "../../svg/ArrowUp.svg";
+import Row from "../atoms/row";
+import PVImg from "../common/PVImg";
 
 export default function Preview({ setModal, item, file, menu }) {
   const closeModal = () => {

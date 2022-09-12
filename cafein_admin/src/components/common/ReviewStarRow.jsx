@@ -1,5 +1,5 @@
-import Row from "../../atoms/row";
-import Stars from "../../atoms/stars";
+import Row from "../atoms/row";
+import Stars from "../atoms/stars";
 
 export default function ReviewStarRow({
   width,

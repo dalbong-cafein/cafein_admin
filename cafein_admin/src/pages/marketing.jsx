@@ -12,9 +12,9 @@ import {
   marketingListApi,
   marketingSearchApi,
 } from "../util/events";
-import RedAlert from "../components/common/modal/RedAlert";
+import RedAlert from "../components/modal/RedAlert";
 import MarketingsItem from "../components/MarketingsItem";
-import MemoModal from "../components/common/modal/Memo";
+import MemoModal from "../components/modal/Memo";
 import FilterRow from "../components/common/FilterRow";
 
 import SelectHeader from "../components/common/SelectHeader";

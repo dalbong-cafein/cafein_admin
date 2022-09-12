@@ -6,7 +6,7 @@ import * as SS from "../components/noticesStyle";
 
 import { eventImgApi, regImgApi } from "../util/events";
 
-import BPreview from "../components/common/modal/Bpreview";
+import BPreview from "../components/modal/Bpreview";
 import PVImg from "../components/common/PVImg";
 import SelectHeader from "../components/common/SelectHeader";
 import Row from "../components/atoms/row";
@@ -111,7 +111,6 @@ const Events = () => {
               </ImgBox>
             ) : (
               <>
-                {" "}
                 <InputBox
                   onClick={() => {
                     input.current?.click();

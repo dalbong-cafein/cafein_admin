@@ -23,7 +23,7 @@ export const Input = styled.input`
   border: 0;
   background-color: #131313;
   color: #fff;
-  width: 220px;
+  max-width: 200px;
   height: 32px;
   &:focus {
     outline: none;
@@ -44,7 +44,7 @@ export const NonePic = styled.div`
 
 export const Sbtn = styled.div`
   position: relative;
-  min-width: 120px;
+  min-width: 110px;
   height: 36px;
   line-height: 36px;
   display: flex;

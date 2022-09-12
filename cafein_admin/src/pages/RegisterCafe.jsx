@@ -11,7 +11,7 @@ import { feedCreateApi } from "../util/management";
 
 import Row from "../components/atoms/row";
 import Header from "../components/common/Header";
-import SearchModal from "../components/common/modal/SearchModal";
+import SearchModal from "../components/modal/SearchModal";
 import RegisterCafeRowStar from "../components/RegisterCafeRowStar";
 import CafeTimeBox from "../components/common/CafeTimeBox";
 import RegisterCafeRecommendation from "../components/RegisterCafeRecommendation";

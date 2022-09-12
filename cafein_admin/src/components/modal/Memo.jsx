@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
-import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Row from "../../atoms/row";
+import { ReactComponent as Close } from "../../svg/close2.svg";
+import Row from "../atoms/row";
 import {
   delMemoApi,
   editMemoApi,
   memoDataApi,
   registerMemoApi,
-} from "../../../util/memo";
+} from "../../util/memo";
 import RedAlert from "./RedAlert";
 
 export default function MemoModal({ setModal, item }) {

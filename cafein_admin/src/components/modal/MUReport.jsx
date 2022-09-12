@@ -2,7 +2,7 @@ import React from "react";
 import Portal from "./Portal";
 import styled from "styled-components";
 import * as S from "./style";
-import { ReactComponent as Close } from "../../../svg/close2.svg";
+import { ReactComponent as Close } from "../../svg/close2.svg";
 
 export default function MUReport({ setModal, selectItem }) {
   const closeModal = () => {

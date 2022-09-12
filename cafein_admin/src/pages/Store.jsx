@@ -7,9 +7,9 @@ import * as S from "./style copy";
 
 import None from "../components/common/None";
 import Header from "../components/common/Header";
-import MemoModal from "../components/common/modal/Memo";
+import MemoModal from "../components/modal/Memo";
 import FilterRow from "../components/common/FilterRow";
-import StoreModal from "../components/common/modal/StoreModal";
+import StoreModal from "../components/modal/StoreModal";
 import StoreItem from "../components/StoreItem";
 
 import { feedDataApi, feedSearchApi } from "../util/management";

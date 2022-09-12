@@ -8,8 +8,8 @@ import styled from "styled-components";
 import { userDetailApi, userListApi, userSearchApi } from "../util/user";
 import None from "../components/common/None";
 import UserItem from "../components/UserItem";
-import MemoModal from "../components/common/modal/Memo";
-import UserDetailModal from "../components/common/modal/UserDetailModal";
+import MemoModal from "../components/modal/Memo";
+import UserDetailModal from "../components/modal/UserDetailModal";
 import Header from "../components/common/Header";
 import FilterRow from "../components/common/FilterRow";
 

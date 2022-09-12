@@ -11,8 +11,8 @@ ul {
 
 ul.pagination li {
   display: inline-block;
-  min-width: 2rem;
-  max-width: 6rem;
+  min-width: 1.5rem;
+  max-width: 4rem;
   height: 2rem;
   border: none;
   display: flex;
@@ -20,7 +20,7 @@ ul.pagination li {
   align-items: center;
   font-size: 16px;
   color: #fff;
-  margin: 0.1em;
+  /* margin: 0.1em; */
 }
 
 ul.pagination li a {

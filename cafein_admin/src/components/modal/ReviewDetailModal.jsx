@@ -3,16 +3,16 @@ import styled from "styled-components";
 import Portal from "./Portal";
 import * as S from "./style";
 
-import Row from "../../atoms/row";
-import Sliders from "../carousel/carousel";
+import Row from "../atoms/row";
+import Sliders from "../common/carousel/carousel";
 import RedAlert from "./RedAlert";
 import ReportReason from "./ReportReason";
-import ReviewStarRow from "./ReviewStarRow";
-import ReviewRecommendationBtn from "../../ReviewRecommendationBtn";
+import ReviewStarRow from "../common/ReviewStarRow";
+import ReviewRecommendationBtn from "../ReviewRecommendationBtn";
 
-import { reviewDelApi, reviewDetailApi } from "../../../util/review";
+import { reviewDelApi, reviewDetailApi } from "../../util/review";
 
-import { ReactComponent as Close } from "../../../svg/close2.svg";
+import { ReactComponent as Close } from "../../svg/close2.svg";
 
 export default function ReviewDetailModal({ setModal, detailReviewId }) {
   const closeModal = () => {

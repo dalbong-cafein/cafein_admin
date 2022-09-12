@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Row from "../atoms/row";
-import DropBox from "./dropbox";
+import DropBox from "./Dropbox";
 import * as S from "../../pages/style copy";
 
 import { ReactComponent as Search } from "../../svg/Search.svg";

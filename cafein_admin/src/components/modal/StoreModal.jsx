@@ -4,16 +4,16 @@ import * as S from "./style";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-import { ReactComponent as Close } from "../../../svg/close2.svg";
-import Row from "../../atoms/row";
-import HoverContent from "../../HoverContent";
-import Sliders from "../carousel/carousel";
+import { ReactComponent as Close } from "../../svg/close2.svg";
+import Row from "../atoms/row";
+import HoverContent from "../HoverContent";
+import Sliders from "../common/carousel/carousel";
 import RedAlert from "./RedAlert";
 import {
   cafeDelApi,
   feedDetailApi,
   feedDetailReviewApi,
-} from "../../../util/management";
+} from "../../util/management";
 import { useEffect } from "react";
 
 export default function CafeDetailModal({ setDModal, id }) {

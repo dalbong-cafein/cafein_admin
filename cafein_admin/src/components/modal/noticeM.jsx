@@ -1,19 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
-import { ReactComponent as Close } from "../../../svg/close2.svg";
+import { ReactComponent as Close } from "../../svg/close2.svg";
 import styled from "styled-components";
-import * as SS from "../../noticesStyle";
+import * as SS from "../noticesStyle";
 
-import { ReactComponent as Photo } from "../../../svg/photo.svg";
-import { ReactComponent as CloseIcon } from "../../../svg/close.svg";
-import PVImg from "../PVImg";
+import { ReactComponent as Photo } from "../../svg/photo.svg";
+import { ReactComponent as CloseIcon } from "../../svg/close.svg";
+import PVImg from "../common/PVImg";
 
-import RedAlert from "./RedAlert";
-import ReportReason from "./ReportReason";
-import Row from "../../atoms/row";
+import Row from "../atoms/row";
 import Preview from "./preview";
-import { editNoticeApi } from "../../../util/events";
+import { editNoticeApi } from "../../util/events";
 
 export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
   const closeModal = () => {

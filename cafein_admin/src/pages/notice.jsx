@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import * as S from "./style copy";
 import * as SS from "../components/noticesStyle";
 import SelectHeader from "../components/common/SelectHeader";
-import Preview from "../components/common/modal/preview";
-import RedAlert from "../components/common/modal/RedAlert";
-import NoticeM from "../components/common/modal/noticeM";
-import Alert from "../components/common/modal/Alert";
+import Preview from "../components/modal/preview";
+import RedAlert from "../components/modal/RedAlert";
+import NoticeM from "../components/modal/noticeM";
+import Alert from "../components/modal/Alert";
 import FilterRow from "../components/common/FilterRow";
 
 import None from "../components/common/None";

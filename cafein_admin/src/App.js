@@ -10,7 +10,7 @@ import { useRecoilState } from "recoil";
 import { adminState } from "./recoil/admin";
 
 //component
-import SideBar from "./components/common/sidebar";
+import SideBar from "./components/common/Sidebar";
 
 //page
 import Main from "./pages/main";

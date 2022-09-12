@@ -9,7 +9,7 @@ import { ReactComponent as Photo } from "../svg/photo.svg";
 import { ReactComponent as CloseIcon } from "../svg/close.svg";
 
 import PVImg from "../components/common/PVImg";
-import SearchModal from "../components/common/modal/SearchModal";
+import SearchModal from "../components/modal/SearchModal";
 import Row from "../components/atoms/row";
 import Header from "../components/common/Header";
 

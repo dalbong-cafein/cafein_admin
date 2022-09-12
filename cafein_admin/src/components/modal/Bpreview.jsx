@@ -1,11 +1,10 @@
 import React from "react";
 import Portal from "./Portal";
 import styled from "styled-components";
-import { ReactComponent as Header } from "../../../svg/BHeader.svg";
-import { ReactComponent as Footer } from "../../../svg/footer.svg";
+import { ReactComponent as Header } from "../../svg/BHeader.svg";
+import { ReactComponent as Footer } from "../../svg/footer.svg";
 
-import Row from "../../atoms/row";
-import PVImg from "../PVImg";
+import PVImg from "../common/PVImg";
 
 export default function BPreview({ setModal, item }) {
   const closeModal = () => {
