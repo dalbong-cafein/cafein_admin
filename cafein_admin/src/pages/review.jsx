@@ -63,8 +63,8 @@ const Review = () => {
   return (
     <>
       <Header
-        mcolor={"#fff"}
-        text={"카페 리뷰"}
+        mcolor="#fff"
+        text="카페 리뷰"
         subText={`등록된 리뷰 ${count}건`}
       />
       <FilterRow

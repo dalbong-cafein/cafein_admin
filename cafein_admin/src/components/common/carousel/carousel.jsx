@@ -21,7 +21,7 @@ export default function Sliders({ imgs, setModal }) {
   });
 
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <S.ModalBox>
         <S.ModalHeader>
           <p>카페 이미지 상세</p>

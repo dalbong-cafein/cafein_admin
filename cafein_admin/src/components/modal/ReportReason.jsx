@@ -42,7 +42,7 @@ export default function ReportReason({ setModal, id }) {
 
   return (
     <>
-      <Portal>
+      <Portal setModal={setModal}>
         <S.ModalBox>
           <S.ModalHeader>
             <p>리뷰 신고</p>
@@ -66,7 +66,7 @@ export default function ReportReason({ setModal, id }) {
             ))}
           </S.ModalContent>
           <ModalFooter>
-            <S.Btn color={"#2563eb"} onClick={() => setReport(true)}>
+            <S.Btn color="#2563eb" onClick={() => setReport(true)}>
               신고
             </S.Btn>
           </ModalFooter>
@@ -74,10 +74,10 @@ export default function ReportReason({ setModal, id }) {
       </Portal>
       {report && (
         <RedAlert
-          text={"리뷰 신고"}
-          text1={"리뷰를"}
-          text2={" 신고"}
-          text3={"하시겠습니까?"}
+          text="리뷰 신고"
+          text1="리뷰를"
+          text2=" 신고"
+          text3="하시겠습니까?"
           setAlert={setReport}
           func={onReport}
           forFunc={null}
@@ -118,6 +118,7 @@ const RItem = styled.div`
   justify-content: space-between;
   height: 56px;
   padding: 0 24px;
+  box-sizing: border-box;
   cursor: pointer;
   align-items: center;
   & > p {

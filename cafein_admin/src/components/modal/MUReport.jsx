@@ -9,7 +9,7 @@ export default function MUReport({ setModal, selectItem }) {
     setModal(false);
   };
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <S.ModalBox>
         <S.ModalHeader>
           <p>신고내역</p>

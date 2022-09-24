@@ -41,17 +41,14 @@ export default function RegNoticeBox({
           <FileUpload register={register} setRegister={setRegister} num={1} />
         </SS.TextBox>
       </div>
-      <Row gap={16} justify={"end"} align={"baseline"}>
+      <Row gap={16} justify="end" align="baseline">
         <SS.Btn
-          back={"#515151"}
+          back="#515151"
           onClick={() => setPreview((previus) => !previus)}
         >
           미리보기
         </SS.Btn>
-        <SS.Btn
-          back={"#2563eb"}
-          onClick={() => setAlert((previus) => !previus)}
-        >
+        <SS.Btn back="#2563eb" onClick={() => setAlert((previus) => !previus)}>
           등록
         </SS.Btn>
       </Row>

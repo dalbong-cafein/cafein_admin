@@ -6,18 +6,15 @@ import { ReactComponent as Footer } from "../../svg/footer.svg";
 
 import PVImg from "../common/PVImg";
 
-export default function BPreview({ setModal, item }) {
+export default function EventPreview({ setModal, item }) {
   const closeModal = () => {
     setModal(false);
   };
-
-  console.log(item);
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <ModalBox>
         <ModalContent style={{ backgroundColor: "#fff" }}>
           <Header />
-
           <ContentBox>
             {item && (
               <div>
@@ -28,7 +25,7 @@ export default function BPreview({ setModal, item }) {
           <Footer />
         </ModalContent>
         <ModalFooter>
-          <Btn color={"#515151"} onClick={closeModal}>
+          <Btn color="#515151" onClick={closeModal}>
             닫기
           </Btn>
         </ModalFooter>
@@ -69,6 +66,7 @@ const ModalFooter = styled.div`
   box-sizing: border-box;
   justify-content: center;
   align-items: baseline;
+  padding: 20px 0;
 `;
 
 const Btn = styled.div`

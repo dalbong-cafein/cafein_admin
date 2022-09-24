@@ -74,11 +74,11 @@ const Marketing = () => {
   return (
     <>
       <SelectHeader
-        menu={"marketing"}
-        menu1={"marketing"}
-        menu2={"event"}
-        Tmenu1={"마케팅 서비스"}
-        Tmenu2={"이벤트"}
+        menu="marketing"
+        menu1="marketing"
+        menu2="event"
+        Tmenu1="마케팅 서비스"
+        Tmenu2="이벤트"
       />
       <FilterRow
         searchType={searchType}
@@ -120,9 +120,9 @@ const Marketing = () => {
       </S.Wrapper>
       {alert && (
         <RedAlert
-          text={"마케팅 서비스 상태 변경"}
-          text2={"'완료'"}
-          text3={"로 상태를 변경하시겠습니까?"}
+          text="마케팅 서비스 상태 변경"
+          text2="'완료'"
+          text3="로 상태를 변경하시겠습니까?"
           setAlert={setAlert}
           func={changeState}
           forFunc={reportId}
@@ -130,7 +130,7 @@ const Marketing = () => {
       )}
 
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
-      {data.length === 0 && <None text={"마케팅 서비스"} />}
+      {data.length === 0 && <None text="마케팅 서비스" />}
     </>
   );
 };

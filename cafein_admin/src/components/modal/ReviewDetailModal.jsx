@@ -41,7 +41,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
 
   return (
     <>
-      <Portal>
+      <Portal setModal={setModal}>
         <S.ModalBox height="790px">
           <S.ModalHeader>
             <p>리뷰 상세</p>

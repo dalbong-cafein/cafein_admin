@@ -23,7 +23,7 @@ const StoreItem = ({
               {String(item.storeId).padStart(6, "0")}
             </div>
             <div onClick={() => onModal(item)}>
-              <Row gap={16} align={"center"} style={{ marginLeft: "16px" }}>
+              <Row gap={16} align="center" style={{ marginLeft: "16px" }}>
                 {item.storeImageDto ? (
                   <S.Photo img={item.storeImageDto.imageUrl} />
                 ) : (
@@ -70,7 +70,6 @@ const ItemRow = styled.div`
   border-bottom: 1px solid #515151;
 
   & > div {
-    // padding: 0 0 0 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,6 +78,8 @@ const ItemRow = styled.div`
     box-sizing: border-box;
     flex: 1;
     border-right: 1px solid #515151;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
   }
   & > div:nth-child(3),
   div:nth-child(2) {

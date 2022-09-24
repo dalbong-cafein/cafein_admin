@@ -15,10 +15,10 @@ const UserItem = ({ data, onModal, setModalMemo, setMemoItem }) => {
             </div>
             <div onClick={() => onModal(item)}>
               <p style={{ color: "#FC7521" }}>{item.socialTypeList[0]}</p>
-              {item.socialTypeList[1] && <p>{item.socialTypeList[1]}</p>}
+              {item.socialTypeList[1] && <p>/{item.socialTypeList[1]}</p>}
             </div>
             <div onClick={() => onModal(item)}>
-              <Row gap={16} align={"center"} style={{ marginLeft: "16px" }}>
+              <Row gap={16} align="center" style={{ marginLeft: "16px" }}>
                 {item.memberImageDto ? (
                   <S.Photo img={item.memberImageDto.imageUrl} />
                 ) : (
@@ -32,7 +32,7 @@ const UserItem = ({ data, onModal, setModalMemo, setMemoItem }) => {
             <div onClick={() => onModal(item)}>{item.app || "-"}</div>
             <div onClick={() => onModal(item)}>
               <Row gap={16}>
-                <p>{item.divice || "-"}</p>
+                <p>{item.device || "-"}</p>
                 <p>{item.ip || "-"}</p>
               </Row>
             </div>

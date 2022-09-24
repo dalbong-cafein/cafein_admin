@@ -24,7 +24,7 @@ export default function HeartView({ setModal, id }) {
     loadData();
   }, []);
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <S.ModalBox>
         <S.ViewHeader>
           <div>
@@ -58,13 +58,13 @@ const IRow = styled.div`
   font-size: 14px;
 
   & > p:first-child {
-    width: 50px;
+    width: 30px;
     text-align: left;
     color: #8b8b8b;
     font-weight: 500;
   }
   & > p:nth-child(2) {
-    width: 300px;
+    width: 380px;
   }
   & > p:nth-child(3) {
     color: #e3e3e3;

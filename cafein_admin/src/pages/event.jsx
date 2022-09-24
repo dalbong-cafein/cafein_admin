@@ -6,7 +6,7 @@ import * as SS from "../components/noticesStyle";
 
 import { eventImgApi, regImgApi } from "../util/events";
 
-import BPreview from "../components/modal/Bpreview";
+import EventPreview from "../components/modal/EventPreview";
 import PVImg from "../components/common/PVImg";
 import SelectHeader from "../components/common/SelectHeader";
 import Row from "../components/atoms/row";
@@ -70,11 +70,11 @@ const Events = () => {
   return (
     <>
       <SelectHeader
-        menu={"event"}
-        menu1={"marketing"}
-        menu2={"event"}
-        Tmenu1={"마케팅 서비스"}
-        Tmenu2={"이벤트"}
+        menu="event"
+        menu1="marketing"
+        menu2="event"
+        Tmenu1="마케팅 서비스"
+        Tmenu2="이벤트"
       />
       <SS.Container>
         <div>
@@ -99,7 +99,7 @@ const Events = () => {
             />
           )}
 
-          {data.length === 0 && <None text={"마케팅 서비스"} />}
+          {data.length === 0 && <None text="마케팅 서비스" />}
         </div>
         <SS.NewNotice>
           <p>새 배너 등록</p>
@@ -128,17 +128,17 @@ const Events = () => {
               </>
             )}
           </AttachBox>
-          <Row gap={16} justify={"end"}>
-            <SS.Btn back={"#515151"} onClick={() => setPreview(true)}>
+          <Row gap={16} justify="end">
+            <SS.Btn back="#515151" onClick={() => setPreview(true)}>
               미리보기
             </SS.Btn>
-            <SS.Btn back={"#2563eb"} onClick={regImg}>
+            <SS.Btn back="#2563eb" onClick={regImg}>
               등록
             </SS.Btn>
           </Row>
         </SS.NewNotice>
       </SS.Container>
-      {preview && <BPreview setModal={setPreview} item={file} />}
+      {preview && <EventPreview setModal={setPreview} item={file} />}
     </>
   );
 };

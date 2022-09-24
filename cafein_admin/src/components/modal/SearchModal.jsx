@@ -117,7 +117,7 @@ export default function SearchModal({
   };
 
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <S.ModalBox>
         <S.ModalHeader>
           <p>카페 검색</p>

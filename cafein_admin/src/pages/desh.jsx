@@ -12,8 +12,8 @@ const Desh = () => {
     <>
       <Header
         mSize={22}
-        text={"안녕하세요! 오늘도 일하는 당신, 참 멋져요"}
-        mcolor={"#fff"}
+        text="안녕하세요! 오늘도 일하는 당신, 참 멋져요"
+        mcolor="#fff"
       >
         <DateColumn />
       </Header>
@@ -24,7 +24,7 @@ const Desh = () => {
             <StaticBox>
               <p>통계</p>
               <div>
-                <NoneDiv text={"통계"} loc={"statistics"} />
+                <NoneDiv text="통계" loc="statistics" />
               </div>
             </StaticBox>
             <MarketingTable />

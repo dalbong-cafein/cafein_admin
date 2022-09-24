@@ -8,7 +8,7 @@ import { ReactComponent as Exit } from "../svg/exit.svg";
 import { useRecoilState } from "recoil";
 import { adminState } from "../recoil/admin";
 
-export default function SidemenuProfile() {
+export default function SidebarProfile() {
   const [admin] = useRecoilState(adminState);
 
   const onClickExit = () => {

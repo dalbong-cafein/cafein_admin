@@ -60,10 +60,10 @@ const RegisterCafe = () => {
   return (
     <>
       <Header
-        align={"center"}
-        mcolor={"#8B8B8B"}
-        text={"카페 관리"}
-        inner={"새 카페 등록"}
+        align="center"
+        mcolor="#8B8B8B"
+        text="카페 관리"
+        inner="새 카페 등록"
       >
         <S.Submit
           disabled={

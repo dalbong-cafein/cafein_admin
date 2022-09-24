@@ -7,7 +7,7 @@ import Row from "../atoms/row";
 import { stickerApi, stickerDelApi } from "../../util/user";
 import { useEffect } from "react";
 
-export default function Sticker({ setModal, id, loadD }) {
+export default function StickerView({ setModal, id, loadD }) {
   const [temp, setTemp] = useState([]);
   const closeModal = () => {
     setModal(false);
@@ -35,7 +35,7 @@ export default function Sticker({ setModal, id, loadD }) {
     loadData();
   }, []);
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <S.ModalBox>
         <S.ViewHeader>
           <div>
@@ -70,14 +70,14 @@ const IRow = styled.div`
   justify-content: space-between;
   font-size: 14px;
   & > p:first-child {
-    width: 50px;
+    width: 30px;
     text-align: left;
     color: #8b8b8b;
 
     font-weight: 500;
   }
   & > div:nth-child(2) {
-    width: 300px;
+    width: 380px;
     & > p:first-child {
       color: #e3e3e3;
     }

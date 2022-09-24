@@ -22,7 +22,7 @@ export default function DeshTodayNewData({}) {
   return (
     <RowBox>
       <Box
-        colorS={"#FC6406"}
+        colorS="#FC6406"
         onClick={() => {
           navigate("/management");
         }}
@@ -34,7 +34,7 @@ export default function DeshTodayNewData({}) {
         <p>{deshData?.storeCnt}곳</p>
       </Box>
       <Box
-        colorS={"#2563eb"}
+        colorS="#2563eb"
         onClick={() => {
           navigate("/user");
         }}
@@ -46,7 +46,7 @@ export default function DeshTodayNewData({}) {
         <p>{deshData?.memberCnt}명</p>
       </Box>
       <Box
-        colorS={"#26ba6a"}
+        colorS="#26ba6a"
         onClick={() => {
           navigate("/review");
         }}

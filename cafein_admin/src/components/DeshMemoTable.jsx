@@ -29,7 +29,7 @@ export default function MemoTable() {
       <Box>
         <p>메모</p>
         {memoArr?.length === 0 ? (
-          <NoneDiv padding={284} text={"메모"} />
+          <NoneDiv padding={284} text="메모" />
         ) : (
           <>
             {memoArr?.map((item, i) => (

@@ -99,7 +99,7 @@ export default function MemoModal({ setModal, item }) {
   }, []);
 
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <S.ModalBox>
         <S.ModalHeader>
           <p>
@@ -109,7 +109,7 @@ export default function MemoModal({ setModal, item }) {
               memo?.reviewId ||
               memo?.couponId ||
               memo?.memberId ||
-              ""
+              id
             }`}
           </p>
           <Close onClick={closeModal} />
@@ -184,10 +184,10 @@ export default function MemoModal({ setModal, item }) {
         )}
         {alert && (
           <RedAlert
-            text={"메모 삭제"}
-            text1={"메모를"}
-            text2={" 삭제"}
-            text3={"하시겠습니까?"}
+            text="메모 삭제"
+            text1="메모를"
+            text2=" 삭제"
+            text3="하시겠습니까?"
             setAlert={setAlert}
             func={onDel}
             forFunc={null}

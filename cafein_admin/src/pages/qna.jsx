@@ -11,9 +11,9 @@ import { postDelApi, registerNoticeApi, eventListApi } from "../util/events";
 import { useRecoilState } from "recoil";
 import Alert from "../components/modal/Alert";
 import None from "../components/common/None";
-import Preview from "../components/modal/preview";
+import NoticePreview from "../components/modal/NoticePreview";
 import RedAlert from "../components/modal/RedAlert";
-import NoticeM from "../components/modal/noticeM";
+import NoticeDetailModal from "../components/modal/NoticeDetailModal";
 import usePagination from "../hooks/usePagination";
 import FilterRow from "../components/common/FilterRow";
 import RegNoticeBox from "../components/RegNoticeBox";
@@ -63,11 +63,11 @@ const QnAs = () => {
   return (
     <>
       <SelectHeader
-        menu={"qna"}
-        menu1={"notice"}
-        menu2={"qna"}
-        Tmenu1={"공지사항"}
-        Tmenu2={"자주 묻는 질문"}
+        menu="qna"
+        menu1="notice"
+        menu2="qna"
+        Tmenu1="공지사항"
+        Tmenu2="자주 묻는 질문"
       />
       <SS.Container>
         <div>
@@ -128,14 +128,14 @@ const QnAs = () => {
       {alert && (
         <Alert
           setAlert={setAlert}
-          text={"자주 묻는 질문 등록"}
-          subtext={"게시물을 등록하시겠습니까?"}
+          text="자주 묻는 질문 등록"
+          subtext="게시물을 등록하시겠습니까?"
           func={onSubmit}
           forFunc={register}
         />
       )}
       {preview && (
-        <Preview
+        <NoticePreview
           item={register}
           setModal={setPreview}
           file={register.imageFiles}
@@ -143,8 +143,8 @@ const QnAs = () => {
         />
       )}
       {modal && (
-        <NoticeM
-          selectItem2={selectItem}
+        <NoticeDetailModal
+          selectItem={selectItem}
           setModal={setModal}
           menu="QnA"
           setAlert={setDAlert}
@@ -152,10 +152,10 @@ const QnAs = () => {
       )}
       {Dalert && (
         <RedAlert
-          text={"자주 묻는 질문 삭제"}
-          text1={"자주 묻는 질문을 "}
-          text2={"삭제"}
-          text3={"하시겠습니까?"}
+          text="자주 묻는 질문 삭제"
+          text1="자주 묻는 질문을 "
+          text2="삭제"
+          text3="하시겠습니까?"
           setAlert={setDAlert}
           func={onDel}
           forFunc={null}

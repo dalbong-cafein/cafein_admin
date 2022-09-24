@@ -73,7 +73,7 @@ export const Sbtn = styled.div`
   align-items: center;
   padding: 0 10px;
   color: #fff;
-  background-color: ${(props) => props.color || "#333333"};
+  background-color: ${(props) => props.color || "#333333";
   border-radius: 6px;
   text-align: center;
   cursor: pointer;

@@ -9,13 +9,13 @@ import { ReactComponent as Arrow } from "../../svg/ArrowUp.svg";
 import Row from "../atoms/row";
 import PVImg from "../common/PVImg";
 
-export default function Preview({ setModal, item, file, menu }) {
+export default function NoticePreview({ setModal, item, file, menu }) {
   const closeModal = () => {
     setModal(false);
   };
 
   return (
-    <Portal>
+    <Portal setModal={setModal}>
       <ModalBox>
         <ModalContent>
           {menu === "notice" ? (
@@ -81,7 +81,7 @@ export default function Preview({ setModal, item, file, menu }) {
           <Footer />
         </ModalContent>
         <ModalFooter>
-          <Btn color={"#515151"} onClick={closeModal}>
+          <Btn color="#515151" onClick={closeModal}>
             닫기
           </Btn>
         </ModalFooter>
@@ -98,8 +98,6 @@ const ModalBox = styled.div`
   background-color: #131313;
   box-sizing: border-box;
   border: 1px solid #515151;
-  // width: 727px;
-  // height: 694px;
 `;
 
 const ModalFooter = styled.div`

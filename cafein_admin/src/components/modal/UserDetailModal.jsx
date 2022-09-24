@@ -13,7 +13,7 @@ import {
   userReportApi,
 } from "../../util/user";
 import MUReport from "./MUReport";
-import Sticker from "./sticker";
+import StickerView from "./StickerView";
 import RedAlert from "./RedAlert";
 import { useNavigate } from "react-router-dom";
 import ReviewView from "./reviewView";
@@ -23,6 +23,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
   const closeModal = () => {
     setModal(false);
   };
+  console.log(selectItem);
   const navigate = useNavigate();
   const [reportData, setReportData] = useState([]);
   const [SItem, setItems] = useState([]);
@@ -34,9 +35,6 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
   const [alert, setAlert] = useState(false);
   const [eUData, setEUData] = useState({});
 
-  const stickerView = () => {
-    setSticker(true);
-  };
   const reviewView = () => {
     setReview(true);
   };
@@ -75,10 +73,8 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
   useEffect(() => {
     if (selectItem.memberId) {
       userReportApi(selectItem.memberId)
-        .then((res) =>
-          setReportData(res.reportData.reportData.adminReportResDtoList)
-        )
-        .catch((err) => navigate("/"));
+        .then((res) => setReportData(res.data.data.adminReportResDtoList))
+        .catch((err) => console.log(err));
     }
     setEUData({
       memberId: selectItem.memberId,
@@ -90,13 +86,13 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
 
   return (
     <>
-      <Portal>
+      <Portal setModal={setModal}>
         <ModalBox>
           {selectItem && (
             <>
               <ModalBoxs
                 style={{ borderRadius: "16px 0 0 16px" }}
-                color={"#131313"}
+                color="#131313"
                 width={516}
               >
                 <Title size={20}>회원 상세</Title>
@@ -122,7 +118,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                     <p style={{ width: "220px" }}>
                       {selectItem.nickname || "-"}
                     </p>
-                    <Row gap={16} align={"center"}>
+                    <Row gap={16} align="center">
                       {selectItem.memberImageDto && (
                         <Photo img={selectItem.memberImageDto.imageUrl} />
                       )}
@@ -175,7 +171,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                   <Line>
                     <span>DEVICE/IP</span>
                     <p>
-                      {selectItem.divice || "-"}
+                      {selectItem.device || "-"}
                       <br />
                       {selectItem.ip || "-"}
                     </p>
@@ -184,47 +180,47 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
               </ModalBoxs>
               <ModalBoxs
                 style={{ borderRadius: "0 16px 16px 0", position: "relative" }}
-                color={"#333333"}
+                color="#333333"
                 width={476}
               >
-                <Row justify={"space-between"}>
+                <Row justify="space-between">
                   <Title size={16}>활동정보</Title>
                   <Close onClick={closeModal} />
                 </Row>
                 <Columnbox>
-                  <Line color={"#515151"}>
+                  <Line color="#515151">
                     <span>방문</span>
-                    <p>{"-"}</p>
+                    <p>-</p>
                   </Line>
-                  <Line color={"#515151"}>
+                  <Line color="#515151">
                     <span>저장</span>
                     <p>{selectItem?.heartCnt || "-"}</p>
                     <Page onClick={heartView} />
                   </Line>
-                  <Line color={"#515151"}>
+                  <Line color="#515151">
                     <span>공유</span>
-                    <p>{"-"}</p>
+                    <p>-</p>
                   </Line>
-                  <Line color={"#515151"}>
+                  <Line color="#515151">
                     <span>혼잡도</span>
                     <p>{selectItem?.congestionCnt || "-"}</p>
                   </Line>
-                  <Line color={"#515151"}>
+                  <Line color="#515151">
                     <span>리뷰</span>
                     <p>{selectItem?.reviewCnt || "-"}</p>
                     <Page onClick={reviewView} />
                   </Line>
-                  <Line color={"#515151"}>
+                  <Line color="#515151">
                     <span>스티커</span>
                     <p>{selectItem?.stickerCnt || "-"}</p>
-                    <Page onClick={stickerView} />
+                    <Page onClick={() => setSticker(true)} />
                   </Line>
                 </Columnbox>
                 <Title style={{ padding: "40px 0 20px" }} size={16}>
                   기타
                 </Title>
                 <Columnbox>
-                  <Line color={"#515151"}>
+                  <Line color="#515151">
                     <span>가입일</span>
                     <p>
                       {String(selectItem.joinDateTime).replace("T", " ") || "-"}
@@ -269,11 +265,11 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                 </Columnbox>
                 <BtnRow>
                   {!edit ? (
-                    <S.Btn color={"#515151"} onClick={() => editData()}>
+                    <S.Btn color="#515151" onClick={() => editData()}>
                       수정
                     </S.Btn>
                   ) : (
-                    <S.Btn color={"#2563eb"} onClick={() => updateUserData()}>
+                    <S.Btn color="#2563eb" onClick={() => updateUserData()}>
                       저장
                     </S.Btn>
                   )}
@@ -285,7 +281,11 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
       </Portal>
       {RModal && <MUReport selectItem={SItem} setModal={setRModal} />}
       {sticker && (
-        <Sticker setModal={setSticker} id={selectItem.memberId} loadD={loadD} />
+        <StickerView
+          setModal={setSticker}
+          id={selectItem.memberId}
+          loadD={loadD}
+        />
       )}
       {review && (
         <ReviewView
@@ -298,9 +298,9 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
 
       {alert && (
         <RedAlert
-          text={"회원 탈퇴"}
-          text2={"'탈퇴'"}
-          text3={"로 상태를 변경 하시겠습니까?"}
+          text="회원 탈퇴"
+          text2="'탈퇴'"
+          text3="로 상태를 변경 하시겠습니까?"
           setAlert={setAlert}
           func={onDel}
           forFunc={null}

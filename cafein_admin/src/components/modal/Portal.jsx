@@ -1,8 +1,8 @@
 import ReactDom from "react-dom";
 import styled from "styled-components";
-export default function Portal({ children }) {
+export default function Portal({ children, setModal }) {
   return ReactDom.createPortal(
-    <Background>{children}</Background>,
+    <Background onClick={() => setModal(false)}>{children}</Background>,
     document.getElementById("modal")
   );
 }

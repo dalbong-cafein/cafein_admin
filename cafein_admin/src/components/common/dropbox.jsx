@@ -42,6 +42,7 @@ const Box = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  z-index: 999;
 `;
 const Item = styled.div`
   font-size: 14px;

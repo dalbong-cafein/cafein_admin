@@ -10,17 +10,22 @@ import { ReactComponent as CloseIcon } from "../../svg/close.svg";
 import PVImg from "../common/PVImg";
 
 import Row from "../atoms/row";
-import Preview from "./preview";
+import NoticePreview from "./NoticePreview";
 import { editNoticeApi } from "../../util/events";
 
-export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
+export default function NoticeDetailModal({
+  setModal,
+  selectItem,
+  menu,
+  setAlert,
+}) {
   const closeModal = () => {
     setModal(false);
   };
   const [preview, setPreview] = useState(false);
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState({
-    ...selectItem2,
+    ...selectItem,
     deleteImageId: "",
     imageFiles: [],
   });
@@ -48,7 +53,7 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
   const deleteImg = () => {
     setFile([]);
     const copy2 = { ...data };
-    copy2.deleteImageId = selectItem2.boardImageDtoList[0].imageId;
+    copy2.deleteImageId = selectItem.boardImageDtoList[0].imageId;
 
     setData(copy2);
   };
@@ -66,37 +71,36 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
         .catch((err) => {
           console.log(err);
           window.alert("나중에 다시 해주세요");
-          // window.location.reload();
+          window.location.reload();
         });
     }
   };
 
   useEffect(() => {
-    if (selectItem2.boardImageDtoList[0]) {
-      setFile([selectItem2.boardImageDtoList[0].imageUrl]);
+    if (selectItem.boardImageDtoList[0]) {
+      setFile([selectItem.boardImageDtoList[0].imageUrl]);
     }
-    console.log(selectItem2);
   }, []);
 
   const input = useRef();
   return (
     <>
-      <Portal>
-        <S.ModalBox height={"776px"}>
+      <Portal setModal={setModal}>
+        <S.ModalBox height="776px">
           <S.ModalHeader>
             <p>{menu == "notice" ? "공지사항 상세" : "자주 묻는 질문 상세"}</p>
             <Close onClick={closeModal} />
           </S.ModalHeader>
-          <S.ModalContent height={"460px"}>
+          <S.ModalContent height="460px">
             <Columnbox style={{ marginBottom: "16px" }}>
               <Line>
                 <span>분류</span>
-                <p>{String(selectItem2.boardId).padStart(6, "0")}</p>
+                <p>{String(selectItem.boardId).padStart(6, "0")}</p>
               </Line>
 
               <Line>
                 <span>등록일</span>
-                <p>{String(selectItem2.regDateTime).replace("T", " ")}</p>
+                <p>{String(selectItem.regDateTime).replace("T", " ")}</p>
               </Line>
               <Line>
                 <span>제목</span>
@@ -104,11 +108,11 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
                   <input
                     type="text"
                     name="title"
-                    defaultValue={selectItem2.title}
+                    defaultValue={selectItem.title}
                     onChange={(e) => onChange(e)}
                   />
                 ) : (
-                  <p>{selectItem2.title}</p>
+                  <p>{selectItem.title}</p>
                 )}
               </Line>
             </Columnbox>
@@ -116,11 +120,11 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
               <textarea
                 type="text"
                 name="content"
-                defaultValue={selectItem2.content}
+                defaultValue={selectItem.content}
                 onChange={(e) => onChange(e)}
               />
             ) : (
-              <Text>{selectItem2.content || "-"}</Text>
+              <Text>{selectItem.content || "-"}</Text>
             )}
           </S.ModalContent>
           <S.ModalFooter
@@ -177,10 +181,10 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
               >
                 삭제
               </p>
-              <S.Btn color={"#515151"} onClick={onSubmit}>
+              <S.Btn color="#515151" onClick={onSubmit}>
                 수정
               </S.Btn>
-              <S.Btn color={"#2563eb"} onClick={() => setPreview(true)}>
+              <S.Btn color="#2563eb" onClick={() => setPreview(true)}>
                 미리보기
               </S.Btn>
             </Row>
@@ -188,10 +192,10 @@ export default function NoticeM({ setModal, selectItem2, menu, setAlert }) {
         </S.ModalBox>
       </Portal>
       {preview && (
-        <Preview
-          item={selectItem2}
+        <NoticePreview
+          item={selectItem}
           setModal={setPreview}
-          file={selectItem2.reviewImageDtoList}
+          file={selectItem.reviewImageDtoList}
           menu={menu}
         />
       )}
@@ -211,7 +215,7 @@ const Line = styled.div`
   padding-bottom: 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
-    width: 100px;
+    width: 55px;
     text-align: right;
     font-size: 16px;
     font-weight: 700;

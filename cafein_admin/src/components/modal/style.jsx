@@ -11,7 +11,7 @@ export const ModalBox = styled.div`
   border: 1px solid #515151;
   border-radius: 16px;
   width: 727px;
-  height: ${(props) => (props.height ? props.height : "694px")};
+  min-height: ${(props) => (props.height ? props.height : "694px")};
 `;
 
 export const ModalBigBox = styled(ModalBox)`
@@ -121,6 +121,44 @@ export const ModalContent = styled.div`
     heigth: 350px;
     max-height: 450px;
     color: #e3e3e3;
+  }
+`;
+
+export const AlertBox = styled.div`
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #333333;
+  box-sizing: border-box;
+  border: 1px solid #515151;
+  border-radius: 8px;
+  width: 400px;
+  height: 180px;
+  padding: 32px 24px 24px;
+`;
+
+export const AlertBtn = styled.div`
+  color: #fff;
+  width: 74px;
+  height: 32px;
+  background-color: ${(props) => props.color && props.color};
+  border-radius: 6px;
+  text-align: center;
+  line-height: 32px;
+  cursor: pointer;
+`;
+export const AlertContent = styled.div`
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  & > p:first-child {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  & > span {
+    font-size: 14px;
   }
 `;
 

@@ -68,7 +68,7 @@ const User = () => {
 
   const onModal = (item) => {
     loadD(item.memberId);
-    setModal(!modal);
+    setModal(true);
   };
 
   useEffect(() => {
@@ -78,8 +78,8 @@ const User = () => {
   return (
     <>
       <Header
-        mcolor={"#fff"}
-        text={"회원 정보"}
+        mcolor="#fff"
+        text="회원 정보"
         subText={`등록된 회원 ${count}건`}
       />
       <FilterRow
@@ -106,7 +106,7 @@ const User = () => {
           <div>핸드폰</div>
           <div>이메일</div>
           <div>APP</div>
-          <div>DIVICE/IP</div>
+          <div>DEVICE/IP</div>
           <div>가입일</div>
           <div>상태</div>
           <div>메모</div>
@@ -119,7 +119,7 @@ const User = () => {
             setMemoItem={setMemoItem}
           />
         ) : (
-          <None text={"유저"} />
+          <None text="유저" />
         )}
       </S.Wrapper>
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}

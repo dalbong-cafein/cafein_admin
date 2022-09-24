@@ -61,12 +61,12 @@ export default function CafeDetailModal({ setDModal, id }) {
   }, []);
   return (
     <>
-      <Portal>
+      <Portal setModal={setDModal}>
         {data && reviewData && (
           <ModalBox>
             <ModalBoxs
               style={{ borderRadius: "16px 0 0 16px" }}
-              color={"#131313"}
+              color="#131313"
               width={516}
             >
               <Title size={20}>카페 상세</Title>
@@ -92,14 +92,14 @@ export default function CafeDetailModal({ setDModal, id }) {
                   <p>{`${String(data?.modDateTime).replace("T", " ")}`}</p>
                 </S.Line>
 
-                <Title style={{ padding: "40px 0 20px" }} size={16}>
+                <Title style={{ padding: "40px 20px 20px" }} size={16}>
                   기본 정보
                 </Title>
                 <Columnbox>
                   <StateRow>
                     <div>
                       <Row
-                        justify={"center"}
+                        justify="center"
                         gap={8}
                         style={{ padding: "0 auto" }}
                       >
@@ -133,14 +133,14 @@ export default function CafeDetailModal({ setDModal, id }) {
                       </Row>
                     </div>
                   </StateRow>
-                  <S.Line color={"#515151"}>
+                  <S.Line color="#515151">
                     <span>위치</span>
                     <p>{String(data?.address?.fullAddress)}</p>
                   </S.Line>
                   <StateRow>
                     <div>
                       <span>운영시간</span>
-                      {data?.businessHoursResDto && (
+                      {data?.businessHoursResDto ? (
                         <Column>
                           <p>
                             월
@@ -171,55 +171,57 @@ export default function CafeDetailModal({ setDModal, id }) {
                             {` ${data?.businessHoursResDto?.onSun?.open}-${data?.businessHoursResDto?.onSun?.closed}`}
                           </p>
                         </Column>
+                      ) : (
+                        "-"
                       )}
                     </div>
                   </StateRow>
-                  <S.Line color={"#515151"}>
+                  <S.Line color="#515151">
                     <span>기타 시간</span>
-                    <p>{data?.businessHoursResDto?.etcTime}</p>
+                    <p>{data?.businessHoursResDto?.etcTime || "-"}</p>
                   </S.Line>
-                  <S.Line color={"#515151"}>
+                  <S.Line color="#515151">
                     <span>와이파이</span>
-                    <p>{data?.wifiPassword}</p>
+                    <p>{data?.wifiPassword || "-"}</p>
                   </S.Line>
-                  <S.Line color={"#515151"}>
+                  <S.Line color="#515151">
                     <span>전화번호</span>
-                    <p>{data?.phone}</p>
+                    <p>{data?.phone || "-"}</p>
                   </S.Line>
-                  <S.Line color={"#515151"}>
+                  <S.Line color="#515151">
                     <span>웹사이트</span>
-                    <p>{data?.website}</p>
+                    <p>{data?.website || "-"}</p>
                   </S.Line>
                 </Columnbox>
               </Columnbox>
             </ModalBoxs>
             <ModalBoxs
               style={{ borderRadius: "0 16px 16px 0" }}
-              color={"#333333"}
+              color="#333333"
               width={476}
             >
-              <Row justify={"space-between"}>
+              <Row justify="space-between">
                 <Title size={16}>활동정보</Title>
                 <Close style={{ cursor: "pointer" }} onClick={closeModal} />
               </Row>
               <Columnbox style={{ paddingBottom: "40px" }}>
-                <S.Line color={"#515151"}>
+                <S.Line color="#515151">
                   <span>조회</span>
                   <p>{data?.viewCnt}</p>
                 </S.Line>
-                <S.Line color={"#515151"}>
+                <S.Line color="#515151">
                   <span>저장</span>
                   <p>{data?.heartCnt}</p>
                 </S.Line>
-                <S.Line color={"#515151"}>
+                <S.Line color="#515151">
                   <span>공유</span>
                   <p>{data?.congestionCnt}</p>
                 </S.Line>
-                <S.Line color={"#515151"}>
+                <S.Line color="#515151">
                   <span>혼잡도</span>
                   <p>{data?.congestionCnt}</p>
                 </S.Line>
-                <S.Line color={"#515151"}>
+                <S.Line color="#515151">
                   <span>리뷰</span>
                   <p>{data?.reviewCnt}</p>
                 </S.Line>
@@ -228,32 +230,32 @@ export default function CafeDetailModal({ setDModal, id }) {
                 카공 정보
               </Title>
               <Columnbox style={{ paddingBottom: "190px" }}>
-                <S.Line color={"#515151"}>
+                <S.Line color="#515151">
                   <span>전체</span>
                   <p>{reviewData?.recommendPercent}% 추천</p>
                 </S.Line>
-                <HoverLine color={"#515151"}>
+                <HoverLine color="#515151">
                   <span>콘센트</span>
                   <p>{totalfunc(reviewData?.socket)}</p>
                 </HoverLine>
                 <HoverBox late={20}>
                   <HoverContent obj={reviewData?.socket} />
                 </HoverBox>
-                <HoverLine color={"#515151"}>
+                <HoverLine color="#515151">
                   <span>화장실</span>
                   <p>{totalfunc(reviewData?.restroom)}</p>
                 </HoverLine>
                 <HoverBox late={55}>
                   <HoverContent obj={reviewData?.restroom} />
                 </HoverBox>
-                <HoverLine color={"#515151"}>
+                <HoverLine color="#515151">
                   <span>테이블</span>
                   <p>{totalfunc(reviewData?.tableSize)}</p>
                 </HoverLine>
                 <HoverBox late={90}>
                   <HoverContent obj={reviewData?.tableSize} />
                 </HoverBox>
-                <HoverLine color={"#515151"}>
+                <HoverLine color="#515151">
                   <span>와이파이</span>
                   <p>{totalfunc(reviewData?.wifi)}</p>
                 </HoverLine>
@@ -269,7 +271,7 @@ export default function CafeDetailModal({ setDModal, id }) {
                   삭제
                 </S.Btn>
                 <S.Btn
-                  color={"#515151"}
+                  color="#515151"
                   onClick={() =>
                     navigate("/management/editCafe", {
                       state: data,
@@ -288,10 +290,10 @@ export default function CafeDetailModal({ setDModal, id }) {
       )}
       {alert && (
         <RedAlert
-          text={"카페 삭제"}
-          text1={"카페를"}
-          text2={" 삭제"}
-          text3={"하시겠습니까?"}
+          text="카페 삭제"
+          text1="카페를"
+          text2=" 삭제"
+          text3="하시겠습니까?"
           setAlert={setAlert}
           func={onDel}
           forFunc={null}

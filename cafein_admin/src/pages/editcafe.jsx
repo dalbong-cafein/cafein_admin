@@ -147,10 +147,10 @@ const Editcafe = () => {
   return (
     <>
       <Header
-        align={"center"}
-        mcolor={"#8B8B8B"}
-        text={"카페 관리"}
-        inner={"카페 상세 수정"}
+        align="center"
+        mcolor="#8B8B8B"
+        text="카페 관리"
+        inner="카페 상세 수정"
       >
         <div>
           <S.Submit

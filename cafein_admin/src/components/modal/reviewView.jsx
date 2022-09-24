@@ -61,7 +61,7 @@ export default function ReviewView({ setModal, id, loadD }) {
 
   return (
     <>
-      <Portal>
+      <Portal setModal={setModal}>
         <S.ModalBigBox double={detail}>
           <Row>
             <div
@@ -149,42 +149,42 @@ export default function ReviewView({ setModal, id, loadD }) {
                   </RecommendBox>
                   <Row
                     gap={16}
-                    align={"baseline"}
+                    align="baseline"
                     style={{ margin: "10px 0 0", fontSize: "14px" }}
                   >
-                    <Row gap={8} align={"baseline"} style={{ width: "120px" }}>
+                    <Row gap={8} align="baseline" style={{ width: "120px" }}>
                       와이파이
                       <Stars
                         width={11}
                         gap={2}
                         num={detailData.detailEvaluation.wifi}
-                        color={"#FD9759"}
+                        color="#FD9759"
                       />
                     </Row>
-                    <Row gap={8} align={"baseline"}>
+                    <Row gap={8} align="baseline">
                       콘센트
                       <Stars
-                        color={"#FD9759"}
+                        color="#FD9759"
                         width={11}
                         gap={2}
                         num={detailData.detailEvaluation.socket}
                       />
                     </Row>
                   </Row>
-                  <Row gap={16} align={"baseline"} style={{ fontSize: "14px" }}>
-                    <Row gap={8} align={"baseline"} style={{ width: "120px" }}>
+                  <Row gap={16} align="baseline" style={{ fontSize: "14px" }}>
+                    <Row gap={8} align="baseline" style={{ width: "120px" }}>
                       화장실
                       <Stars
-                        color={"#FD9759"}
+                        color="#FD9759"
                         width={11}
                         gap={2}
                         num={detailData.detailEvaluation.restroom}
                       />
                     </Row>
-                    <Row gap={8} align={"baseline"}>
+                    <Row gap={8} align="baseline">
                       테이블
                       <Stars
-                        color={"#FD9759"}
+                        color="#FD9759"
                         width={11}
                         gap={2}
                         num={detailData.detailEvaluation.tableSize}
@@ -208,10 +208,10 @@ export default function ReviewView({ setModal, id, loadD }) {
                 </S.ModalContent>
                 <S.ModalFooter style={{ justifyContent: "end" }}>
                   <Row gap={24}>
-                    <S.Btn color={"#515151"} onClick={() => setRReason(true)}>
+                    <S.Btn color="#515151" onClick={() => setRReason(true)}>
                       신고
                     </S.Btn>
-                    <S.Btn color={"#2563eb"} onClick={() => setDel(true)}>
+                    <S.Btn color="#2563eb" onClick={() => setDel(true)}>
                       삭제
                     </S.Btn>
                   </Row>
@@ -223,10 +223,10 @@ export default function ReviewView({ setModal, id, loadD }) {
       </Portal>
       {del && (
         <RedAlert
-          text={"리뷰 삭제"}
-          text1={"리뷰를"}
-          text2={" 삭제"}
-          text3={"하시겠습니까?"}
+          text="리뷰 삭제"
+          text1="리뷰를"
+          text2=" 삭제"
+          text3="하시겠습니까?"
           setAlert={setDel}
           func={reviewDel}
           forFunc={detailData.reviewId}
@@ -249,13 +249,13 @@ const IRow = styled.div`
   font-size: 14px;
 
   & > p:first-child {
-    width: 50px;
+    width: 20px;
     text-align: left;
     color: ${(props) => (props.color ? "#FC7521" : "#8b8b8b")};
     font-weight: 500;
   }
   & > p:nth-child(2) {
-    width: 220px;
+    width: 250px;
     color: ${(props) => (props.color ? "#FC7521" : "#8b8b8b")};
     cursor: pointer;
   }

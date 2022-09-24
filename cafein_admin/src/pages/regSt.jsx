@@ -213,7 +213,9 @@ export const Btn = styled.div`
 `;
 
 export const Btn2 = styled.div`
-  padding: 13px 21px 13px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid #acacac;
   color: ${(props) => (props.isT ? "#E3E3E3" : "#8b8b8b")};
   font-size: 14px;

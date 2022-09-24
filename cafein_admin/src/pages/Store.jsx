@@ -63,8 +63,8 @@ const Store = () => {
   return (
     <Container>
       <Header
-        mcolor={"#fff"}
-        text={"카페 관리"}
+        mcolor="#fff"
+        text="카페 관리"
         subText={`등록된 카페 ${count}건`}
       />
       <FilterRow
@@ -87,7 +87,7 @@ const Store = () => {
           onClick={() => {
             navigate("/management/register");
           }}
-          color={"#2563EB"}
+          color="#2563EB"
         >
           새 카페 등록
         </S.Sbtn>
@@ -138,6 +138,8 @@ const TableHeader = styled.div`
   & > div {
     flex: 1;
     border-right: 1px solid #515151;
+    box-sizing: 16px;
+    overflow: hidden;
   }
   & > div:nth-child(3),
   div:nth-child(2) {

@@ -32,7 +32,7 @@ export default function MarketingTable() {
         </THead>
 
         {marketingArr?.length === 0 ? (
-          <NoneDiv padding={100} text={"마케팅 서비스"} loc={"marketing"} />
+          <NoneDiv padding={100} text="마케팅 서비스" loc="marketing" />
         ) : (
           <ColumnBox onClick={() => navigate("/marketing")}>
             {marketingArr &&

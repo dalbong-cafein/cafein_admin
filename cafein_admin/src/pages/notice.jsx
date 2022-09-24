@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import * as S from "./style copy";
 import * as SS from "../components/noticesStyle";
 import SelectHeader from "../components/common/SelectHeader";
-import Preview from "../components/modal/preview";
+import NoticePreview from "../components/modal/NoticePreview";
 import RedAlert from "../components/modal/RedAlert";
-import NoticeM from "../components/modal/noticeM";
+import NoticeDetailModal from "../components/modal/NoticeDetailModal";
 import Alert from "../components/modal/Alert";
 import FilterRow from "../components/common/FilterRow";
 
@@ -63,11 +63,11 @@ const Notice = () => {
   return (
     <>
       <SelectHeader
-        menu={"notice"}
-        menu1={"notice"}
-        menu2={"qna"}
-        Tmenu1={"공지사항"}
-        Tmenu2={"자주 묻는 질문"}
+        menu="notice"
+        menu1="notice"
+        menu2="qna"
+        Tmenu1="공지사항"
+        Tmenu2="자주 묻는 질문"
       />
       <SS.Container>
         <div>
@@ -116,7 +116,7 @@ const Notice = () => {
                 ))}
             </S.DataBox>
           </S.Wrapper>
-          {data.length == 0 && <None text={"공지"} />}
+          {data.length == 0 && <None text="공지" />}
         </div>
         <RegNoticeBox
           register={register}
@@ -128,15 +128,15 @@ const Notice = () => {
       {alert && (
         <Alert
           setAlert={setAlert}
-          text={"공지사항 등록"}
-          subtext={"게시물을 등록하시겠습니까?"}
+          text="공지사항 등록"
+          subtext="게시물을 등록하시겠습니까?"
           func={onSubmit}
           forFunc={register}
         />
       )}
 
       {preview && (
-        <Preview
+        <NoticePreview
           item={register}
           setModal={setPreview}
           file={register.imageFiles}
@@ -144,8 +144,8 @@ const Notice = () => {
         />
       )}
       {modal && (
-        <NoticeM
-          selectItem2={selectItem}
+        <NoticeDetailModal
+          selectItem={selectItem}
           setModal={setModal}
           menu="notice"
           setAlert={setDAlert}
@@ -153,10 +153,10 @@ const Notice = () => {
       )}
       {Dalert && (
         <RedAlert
-          text={"공지사항 삭제"}
-          text1={"공지사항을 "}
-          text2={"삭제"}
-          text3={"하시겠습니까?"}
+          text="공지사항 삭제"
+          text1="공지사항을 "
+          text2="삭제"
+          text3="하시겠습니까?"
           setAlert={setDAlert}
           func={onDel}
           forFunc={null}

@@ -37,10 +37,16 @@ export default function FilterRow({
     setPage(page);
   };
 
+  const onEnterKey = (e) => {
+    if (e.key === "Enter") {
+      onclick();
+    }
+  };
+
   return (
     <Row
-      justify={"space-between"}
-      align={"baseline"}
+      justify="space-between"
+      align="baseline"
       style={{ marginBottom: "20px" }}
     >
       <Row gap={15}>
@@ -53,7 +59,7 @@ export default function FilterRow({
           오래된 순{sort === "ASC" && <Check />}
         </S.Sbtn>
       </Row>
-      <Row gap={15} align={"baseline"}>
+      <Row gap={15} align="baseline">
         <Paging
           count={count}
           handlePageChange={handlePageChange}
@@ -76,7 +82,7 @@ export default function FilterRow({
           </S.Sbtn>
         )}
 
-        <Row style={{ borderBottom: "1px solid #fff" }}>
+        <Row style={{ borderBottom: "1px solid #fff" }} onKeyDown={onEnterKey}>
           <S.Input
             placeholder="검색"
             type="text"

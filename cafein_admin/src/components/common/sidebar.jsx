@@ -10,7 +10,7 @@ import { ReactComponent as Notice } from "../../svg/notice.svg";
 import { ReactComponent as Statictis } from "../../svg/statictis.svg";
 import { ReactComponent as LogoIcon } from "../../svg/Logo.svg";
 
-import SidemenuProfile from "../Sidemenu_profile";
+import SidebarProfile from "../SidebarProfile";
 
 import { useNavigate } from "react-router-dom";
 
@@ -93,7 +93,7 @@ const SideBar = () => {
           </a>
         </div>
 
-        <SidemenuProfile />
+        <SidebarProfile />
       </Box>
     </Container>
   );

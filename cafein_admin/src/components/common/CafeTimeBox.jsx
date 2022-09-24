@@ -20,15 +20,19 @@ export default function CafeTimeBox({
   const [days, setDays] = useState([]);
   const [openTime, setOpenTime] = useState("");
   const [closeTime, setCloseTime] = useState("");
-
-  const dayPush = async (e) => {
+  const dayArr = ["월", "화", "수", "목", "금", "토", "일"];
+  const dayPush = async (e, item) => {
     e.stopPropagation();
     const copy = [...days];
-    if (!days.includes(e.currentTarget.id)) {
-      copy.push(e.currentTarget.id);
+    if (!days.includes(item)) {
+      copy.push(item);
+      copy.sort(function (a, b) {
+        return dayArr.indexOf(a) - dayArr.indexOf(b);
+      });
+
       setDays(copy);
     } else {
-      copy.splice(days.indexOf(e.currentTarget.id), 1);
+      copy.splice(days.indexOf(item), 1);
       setDays(copy);
     }
   };
@@ -91,13 +95,20 @@ export default function CafeTimeBox({
             </S.Btn>
             <S.Btn2 isT={selectOn} onClick={() => setSelectOn(!selectOn)}>
               {days.length === 0 ? (
-                <Row gap={13} align={"center"}>
+                <Row gap={13} align="center">
                   <p>반복</p> {selectOn ? <ArrowUp /> : <ArrowDown />}
                 </Row>
               ) : (
                 <p>{days.join(" ")}</p>
               )}
             </S.Btn2>
+            {selectOn && (
+              <ComboBoxForDay
+                dayArr={dayArr}
+                dayPush={dayPush}
+                isEdit={isEdit}
+              />
+            )}
             <Plus onClick={addTime} />
           </S.BtnRow>
           {dayarr.map((item, i) => (
@@ -132,7 +143,6 @@ export default function CafeTimeBox({
           ))}
         </S.TimeBox>
       </S.Box>
-      {selectOn && <ComboBoxForDay dayPush={dayPush} isEdit={isEdit} />}
     </>
   );
 }
