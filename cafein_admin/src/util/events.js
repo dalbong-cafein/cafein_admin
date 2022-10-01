@@ -7,14 +7,13 @@ export const marketingListApi = async (page, sort) => {
 
 //쿠폰리스트 검색
 export const marketingSearchApi = async (searchType, keyword, page, sort) => {
-  const sub =
-    searchType === "분류" ? "cp" : searchType === "회원 번호" ? "m" : "p";
-  return await withAuthInstance.get(
-    `/coupons?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
-  );
+  const sub = searchType === "분류" ? "cp" : searchType === "회원 번호" ? "m" : "p";
+  return await withAuthInstance.get(`/coupons?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`);
 };
-export const eventListApi = async (page, sort) => {
-  return await withAuthInstance.get(`/boards?boardCategoryId=2`);
+export const eventListApi = async (search, page, sort) => {
+  return await withAuthInstance.get(
+    `/boards?boardCategoryId=2&page=${page}&sort=${sort}&size=9${search && `&keyword=${search}`}`
+  );
 };
 
 //게시글 삭제

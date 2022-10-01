@@ -29,8 +29,7 @@ const Notice = () => {
   const [preview, setPreview] = useState(false);
 
   // pagination
-  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
-    usePagination(10);
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination(10);
   const [alert, setAlert] = useState(false);
   const [Dalert, setDAlert] = useState(false);
   const [modal, setModal] = useState(false);
@@ -51,6 +50,14 @@ const Notice = () => {
       })
       .catch((err) => console.log(err));
   };
+  const searchData = () => {
+    adminFeedListApi(search, page, sort)
+      .then((res) => {
+        setCount(res.data.data.boardCnt);
+        setData(res.data.data.boardResDtoList.dtoList);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     const copy = { ...register };
     copy.boardCategoryId = 1;
@@ -62,13 +69,7 @@ const Notice = () => {
   }, [sort, page]);
   return (
     <>
-      <SelectHeader
-        menu="notice"
-        menu1="notice"
-        menu2="qna"
-        Tmenu1="공지사항"
-        Tmenu2="자주 묻는 질문"
-      />
+      <SelectHeader menu="notice" menu1="notice" menu2="qna" Tmenu1="공지사항" Tmenu2="자주 묻는 질문" />
       <SS.Container>
         <div>
           <FilterRow
@@ -81,6 +82,7 @@ const Notice = () => {
             setPage={setPage}
             search={search}
             setSearch={setSearch}
+            searchData={searchData}
             nodrop
           />
           <S.Wrapper isNull={data.length === 0}>
@@ -101,14 +103,8 @@ const Notice = () => {
                   >
                     <div>{String(item.boardId).padStart(6, "0")}</div>
                     <div>
-                      <p style={{ fontWeight: "bold", marginBottom: "5px" }}>
-                        {item.title}
-                      </p>
-                      <p>
-                        {item.content.length > 30
-                          ? `${item.content.slice(0, 30)}...`
-                          : item.content}
-                      </p>
+                      <p style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</p>
+                      <p>{item.content.length > 30 ? `${item.content.slice(0, 30)}...` : item.content}</p>
                     </div>
 
                     <div>{String(item.regDateTime).split("T")[0]}</div>
@@ -118,12 +114,7 @@ const Notice = () => {
           </S.Wrapper>
           {data.length == 0 && <None text="공지" />}
         </div>
-        <RegNoticeBox
-          register={register}
-          setRegister={setRegister}
-          setPreview={setPreview}
-          setAlert={setAlert}
-        />
+        <RegNoticeBox register={register} setRegister={setRegister} setPreview={setPreview} setAlert={setAlert} />
       </SS.Container>
       {alert && (
         <Alert
@@ -135,22 +126,8 @@ const Notice = () => {
         />
       )}
 
-      {preview && (
-        <NoticePreview
-          item={register}
-          setModal={setPreview}
-          file={register.imageFiles}
-          menu="notice"
-        />
-      )}
-      {modal && (
-        <NoticeDetailModal
-          selectItem={selectItem}
-          setModal={setModal}
-          menu="notice"
-          setAlert={setDAlert}
-        />
-      )}
+      {preview && <NoticePreview item={register} setModal={setPreview} file={register.imageFiles} menu="notice" />}
+      {modal && <NoticeDetailModal selectItem={selectItem} setModal={setModal} menu="notice" setAlert={setDAlert} />}
       {Dalert && (
         <RedAlert
           text="공지사항 삭제"

@@ -9,11 +9,7 @@ import Row from "../atoms/row";
 import HoverContent from "../HoverContent";
 import Sliders from "../common/carousel/carousel";
 import RedAlert from "./RedAlert";
-import {
-  cafeDelApi,
-  feedDetailApi,
-  feedDetailReviewApi,
-} from "../../util/management";
+import { cafeDelApi, feedDetailApi, feedDetailReviewApi } from "../../util/management";
 import { useEffect } from "react";
 
 export default function CafeDetailModal({ setDModal, id }) {
@@ -59,16 +55,44 @@ export default function CafeDetailModal({ setDModal, id }) {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const dayArr = [
+    { key: "onMon", name: "월" },
+    { key: "onTue", name: "화" },
+    { key: "onWed", name: "수" },
+    { key: "onThu", name: "목" },
+    { key: "onFri", name: "금" },
+    { key: "onSat", name: "토" },
+    { key: "onSun", name: "일" },
+  ];
+
+  const isAllday = () => {
+    if (data) {
+      const keys = Object.keys(data?.totalBusinessHoursResDto).filter((item) => item !== "etcTime");
+
+      for (let i = 0; i < dayArr.length; i++) {
+        if (keys.includes(dayArr[i].key)) {
+          if (!data?.totalBusinessHoursResDto[dayArr[i].key]) {
+            return false;
+          } else if (data?.totalBusinessHoursResDto[dayArr[i].key]?.open) {
+            return false;
+          } else if (data?.totalBusinessHoursResDto[dayArr[i].key]?.closed) {
+            return false;
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      }
+    }
+  };
   return (
     <>
       <Portal setModal={setDModal}>
         {data && reviewData && (
           <ModalBox>
-            <ModalBoxs
-              style={{ borderRadius: "16px 0 0 16px" }}
-              color="#131313"
-              width={516}
-            >
+            <ModalBoxs style={{ borderRadius: "16px 0 0 16px" }} color="#131313" width={516}>
               <Title size={20}>카페 상세</Title>
               <Columnbox gap={14}>
                 <S.Line>
@@ -98,23 +122,12 @@ export default function CafeDetailModal({ setDModal, id }) {
                 <Columnbox>
                   <StateRow>
                     <div>
-                      <Row
-                        justify="center"
-                        gap={8}
-                        style={{ padding: "0 auto" }}
-                      >
-                        {data?.storeImageDtoList &&
-                        data?.storeImageDtoList.length > 4 ? (
+                      <Row justify="center" gap={8} style={{ padding: "0 auto" }}>
+                        {data?.storeImageDtoList && data?.storeImageDtoList.length > 4 ? (
                           <>
-                            {data?.storeImageDtoList
-                              .slice(0, 4)
-                              .map((item, i) => (
-                                <Photo
-                                  key={i}
-                                  img={item.imageUrl}
-                                  onClick={() => setSlider(true)}
-                                />
-                              ))}
+                            {data?.storeImageDtoList.slice(0, 4).map((item, i) => (
+                              <Photo key={i} img={item.imageUrl} onClick={() => setSlider(true)} />
+                            ))}
                             <PhotoPlus onClick={() => setSlider(true)}>
                               +{data?.storeImageDtoList?.length - 4}
                             </PhotoPlus>
@@ -122,11 +135,7 @@ export default function CafeDetailModal({ setDModal, id }) {
                         ) : (
                           <>
                             {data?.storeImageDtoList?.map((item, i) => (
-                              <Photo
-                                key={i}
-                                img={item.imageUrl}
-                                onClick={() => setSlider(true)}
-                              />
+                              <Photo key={i} img={item.imageUrl} onClick={() => setSlider(true)} />
                             ))}
                           </>
                         )}
@@ -140,36 +149,16 @@ export default function CafeDetailModal({ setDModal, id }) {
                   <StateRow>
                     <div>
                       <span>운영시간</span>
-                      {data?.businessHoursResDto ? (
+                      {data?.totalBusinessHoursResDto ? (
                         <Column>
-                          <p>
-                            월
-                            {` ${data?.businessHoursResDto?.onMon?.open}-${data?.businessHoursResDto?.onMon?.closed}`}
-                          </p>
-                          <p>
-                            화
-                            {` ${data?.businessHoursResDto?.onTue?.open}-${data?.businessHoursResDto?.onTue?.closed}`}
-                          </p>
-                          <p>
-                            수
-                            {` ${data?.businessHoursResDto?.onWed?.open}-${data?.businessHoursResDto?.onWed?.closed}`}
-                          </p>
-                          <p>
-                            목
-                            {` ${data?.businessHoursResDto?.onThu?.open}-${data?.businessHoursResDto?.onThu?.closed}`}
-                          </p>
-                          <p>
-                            금
-                            {` ${data?.businessHoursResDto?.onFri?.open}-${data?.businessHoursResDto?.onFri?.closed}`}
-                          </p>
-                          <p>
-                            토
-                            {` ${data?.businessHoursResDto?.onSat?.open}-${data?.businessHoursResDto?.onSat?.closed}`}
-                          </p>
-                          <p>
-                            일
-                            {` ${data?.businessHoursResDto?.onSun?.open}-${data?.businessHoursResDto?.onSun?.closed}`}
-                          </p>
+                          {dayArr.map((item, i) => (
+                            <p>
+                              {data?.totalBusinessHoursResDto[item.key] &&
+                                `${item.name} ${data?.totalBusinessHoursResDto[item.key]?.open}-${
+                                  data?.totalBusinessHoursResDto[item.key]?.closed
+                                }`}
+                            </p>
+                          ))}
                         </Column>
                       ) : (
                         "-"
@@ -195,11 +184,7 @@ export default function CafeDetailModal({ setDModal, id }) {
                 </Columnbox>
               </Columnbox>
             </ModalBoxs>
-            <ModalBoxs
-              style={{ borderRadius: "0 16px 16px 0" }}
-              color="#333333"
-              width={476}
-            >
+            <ModalBoxs style={{ borderRadius: "0 16px 16px 0" }} color="#333333" width={476}>
               <Row justify="space-between">
                 <Title size={16}>활동정보</Title>
                 <Close style={{ cursor: "pointer" }} onClick={closeModal} />
@@ -264,10 +249,7 @@ export default function CafeDetailModal({ setDModal, id }) {
                 </HoverBox>
               </Columnbox>
               <Row gap={24}>
-                <S.Btn
-                  style={{ border: "1px solid #515151" }}
-                  onClick={() => setAlert(true)}
-                >
+                <S.Btn style={{ border: "1px solid #515151" }} onClick={() => setAlert(true)}>
                   삭제
                 </S.Btn>
                 <S.Btn
@@ -285,9 +267,7 @@ export default function CafeDetailModal({ setDModal, id }) {
           </ModalBox>
         )}
       </Portal>
-      {slider && (
-        <Sliders setModal={setSlider} imgs={data?.storeImageDtoList} />
-      )}
+      {slider && <Sliders setModal={setSlider} imgs={data?.storeImageDtoList} />}
       {alert && (
         <RedAlert
           text="카페 삭제"
@@ -374,8 +354,7 @@ const Columnbox = styled.div`
 const Photo = styled.div`
   width: 72px;
   height:72px;
-  background: ${({ img }) =>
-    img && `url(${img})`} no-repeat center center/cover;
+  background: ${({ img }) => img && `url(${img})`} no-repeat center center/cover;
   border-radius: 6px;
   cursor:pointer;
   }

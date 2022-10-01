@@ -23,8 +23,7 @@ const QnAs = () => {
 
   const [search, setSearch] = useState("");
   // pagination
-  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
-    usePagination();
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
   const [alert, setAlert] = useState(false);
   const [modal, setModal] = useState(false);
@@ -51,6 +50,15 @@ const QnAs = () => {
       .catch((err) => console.log(err));
   };
 
+  const searchData = () => {
+    eventListApi(search, page, sort)
+      .then((res) => {
+        setCount(res.data.data.boardCnt);
+        setData(res.data.data.boardResDtoList.dtoList);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     const copy = { ...register };
     copy.boardCategoryId = 2;
@@ -60,15 +68,10 @@ const QnAs = () => {
       setData(res.data.data.boardResDtoList.dtoList);
     });
   }, [sort, page]);
+
   return (
     <>
-      <SelectHeader
-        menu="qna"
-        menu1="notice"
-        menu2="qna"
-        Tmenu1="공지사항"
-        Tmenu2="자주 묻는 질문"
-      />
+      <SelectHeader menu="qna" menu1="notice" menu2="qna" Tmenu1="공지사항" Tmenu2="자주 묻는 질문" />
       <SS.Container>
         <div>
           <FilterRow
@@ -81,6 +84,7 @@ const QnAs = () => {
             setPage={setPage}
             search={search}
             setSearch={setSearch}
+            searchData={searchData}
             nodrop
           />
           <S.Wrapper isNull={data.length === 0}>
@@ -89,31 +93,23 @@ const QnAs = () => {
               <div>제목</div>
               <div>등록일</div>
             </TableHeader>
-            {data
-              .slice(item * (page - 1), item * (page - 1) + item)
-              .map((item, i) => (
-                <ItemRow
-                  key={i}
-                  onClick={() => {
-                    setModal(true);
-                    setSelectItem(item);
-                  }}
-                >
-                  <div>{String(item.boardId).padStart(6, "0")}</div>
-                  <div>
-                    <p style={{ fontWeight: "bold", marginBottom: "5px" }}>
-                      {item.title}
-                    </p>
-                    <p>
-                      {item.content.length > 30
-                        ? `${item.content.slice(0, 30)}...`
-                        : item.content}
-                    </p>
-                  </div>
+            {data.map((item, i) => (
+              <ItemRow
+                key={i}
+                onClick={() => {
+                  setModal(true);
+                  setSelectItem(item);
+                }}
+              >
+                <div>{String(item.boardId).padStart(6, "0")}</div>
+                <div>
+                  <p style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</p>
+                  <p>{item.content.length > 30 ? `${item.content.slice(0, 30)}...` : item.content}</p>
+                </div>
 
-                  <div>{String(item.regDateTime).split("T")[0]}</div>
-                </ItemRow>
-              ))}
+                <div>{String(item.regDateTime).split("T")[0]}</div>
+              </ItemRow>
+            ))}
           </S.Wrapper>
           {data.length == 0 && <None text="QnA" />}
         </div>
@@ -134,22 +130,8 @@ const QnAs = () => {
           forFunc={register}
         />
       )}
-      {preview && (
-        <NoticePreview
-          item={register}
-          setModal={setPreview}
-          file={register.imageFiles}
-          menu="QnA"
-        />
-      )}
-      {modal && (
-        <NoticeDetailModal
-          selectItem={selectItem}
-          setModal={setModal}
-          menu="QnA"
-          setAlert={setDAlert}
-        />
-      )}
+      {preview && <NoticePreview item={register} setModal={setPreview} file={register.imageFiles} menu="QnA" />}
+      {modal && <NoticeDetailModal selectItem={selectItem} setModal={setModal} menu="QnA" setAlert={setDAlert} />}
       {Dalert && (
         <RedAlert
           text="자주 묻는 질문 삭제"

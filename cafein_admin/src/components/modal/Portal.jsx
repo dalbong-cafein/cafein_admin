@@ -2,7 +2,14 @@ import ReactDom from "react-dom";
 import styled from "styled-components";
 export default function Portal({ children, setModal }) {
   return ReactDom.createPortal(
-    <Background onClick={() => setModal(false)}>{children}</Background>,
+    <Background
+    // onClick={(e) => {
+    //   e.stopPropagation();
+    //   setModal(false);
+    // }}
+    >
+      {children}
+    </Background>,
     document.getElementById("modal")
   );
 }
