@@ -10,11 +10,7 @@ import MemoTable from "../components/DeshMemoTable";
 const Desh = () => {
   return (
     <>
-      <Header
-        mSize={22}
-        text="안녕하세요! 오늘도 일하는 당신, 참 멋져요"
-        mcolor="#fff"
-      >
+      <Header mSize={22} text="안녕하세요! 오늘도 일하는 당신, 참 멋져요" mcolor="#fff" btn={false}>
         <DateColumn />
       </Header>
       <Container>

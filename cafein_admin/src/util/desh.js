@@ -1,6 +1,6 @@
 import { withAuthInstance } from "./index";
 
-export const adminFeedListApi = async (search, page, sort) => {
+export const adminFeedListApi = async (page, sort, search) => {
   return await withAuthInstance.get(`/boards?page=${page}&sort=${sort}${search && `&keyword=${search}`}`);
 };
 

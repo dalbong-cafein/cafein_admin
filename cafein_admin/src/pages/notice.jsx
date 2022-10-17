@@ -62,7 +62,7 @@ const Notice = () => {
     const copy = { ...register };
     copy.boardCategoryId = 1;
     setRegister(copy);
-    adminFeedListApi(page, sort).then((res) => {
+    adminFeedListApi(page, sort, search).then((res) => {
       setCount(res.data.data.boardCnt);
       setData(res.data.data.boardResDtoList.dtoList);
     });

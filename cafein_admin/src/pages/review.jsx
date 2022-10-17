@@ -17,15 +17,10 @@ const Review = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   // pagination
-  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
-    usePagination();
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
-    "내용",
-    "회원 번호",
-    "카페 번호",
-  ]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["내용", "회원 번호", "카페 번호"]);
 
   const [modal, setModal] = useState(false);
   const [detailReviewId, setDetailReviewId] = useState([]);
@@ -66,18 +61,18 @@ const Review = () => {
         mcolor="#fff"
         text="카페 리뷰"
         subText={`등록된 리뷰 ${count}건`}
+        onAsc={onAsc}
+        onDesc={onDesc}
+        sort={sort}
       />
       <FilterRow
         searchType={searchType}
         setSearchType={setSearchType}
         searchArr={searchArr}
         setSearchArr={setSearchArr}
-        sort={sort}
         count={count}
         page={page}
         item={item}
-        onAsc={onAsc}
-        onDesc={onDesc}
         setPage={setPage}
         searchData={searchData}
         search={search}
@@ -95,19 +90,12 @@ const Review = () => {
           <div>메모</div>
         </TableHeader>
 
-        <ReviewTemp
-          data={data}
-          onModal={onModal}
-          setMemoModal={setMemoModal}
-          setMemoItem={setMemoItem}
-        />
+        <ReviewTemp data={data} onModal={onModal} setMemoModal={setMemoModal} setMemoItem={setMemoItem} />
       </S.Wrapper>
 
       {data.length === 0 && <None text="리뷰" />}
       {memoModal && <MemoModal item={memoItem} setModal={setMemoModal} />}
-      {modal && (
-        <ReviewModal setModal={setModal} detailReviewId={detailReviewId} />
-      )}
+      {modal && <ReviewModal setModal={setModal} detailReviewId={detailReviewId} />}
     </>
   );
 };

@@ -23,10 +23,7 @@ function App() {
   const [admin] = useRecoilState(adminState);
 
   useEffect(() => {
-    if (
-      admin.email == null &&
-      window.location.pathname.split("/")[1] !== "login"
-    ) {
+    if (admin.email == null && window.location.pathname.split("/")[1] !== "login") {
       navigate("/login");
     }
   });
@@ -52,7 +49,8 @@ const Container = styled.div`
   background-color: #131313;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  min-width: 1440px;
+  overflow-y: hidden;
 `;
 const Row = styled.div`
   display: flex;

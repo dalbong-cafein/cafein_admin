@@ -13,12 +13,7 @@ import Row from "../atoms/row";
 import NoticePreview from "./NoticePreview";
 import { editNoticeApi } from "../../util/events";
 
-export default function NoticeDetailModal({
-  setModal,
-  selectItem,
-  menu,
-  setAlert,
-}) {
+export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert }) {
   const closeModal = () => {
     setModal(false);
   };
@@ -61,11 +56,13 @@ export default function NoticeDetailModal({
   const onSubmit = () => {
     if (!edit) {
       setEdit(true);
+      window.alert("수정 모드입니다.");
     } else {
       console.log(data);
       editNoticeApi(data)
         .then((res) => {
           console.log(res);
+          window.alert("수정되었습니다.");
           window.location.reload();
         })
         .catch((err) => {
@@ -105,31 +102,19 @@ export default function NoticeDetailModal({
               <Line>
                 <span>제목</span>
                 {edit ? (
-                  <input
-                    type="text"
-                    name="title"
-                    defaultValue={selectItem.title}
-                    onChange={(e) => onChange(e)}
-                  />
+                  <input type="text" name="title" defaultValue={selectItem.title} onChange={(e) => onChange(e)} />
                 ) : (
                   <p>{selectItem.title}</p>
                 )}
               </Line>
             </Columnbox>
             {edit ? (
-              <textarea
-                type="text"
-                name="content"
-                defaultValue={selectItem.content}
-                onChange={(e) => onChange(e)}
-              />
+              <textarea type="text" name="content" defaultValue={selectItem.content} onChange={(e) => onChange(e)} />
             ) : (
               <Text>{selectItem.content || "-"}</Text>
             )}
           </S.ModalContent>
-          <S.ModalFooter
-            style={{ justifyContent: "end", flexDirection: "column" }}
-          >
+          <S.ModalFooter style={{ justifyContent: "end", flexDirection: "column" }}>
             {edit ? (
               <SS.PhotoBox style={{ minHeight: "120px", marginBottom: "30px" }}>
                 <SS.FileUpload
@@ -139,12 +124,7 @@ export default function NoticeDetailModal({
                 >
                   <Photo />
                   <div>{file?.length || 0}/1</div>
-                  <input
-                    ref={input}
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => onLoadFile(e)}
-                  />
+                  <input ref={input} type="file" style={{ display: "none" }} onChange={(e) => onLoadFile(e)} />
                 </SS.FileUpload>
                 {file[0] && (
                   <SS.ImgBox>
@@ -154,10 +134,7 @@ export default function NoticeDetailModal({
                 )}
               </SS.PhotoBox>
             ) : (
-              <Row
-                gap={10}
-                style={{ minHeight: "120px", marginBottom: "30px" }}
-              >
+              <Row gap={10} style={{ minHeight: "120px", marginBottom: "30px" }}>
                 {file[0] && (
                   <Pic>
                     <img src={process.env.PUBLIC_URL + file[0]} alt="img" />
@@ -165,12 +142,7 @@ export default function NoticeDetailModal({
                 )}
               </Row>
             )}
-            <Row
-              gap={24}
-              align="center"
-              justify="end"
-              style={{ width: "100%" }}
-            >
+            <Row gap={24} align="center" justify="end" style={{ width: "100%" }}>
               <p
                 style={{
                   color: "#FF5C50",
@@ -192,12 +164,7 @@ export default function NoticeDetailModal({
         </S.ModalBox>
       </Portal>
       {preview && (
-        <NoticePreview
-          item={selectItem}
-          setModal={setPreview}
-          file={selectItem.reviewImageDtoList}
-          menu={menu}
-        />
+        <NoticePreview item={selectItem} setModal={setPreview} file={selectItem.reviewImageDtoList} menu={menu} />
       )}
     </>
   );

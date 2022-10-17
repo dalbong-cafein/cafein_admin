@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { ReactComponent as Arrow } from "../../svg/arrow.svg";
+import { ReactComponent as Check } from "../../svg/check.svg";
 
-const Header = ({ align, mSize, text, subText, mcolor, inner, children }) => {
+import * as S from "../../pages/style copy";
+
+const Header = ({ btn = true, align, mSize, text, subText, mcolor, inner, children, onAsc, onDesc, sort }) => {
   return (
-    <Row align={align}>
+    <SpaceRow align={align}>
       <div>
         <Menu mSize={mSize} mcolor={mcolor}>
           {text}
@@ -16,13 +19,27 @@ const Header = ({ align, mSize, text, subText, mcolor, inner, children }) => {
           </Txt2>
         )}
       </div>
-      {children}
-    </Row>
+      <Row gap={15}>
+        {children && children}
+        {btn && (
+          <Row style={{ gap: "16px" }}>
+            <S.Sbtn onClick={onDesc}>
+              최신순
+              {sort === "DESC" && <Check />}
+            </S.Sbtn>
+            <S.Sbtn onClick={onAsc}>오래된 순{sort === "ASC" && <Check />}</S.Sbtn>
+          </Row>
+        )}
+      </Row>
+    </SpaceRow>
   );
 };
-
 const Row = styled.div`
   display: flex;
+  align-items: center;
+`;
+
+const SpaceRow = styled(Row)`
   width: 100%;
   padding: 72px 102px 24px 0;
   justify-content: space-between;

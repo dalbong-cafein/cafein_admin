@@ -37,7 +37,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
         setData(res.data.data);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   return (
     <>
@@ -73,15 +73,8 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
                 <p>{String(data.modDateTime).replace("T", " ")}</p>
               </S.Line>
             </Columnbox>
-            <ReviewRecommendationBtn
-              isDetail
-              recommendation={data.recommendation}
-            />
-            <Row
-              gap={16}
-              align="baseline"
-              style={{ margin: "10px 0 0", fontSize: "14px" }}
-            >
+            <ReviewRecommendationBtn isDetail recommendation={data.recommendation} />
+            <Row gap={16} align="baseline" style={{ margin: "10px 0 0", fontSize: "14px" }}>
               <ReviewStarRow
                 item1Title="와이파이"
                 item2Title="콘센트"
@@ -104,10 +97,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
               <Row justify="space-between">
                 {data.reviewImageDtoList.map((item, i) => (
                   <Pic key={i} onClick={() => setSlider(true)}>
-                    <img
-                      src={process.env.PUBLIC_URL + item.imageUrl}
-                      alt="img"
-                    />
+                    <img src={process.env.PUBLIC_URL + item.imageUrl} alt="img" />
                   </Pic>
                 ))}
               </Row>
@@ -138,9 +128,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
         />
       )}
       {rReason && <ReportReason setModal={setRReason} id={data.reviewId} />}
-      {slider && (
-        <Sliders setModal={setSlider} imgs={data?.reviewImageDtoList} />
-      )}
+      {slider && <Sliders setModal={setSlider} imgs={data?.reviewImageDtoList} />}
     </>
   );
 }

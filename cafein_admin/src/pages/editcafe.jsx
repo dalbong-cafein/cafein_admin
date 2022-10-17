@@ -51,9 +51,7 @@ const Editcafe = () => {
     const copy = [...file];
     const copy2 = { ...register };
     let coppy = [...delImg];
-    const hasfile = await state.storeImageDtoList.filter(
-      (item) => item.imageUrl === a
-    );
+    const hasfile = await state.storeImageDtoList.filter((item) => item.imageUrl === a);
     if (hasfile[0]) {
       coppy.push(hasfile[0].imageId);
     }
@@ -146,17 +144,9 @@ const Editcafe = () => {
 
   return (
     <>
-      <Header
-        align="center"
-        mcolor="#8B8B8B"
-        text="카페 관리"
-        inner="카페 상세 수정"
-      >
+      <Header align="center" mcolor="#8B8B8B" text="카페 관리" inner="카페 상세 수정" btn={false}>
         <div>
-          <S.Submit
-            style={{ marginRight: "15px" }}
-            onClick={() => window.history.back()}
-          >
+          <S.Submit style={{ marginRight: "15px" }} onClick={() => window.history.back()}>
             취소
           </S.Submit>
           <S.Submit
@@ -207,30 +197,18 @@ const Editcafe = () => {
                 {file?.map((a, idx) => {
                   return (
                     <S.ImgBox key={idx}>
-                      <CloseIcon
-                        name={a.name}
-                        onClick={() => deleteImg(a, idx)}
-                      />
+                      <CloseIcon name={a.name} onClick={() => deleteImg(a, idx)} />
                       <PVImg img={a} />
                     </S.ImgBox>
                   );
                 })}
               </S.PhotoBox>
             </S.Box>
-            <CafeTimeBox
-              dayarr={dayarr}
-              setDayarr={setDayarr}
-              register={register}
-              setRegister={setRegister}
-              isEdit
-            />
+            <CafeTimeBox dayarr={dayarr} setDayarr={setDayarr} register={register} setRegister={setRegister} isEdit />
             <S.TextBox>
               <p>안내사항</p>
               <p>카공인에게 도움이 될 수 있는 정보를 공유해 주세요.</p>
-              <p>
-                부적절한 정보가 등록될 경우 카페인 운영정책에 따라 삭제될 수
-                있어요.
-              </p>
+              <p>부적절한 정보가 등록될 경우 카페인 운영정책에 따라 삭제될 수 있어요.</p>
             </S.TextBox>
           </S.Column>
           <S.Column>

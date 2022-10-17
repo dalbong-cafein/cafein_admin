@@ -18,15 +18,10 @@ const User = () => {
   const [search, setSearch] = useState("");
 
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
-    "분류",
-    "회원명",
-    "핸드폰",
-  ]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["분류", "회원명", "핸드폰"]);
 
   // pagination
-  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
-    usePagination();
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
   const [modal, setModal] = useState(false);
   const [selectItem, setSelectItem] = useState([]);
@@ -81,18 +76,18 @@ const User = () => {
         mcolor="#fff"
         text="회원 정보"
         subText={`등록된 회원 ${count}건`}
+        onAsc={onAsc}
+        onDesc={onDesc}
+        sort={sort}
       />
       <FilterRow
         searchType={searchType}
         setSearchType={setSearchType}
         searchArr={searchArr}
         setSearchArr={setSearchArr}
-        sort={sort}
         count={count}
         page={page}
         item={item}
-        onAsc={onAsc}
-        onDesc={onDesc}
         setPage={setPage}
         searchData={searchData}
         search={search}
@@ -112,24 +107,13 @@ const User = () => {
           <div>메모</div>
         </TableHeader>
         {data.length ? (
-          <UserItem
-            data={data}
-            setModalMemo={setModalMemo}
-            onModal={onModal}
-            setMemoItem={setMemoItem}
-          />
+          <UserItem data={data} setModalMemo={setModalMemo} onModal={onModal} setMemoItem={setMemoItem} />
         ) : (
           <None text="유저" />
         )}
       </S.Wrapper>
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
-      {modal && (
-        <UserDetailModal
-          setModal={setModal}
-          selectItem={selectItem}
-          loadD={loadD}
-        />
-      )}
+      {modal && <UserDetailModal setModal={setModal} selectItem={selectItem} loadD={loadD} />}
     </>
   );
 };

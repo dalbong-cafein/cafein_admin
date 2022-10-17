@@ -23,17 +23,12 @@ const Store = () => {
   const [dModal, setDModal] = useState(false);
   const [detailStoreId, setDetailStoreId] = useState(null);
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
-    "분류",
-    "카페명",
-    "위치",
-  ]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["분류", "카페명", "위치"]);
   //memo
   const [memoItem, setMemoItem] = useState(null);
   const [modalMemo, setModalMemo] = useState(false);
   // pagination
-  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
-    usePagination();
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
   const changeData = () => {
     if (searchType === "전체") {
@@ -66,18 +61,18 @@ const Store = () => {
         mcolor="#fff"
         text="카페 관리"
         subText={`등록된 카페 ${count}건`}
+        onAsc={onAsc}
+        onDesc={onDesc}
+        sort={sort}
       />
       <FilterRow
         searchType={searchType}
         setSearchType={setSearchType}
         searchArr={searchArr}
         setSearchArr={setSearchArr}
-        sort={sort}
         count={count}
         page={page}
         item={item}
-        onAsc={onAsc}
-        onDesc={onDesc}
         setPage={setPage}
         searchData={searchData}
         search={search}
@@ -113,9 +108,7 @@ const Store = () => {
           setDetailStoreId={setDetailStoreId}
         />
       </S.Wrapper>
-      {data.length === 0 && (
-        <None text="카페" text2="새 카페 등록" href="/management/register" />
-      )}
+      {data.length === 0 && <None text="카페" text2="새 카페 등록" href="/management/register" />}
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
       {dModal && <StoreModal setDModal={setDModal} id={detailStoreId} />}
     </Container>

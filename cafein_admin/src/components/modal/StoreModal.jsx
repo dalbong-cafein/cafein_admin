@@ -221,28 +221,28 @@ export default function CafeDetailModal({ setDModal, id }) {
                 </S.Line>
                 <HoverLine color="#515151">
                   <span>콘센트</span>
-                  <p>{totalfunc(reviewData?.socket)}</p>
+                  <p>{totalfunc(reviewData?.socket)} 점</p>
                 </HoverLine>
                 <HoverBox late={20}>
                   <HoverContent obj={reviewData?.socket} />
                 </HoverBox>
                 <HoverLine color="#515151">
                   <span>화장실</span>
-                  <p>{totalfunc(reviewData?.restroom)}</p>
+                  <p>{totalfunc(reviewData?.restroom)} 점</p>
                 </HoverLine>
                 <HoverBox late={55}>
                   <HoverContent obj={reviewData?.restroom} />
                 </HoverBox>
                 <HoverLine color="#515151">
                   <span>테이블</span>
-                  <p>{totalfunc(reviewData?.tableSize)}</p>
+                  <p>{totalfunc(reviewData?.tableSize)} 점</p>
                 </HoverLine>
                 <HoverBox late={90}>
                   <HoverContent obj={reviewData?.tableSize} />
                 </HoverBox>
                 <HoverLine color="#515151">
                   <span>와이파이</span>
-                  <p>{totalfunc(reviewData?.wifi)}</p>
+                  <p>{totalfunc(reviewData?.wifi)} 점</p>
                 </HoverLine>
                 <HoverBox late={120}>
                   <HoverContent obj={reviewData?.wifi} />
