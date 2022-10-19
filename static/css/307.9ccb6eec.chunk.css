@@ -1,0 +1,2 @@
+.pagination{display:flex;justify-content:center;margin-top:15px}ul{list-style:none;padding:0}ul.pagination li{align-items:center;border:none;color:#fff;display:inline-block;display:flex;font-size:16px;height:2rem;justify-content:center;max-width:4rem;min-width:1.5rem}ul.pagination li a{color:#fff;font-size:16px;text-decoration:none}ul.pagination li.active a{background-color:#333;border-radius:6px;padding:6px 12px}.page-selection{color:#fff;height:2rem;width:.8rem}
+/*# sourceMappingURL=307.9ccb6eec.chunk.css.map*/
