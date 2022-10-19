@@ -7,11 +7,7 @@ import styled from "styled-components";
 
 import None from "../components/common/None";
 
-import {
-  changeStateApi,
-  marketingListApi,
-  marketingSearchApi,
-} from "../util/events";
+import { changeStateApi, marketingListApi, marketingSearchApi } from "../util/events";
 import RedAlert from "../components/modal/RedAlert";
 import MarketingsItem from "../components/MarketingsItem";
 import MemoModal from "../components/modal/Memo";
@@ -30,15 +26,10 @@ const Marketing = () => {
   const [modalMemo, setModalMemo] = useState(false);
 
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
-    "분류",
-    "회원 번호",
-    "핸드폰",
-  ]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["분류", "회원 번호", "핸드폰"]);
 
   // pagination
-  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] =
-    usePagination();
+  const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
   const searchData = () => {
     marketingSearchApi(searchType, search, page, sort)
@@ -49,17 +40,13 @@ const Marketing = () => {
       .catch((err) => console.log(err));
   };
 
-  const changeData = () => {
-    if (searchType === "전체") {
-      marketingListApi(page, sort)
-        .then((res) => {
-          setCount(res.data.data.couponCnt);
-          setData(res.data.data.couponResDtoList.dtoList);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      searchData();
-    }
+  const onResetData = () => {
+    marketingListApi(page, sort)
+      .then((res) => {
+        setCount(res.data.data.couponCnt);
+        setData(res.data.data.couponResDtoList.dtoList);
+      })
+      .catch((err) => console.log(err));
   };
 
   const changeState = (id) => {
@@ -69,17 +56,11 @@ const Marketing = () => {
   };
 
   useEffect(() => {
-    changeData();
+    searchData();
   }, [page, sort]);
   return (
     <>
-      <SelectHeader
-        menu="marketing"
-        menu1="marketing"
-        menu2="event"
-        Tmenu1="마케팅 서비스"
-        Tmenu2="이벤트"
-      />
+      <SelectHeader menu="marketing" menu1="marketing" menu2="event" Tmenu1="마케팅 서비스" Tmenu2="이벤트" />
       <FilterRow
         searchType={searchType}
         setSearchType={setSearchType}
@@ -89,12 +70,12 @@ const Marketing = () => {
         count={count}
         page={page}
         item={item}
-        onAsc={onAsc}
-        onDesc={onDesc}
         setPage={setPage}
         searchData={searchData}
         search={search}
         setSearch={setSearch}
+        onDesc={onDesc}
+        onResetData={onResetData}
       />
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>

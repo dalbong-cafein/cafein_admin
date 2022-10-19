@@ -9,28 +9,27 @@ import { ReactComponent as ArrowDown } from "../../svg/ArrowDown.svg";
 import Paging from "./Pagination";
 
 export default function FilterRow({
-  children,
   searchType,
   setSearchType,
   searchArr,
   setSearchArr,
-  sort,
   count,
   page,
   item,
   onDesc,
-  onAsc,
   setPage,
   searchData,
   search,
   setSearch,
   nodrop,
+  onResetData,
 }) {
   const [isDrop, setIsDrop] = useState(false);
   const onclick = () => {
     onDesc();
     setPage(1);
     searchData();
+    setIsDrop(false);
   };
   const handlePageChange = (page) => {
     setPage(page);
@@ -65,6 +64,7 @@ export default function FilterRow({
           <S.Input placeholder="검색" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
           <Search onClick={onclick} />
         </Row>
+        <S.ResetBtn onClick={onResetData}>목록으로 돌아가기</S.ResetBtn>
       </Row>
       <Row gap={15} align="baseline">
         <Paging count={count} handlePageChange={handlePageChange} page={page} item={item} />

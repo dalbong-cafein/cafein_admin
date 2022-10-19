@@ -80,3 +80,15 @@ export const Btn = styled.button`
   line-height: 26px;
   cursor: pointer;
 `;
+
+export const ResetBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 36px;
+  color: #fff;
+  background-color: #fc7521;
+  border-radius: 6px;
+  cursor: pointer;
+`;

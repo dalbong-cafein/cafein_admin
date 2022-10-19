@@ -7,7 +7,8 @@ export const marketingListApi = async (page, sort) => {
 
 //쿠폰리스트 검색
 export const marketingSearchApi = async (searchType, keyword, page, sort) => {
-  const sub = searchType === "분류" ? "cp" : searchType === "회원 번호" ? "m" : "p";
+  const sub =
+    searchType === "분류" ? "cp" : searchType === "회원 번호" ? "m" : searchType === "휴대폰" ? "p" : ["p", "cp", "m"];
   return await withAuthInstance.get(`/coupons?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`);
 };
 export const eventListApi = async (search, page, sort) => {

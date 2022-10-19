@@ -30,19 +30,6 @@ const Store = () => {
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
-  const changeData = () => {
-    if (searchType === "전체") {
-      feedDataApi(page, sort)
-        .then((res) => {
-          setCount(res.data.data.storeCnt);
-          setData(res.data.data.storeResDtoList.dtoList);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      searchData();
-    }
-  };
-
   const searchData = () => {
     feedSearchApi(search, searchType, page, sort)
       .then((res) => {
@@ -52,8 +39,21 @@ const Store = () => {
       .catch((err) => console.log(err));
   };
 
+  const onResetData = () => {
+    setSearchType("전체");
+    setSearch("");
+    setPage(1);
+    onDesc();
+    feedDataApi(page, sort)
+      .then((res) => {
+        setCount(res.data.data.storeCnt);
+        setData(res.data.data.storeResDtoList.dtoList);
+      })
+      .catch((err) => console.log(err));
+  };
+  console.log(data);
   useEffect(() => {
-    changeData();
+    searchData();
   }, [page, sort]);
   return (
     <Container>
@@ -77,6 +77,8 @@ const Store = () => {
         searchData={searchData}
         search={search}
         setSearch={setSearch}
+        onDesc={onDesc}
+        onResetData={onResetData}
       >
         <S.Sbtn
           onClick={() => {

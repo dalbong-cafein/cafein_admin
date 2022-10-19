@@ -14,7 +14,7 @@ import SideBar from "./components/common/Sidebar";
 
 //page
 import Main from "./pages/main";
-import LogIn from "./pages/Login";
+import LogIn from "./pages/login";
 
 function App() {
   const [menu, setMenu] = useState("");

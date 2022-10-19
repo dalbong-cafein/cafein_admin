@@ -38,18 +38,19 @@ const User = () => {
       })
       .catch((err) => console.log(err));
   };
+  console.log(data);
+  const onResetData = () => {
+    setSearchType("전체");
+    setSearch("");
+    setPage(1);
+    onDesc();
 
-  const changeData = () => {
-    if (searchType === "전체") {
-      userListApi(sort, page)
-        .then((res) => {
-          setData(res.data.data.memberResDtoList.dtoList);
-          setCount(res.data.data.memberCnt);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      searchData();
-    }
+    userListApi(sort, page)
+      .then((res) => {
+        setData(res.data.data.memberResDtoList.dtoList);
+        setCount(res.data.data.memberCnt);
+      })
+      .catch((err) => console.log(err));
   };
 
   const loadD = (id) => {
@@ -67,7 +68,7 @@ const User = () => {
   };
 
   useEffect(() => {
-    changeData();
+    searchData();
   }, [page, sort]);
 
   return (
@@ -88,6 +89,8 @@ const User = () => {
         count={count}
         page={page}
         item={item}
+        onDesc={onDesc}
+        onResetData={onResetData}
         setPage={setPage}
         searchData={searchData}
         search={search}

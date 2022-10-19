@@ -39,21 +39,22 @@ const Review = () => {
     });
   };
 
-  const changeData = () => {
-    if (searchType === "전체") {
-      reviewDataApi(page, sort)
-        .then((res) => {
-          setCount(res.data.data.reviewCnt);
-          setData(res.data.data.reviewResDtoList.dtoList);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      searchData();
-    }
+  const onResetData = () => {
+    setSearchType("전체");
+    setSearch("");
+    setPage(1);
+    onDesc();
+    reviewDataApi(page, sort)
+      .then((res) => {
+        setCount(res.data.data.reviewCnt);
+        setData(res.data.data.reviewResDtoList.dtoList);
+      })
+      .catch((err) => console.log(err));
   };
 
+  console.log(data);
   useEffect(() => {
-    changeData();
+    searchData();
   }, [page, sort]);
   return (
     <>
@@ -77,6 +78,8 @@ const Review = () => {
         searchData={searchData}
         search={search}
         setSearch={setSearch}
+        onDesc={onDesc}
+        onResetData={onResetData}
       />
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>

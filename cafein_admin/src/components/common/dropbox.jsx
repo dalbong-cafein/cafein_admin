@@ -1,22 +1,12 @@
 import styled from "styled-components";
-const DropBox = ({
-  searchArr,
-  setIsDrop,
-  setSearchArr,
-  searchType,
-  setSearchType,
-}) => {
+const DropBox = ({ searchArr, setIsDrop, setSearchArr, searchType, setSearchType }) => {
   const onclick = (e) => {
-    if (e.target.id === "전체") {
-      window.location.reload();
-    } else {
-      const temp = e.target.id;
-      const copy = [...searchArr, searchType];
-      copy.splice(searchArr.indexOf(temp), 1);
-      setSearchType(temp);
-      setSearchArr(copy);
-      setIsDrop(false);
-    }
+    const temp = e.target.id;
+    const copy = [...searchArr, searchType];
+    copy.splice(searchArr.indexOf(temp), 1);
+    setSearchType(temp);
+    setSearchArr(copy);
+    setIsDrop(false);
   };
   return (
     <Box>
