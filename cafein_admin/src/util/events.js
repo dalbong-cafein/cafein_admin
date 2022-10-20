@@ -29,11 +29,7 @@ export const editNoticeApi = async (register) => {
   formData.append("content", register.content);
   formData.append("boardId", register.boardId);
   formData.append("deleteImageId", register.deleteImageId);
-  if (register.imageFiles) {
-    for (let i = 0; i < register.imageFiles.length; i++) {
-      formData.append("imageFile", register.imageFiles[i]);
-    }
-  }
+  formData.append("imageFile", register.imageFiles);
 
   return await axios({
     method: "put",
@@ -53,11 +49,7 @@ export const registerNoticeApi = async (register) => {
   formData.append("title", register.title);
   formData.append("content", register.content);
   formData.append("boardCategoryId", register.boardCategoryId);
-  if (register.imageFiles.length > 0) {
-    for (let i = 0; i < register.imageFiles.length; i++) {
-      formData.append("imageFiles", register.imageFiles[i]);
-    }
-  }
+  formData.append("imageFiles", register.imageFiles);
 
   return axios({
     method: "POST",

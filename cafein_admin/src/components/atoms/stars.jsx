@@ -8,6 +8,7 @@ const Stars = ({ width, gap, num, isNum, color, i }) => {
       <Star />
       <Star />
       <Star />
+      <Star />
       {isNum && <p>{num}</p>}
     </Row>
   );

@@ -6,7 +6,8 @@ export const convertTime = (time) => {
   return time;
 };
 
-export const updateDay = (j, copy, open, close) => {
+export const updateDay = (j, copy, open = "", close = "") => {
+  console.log(open);
   if (j === "월") {
     copy.monOpen = open;
     copy.monClose = close;

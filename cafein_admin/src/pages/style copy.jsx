@@ -34,12 +34,14 @@ export const Photo = styled.div`
   width: 40px;
   height: 40px;
   background: ${({ img }) => img && `url(${img})`} no-repeat center center/cover;
+  border-radius: 4px;
 `;
 
 export const NonePic = styled.div`
   width: 40px;
   height: 40px;
   background-color: #fff;
+  border-radius: 4px;
 `;
 
 export const Sbtn = styled.div`
@@ -91,4 +93,11 @@ export const ResetBtn = styled.div`
   background-color: #fc7521;
   border-radius: 6px;
   cursor: pointer;
+`;
+
+export const CongestionBtn = styled.div`
+  padding: 5px;
+  background-color: ${(props) => (props.id == 1 ? "#DFF5E8" : props.id == 2 ? "#FFF3E0" : "#FFEBEE")};
+  color: ${(props) => (props.id == 1 ? "#26BA6A" : props.id == 2 ? "#FF9800" : "#F44336")};
+  border-radius: 4px;
 `;

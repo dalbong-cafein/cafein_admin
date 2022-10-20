@@ -33,12 +33,7 @@ export const feedCreateApi = async (register) => {
   formData.append("wifiPassword", register.wifiPassword);
   formData.append("etcTime", register.etcTime);
   formData.append("phone", register.phone);
-
-  if (register.imageFiles.length > 0) {
-    for (let i = 0; i < register.imageFiles.length; i++) {
-      formData.append("imageFiles", register.imageFiles[i]);
-    }
-  }
+  formData.append("imageFiles", register.imageFiles);
 
   return axios({
     method: "POST",
@@ -51,34 +46,9 @@ export const feedCreateApi = async (register) => {
 };
 export const feedEditApi = async (register) => {
   const formData = new FormData();
-  formData.append("storeId", register.storeId);
-  formData.append("monOpen", register.monOpen);
-  formData.append("monClose", register.monClose);
-  formData.append("tueOpen", register.tueOpen);
-  formData.append("tueClose", register.tueClose);
-  formData.append("wedOpen", register.wedOpen);
-  formData.append("wedClose", register.wedClose);
-  formData.append("thuOpen", register.thuOpen);
-  formData.append("thuClose", register.thuClose);
-  formData.append("friOpen", register.friOpen);
-  formData.append("friClose", register.friClose);
-  formData.append("satOpen", register.satOpen);
-  formData.append("satClose", register.satClose);
-  formData.append("sunOpen", register.sunOpen);
-  formData.append("sunClose", register.sunClose);
-  formData.append("wifiPassword", register.wifiPassword);
-  formData.append("phone", register.phone);
-  formData.append("website", register.website);
-  formData.append("etcTime", register.etcTime);
-  if (register.updateImageFiles) {
-    for (let i = 0; i < register.updateImageFiles.length; i++) {
-      formData.append("updateImageFiles", register.updateImageFiles[i]);
-    }
-  }
-  if (register.deleteImageIdList.length > 0) {
-    for (let i = 0; i < register.deleteImageIdList.length; i++) {
-      formData.append("deleteImageIdList", register.deleteImageIdList[i]);
-    }
+  const keys = Object.keys(register);
+  for (let key of keys) {
+    formData.append(key, register[key]);
   }
 
   return axios({

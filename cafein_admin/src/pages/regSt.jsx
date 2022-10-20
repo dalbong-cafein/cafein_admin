@@ -80,7 +80,7 @@ export const Box = styled.div`
   flex-direction: column;
   gap: 16px;
   & > p {
-    padding: 16px 0;
+    padding: 16px 0 8px;
     font-weight: 500;
   }
 `;
@@ -230,12 +230,13 @@ export const Btn2 = styled.div`
 
 export const RowBox = styled.div`
   display: flex;
-  padding: 0 125px;
+  padding: 0 auto;
+
   justify-content: center;
   gap: 100px;
   & > div {
     & > p {
-      padding-top: 12px;
+      padding: 12px 0;
       color: #acacac;
       font-size: 14px;
       text-align: center;

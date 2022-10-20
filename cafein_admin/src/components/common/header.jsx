@@ -20,16 +20,18 @@ const Header = ({ btn = true, align, mSize, text, subText, mcolor, inner, childr
         )}
       </div>
       <Row gap={15}>
-        {children && children}
-        {btn && (
-          <Row style={{ gap: "16px" }}>
-            <S.Sbtn onClick={onDesc}>
-              최신순
-              {sort === "DESC" && <Check />}
-            </S.Sbtn>
-            <S.Sbtn onClick={onAsc}>오래된 순{sort === "ASC" && <Check />}</S.Sbtn>
-          </Row>
-        )}
+        <Row style={{ gap: "16px" }}>
+          {children && children}
+          {btn && (
+            <>
+              <S.Sbtn onClick={onDesc}>
+                최신순
+                {sort === "DESC" && <Check />}
+              </S.Sbtn>
+              <S.Sbtn onClick={onAsc}>오래된 순{sort === "ASC" && <Check />}</S.Sbtn>
+            </>
+          )}
+        </Row>
       </Row>
     </SpaceRow>
   );

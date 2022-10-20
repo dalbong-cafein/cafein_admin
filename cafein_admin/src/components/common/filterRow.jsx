@@ -6,6 +6,8 @@ import * as S from "../../pages/style copy";
 
 import { ReactComponent as Search } from "../../svg/Search.svg";
 import { ReactComponent as ArrowDown } from "../../svg/ArrowDown.svg";
+import { ReactComponent as CloseIcon } from "../../svg/close.svg";
+
 import Paging from "./Pagination";
 
 export default function FilterRow({

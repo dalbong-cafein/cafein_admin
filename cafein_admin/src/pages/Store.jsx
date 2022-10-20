@@ -64,7 +64,16 @@ const Store = () => {
         onAsc={onAsc}
         onDesc={onDesc}
         sort={sort}
-      />
+      >
+        <S.Sbtn
+          onClick={() => {
+            navigate("/management/register");
+          }}
+          color="#2563EB"
+        >
+          새 카페 등록
+        </S.Sbtn>
+      </Header>
       <FilterRow
         searchType={searchType}
         setSearchType={setSearchType}
@@ -79,24 +88,15 @@ const Store = () => {
         setSearch={setSearch}
         onDesc={onDesc}
         onResetData={onResetData}
-      >
-        <S.Sbtn
-          onClick={() => {
-            navigate("/management/register");
-          }}
-          color="#2563EB"
-        >
-          새 카페 등록
-        </S.Sbtn>
-      </FilterRow>
+      />
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>
           <div>분류</div>
           <div>카페명</div>
           <div>위치</div>
-          <div>연락처</div>
           <div>혼잡도</div>
           <div>리뷰</div>
+          <div>추천율</div>
           <div>등록일</div>
           <div>최종 수정일</div>
           <div>메모</div>

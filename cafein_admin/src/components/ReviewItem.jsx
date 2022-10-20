@@ -13,9 +13,7 @@ const ReviewItem = ({ data, onModal, setMemoModal, setMemoItem }) => {
       {data &&
         data.map((item, i) => (
           <ItemRow key={i} hasMemoId={item.memoId}>
-            <div onClick={() => onModal(item)}>
-              {String(item.reviewId).padStart(6, "0")}
-            </div>
+            <div onClick={() => onModal(item)}>{String(item.reviewId).padStart(6, "0")}</div>
             <div onClick={() => onModal(item)}>
               <ReviewRecommendationBtn recommendation={item.recommendation} />
             </div>
@@ -36,29 +34,26 @@ const ReviewItem = ({ data, onModal, setMemoModal, setMemoItem }) => {
               </Row>
               {item.content && (
                 <Row gap={16} align="baseline" style={{ fontSize: "14px" }}>
-                  {item.content.length > 45
-                    ? `${item.content.slice(0, 45)}...`
-                    : item.content}
+                  <p
+                    style={{
+                      width: "550px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      textAlign: "left",
+                    }}
+                  >
+                    {item.content}
+                  </p>
                 </Row>
               )}
             </div>
-            <div onClick={() => onModal(item)}>
-              {String(item.writerId).padStart(6, "0")}
-            </div>
-            <div
-              onClick={() => onModal(item)}
-              style={{ display: "flex", flexDirection: "column" }}
-            >
+            <div onClick={() => onModal(item)}>{String(item.writerId).padStart(6, "0")}</div>
+            <div onClick={() => onModal(item)} style={{ display: "flex", flexDirection: "column" }}>
               <div>{String(item.storeId).padStart(6, "0")}</div>
-
-              <div>{item.storeName}</div>
             </div>
-            <div onClick={() => onModal(item)}>
-              {item.regDateTime.split("T")[0]}
-            </div>
-            <div onClick={() => onModal(item)}>
-              {item.modDateTime.split("T")[0]}
-            </div>
+            <div onClick={() => onModal(item)}>{item.regDateTime.split("T")[0]}</div>
+            <div onClick={() => onModal(item)}>{item.modDateTime.split("T")[0]}</div>
             <div>
               <Memo
                 onClick={() => {
@@ -104,9 +99,6 @@ const ItemRow = styled.div`
     }
   }
 
-  & > div:nth-child(5) {
-    flex: 1.5;
-  }
   & > div:last-child {
     border-right: none;
     border-bottom: none;

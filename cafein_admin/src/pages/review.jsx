@@ -35,6 +35,7 @@ const Review = () => {
 
   const searchData = () => {
     reviewSearchApi(search, searchType, page, sort).then((res) => {
+      setCount(res.data.data.reviewCnt);
       setData(res.data.data.reviewResDtoList.dtoList);
     });
   };
@@ -52,7 +53,6 @@ const Review = () => {
       .catch((err) => console.log(err));
   };
 
-  console.log(data);
   useEffect(() => {
     searchData();
   }, [page, sort]);
@@ -117,9 +117,6 @@ const TableHeader = styled.div`
   }
   & > div:nth-child(3) {
     flex: 4;
-  }
-  & > div:nth-child(5) {
-    flex: 1.5;
   }
 
   & > div:last-child {

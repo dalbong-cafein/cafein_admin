@@ -81,28 +81,28 @@ const Editcafe = () => {
   const input = useRef();
 
   const submit = async (register) => {
-    console.log(register);
     feedEditApi(register)
       .then((res) => {
         console.log(res);
         navigate("/management");
       })
       .catch((err) => {
-        window.alert("조금 이따가 다시 시도해주세요");
-        navigate("/management");
+        console.log(err);
+        // window.alert("조금 이따가 다시 시도해주세요");
+        // navigate("/management");
       });
   };
 
+  console.log(state);
+  console.log(register);
   useEffect(() => {
     const fetchingData = async () => {
       const copy = { ...register };
       copy.storeId = state.storeId;
-      const obj = Object.keys(copy);
-      obj.map((item) => {
-        if (state[item]) {
-          copy.item = state[item];
-        }
-      });
+      const obj = Object.keys(register);
+      for (let key of obj) {
+        copy[key] = state[key];
+      }
 
       setRegister(copy);
     };
@@ -112,14 +112,12 @@ const Editcafe = () => {
       const copy = [...dayarr];
       const copy2 = { ...register };
       obj?.map((item, i) => {
-        if (state?.businessHoursResDto) {
-          if (item !== "etcTime") {
-            const day = convertDay(item);
-            const open = state?.businessHoursResDto[item]?.open;
-            const close = state?.businessHoursResDto[item]?.closed;
-            copy.push([open, close, day]);
-            updateDay(day, copy2, open, close);
-          }
+        if (item !== "etcTime") {
+          const day = convertDay(item);
+          const open = state.businessHoursResDto[item].open || "";
+          const close = state.businessHoursResDto[item].closed || "";
+          copy.push([open, close, day]);
+          updateDay(day, copy2, open, close);
         }
       });
 
