@@ -63,7 +63,8 @@ const QnAs = () => {
     const copy = { ...register };
     copy.boardCategoryId = 2;
     setRegister(copy);
-    eventListApi(page, sort).then((res) => {
+    eventListApi(search, page, sort).then((res) => {
+      console.log(res);
       setCount(res.data.data.boardCnt);
       setData(res.data.data.boardResDtoList.dtoList);
     });
@@ -103,8 +104,30 @@ const QnAs = () => {
               >
                 <div>{String(item.boardId).padStart(6, "0")}</div>
                 <div>
-                  <p style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</p>
-                  <p>{item.content.length > 30 ? `${item.content.slice(0, 30)}...` : item.content}</p>
+                  <p
+                    style={{
+                      fontWeight: "bold",
+                      marginBottom: "5px",
+                      width: "250px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      textAlign: "left",
+                    }}
+                  >
+                    {item.title}
+                  </p>
+                  <p
+                    style={{
+                      width: "250px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      textAlign: "left",
+                    }}
+                  >
+                    {item.content}
+                  </p>
                 </div>
 
                 <div>{String(item.regDateTime).split("T")[0]}</div>
