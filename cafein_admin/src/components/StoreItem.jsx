@@ -3,10 +3,11 @@ import Row from "./atoms/row";
 import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 
-const StoreItem = ({ data, setDModal, setModalMemo, setMemoItem, setDetailStoreId }) => {
+const StoreItem = ({ setCongestionScore, data, setDModal, setModalMemo, setMemoItem, setDetailStoreId }) => {
   const onModal = (item) => {
     setDetailStoreId(() => item.storeId);
     setDModal(true);
+    setCongestionScore(() => item.congestionScoreAvg);
   };
   return (
     <S.DataBox>

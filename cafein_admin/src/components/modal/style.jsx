@@ -104,7 +104,7 @@ export const ModalContent = styled.div`
     padding: 24px 0;
     width: 90%;
 
-    height: 250px;
+    height: 180px;
     font-size: 16px;
     background-color: #131313;
     color: #e3e3e3;
@@ -118,7 +118,7 @@ export const ModalContent = styled.div`
     width: 100%;
     white-space: pre-line;
     line-height: 22.4px;
-    heigth: 350px;
+    heigth: 200px;
     max-height: 450px;
     color: #e3e3e3;
   }
@@ -176,7 +176,8 @@ export const Line = styled.div`
     color: #8b8b8b;
   }
   & > p:nth-child(2) {
-    // width: 370px;
+    max-width: 250px;
+    word-wrap: break-word;
     line-height: 18px;
     color: #e3e3e3;
   }

@@ -27,7 +27,7 @@ const Editcafe = () => {
   const [searchModal, setSearchModal] = useState(false);
   const [dayarr, setDayarr] = useState([]);
   const [delImg, setDelImg] = useState([]);
-  const [updateImg, setUpdata] = useState([]);
+  const [updateImg, setUpdateImg] = useState([]);
 
   const onLoadFile = (e) => {
     let copy = [...file];
@@ -36,13 +36,15 @@ const Editcafe = () => {
       return;
     } else {
       if (e.target.files[0]) {
-        copy = [...copy, e.target.files[0]];
+        copy.push(e.target.files[0]);
         setFile(copy);
-        let coppy = [...updateImg, e.target.files[0]];
+        let copy3 = [...updateImg];
+        copy3.push(e.target.files[0]);
+        setUpdateImg(() => copy3);
 
         const copy2 = { ...register };
-        copy2.updateImageFiles = coppy;
-        setRegister(copy2);
+        copy2.updateImageFiles = copy3;
+        setRegister(() => copy2);
       }
     }
   };
@@ -81,6 +83,7 @@ const Editcafe = () => {
   const input = useRef();
 
   const submit = async (register) => {
+    console.log(register);
     feedEditApi(register)
       .then((res) => {
         console.log(res);
@@ -93,8 +96,6 @@ const Editcafe = () => {
       });
   };
 
-  console.log(state);
-  console.log(register);
   useEffect(() => {
     const fetchingData = async () => {
       const copy = { ...register };
@@ -103,7 +104,6 @@ const Editcafe = () => {
       for (let key of obj) {
         copy[key] = state[key];
       }
-
       setRegister(copy);
     };
 
@@ -112,12 +112,14 @@ const Editcafe = () => {
       const copy = [...dayarr];
       const copy2 = { ...register };
       obj?.map((item, i) => {
-        if (item !== "etcTime") {
-          const day = convertDay(item);
-          const open = state.businessHoursResDto[item].open || "";
-          const close = state.businessHoursResDto[item].closed || "";
-          copy.push([open, close, day]);
-          updateDay(day, copy2, open, close);
+        if (state?.businessHoursResDto) {
+          if (item !== "etcTime") {
+            const day = convertDay(item);
+            const open = state.businessHoursResDto[item].open || null;
+            const close = state.businessHoursResDto[item].closed || null;
+            copy.push([open, close, day]);
+            updateDay(day, copy2, open, close);
+          }
         }
       });
 

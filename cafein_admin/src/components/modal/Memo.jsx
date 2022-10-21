@@ -3,12 +3,7 @@ import Portal from "./Portal";
 import * as S from "./style";
 import { ReactComponent as Close } from "../../svg/close2.svg";
 import Row from "../atoms/row";
-import {
-  delMemoApi,
-  editMemoApi,
-  memoDataApi,
-  registerMemoApi,
-} from "../../util/memo";
+import { delMemoApi, editMemoApi, memoDataApi, registerMemoApi } from "../../util/memo";
 import RedAlert from "./RedAlert";
 
 export default function MemoModal({ setModal, item }) {
@@ -71,9 +66,7 @@ export default function MemoModal({ setModal, item }) {
     const today = new Date();
     const timeValue = new Date(memo?.modDateTime || memo?.regDateTime);
 
-    const betweenTime = Math.floor(
-      (today.getTime() - timeValue.getTime()) / 1000 / 60
-    );
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
     if (betweenTime < 1) return "방금 전";
     if (betweenTime < 60) {
       return `${betweenTime}분전`;
@@ -104,19 +97,13 @@ export default function MemoModal({ setModal, item }) {
         <S.ModalHeader>
           <p>
             {`${memo?.memoType || where}`}
-            {`_${
-              memo?.storeId ||
-              memo?.reviewId ||
-              memo?.couponId ||
-              memo?.memberId ||
-              id
-            }`}
+            {`_${memo?.storeId || memo?.reviewId || memo?.couponId || memo?.memberId || id}`}
           </p>
           <Close onClick={closeModal} />
         </S.ModalHeader>
         {item?.memoId ? (
           <>
-            <S.ModalContent>
+            <S.ModalContent style={{ height: "0" }}>
               {editMode ? (
                 <textarea
                   cols="50"
@@ -144,16 +131,10 @@ export default function MemoModal({ setModal, item }) {
                   </>
                 ) : (
                   <>
-                    <S.Btn
-                      style={{ border: "1px solid #515151" }}
-                      onClick={() => setAlert(true)}
-                    >
+                    <S.Btn style={{ border: "1px solid #515151" }} onClick={() => setAlert(true)}>
                       삭제
                     </S.Btn>
-                    <S.Btn
-                      color="#515151"
-                      onClick={() => setEditMode(!editMode)}
-                    >
+                    <S.Btn color="#515151" onClick={() => setEditMode(!editMode)}>
                       수정
                     </S.Btn>
                   </>

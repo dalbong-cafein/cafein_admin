@@ -12,7 +12,7 @@ import RedAlert from "./RedAlert";
 import { cafeDelApi, feedDetailApi, feedDetailReviewApi } from "../../util/management";
 import { useEffect } from "react";
 
-export default function CafeDetailModal({ setDModal, id }) {
+export default function CafeDetailModal({ setDModal, id, congestionScore }) {
   const closeModal = () => {
     setDModal(false);
   };
@@ -55,6 +55,8 @@ export default function CafeDetailModal({ setDModal, id }) {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  console.log(data);
 
   const dayArr = [
     { key: "onMon", name: "월" },
@@ -116,7 +118,7 @@ export default function CafeDetailModal({ setDModal, id }) {
                   <p>{`${String(data?.modDateTime).replace("T", " ")}`}</p>
                 </S.Line>
 
-                <Title style={{ padding: "40px 20px 20px" }} size={16}>
+                <Title style={{ padding: "20px" }} size={16}>
                   기본 정보
                 </Title>
                 <Columnbox>
@@ -189,35 +191,45 @@ export default function CafeDetailModal({ setDModal, id }) {
                 <Title size={16}>활동정보</Title>
                 <Close style={{ cursor: "pointer" }} onClick={closeModal} />
               </Row>
-              <Columnbox style={{ paddingBottom: "40px" }}>
+              <Columnbox>
                 <S.Line color="#515151">
                   <span>조회</span>
-                  <p>{data?.viewCnt}</p>
+                  <p>{data?.viewCnt ? data?.viewCnt + "회" : "-"}</p>
                 </S.Line>
                 <S.Line color="#515151">
                   <span>저장</span>
-                  <p>{data?.heartCnt}</p>
+                  <p>{data?.heartCnt ? data?.heartCnt + "회" : "-"}</p>
                 </S.Line>
                 <S.Line color="#515151">
                   <span>공유</span>
-                  <p>{data?.congestionCnt}</p>
+                  <p>{"-"}</p>
                 </S.Line>
                 <S.Line color="#515151">
                   <span>혼잡도</span>
-                  <p>{data?.congestionCnt}</p>
+                  <Row gap={5}>
+                    <p>{data?.congestionCnt ? data?.congestionCnt + "개" : "-"}</p>
+                    {congestionScore && (
+                      <CongestionBtn id={parseInt(congestionScore)}>
+                        {parseInt(congestionScore) == 1 ? "여유" : parseInt(congestionScore) == 2 ? "보통" : "혼잡"}
+                      </CongestionBtn>
+                    )}
+                  </Row>
                 </S.Line>
                 <S.Line color="#515151">
                   <span>리뷰</span>
-                  <p>{data?.reviewCnt}</p>
+                  <p>{data?.reviewCnt ? data?.reviewCnt + "개" : "-"}</p>
                 </S.Line>
               </Columnbox>
-              <Title style={{ padding: "40px 0" }} size={16}>
-                카공 정보
+              <Title style={{ paddingTop: "40px" }} size={16}>
+                <Row justify="space-between">
+                  <Title size={16}>카공 정보</Title>
+                  <p style={{ fontWeight: "400" }}>5점 만점</p>
+                </Row>
               </Title>
-              <Columnbox style={{ paddingBottom: "190px" }}>
+              <Columnbox style={{ paddingBottom: "140px" }}>
                 <S.Line color="#515151">
                   <span>전체</span>
-                  <p>{reviewData?.recommendPercent}% 추천</p>
+                  <p>{reviewData?.recommendPercent ? reviewData?.recommendPercent + "% 추천" : "-"}</p>
                 </S.Line>
                 <HoverLine color="#515151">
                   <span>콘센트</span>
@@ -285,7 +297,7 @@ export default function CafeDetailModal({ setDModal, id }) {
 
 const ModalBox = styled.div`
   width: 992px;
-  height: 930px;
+  height: 850px;
   transform: translate(-50%, -50%);
   position: absolute;
   top: 50%;
@@ -298,7 +310,7 @@ const ModalBox = styled.div`
 `;
 const ModalBoxs = styled.div`
   width: ${(props) => props.width && props.width}px;
-  height: 930px;
+  height: 850px;
   box-sizing: border-box;
   background-color: ${(props) => props.color && props.color};
   color: #fff;
@@ -309,7 +321,7 @@ const Title = styled.p`
   font-size: ${(props) => props.size}px;
   font-weight: 700;
   color: #f6f6f6;
-  padding-bottom: 60px;
+  padding-bottom: 30px;
 `;
 
 const HoverLine = styled(S.Line)`
@@ -393,4 +405,11 @@ const HoverBox = styled.div`
   background-color: #646464;
   border-radius: 4px;
   transform: translate(120%, ${(props) => props.late && props.late}%);
+`;
+
+const CongestionBtn = styled.div`
+  padding: 5px;
+  background-color: ${(props) => (props.id == 1 ? "#DFF5E8" : props.id == 2 ? "#FFF3E0" : "#FFEBEE")};
+  color: ${(props) => (props.id == 1 ? "#26BA6A" : props.id == 2 ? "#FF9800" : "#F44336")};
+  border-radius: 4px;
 `;

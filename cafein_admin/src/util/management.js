@@ -33,7 +33,7 @@ export const feedCreateApi = async (register) => {
   formData.append("wifiPassword", register.wifiPassword);
   formData.append("etcTime", register.etcTime);
   formData.append("phone", register.phone);
-  formData.append("imageFiles", register.imageFiles);
+  register.imageFiles.forEach((img) => formData.append("imageFiles", img));
 
   return axios({
     method: "POST",
@@ -48,8 +48,15 @@ export const feedEditApi = async (register) => {
   const formData = new FormData();
   const keys = Object.keys(register);
   for (let key of keys) {
-    formData.append(key, register[key]);
+    if (key != "updateImageFiles" && !!register[key]) {
+      formData.append(key, register[key]);
+    }
+    if (key == "phone" || key == "wifiPassword" || key == "website" || key == "etcTime") {
+      formData.append(key, register[key]);
+    }
   }
+
+  if (register.updateImageFiles) register.updateImageFiles.forEach((img) => formData.append("updateImageFiles", img));
 
   return axios({
     method: "PUT",

@@ -22,7 +22,7 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
   const [data, setData] = useState({
     ...selectItem,
     deleteImageId: "",
-    imageFiles: [],
+    imageFile: [],
   });
   const [file, setFile] = useState([]);
 
@@ -33,7 +33,7 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
     } else {
       if (e.target.files[0]) {
         setFile([e.target.files[0]]);
-        const copy2 = { ...data, imageFiles: [e.target.files[0]] };
+        const copy2 = { ...data, imageFile: [e.target.files[0]] };
         setData(copy2);
       }
     }

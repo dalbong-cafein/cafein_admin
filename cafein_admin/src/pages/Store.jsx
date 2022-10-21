@@ -22,6 +22,7 @@ const Store = () => {
   //detail
   const [dModal, setDModal] = useState(false);
   const [detailStoreId, setDetailStoreId] = useState(null);
+  const [congestionScore, setCongestionScore] = useState(null);
   //drop
   const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["분류", "카페명", "위치"]);
   //memo
@@ -108,11 +109,12 @@ const Store = () => {
           setDModal={setDModal}
           setMemoItem={setMemoItem}
           setDetailStoreId={setDetailStoreId}
+          setCongestionScore={setCongestionScore}
         />
       </S.Wrapper>
       {data.length === 0 && <None text="카페" text2="새 카페 등록" href="/management/register" />}
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
-      {dModal && <StoreModal setDModal={setDModal} id={detailStoreId} />}
+      {dModal && <StoreModal setDModal={setDModal} id={detailStoreId} congestionScore={congestionScore} />}
     </Container>
   );
 };
