@@ -12,15 +12,21 @@ import None from "../components/common/None";
 import ReviewTemp from "../components/ReviewItem";
 import MemoModal from "../components/modal/Memo";
 import FilterRow from "../components/common/FilterRow";
+import { useLocation } from "react-router-dom";
 
 const Review = () => {
+  const { state } = useLocation();
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["내용", "회원 번호", "카페 번호"]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
+    "내용",
+    "회원 번호",
+    "카페 번호",
+  ]);
 
   const [modal, setModal] = useState(false);
   const [detailReviewId, setDetailReviewId] = useState([]);
@@ -34,7 +40,8 @@ const Review = () => {
   };
 
   const searchData = () => {
-    reviewSearchApi(search, searchType, page, sort).then((res) => {
+    const keyword = state || search;
+    reviewSearchApi(keyword, searchType, page, sort).then((res) => {
       setCount(res.data.data.reviewCnt);
       setData(res.data.data.reviewResDtoList.dtoList);
     });
@@ -45,6 +52,9 @@ const Review = () => {
     setSearch("");
     setPage(1);
     onDesc();
+    loadData();
+  };
+  const loadData = () => {
     reviewDataApi(page, sort)
       .then((res) => {
         setCount(res.data.data.reviewCnt);
@@ -54,7 +64,9 @@ const Review = () => {
   };
 
   useEffect(() => {
-    searchData();
+    if (!state) {
+      loadData();
+    }
   }, [page, sort]);
   return (
     <>
@@ -80,6 +92,7 @@ const Review = () => {
         setSearch={setSearch}
         onDesc={onDesc}
         onResetData={onResetData}
+        state={state}
       />
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>
@@ -93,7 +106,12 @@ const Review = () => {
           <div>메모</div>
         </TableHeader>
 
-        <ReviewTemp data={data} onModal={onModal} setMemoModal={setMemoModal} setMemoItem={setMemoItem} />
+        <ReviewTemp
+          data={data}
+          onModal={onModal}
+          setMemoModal={setMemoModal}
+          setMemoItem={setMemoItem}
+        />
       </S.Wrapper>
 
       {data.length === 0 && <None text="리뷰" />}

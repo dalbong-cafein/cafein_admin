@@ -45,5 +45,10 @@ const Row = styled.div`
       fill: ${(props) => props.isFill >= 4 && props.color};
     }
   }
+  & > svg:nth-child(5) {
+    path {
+      fill: ${(props) => props.isFill >= 5 && props.color};
+    }
+  }
 `;
 export default Stars;

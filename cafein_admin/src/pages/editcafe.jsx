@@ -16,6 +16,7 @@ import Header from "../components/common/Header";
 import { updateDay } from "../hooks/registerHook";
 import { feedEditApi } from "../util/management";
 import CafeTimeBox from "../components/common/CafeTimeBox";
+import { resizeImg } from "../constant/resizeImg";
 
 const Editcafe = () => {
   const { state } = useLocation();
@@ -29,17 +30,18 @@ const Editcafe = () => {
   const [delImg, setDelImg] = useState([]);
   const [updateImg, setUpdateImg] = useState([]);
 
-  const onLoadFile = (e) => {
+  const onLoadFile = async (e) => {
     let copy = [...file];
     if (copy.length >= 5) {
       window.alert("이미지는 5개만 추가 가능합니다");
       return;
     } else {
       if (e.target.files[0]) {
-        copy.push(e.target.files[0]);
+        const file = await resizeImg(e.target.files[0]);
+        copy.push(file);
         setFile(copy);
         let copy3 = [...updateImg];
-        copy3.push(e.target.files[0]);
+        copy3.push(file);
         setUpdateImg(() => copy3);
 
         const copy2 = { ...register };
@@ -82,7 +84,7 @@ const Editcafe = () => {
   };
   const input = useRef();
 
-  const submit = async (register) => {
+  const submit = async () => {
     feedEditApi(register)
       .then((res) => {
         console.log(res);
@@ -139,14 +141,19 @@ const Editcafe = () => {
       fetchingImg();
       fetchingData();
     }
-  }, []);
+  }, [state]);
 
   return (
     <>
-      <Header align="center" mcolor="#8B8B8B" text="카페 관리" inner="카페 상세 수정" btn={false}>
-        <S.Submit style={{ marginRight: "15px" }} onClick={() => window.history.back()}>
-          취소
-        </S.Submit>
+      <Header
+        halfWidth
+        align="center"
+        mcolor="#8B8B8B"
+        text="카페 관리"
+        inner="카페 상세 수정"
+        btn={false}
+      >
+        <S.Submit onClick={() => window.history.back()}>취소</S.Submit>
         <S.Submit
           isFill={
             !register.storeName &&
@@ -157,7 +164,7 @@ const Editcafe = () => {
             !register.tableSize &&
             !register.socket
           }
-          onClick={() => submit(register)}
+          onClick={submit}
         >
           등록
         </S.Submit>

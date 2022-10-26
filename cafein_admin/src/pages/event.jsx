@@ -16,6 +16,7 @@ import EventMapBoxs from "../components/EventMapBox";
 import usePagination from "../hooks/usePagination";
 import FilterRow from "../components/common/FilterRow";
 import { adminFeedListApi } from "../util/desh";
+import { resizeImg } from "../constant/resizeImg";
 
 const Events = () => {
   const navigate = useNavigate();
@@ -31,12 +32,13 @@ const Events = () => {
 
   const [file, setFile] = useState();
 
-  const onLoadFile = (e) => {
+  const onLoadFile = async (e) => {
     if (file) {
       alert("이미지는 하나만 등록해주세요");
     }
     if (e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const file = await resizeImg(e.target.files[0]);
+      setFile(file);
     }
   };
   const regImg = () => {
@@ -76,7 +78,13 @@ const Events = () => {
   const input = useRef();
   return (
     <>
-      <SelectHeader menu="event" menu1="marketing" menu2="event" Tmenu1="마케팅 서비스" Tmenu2="이벤트" />
+      <SelectHeader
+        menu="event"
+        menu1="marketing"
+        menu2="event"
+        Tmenu1="마케팅 서비스"
+        Tmenu2="이벤트"
+      />
       <SS.Container>
         <div>
           <FilterRow
@@ -115,7 +123,11 @@ const Events = () => {
                     <div>{String(item.boardId).padStart(6, "0")}</div>
                     <div>
                       <p style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</p>
-                      <p>{item.content.length > 30 ? `${item.content.slice(0, 30)}...` : item.content}</p>
+                      <p>
+                        {item.content.length > 30
+                          ? `${item.content.slice(0, 30)}...`
+                          : item.content}
+                      </p>
                     </div>
 
                     <div>{String(item.regDateTime).split("T")[0]}</div>

@@ -12,6 +12,7 @@ import PVImg from "../common/PVImg";
 import Row from "../atoms/row";
 import NoticePreview from "./NoticePreview";
 import { editNoticeApi } from "../../util/events";
+import { resizeImg } from "../../constant/resizeImg";
 
 export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert }) {
   const closeModal = () => {
@@ -26,14 +27,15 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
   });
   const [file, setFile] = useState([]);
 
-  const onLoadFile = (e) => {
+  const onLoadFile = async (e) => {
     if (file?.length >= 1) {
       window.alert("이미지는 1개만 추가 가능합니다");
       return;
     } else {
       if (e.target.files[0]) {
-        setFile([e.target.files[0]]);
-        const copy2 = { ...data, imageFile: [e.target.files[0]] };
+        const file = await resizeImg(e.target.files[0]);
+        setFile([file]);
+        const copy2 = { ...data, imageFile: [file] };
         setData(copy2);
       }
     }
@@ -102,14 +104,24 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
               <Line>
                 <span>제목</span>
                 {edit ? (
-                  <input type="text" name="title" defaultValue={selectItem.title} onChange={(e) => onChange(e)} />
+                  <input
+                    type="text"
+                    name="title"
+                    defaultValue={selectItem.title}
+                    onChange={(e) => onChange(e)}
+                  />
                 ) : (
                   <p>{selectItem.title}</p>
                 )}
               </Line>
             </Columnbox>
             {edit ? (
-              <textarea type="text" name="content" defaultValue={selectItem.content} onChange={(e) => onChange(e)} />
+              <textarea
+                type="text"
+                name="content"
+                defaultValue={selectItem.content}
+                onChange={(e) => onChange(e)}
+              />
             ) : (
               <Text>{selectItem.content || "-"}</Text>
             )}
@@ -124,7 +136,12 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
                 >
                   <Photo />
                   <div>{file?.length || 0}/1</div>
-                  <input ref={input} type="file" style={{ display: "none" }} onChange={(e) => onLoadFile(e)} />
+                  <input
+                    ref={input}
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={(e) => onLoadFile(e)}
+                  />
                 </SS.FileUpload>
                 {file[0] && (
                   <SS.ImgBox>
@@ -164,7 +181,12 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
         </S.ModalBox>
       </Portal>
       {preview && (
-        <NoticePreview item={selectItem} setModal={setPreview} file={selectItem.reviewImageDtoList} menu={menu} />
+        <NoticePreview
+          item={selectItem}
+          setModal={setPreview}
+          file={selectItem.reviewImageDtoList}
+          menu={menu}
+        />
       )}
     </>
   );

@@ -16,8 +16,16 @@ export const reviewDetailApi = async (id) => {
 
 export const reviewSearchApi = async (keyword, searchType, page, sort) => {
   const sub =
-    searchType === "내용" ? "w" : searchType === "회원 번호" ? "c" : searchType === "카페 번호" ? "s" : ["s", "c", "w"];
-  return await withAuthInstance.get(`/reviews?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`);
+    searchType === "내용"
+      ? "w"
+      : searchType === "회원 번호"
+      ? "c"
+      : searchType === "카페 번호"
+      ? "s"
+      : ["s", "c", "w"];
+  return await withAuthInstance.get(
+    `/reviews?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
+  );
 };
 
 export const reviewDelApi = async (id) => {

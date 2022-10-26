@@ -10,6 +10,7 @@ import { ReactComponent as CloseIcon } from "../../svg/close.svg";
 import { ReactComponent as Check } from "../../svg/check.svg";
 
 import Paging from "./Pagination";
+import { useEffect } from "react";
 
 export default function FilterRow({
   searchType,
@@ -28,15 +29,16 @@ export default function FilterRow({
   onResetData,
   sort,
   onAsc,
+  state,
 }) {
   const [isDrop, setIsDrop] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const onclick = () => {
+  const onclick = (state) => {
     onDesc();
     setPage(1);
-    searchData();
+    searchData(state);
     setIsDrop(false);
-    if (search) {
+    if (state || search) {
       setIsSearching(true);
     }
   };
@@ -54,6 +56,12 @@ export default function FilterRow({
       onclick();
     }
   };
+  useEffect(() => {
+    if (!!state) {
+      setSearch(() => state);
+      onclick(state);
+    }
+  }, [state]);
   return (
     <Row justify="space-between" align="baseline" style={{ marginBottom: "20px" }}>
       <Row gap={15}>

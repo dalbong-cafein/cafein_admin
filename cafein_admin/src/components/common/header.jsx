@@ -19,7 +19,7 @@ const Header = ({
   halfWidth,
 }) => {
   return (
-    <SpaceRow align={align} halfWidth>
+    <SpaceRow align={align} halfWidth={halfWidth}>
       <div>
         <Menu mSize={mSize} mcolor={mcolor}>
           {text}
@@ -32,7 +32,7 @@ const Header = ({
           </Txt2>
         )}
       </div>
-      <Row gap={15}>
+      <Row>
         {children && children}
         {btn && (
           <>
@@ -50,6 +50,7 @@ const Header = ({
 const Row = styled.div`
   display: flex;
   align-items: center;
+  gap: 16px;
 `;
 
 const SpaceRow = styled(Row)`

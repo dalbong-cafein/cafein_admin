@@ -48,15 +48,17 @@ export const feedEditApi = async (register) => {
   const formData = new FormData();
   const keys = Object.keys(register);
   for (let key of keys) {
-    if (key != "updateImageFiles" && !!register[key]) {
-      formData.append(key, register[key]);
-    }
-    if (key == "phone" || key == "wifiPassword" || key == "website" || key == "etcTime") {
-      formData.append(key, register[key]);
+    if (key != "updateImageFiles") {
+      if (key == "phone" || key == "wifiPassword" || key == "website" || key == "etcTime") {
+        formData.append(key, register[key]);
+      } else if (!!register[key]) {
+        formData.append(key, register[key]);
+      }
     }
   }
 
-  if (register.updateImageFiles) register.updateImageFiles.forEach((img) => formData.append("updateImageFiles", img));
+  if (register.updateImageFiles)
+    register.updateImageFiles.forEach((img) => formData.append("updateImageFiles", img));
 
   return axios({
     method: "PUT",
@@ -86,8 +88,16 @@ export const feedDetailReviewApi = async (id) => {
 //피드 검색어
 export const feedSearchApi = async (keyword, searchType, page, sort) => {
   const type =
-    searchType === "카페명" ? "sn" : searchType === "분류" ? "s" : searchType === "위치" ? "a" : ["a", "sn", "s"];
-  return await withAuthInstance.get(`/stores?page=${page}&sort=${sort}&searchType=${type}&keyword=${keyword}`);
+    searchType === "카페명"
+      ? "sn"
+      : searchType === "분류"
+      ? "s"
+      : searchType === "위치"
+      ? "a"
+      : ["a", "sn", "s"];
+  return await withAuthInstance.get(
+    `/stores?page=${page}&sort=${sort}&searchType=${type}&keyword=${keyword}`
+  );
 };
 
 //카페 삭제

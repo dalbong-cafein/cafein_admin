@@ -24,7 +24,11 @@ const Store = () => {
   const [detailStoreId, setDetailStoreId] = useState(null);
   const [congestionScore, setCongestionScore] = useState(null);
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["분류", "카페명", "위치"]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
+    "분류",
+    "카페명",
+    "위치",
+  ]);
   //memo
   const [memoItem, setMemoItem] = useState(null);
   const [modalMemo, setModalMemo] = useState(false);
@@ -40,11 +44,7 @@ const Store = () => {
       .catch((err) => console.log(err));
   };
 
-  const onResetData = () => {
-    setSearchType("전체");
-    setSearch("");
-    setPage(1);
-    onDesc();
+  const loadData = () => {
     feedDataApi(page, sort)
       .then((res) => {
         setCount(res.data.data.storeCnt);
@@ -52,9 +52,17 @@ const Store = () => {
       })
       .catch((err) => console.log(err));
   };
-  console.log(data);
+
+  const onResetData = () => {
+    setSearchType("전체");
+    setSearch("");
+    setPage(1);
+    onDesc();
+    loadData();
+  };
+
   useEffect(() => {
-    searchData();
+    loadData();
   }, [page, sort]);
   return (
     <Container>
@@ -114,7 +122,9 @@ const Store = () => {
       </S.Wrapper>
       {data.length === 0 && <None text="카페" text2="새 카페 등록" href="/management/register" />}
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
-      {dModal && <StoreModal setDModal={setDModal} id={detailStoreId} congestionScore={congestionScore} />}
+      {dModal && (
+        <StoreModal setDModal={setDModal} id={detailStoreId} congestionScore={congestionScore} />
+      )}
     </Container>
   );
 };

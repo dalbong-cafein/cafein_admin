@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Close } from "../../svg/close2.svg";
+import { ReactComponent as Page } from "../../svg/page.svg";
+
 import Row from "../atoms/row";
 import HoverContent from "../HoverContent";
 import Sliders from "../common/carousel/carousel";
@@ -55,8 +57,6 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  console.log(data);
 
   const dayArr = [
     { key: "onMon", name: "월" },
@@ -206,18 +206,28 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
                 </S.Line>
                 <S.Line color="#515151">
                   <span>혼잡도</span>
-                  <Row gap={5}>
+                  <Row gap={10}>
                     <p>{data?.congestionCnt ? data?.congestionCnt + "개" : "-"}</p>
+                    {!!data?.congestionCnt && <Page />}
                     {congestionScore && (
                       <CongestionBtn id={parseInt(congestionScore)}>
-                        {parseInt(congestionScore) == 1 ? "여유" : parseInt(congestionScore) == 2 ? "보통" : "혼잡"}
+                        {parseInt(congestionScore) == 1
+                          ? "여유"
+                          : parseInt(congestionScore) == 2
+                          ? "보통"
+                          : "혼잡"}
                       </CongestionBtn>
                     )}
                   </Row>
                 </S.Line>
                 <S.Line color="#515151">
                   <span>리뷰</span>
-                  <p>{data?.reviewCnt ? data?.reviewCnt + "개" : "-"}</p>
+                  <Row gap={10}>
+                    <p>{data?.reviewCnt ? data?.reviewCnt + "개" : "-"}</p>
+                    {!!data?.reviewCnt && (
+                      <Page onClick={() => navigate("/review", { state: data?.storeId })} />
+                    )}
+                  </Row>
                 </S.Line>
               </Columnbox>
               <Title style={{ paddingTop: "40px" }} size={16}>
@@ -229,7 +239,9 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
               <Columnbox style={{ paddingBottom: "140px" }}>
                 <S.Line color="#515151">
                   <span>전체</span>
-                  <p>{reviewData?.recommendPercent ? reviewData?.recommendPercent + "% 추천" : "-"}</p>
+                  <p>
+                    {reviewData?.recommendPercent ? reviewData?.recommendPercent + "% 추천" : "-"}
+                  </p>
                 </S.Line>
                 <HoverLine color="#515151">
                   <span>콘센트</span>
@@ -394,8 +406,6 @@ const Column = styled.div`
   }
 `;
 const HoverBox = styled.div`
-  width: 164px;
-  height: 136px;
   display: none;
   padding: 17px;
   box-sizing: border-box;
@@ -409,7 +419,8 @@ const HoverBox = styled.div`
 
 const CongestionBtn = styled.div`
   padding: 5px;
-  background-color: ${(props) => (props.id == 1 ? "#DFF5E8" : props.id == 2 ? "#FFF3E0" : "#FFEBEE")};
+  background-color: ${(props) =>
+    props.id == 1 ? "#DFF5E8" : props.id == 2 ? "#FFF3E0" : "#FFEBEE"};
   color: ${(props) => (props.id == 1 ? "#26BA6A" : props.id == 2 ? "#FF9800" : "#F44336")};
   border-radius: 4px;
 `;

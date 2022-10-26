@@ -4,22 +4,20 @@ import styled from "styled-components";
 const HoverContent = ({ obj }) => {
   if (obj) {
     const keys = Object.keys(obj);
-
     return (
       <Div>
         <div></div>
-        {keys &&
-          keys.map((item, i) => (
-            <Stars
-              key={i}
-              width={18.4}
-              gap={7}
-              num={obj[item]}
-              isNum={true}
-              i={i + 1}
-              color="#ffce4a"
-            />
-          ))}
+        {keys.reverse().map((item, i) => (
+          <Stars
+            key={i}
+            width={18.4}
+            gap={7}
+            num={obj[item]}
+            isNum={true}
+            i={5 - i}
+            color="#ffce4a"
+          />
+        ))}
       </Div>
     );
   }

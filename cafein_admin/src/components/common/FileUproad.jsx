@@ -4,17 +4,13 @@ import { ReactComponent as Photo } from "../../svg/photo.svg";
 import { ReactComponent as CloseIcon } from "../../svg/close.svg";
 import { useState } from "react";
 import { useRef } from "react";
+import { resizeImg } from "../../constant/resizeImg";
 
-export default function FileUpload({
-  register,
-  setRegister,
-  num = 5,
-  submitFunc,
-}) {
+export default function FileUpload({ register, setRegister, num = 5, submitFunc }) {
   const [file, setFile] = useState([]);
   const input = useRef();
 
-  const onLoadFile = (e) => {
+  const onLoadFile = async (e) => {
     if (submitFunc) submitFunc();
     else {
       let copy = [...file];
@@ -23,7 +19,8 @@ export default function FileUpload({
         return;
       } else {
         if (e.target.files[0]) {
-          copy = [...copy, e.target.files[0]];
+          const file = await resizeImg(e.target.files[0]);
+          copy = [...copy, file];
           setFile(copy);
           const copy2 = { ...register };
           copy2.imageFiles = copy;
