@@ -4,9 +4,22 @@ import { ReactComponent as Check } from "../../svg/check.svg";
 
 import * as S from "../../pages/style copy";
 
-const Header = ({ btn = true, align, mSize, text, subText, mcolor, inner, children, onAsc, onDesc, sort }) => {
+const Header = ({
+  btn = true,
+  align,
+  mSize,
+  text,
+  subText,
+  mcolor,
+  inner,
+  children,
+  onAsc,
+  onDesc,
+  sort,
+  halfWidth,
+}) => {
   return (
-    <SpaceRow align={align}>
+    <SpaceRow align={align} halfWidth>
       <div>
         <Menu mSize={mSize} mcolor={mcolor}>
           {text}
@@ -20,18 +33,16 @@ const Header = ({ btn = true, align, mSize, text, subText, mcolor, inner, childr
         )}
       </div>
       <Row gap={15}>
-        <Row style={{ gap: "16px" }}>
-          {children && children}
-          {btn && (
-            <>
-              <S.Sbtn onClick={onDesc}>
-                최신순
-                {sort === "DESC" && <Check />}
-              </S.Sbtn>
-              <S.Sbtn onClick={onAsc}>오래된 순{sort === "ASC" && <Check />}</S.Sbtn>
-            </>
-          )}
-        </Row>
+        {children && children}
+        {btn && (
+          <>
+            <S.Sbtn onClick={onDesc}>
+              최신순
+              {sort === "DESC" && <Check />}
+            </S.Sbtn>
+            <S.Sbtn onClick={onAsc}>오래된 순{sort === "ASC" && <Check />}</S.Sbtn>
+          </>
+        )}
       </Row>
     </SpaceRow>
   );
@@ -42,7 +53,7 @@ const Row = styled.div`
 `;
 
 const SpaceRow = styled(Row)`
-  width: 100%;
+  width: ${(props) => (props.halfWidth ? "50%" : "100%")};
   padding: 72px 102px 24px 0;
   justify-content: space-between;
   & > div:first-child {

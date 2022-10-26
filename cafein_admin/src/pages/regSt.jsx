@@ -13,7 +13,6 @@ export const Submit = styled.button`
   border: none;
   background-color: ${(props) => (props.isFill ? "#2563EB" : "#333333")};
   color: #fff;
-  transform: translate(20px, 0);
 `;
 export const Input1 = styled.input`
   width: 100%;
@@ -64,7 +63,7 @@ export const Column = styled.div`
   display: flex;
   width: 50%;
   flex-direction: column;
-  gap: 16px;
+  gap: 16px 0;
 `;
 
 export const Box = styled.div`

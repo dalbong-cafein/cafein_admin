@@ -30,14 +30,23 @@ export default function FilterRow({
   onAsc,
 }) {
   const [isDrop, setIsDrop] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const onclick = () => {
     onDesc();
     setPage(1);
     searchData();
     setIsDrop(false);
+    if (search) {
+      setIsSearching(true);
+    }
   };
   const handlePageChange = (page) => {
     setPage(page);
+  };
+  const onReset = () => {
+    onResetData();
+    setIsDrop(false);
+    setIsSearching(false);
   };
 
   const onEnterKey = (e) => {
@@ -50,7 +59,6 @@ export default function FilterRow({
       <Row gap={15}>
         {nodrop ? (
           <>
-            {" "}
             <S.Sbtn onClick={onDesc}>
               최신순
               {sort === "DESC" && <Check />}
@@ -73,10 +81,18 @@ export default function FilterRow({
               )}
             </S.Sbtn>
             <Row style={{ borderBottom: "1px solid #fff" }} onKeyDown={onEnterKey}>
-              <S.Input placeholder="검색" type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
-              <Search onClick={onclick} />
+              <S.Input
+                placeholder="검색"
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              {isSearching ? (
+                <CloseIcon onClick={onReset} width="18px" height="18px" />
+              ) : (
+                <Search onClick={onclick} />
+              )}
             </Row>
-            <S.ResetBtn onClick={onResetData}>목록으로 돌아가기</S.ResetBtn>{" "}
           </>
         )}
       </Row>

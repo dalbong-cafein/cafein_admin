@@ -83,7 +83,6 @@ const Editcafe = () => {
   const input = useRef();
 
   const submit = async (register) => {
-    console.log(register);
     feedEditApi(register)
       .then((res) => {
         console.log(res);
@@ -145,115 +144,110 @@ const Editcafe = () => {
   return (
     <>
       <Header align="center" mcolor="#8B8B8B" text="카페 관리" inner="카페 상세 수정" btn={false}>
-        <div>
-          <S.Submit style={{ marginRight: "15px" }} onClick={() => window.history.back()}>
-            취소
-          </S.Submit>
-          <S.Submit
-            isFill={
-              !register.storeName &&
-              !register.siNm &&
-              !register.recommendation &&
-              !register.wifi &&
-              !register.restroom &&
-              !register.tableSize &&
-              !register.socket
-            }
-            onClick={() => submit(register)}
-          >
-            등록
-          </S.Submit>
-        </div>
+        <S.Submit style={{ marginRight: "15px" }} onClick={() => window.history.back()}>
+          취소
+        </S.Submit>
+        <S.Submit
+          isFill={
+            !register.storeName &&
+            !register.siNm &&
+            !register.recommendation &&
+            !register.wifi &&
+            !register.restroom &&
+            !register.tableSize &&
+            !register.socket
+          }
+          onClick={() => submit(register)}
+        >
+          등록
+        </S.Submit>
       </Header>
       <S.Containaer>
-        <Row gap={20}>
-          <S.Column>
-            <S.InputBox>
-              <span>카페명</span>
-              <div>{state.storeName}</div>
-            </S.InputBox>
-            <S.InputBox>
-              <span>주소</span>
-              <div>{loc.address_name || state.address.fullAddress} </div>
-            </S.InputBox>
-            <S.Box height={168}>
-              <p>장소 사진</p>
-              <S.PhotoBox>
-                <S.FileUpload
-                  onClick={() => {
-                    input.current?.click();
-                  }}
-                >
-                  <Photo />
-                  <div>{file.length}/5</div>
-                  <input
-                    ref={input}
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={(e) => onLoadFile(e)}
-                  />
-                </S.FileUpload>
-                {file?.map((a, idx) => {
-                  return (
-                    <S.ImgBox key={idx}>
-                      <CloseIcon name={a.name} onClick={() => deleteImg(a, idx)} />
-                      <PVImg img={a} />
-                    </S.ImgBox>
-                  );
-                })}
-              </S.PhotoBox>
-            </S.Box>
-            <CafeTimeBox dayarr={dayarr} setDayarr={setDayarr} register={register} setRegister={setRegister} isEdit />
-            <S.TextBox>
-              <p>안내사항</p>
-              <p>카공인에게 도움이 될 수 있는 정보를 공유해 주세요.</p>
-              <p>부적절한 정보가 등록될 경우 카페인 운영정책에 따라 삭제될 수 있어요.</p>
-            </S.TextBox>
-          </S.Column>
-          <S.Column>
-            <S.InputBox>
-              <span>기타 운영 시간</span>
-              <input
-                type="text"
-                placeholder="Ex. 매달 첫째주 수요일"
-                name="etcTime"
-                defaultValue={state?.businessHoursResDto?.etcTime}
-                onChange={(e) => onChange(e)}
-              />
-            </S.InputBox>
-            <S.InputBox>
-              <span>전화번호</span>
-              <input
-                type="text"
-                name="phone"
-                defaultValue={loc?.phone || state.phone}
-                onChange={(e) => onChange(e)}
-                placeholder="카페 전화번호를 입력해주세요"
-              />
-            </S.InputBox>
-            <S.InputBox>
-              <span>웹사이트</span>
-              <input
-                type="text"
-                name="website"
-                defaultValue={state.website}
-                onChange={(e) => onChange(e)}
-                placeholder="카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
-              />
-            </S.InputBox>
-            <S.InputBox>
-              <span>와이파이 비밀번호</span>
-              <input
-                type="text"
-                placeholder="와이파이 비밀번호를 입력해 주세요"
-                name="wifiPassword"
-                defaultValue={state.wifiPassword}
-                onChange={(e) => onChange(e)}
-              />
-            </S.InputBox>
-          </S.Column>
-        </Row>
+        <S.Column>
+          <S.InputBox>
+            <span>카페명</span>
+            <div>{state.storeName}</div>
+          </S.InputBox>
+          <S.InputBox>
+            <span>주소</span>
+            <div>{loc.address_name || state.address.fullAddress} </div>
+          </S.InputBox>
+          <S.Box height={168}>
+            <p>장소 사진</p>
+            <S.PhotoBox>
+              <S.FileUpload
+                onClick={() => {
+                  input.current?.click();
+                }}
+              >
+                <Photo />
+                <div>{file.length}/5</div>
+                <input
+                  ref={input}
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={(e) => onLoadFile(e)}
+                />
+              </S.FileUpload>
+              {file?.map((a, idx) => {
+                return (
+                  <S.ImgBox key={idx}>
+                    <CloseIcon name={a.name} onClick={() => deleteImg(a, idx)} />
+                    <PVImg img={a} />
+                  </S.ImgBox>
+                );
+              })}
+            </S.PhotoBox>
+          </S.Box>
+          <CafeTimeBox
+            dayarr={dayarr}
+            setDayarr={setDayarr}
+            register={register}
+            setRegister={setRegister}
+            isEdit
+          />
+          <S.InputBox>
+            <span>기타 운영 시간</span>
+            <input
+              type="text"
+              placeholder="Ex. 매달 첫째주 수요일"
+              name="etcTime"
+              defaultValue={state?.businessHoursResDto?.etcTime}
+              onChange={(e) => onChange(e)}
+            />
+          </S.InputBox>
+          <S.InputBox>
+            <span>전화번호</span>
+            <input
+              type="text"
+              name="phone"
+              defaultValue={loc?.phone || state.phone}
+              onChange={(e) => onChange(e)}
+              placeholder="카페 전화번호를 입력해주세요"
+            />
+          </S.InputBox>
+          <S.InputBox>
+            <span>웹사이트</span>
+            <input
+              type="text"
+              name="website"
+              defaultValue={state.website}
+              onChange={(e) => onChange(e)}
+              placeholder="카페 홈페이지 또는 인스타그램 주소를 입력해주세요"
+            />
+          </S.InputBox>
+          <S.InputBox>
+            <span>와이파이 비밀번호</span>
+            <input
+              type="text"
+              placeholder="와이파이 비밀번호를 입력해 주세요"
+              name="wifiPassword"
+              defaultValue={state.wifiPassword}
+              onChange={(e) => onChange(e)}
+            />
+          </S.InputBox>
+        </S.Column>
       </S.Containaer>
       {searchModal && (
         <SearchModal
