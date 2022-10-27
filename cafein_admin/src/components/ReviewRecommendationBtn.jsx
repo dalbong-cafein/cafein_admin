@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export default function ReviewRecommendationBtn({ recommendation, isDetail }) {
   return (
-    <Div isDetail={isDetail}>
+    <Div isDetail={isDetail} recommendation={recommendation}>
       <p>
         {recommendation === "GOOD"
           ? "추천해요"
           : recommendation === "NORMAL"
-          ? "그저그래요"
-          : "별로예요"}
+          ? "무난해요"
+          : "아쉬워요"}
       </p>
     </Div>
   );
@@ -16,12 +16,28 @@ export default function ReviewRecommendationBtn({ recommendation, isDetail }) {
 
 const Div = styled.div`
   border-radius: 20px;
-  color: #fc6406;
+  color: ${(props) =>
+    props.recommendation == "GOOD"
+      ? "#fc6406"
+      : props.recommendation == "NORMAL"
+      ? "#FF9800"
+      : "#646464"};
   font-size: 13px;
-  background-color: #fff0e6;
+  background-color: ${(props) =>
+    props.recommendation == "GOOD"
+      ? "#FFF0E6"
+      : props.recommendation == "NORMAL"
+      ? "#FFF3E0"
+      : "#E3E3E3"};
   padding: 4px 8px;
   & > p {
-    color: #fc6406;
+    color: ${(props) =>
+      props.recommendation == "GOOD"
+        ? "#fc6406"
+        : props.recommendation == "NORMAL"
+        ? "#FF9800"
+        : "#646464"};
+    font-size: 13px;
   }
   ${(props) =>
     props.isDetail

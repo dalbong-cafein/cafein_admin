@@ -25,7 +25,7 @@ export const ModalHeader = styled.div`
   box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   & > p:first-child {
     color: #f6f6f6;
     font-size: 20px;

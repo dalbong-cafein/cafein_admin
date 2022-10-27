@@ -10,11 +10,9 @@ const UserItem = ({ data, onModal, setModalMemo, setMemoItem }) => {
       {data &&
         data.map((item, i) => (
           <ItemRow key={i} hasMemoId={item.memoId}>
+            <div onClick={() => onModal(item)}>{String(item.memberId).padStart(6, "0")}</div>
             <div onClick={() => onModal(item)}>
-              {String(item.memberId).padStart(6, "0")}
-            </div>
-            <div onClick={() => onModal(item)}>
-              <p style={{ color: "#FC7521" }}>{item.socialTypeList[0]}</p>
+              <p>{item.socialTypeList[0]}</p>
               {item.socialTypeList[1] && <p>/{item.socialTypeList[1]}</p>}
             </div>
             <div onClick={() => onModal(item)}>
@@ -30,15 +28,7 @@ const UserItem = ({ data, onModal, setModalMemo, setMemoItem }) => {
             <div onClick={() => onModal(item)}>{item.phone || "-"}</div>
             <div onClick={() => onModal(item)}>{item.email}</div>
             <div onClick={() => onModal(item)}>{item.app || "-"}</div>
-            <div onClick={() => onModal(item)}>
-              <Row gap={16}>
-                <p>{item.device || "-"}</p>
-                <p>{item.ip || "-"}</p>
-              </Row>
-            </div>
-            <div onClick={() => onModal(item)}>
-              {String(item.regDateTime).split("T")[0] || "-"}
-            </div>
+            <div onClick={() => onModal(item)}>{String(item.regDateTime).split("T")[0] || "-"}</div>
             <div onClick={() => onModal(item)}>
               <StateBtn content={item.memberState} />
             </div>
@@ -80,12 +70,11 @@ const ItemRow = styled.div`
     flex: 2;
   }
   & > div:nth-child(4),
-  div:nth-child(7),
-  div:nth-child(8) {
+  div:nth-child(7) {
     flex: 0.9;
   }
 
-  & > div:nth-child(9) {
+  & > div:nth-child(8) {
     flex: 1.2;
   }
   & > div:last-child {

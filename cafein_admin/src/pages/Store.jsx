@@ -19,6 +19,7 @@ const Store = () => {
 
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+  const [area, setAear] = useState("전체");
   //detail
   const [dModal, setDModal] = useState(false);
   const [detailStoreId, setDetailStoreId] = useState(null);
@@ -60,6 +61,7 @@ const Store = () => {
     onDesc();
     loadData();
   };
+  const areaArr = ["전체", "강남구", "동대문구", "마포구", "서대문구", "성북구", "종로구"];
 
   useEffect(() => {
     loadData();
@@ -98,6 +100,13 @@ const Store = () => {
         onDesc={onDesc}
         onResetData={onResetData}
       />
+      <AreaFilter>
+        {areaArr.map((item, i) => (
+          <AreaItem key={i} isSelect={area == item} onClick={() => setAear(() => item)}>
+            {item}
+          </AreaItem>
+        ))}
+      </AreaFilter>
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>
           <div>분류</div>
@@ -158,4 +167,23 @@ const TableHeader = styled.div`
   }
 `;
 
+const AreaFilter = styled.div`
+  width: 100%;
+  border-radius: 6px;
+  background-color: #333333;
+  display: flex;
+  gap: 32px;
+  padding: 10px 48px;
+  align-item: center;
+  margin-bottom: 16px;
+`;
+
+const AreaItem = styled.div`
+  color: #fff;
+  font-weight: ${(props) => (props.isSelect ? 400 : 500)};
+  padding: 5px 15px;
+  background-color: ${(props) => props.isSelect && "#2563EB"};
+  border-radius: 15px;
+  cursor: pointer;
+`;
 export default Store;

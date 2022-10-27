@@ -18,7 +18,11 @@ const User = () => {
   const [search, setSearch] = useState("");
 
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["분류", "회원명", "핸드폰"]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
+    "분류",
+    "회원명",
+    "핸드폰",
+  ]);
 
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
@@ -38,7 +42,7 @@ const User = () => {
       })
       .catch((err) => console.log(err));
   };
-  console.log(data);
+
   const onResetData = () => {
     setSearchType("전체");
     setSearch("");
@@ -100,17 +104,21 @@ const User = () => {
         <TableHeader>
           <div>분류</div>
           <div>소셜</div>
-          <div>회원명</div>
+          <div>닉네임</div>
           <div>핸드폰</div>
           <div>이메일</div>
           <div>APP</div>
-          <div>DEVICE/IP</div>
           <div>가입일</div>
           <div>상태</div>
           <div>메모</div>
         </TableHeader>
         {data.length ? (
-          <UserItem data={data} setModalMemo={setModalMemo} onModal={onModal} setMemoItem={setMemoItem} />
+          <UserItem
+            data={data}
+            setModalMemo={setModalMemo}
+            onModal={onModal}
+            setMemoItem={setMemoItem}
+          />
         ) : (
           <None text="유저" />
         )}
@@ -137,12 +145,11 @@ const TableHeader = styled.div`
   div:nth-child(5) {
     flex: 2;
   }
-  & > div:nth-child(9) {
+  & > div:nth-child(8) {
     flex: 1.2;
   }
   & > div:nth-child(4),
-  div:nth-child(7),
-  div:nth-child(8) {
+  div:nth-child(7) {
     flex: 0.9;
   }
 

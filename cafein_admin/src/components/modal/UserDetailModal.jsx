@@ -7,11 +7,7 @@ import { ReactComponent as Close } from "../../svg/close2.svg";
 import { ReactComponent as Page } from "../../svg/page.svg";
 
 import Row from "../atoms/row";
-import {
-  userDataUpdateApi,
-  userLeaveApi,
-  userReportApi,
-} from "../../util/user";
+import { userDataUpdateApi, userLeaveApi, userReportApi } from "../../util/user";
 import MUReport from "./MUReport";
 import StickerView from "./StickerView";
 import RedAlert from "./RedAlert";
@@ -23,7 +19,6 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
   const closeModal = () => {
     setModal(false);
   };
-  console.log(selectItem);
   const navigate = useNavigate();
   const [reportData, setReportData] = useState([]);
   const [SItem, setItems] = useState([]);
@@ -90,11 +85,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
         <ModalBox>
           {selectItem && (
             <>
-              <ModalBoxs
-                style={{ borderRadius: "16px 0 0 16px" }}
-                color="#131313"
-                width={516}
-              >
+              <ModalBoxs style={{ borderRadius: "16px 0 0 16px" }} color="#131313" width={516}>
                 <Title size={20}>회원 상세</Title>
                 <Columnbox gap={14}>
                   <Line>
@@ -103,26 +94,19 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                   </Line>
                   <Line>
                     <span>소셜</span>
-                    <p style={{ color: "#FC7521" }}>
-                      {selectItem?.socialTypeList?.length >= 1 &&
-                        selectItem?.socialTypeList[0]}
+                    <p>
+                      {selectItem?.socialTypeList?.length >= 1 && selectItem?.socialTypeList[0]}
                     </p>
                     {selectItem?.socialTypeList?.length === 2 && (
-                      <p style={{ color: "#e3e3e3" }}>
-                        {selectItem.socialTypeList[1]}
-                      </p>
+                      <p style={{ color: "#e3e3e3" }}>{selectItem.socialTypeList[1]}</p>
                     )}
                   </Line>
-                  <Line>
-                    <span>회원명</span>
-                    <p style={{ width: "220px" }}>
-                      {selectItem.nickname || "-"}
-                    </p>
-                    <Row gap={16} align="center">
-                      {selectItem.memberImageDto && (
-                        <Photo img={selectItem.memberImageDto.imageUrl} />
-                      )}
-                    </Row>
+                  <Line align>
+                    <span>닉네임</span>
+                    <p style={{ width: "220px" }}>{selectItem.nickname || "-"}</p>
+                    {selectItem.memberImageDto && (
+                      <Photo img={selectItem.memberImageDto.imageUrl} />
+                    )}
                   </Line>
                   <Line>
                     <span>핸드폰</span>
@@ -169,12 +153,12 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                     <p>{selectItem.app || "-"}</p>
                   </Line>
                   <Line>
-                    <span>DEVICE/IP</span>
-                    <p>
-                      {selectItem.device || "-"}
-                      <br />
-                      {selectItem.ip || "-"}
-                    </p>
+                    <span>DEVICE</span>
+                    <p>{selectItem.device || "-"}</p>
+                  </Line>
+                  <Line>
+                    <span>IP</span>
+                    <p>{selectItem.ip || "-"}</p>
                   </Line>
                 </Columnbox>
               </ModalBoxs>
@@ -222,9 +206,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                 <Columnbox>
                   <Line color="#515151">
                     <span>가입일</span>
-                    <p>
-                      {String(selectItem.joinDateTime).replace("T", " ") || "-"}
-                    </p>
+                    <p>{String(selectItem.joinDateTime).replace("T", " ") || "-"}</p>
                   </Line>
                   <StateRow>
                     <div>
@@ -245,7 +227,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                           ? "신고"
                           : "탈퇴"}
                       </Btn>
-                      <p onClick={() => setAlert(true)}>탈퇴</p>
+                      <p onClick={() => setAlert(true)}>탈퇴하기</p>
                     </div>
                     <div>
                       {reportData &&
@@ -280,20 +262,8 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
         </ModalBox>
       </Portal>
       {RModal && <MUReport selectItem={SItem} setModal={setRModal} />}
-      {sticker && (
-        <StickerView
-          setModal={setSticker}
-          id={selectItem.memberId}
-          loadD={loadD}
-        />
-      )}
-      {review && (
-        <ReviewView
-          setModal={setReview}
-          id={selectItem.memberId}
-          loadD={loadD}
-        />
-      )}
+      {sticker && <StickerView setModal={setSticker} id={selectItem.memberId} loadD={loadD} />}
+      {review && <ReviewView setModal={setReview} id={selectItem.memberId} loadD={loadD} />}
       {heart && <HeartView setModal={setHeart} id={selectItem.memberId} />}
 
       {alert && (
@@ -340,7 +310,7 @@ const Title = styled.p`
 `;
 const Line = styled.div`
   display: flex;
-  align-items: center;
+  align-items: ${(props) => (props.align ? "flex-start" : "center")};
   width: 100%;
   padding: 2px 0 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
@@ -389,7 +359,7 @@ const StateRow = styled.div`
       color: #8b8b8b;
     }
     & > p {
-      margin-left: 80px;
+      margin-left: 60px;
       font-weight: 700;
       color: #f44336;
       cursor: pointer;
@@ -442,30 +412,23 @@ const Btn = styled.div`
   margin: 0 auto;
   border-radius: 6px;
   color: ${(props) =>
-    props.content === "기본"
-      ? "#26BA6A"
-      : props.content === "신고"
-      ? "#f44336"
-      : "#ff9800"};
+    props.content === "기본" ? "#26BA6A" : props.content === "신고" ? "#f44336" : "#ff9800"};
   line-height: 26px;
   & > div:first-child {
     position: absolute;
     width: 86px;
     height: 26px;
     background-color: ${(props) =>
-      props.content === "기본"
-        ? "#26BA6A"
-        : props.content === "신고"
-        ? "#f44336"
-        : "#ff9800"};
+      props.content === "기본" ? "#26BA6A" : props.content === "신고" ? "#f44336" : "#ff9800"};
     opacity: 0.3;
     border-radius: 4px;
   }
 `;
 
 const Photo = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
   background: ${({ img }) => img && `url(${img})`} no-repeat center center/cover;
 `;
 

@@ -43,7 +43,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
     <>
       <Portal setModal={setModal}>
         <S.ModalBox height="790px">
-          <S.ModalHeader>
+          <S.ModalHeader style={{ marginBottom: "30px" }}>
             <p>리뷰 상세</p>
             <Close onClick={closeModal} />
           </S.ModalHeader>
@@ -94,7 +94,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
             </Row>
             <Text>{data.content || "-"}</Text>
             {data.reviewImageDtoList && (
-              <Row justify="space-between">
+              <Row gap={10}>
                 {data.reviewImageDtoList.map((item, i) => (
                   <Pic key={i} onClick={() => setSlider(true)}>
                     <img src={process.env.PUBLIC_URL + item.imageUrl} alt="img" />

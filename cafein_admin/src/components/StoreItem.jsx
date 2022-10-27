@@ -3,14 +3,21 @@ import Row from "./atoms/row";
 import * as S from "../pages/style copy";
 import { ReactComponent as Memo } from "../svg/memo.svg";
 
-const StoreItem = ({ setCongestionScore, data, setDModal, setModalMemo, setMemoItem, setDetailStoreId }) => {
+const StoreItem = ({
+  setCongestionScore,
+  data,
+  setDModal,
+  setModalMemo,
+  setMemoItem,
+  setDetailStoreId,
+}) => {
   const onModal = (item) => {
     setDetailStoreId(() => item.storeId);
     setDModal(true);
     setCongestionScore(() => item.congestionScoreAvg);
   };
   return (
-    <S.DataBox>
+    <S.DataBox style={{ height: "calc(59vh )" }}>
       {data &&
         data.map((item, i) => (
           <ItemRow key={i} hasMemoId={item.memoId}>
@@ -60,7 +67,7 @@ const ItemRow = styled.div`
   color: #e3e3e3;
   font-size: 14px;
   // flex: 1;
-  height: calc(65vh / 9);
+  height: calc(59vh / 9);
   cursor: pointer;
   border-bottom: 1px solid #515151;
 
