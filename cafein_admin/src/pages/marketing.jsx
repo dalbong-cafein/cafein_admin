@@ -26,7 +26,11 @@ const Marketing = () => {
   const [modalMemo, setModalMemo] = useState(false);
 
   //drop
-  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch(["분류", "회원 번호", "핸드폰"]);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
+    "분류",
+    "회원 번호",
+    "핸드폰",
+  ]);
 
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
@@ -60,7 +64,19 @@ const Marketing = () => {
   }, [page, sort]);
   return (
     <>
-      <SelectHeader menu="marketing" menu1="marketing" menu2="event" Tmenu1="마케팅 서비스" Tmenu2="이벤트" />
+      <SelectHeader
+        menu="marketing"
+        menu1="marketing"
+        menu2="event"
+        Tmenu1="마케팅 서비스"
+        Tmenu2="이벤트"
+        onAsc={onAsc}
+        onDesc={onDesc}
+        sort={sort}
+        btn
+      >
+        <S.Sbtn color="#2563EB">스티커 지급</S.Sbtn>
+      </SelectHeader>
       <FilterRow
         searchType={searchType}
         setSearchType={setSearchType}

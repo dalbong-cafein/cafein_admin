@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Row from "../atoms/row";
 import DropBox from "./Dropbox";
@@ -33,6 +33,7 @@ export default function FilterRow({
 }) {
   const [isDrop, setIsDrop] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+
   const onclick = (state) => {
     onDesc();
     setPage(1);

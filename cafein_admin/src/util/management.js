@@ -86,7 +86,9 @@ export const feedDetailReviewApi = async (id) => {
 };
 
 //피드 검색어
-export const feedSearchApi = async (keyword, searchType, page, sort) => {
+export const feedSearchApi = async (keyword, searchType, page, sort, area) => {
+  const isAll = area != "전체";
+
   const type =
     searchType === "카페명"
       ? "sn"
@@ -96,7 +98,9 @@ export const feedSearchApi = async (keyword, searchType, page, sort) => {
       ? "a"
       : ["a", "sn", "s"];
   return await withAuthInstance.get(
-    `/stores?page=${page}&sort=${sort}&searchType=${type}&keyword=${keyword}`
+    `/stores?page=${page}&sort=${sort}&searchType=${type}&keyword=${keyword}&sggNm=${
+      area != "전체" ? area : ""
+    }`
   );
 };
 

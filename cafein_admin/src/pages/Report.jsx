@@ -4,69 +4,45 @@ import { useState, useEffect } from "react";
 import * as S from "./style copy";
 import * as SS from "../components/noticesStyle";
 import SelectHeader from "../components/common/SelectHeader";
-import NoticePreview from "../components/modal/NoticePreview";
-import RedAlert from "../components/modal/RedAlert";
-import NoticeDetailModal from "../components/modal/NoticeDetailModal";
-import Alert from "../components/modal/Alert";
+
 import FilterRow from "../components/common/FilterRow";
 
 import None from "../components/common/None";
-import { adminFeedListApi } from "../util/desh";
-
+import { getReportListApi } from "../util/events";
 import { useRecoilState } from "recoil";
 import { registerNotice } from "../recoil/NNotice";
-import { postDelApi, registerNoticeApi } from "../util/events";
 
 import usePagination from "../hooks/usePagination";
 import RegNoticeBox from "../components/RegNoticeBox";
 
-const Notice = () => {
+const Report = () => {
   const [data, setData] = useState([]);
   const [selectItem, setSelectItem] = useState([]);
 
   const [search, setSearch] = useState("");
   const [register, setRegister] = useRecoilState(registerNotice);
-  const [preview, setPreview] = useState(false);
 
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination(10);
-  const [alert, setAlert] = useState(false);
-  const [Dalert, setDAlert] = useState(false);
-  const [modal, setModal] = useState(false);
 
-  const onSubmit = (register) => {
-    registerNoticeApi(register)
-      .then((res) => {
-        setAlert(false);
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const onDel = () => {
-    postDelApi(selectItem.boardId)
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
-  };
   const searchData = () => {
-    adminFeedListApi(search, page, sort)
-      .then((res) => {
-        setCount(res.data.data.boardCnt);
-        setData(res.data.data.boardResDtoList.dtoList);
-      })
-      .catch((err) => console.log(err));
+    // adminFeedListApi(search, page, sort)
+    //   .then((res) => {
+    //     setCount(res.data.data.boardCnt);
+    //     setData(res.data.data.boardResDtoList.dtoList);
+    //   })
+    //   .catch((err) => console.log(err));
   };
   useEffect(() => {
     const copy = { ...register };
     copy.boardCategoryId = 1;
     setRegister(copy);
-    adminFeedListApi(page, sort, search).then((res) => {
+    getReportListApi(page, sort, search).then((res) => {
       setCount(res.data.data.boardCnt);
       setData(res.data.data.boardResDtoList.dtoList);
     });
   }, [sort, page]);
+
   return (
     <>
       <SelectHeader
@@ -77,6 +53,10 @@ const Notice = () => {
         Tmenu2="자주 묻는 질문"
         menu3="report"
         Tmenu3="신고"
+        sort={sort}
+        onDesc={onDesc}
+        onAsc={onAsc}
+        btn
       />
       <SS.Container>
         <div>
@@ -102,13 +82,7 @@ const Notice = () => {
             <S.DataBox>
               {data &&
                 data.map((item, i) => (
-                  <ItemRow
-                    key={i}
-                    onClick={() => {
-                      setModal(true);
-                      setSelectItem(item);
-                    }}
-                  >
+                  <ItemRow key={i}>
                     <div>{String(item.boardId).padStart(6, "0")}</div>
                     <div>
                       <p
@@ -144,50 +118,7 @@ const Notice = () => {
           </S.Wrapper>
           {data.length == 0 && <None text="공지" />}
         </div>
-        <RegNoticeBox
-          register={register}
-          setRegister={setRegister}
-          setPreview={setPreview}
-          setAlert={setAlert}
-        />
       </SS.Container>
-      {alert && (
-        <Alert
-          setAlert={setAlert}
-          text="공지사항 등록"
-          subtext="게시물을 등록하시겠습니까?"
-          func={onSubmit}
-          forFunc={register}
-        />
-      )}
-
-      {preview && (
-        <NoticePreview
-          item={register}
-          setModal={setPreview}
-          file={register.imageFiles}
-          menu="notice"
-        />
-      )}
-      {modal && (
-        <NoticeDetailModal
-          selectItem={selectItem}
-          setModal={setModal}
-          menu="notice"
-          setAlert={setDAlert}
-        />
-      )}
-      {Dalert && (
-        <RedAlert
-          text="공지사항 삭제"
-          text1="공지사항을 "
-          text2="삭제"
-          text3="하시겠습니까?"
-          setAlert={setDAlert}
-          func={onDel}
-          forFunc={null}
-        />
-      )}
     </>
   );
 };
@@ -251,4 +182,4 @@ const ItemRow = styled.div`
   }
 `;
 
-export default Notice;
+export default Report;

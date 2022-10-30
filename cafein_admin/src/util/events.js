@@ -8,8 +8,16 @@ export const marketingListApi = async (page, sort) => {
 //쿠폰리스트 검색
 export const marketingSearchApi = async (searchType, keyword, page, sort) => {
   const sub =
-    searchType === "분류" ? "cp" : searchType === "회원 번호" ? "m" : searchType === "휴대폰" ? "p" : ["p", "cp", "m"];
-  return await withAuthInstance.get(`/coupons?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`);
+    searchType === "분류"
+      ? "cp"
+      : searchType === "회원 번호"
+      ? "m"
+      : searchType === "휴대폰"
+      ? "p"
+      : ["p", "cp", "m"];
+  return await withAuthInstance.get(
+    `/coupons?page=${page}&sort=${sort}&searchType=${sub}&keyword=${keyword}`
+  );
 };
 export const eventListApi = async (search, page, sort) => {
   return await withAuthInstance.get(
@@ -61,9 +69,10 @@ export const registerNoticeApi = async (register) => {
   });
 };
 
-export const regImgApi = async (file) => {
+export const regImgApi = async (content) => {
   const formData = new FormData();
-  formData.append("imageFile", file);
+  formData.append("boardId", content.id);
+  formData.append("imageFile", content.file);
 
   return axios({
     method: "POST",
@@ -81,4 +90,10 @@ export const eventImgApi = (page, sort) => {
 
 export const delEventImgApi = (id) => {
   return withAuthInstance.delete(`/events/${id}`);
+};
+
+export const getReportListApi = async (page, sort, search) => {
+  return await withAuthInstance.post(
+    `/reports?size=12&page=${page}&sort=${sort}${search && `&keyword=${search}`}`
+  );
 };

@@ -29,7 +29,9 @@ const MarketingsItem = ({
             <div>{String(item.memberId).padStart(6, "0")}</div>
             <div>{item.phone || "-"}</div>
             <div>{String(item.regDateTime).split("T")[0]}</div>
-            <div>{String(item.processingDateTime).split("T")[0] || "-"}</div>
+            <div>
+              {item.processingDateTime ? String(item.processingDateTime).split("T")[0] : "-"}
+            </div>
             <div>
               <S.Btn
                 content={item.status}

@@ -55,7 +55,7 @@ const Row = styled.div`
 
 const SpaceRow = styled(Row)`
   width: ${(props) => (props.halfWidth ? "50%" : "100%")};
-  padding: 72px 102px 24px 0;
+  padding: 52px 102px 24px 0;
   justify-content: space-between;
   & > div:first-child {
     display: flex;

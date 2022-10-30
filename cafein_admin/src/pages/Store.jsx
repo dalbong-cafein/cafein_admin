@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePagination from "../hooks/usePagination";
 import useSearch from "../hooks/useSearch";
@@ -37,7 +37,7 @@ const Store = () => {
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination();
 
   const searchData = () => {
-    feedSearchApi(search, searchType, page, sort)
+    feedSearchApi(search, searchType, page, sort, area)
       .then((res) => {
         setData(res.data.data.storeResDtoList.dtoList);
         setCount(res.data.data.storeCnt);
@@ -48,6 +48,7 @@ const Store = () => {
   const loadData = () => {
     feedDataApi(page, sort)
       .then((res) => {
+        console.log(res);
         setCount(res.data.data.storeCnt);
         setData(res.data.data.storeResDtoList.dtoList);
       })
@@ -59,13 +60,32 @@ const Store = () => {
     setSearch("");
     setPage(1);
     onDesc();
-    loadData();
+    if (area != "전체") {
+      searchData();
+    } else {
+      loadData();
+    }
   };
-  const areaArr = ["전체", "강남구", "동대문구", "마포구", "서대문구", "성북구", "종로구"];
+  const areaArr = [
+    "전체",
+    "강남구",
+    "동대문구",
+    "마포구",
+    "서대문구",
+    "성북구",
+    "종로구",
+    "광진구",
+    "서초구",
+    "중구",
+  ];
 
   useEffect(() => {
-    loadData();
-  }, [page, sort]);
+    if (area != "전체") {
+      searchData();
+    } else {
+      loadData();
+    }
+  }, [page, sort, area]);
   return (
     <Container>
       <Header

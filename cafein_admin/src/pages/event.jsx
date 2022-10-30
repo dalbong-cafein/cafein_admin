@@ -11,12 +11,12 @@ import EventPreview from "../components/modal/EventPreview";
 import PVImg from "../components/common/PVImg";
 import SelectHeader from "../components/common/SelectHeader";
 import Row from "../components/atoms/row";
-import None from "../components/common/None";
 import EventMapBoxs from "../components/EventMapBox";
 import usePagination from "../hooks/usePagination";
 import FilterRow from "../components/common/FilterRow";
-import { adminFeedListApi } from "../util/desh";
+import { adminFeedListForEventApi } from "../util/desh";
 import { resizeImg } from "../constant/resizeImg";
+import Paging from "../components/common/Pagination";
 
 const Events = () => {
   const navigate = useNavigate();
@@ -25,11 +25,26 @@ const Events = () => {
 
   const [data, setData] = useState([]);
   const [noticeData, setNoticeData] = useState([]);
+  const [nowBanner, setNowBanner] = useState();
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination(10);
+  const [noticeId, setNoticeId] = useState("");
+  const [
+    pageForNotice,
+    sortForNotice,
+    itemForNotice,
+    countForNotice,
+    setCountForNotice,
+    setPageForNotice,
+    onDescForNotice,
+    onAscForNotice,
+  ] = usePagination(4);
 
   const [preview, setPreview] = useState(false);
 
+  const handlePageChangeForNotice = (page) => {
+    setPageForNotice(page);
+  };
   const [file, setFile] = useState();
 
   const onLoadFile = async (e) => {
@@ -45,7 +60,7 @@ const Events = () => {
     if (!file) {
       window.alert("첨부파일이 없습니다.");
     } else {
-      regImgApi(file)
+      regImgApi({ file: file, id: noticeId })
         .then(() => {
           loadData();
           setFile();
@@ -57,7 +72,7 @@ const Events = () => {
   const loadData = () => {
     eventImgApi(page, sort)
       .then((res) => {
-        console.log(res);
+        setNowBanner(res.data.data.currentEventResDto);
         setData(res.data.data.eventResDtoList.dtoList);
         setCount(res.data.data.eventCnt);
       })
@@ -70,11 +85,11 @@ const Events = () => {
 
   useEffect(() => {
     loadData();
-    adminFeedListApi(page, sort).then((res) => {
-      setCount(res.data.data.boardCnt);
-      setData(res.data.data.boardResDtoList.dtoList);
+    adminFeedListForEventApi(page, sort).then((res) => {
+      setCountForNotice(res.data.data.boardCnt);
+      setNoticeData(res.data.data.boardResDtoList.dtoList);
     });
-  }, [page, sort]);
+  }, [page, sort, pageForNotice]);
   const input = useRef();
   return (
     <>
@@ -99,68 +114,102 @@ const Events = () => {
             setSearch={setSearch}
             nodrop
           />
-          {data && <EventMapBoxs data={data} item={item} page={page} loadData={loadData} />}
-
-          {data.length === 0 && <None text="마케팅 서비스" />}
+          {data && (
+            <EventMapBoxs
+              data={data}
+              item={item}
+              page={page}
+              loadData={loadData}
+              nowBanner={nowBanner}
+            />
+          )}
         </div>
-        <SS.NewNotice>
-          <S.Wrapper isNull={data.length === 0}>
-            <TableHeader>
-              <div>분류</div>
-              <div>제목</div>
-              <div>등록일</div>
-            </TableHeader>
-            <S.DataBox>
-              {noticeData &&
-                noticeData.map((item, i) => (
-                  <ItemRow
-                    key={i}
-                    // onClick={() => {
-                    //   setModal(true);
-                    //   setSelectItem(item);
-                    // }}
-                  >
-                    <div>{String(item.boardId).padStart(6, "0")}</div>
-                    <div>
-                      <p style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</p>
-                      <p>
-                        {item.content.length > 30
-                          ? `${item.content.slice(0, 30)}...`
-                          : item.content}
-                      </p>
-                    </div>
+        <SS.NewNotice
+          style={{
+            backgroundColor: "#222222",
+            borderRadius: "16px",
+            padding: "20px 16px",
+            gap: "16px",
+          }}
+        >
+          <p style={{ color: "#e3e3e3" }}>새 배너 등록</p>
+          <Card>
+            <S.Wrapper
+              isNull={noticeData.length === 0}
+              style={{ border: 0, backgroundColor: "#333333" }}
+            >
+              <S.DataBox style={{ height: "32vh" }}>
+                {noticeData &&
+                  noticeData.map((item, i) => (
+                    <ItemRow key={i} onClick={() => setNoticeId(() => item.boardId)}>
+                      <div>{String(item.boardId).padStart(6, "0")}</div>
 
-                    <div>{String(item.regDateTime).split("T")[0]}</div>
-                  </ItemRow>
-                ))}
-            </S.DataBox>
-          </S.Wrapper>
-          <p>새 배너 등록</p>
-          <AttachBox>
-            <p>첨부</p>
-            {file ? (
-              <ImgBox>
-                <PVImg img={file} />
-              </ImgBox>
-            ) : (
-              <>
-                <InputBox
-                  onClick={() => {
-                    input.current?.click();
-                  }}
-                >
-                  <p>이미지를 선택하세요</p>
-                  <input
-                    ref={input}
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
-                    onChange={(e) => onLoadFile(e)}
-                  />
-                </InputBox>
-              </>
-            )}
-          </AttachBox>
+                      <div>
+                        {item.boardImageDtoList[0] ? (
+                          <Photo img={item.boardImageDtoList[0].imageUrl} />
+                        ) : (
+                          <NonePic />
+                        )}
+                        <div>
+                          <p style={{ fontWeight: "bold", marginBottom: "5px" }}>{item.title}</p>
+                          <p>
+                            {item.content.length > 30
+                              ? `${item.content.slice(0, 30)}...`
+                              : item.content}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>{String(item.regDateTime).split("T")[0]}</div>
+                    </ItemRow>
+                  ))}
+              </S.DataBox>
+              <Paging
+                count={countForNotice}
+                handlePageChange={handlePageChangeForNotice}
+                page={pageForNotice}
+                item={itemForNotice}
+              />
+            </S.Wrapper>
+          </Card>
+          <Card>
+            <p>배너와 연결할 공지사항</p>
+            <input
+              placeholder="공지사항 번호를 입력해 주세요"
+              value={noticeId}
+              onChange={(e) => {
+                setNoticeId(e.target.value);
+              }}
+            />
+          </Card>
+          <Card>
+            <p>이미지 첨부</p>
+            <AttachBox>
+              {file ? (
+                <ImgBox>
+                  <PVImg img={file} />
+                </ImgBox>
+              ) : (
+                <>
+                  <InputBox
+                    onClick={() => {
+                      input.current?.click();
+                    }}
+                  >
+                    <p>이미지를 선택하세요</p>
+                    <input
+                      ref={input}
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={(e) => onLoadFile(e)}
+                    />
+                  </InputBox>
+                </>
+              )}
+            </AttachBox>
+          </Card>
+
           <Row gap={16} justify="end">
             <SS.Btn back="#515151" onClick={() => setPreview(true)}>
               미리보기
@@ -177,8 +226,6 @@ const Events = () => {
 };
 
 const InputBox = styled.div`
-  position: absolute;
-  transform: translate(45%, 25%);
   border: 1px dotted #acacac;
   border-radius: 8px;
   height: 72px;
@@ -187,9 +234,14 @@ const InputBox = styled.div`
   line-height: 72px;
 `;
 
+const Photo = styled.div`
+  width: 40px;
+  height: 40px;
+  background: ${({ img }) => img && `url(${img})`} no-repeat center center/cover;
+  border-radius: 4px;
+`;
+
 const ImgBox = styled.div`
-  position: absolute;
-  transform: translate(45%, 25%);
   border-radius: 8px;
   width: 328px;
   max-height: 72px;
@@ -198,49 +250,25 @@ const ImgBox = styled.div`
 `;
 const AttachBox = styled.div`
   background-color: #333333;
-  margin-top: 30px;
   border-radius: 8px;
   width: 100%;
-  height: 104px;
+  height: 80px;
   box-sizing: border-box;
   position: relative;
   cursor: pointer;
-
-  & > p {
-    font-weight: 500;
-    color: #acacac;
-    padding: 12px 16px;
-  }
-`;
-const TableHeader = styled.div`
-  font-size: 14px;
   display: flex;
-  width: 100%;
-  color: #8b8b8b;
-  text-align: center;
-  line-height: 42px;
-  border-bottom: 1px solid #515151;
-  & > div {
-    flex: 0.5;
-    border-right: 1px solid #515151;
-  }
-  & div:nth-child(2) {
-    flex: 2.5;
-  }
-
-  & > div:last-child {
-    flex: 1;
-    border-right: none;
-  }
+  justify-content: center;
+  align-items: center;
 `;
 
 const ItemRow = styled.div`
   display: flex;
   color: #e3e3e3;
-  height: calc(65vh / 9);
+  height: calc(32vh / 4);
   cursor: pointer;
-  border-bottom: 1px solid #515151;
   font-size: 14px;
+  border-bottom: 1px solid #515151;
+
   & > div {
     // padding: 0 0 0 16px;
     display: flex;
@@ -249,25 +277,46 @@ const ItemRow = styled.div`
     text-align: left;
     line-height: 18px;
     box-sizing: border-box;
-    flex: 0.5;
-    border-right: 1px solid #515151;
+    flex: 1;
   }
 
   & div:nth-child(2) {
     flex: 2.5;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: start;
-    & > p {
-      margin: 0 0 0 16px;
+    & > div {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      & > p {
+        margin: 0 0 0 16px;
+      }
     }
   }
+`;
 
-  & > div:last-child {
-    flex: 1;
-    border-right: none;
-    border-bottom: none;
+const Card = styled.div`
+  background-color: #333333;
+  border-radius: 16px;
+  padding: 16px;
+  & > input {
+    width: 100%;
+    border: 0;
+    height: 32px;
+    margin-top: 16px;
+    border-bottom: 1px solid #515151;
+    background-color: #333333;
+    color: #fff;
+    &:focus {
+      outline: none;
+    }
   }
+`;
+
+const NonePic = styled.div`
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 4px;
 `;
 export default Events;

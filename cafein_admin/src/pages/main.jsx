@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
+import Report from "./Report";
 
 const Store = React.lazy(() => import("./Store"));
 const Register = React.lazy(() => import("./RegisterCafe"));
@@ -28,6 +29,7 @@ const Main = () => {
           <Route path="/event" exact element={<Events />} />
           <Route path="/notice" exact element={<Notice />} />
           <Route path="/qna" exact element={<QnAs />} />
+          <Route path="/report" exact element={<Report />} />
         </Routes>
       </Suspense>
     </Containaer>

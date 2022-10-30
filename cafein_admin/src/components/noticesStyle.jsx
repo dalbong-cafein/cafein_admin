@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Headers = styled.div`
   display: flex;
   width: 100%;
-  padding: 72px 102px 48px 0;
+  padding: 52px 102px 48px 0;
   justify-content: space-between;
   & > div:first-child {
     display: flex;
@@ -15,8 +15,7 @@ export const Headers = styled.div`
 export const Menu = styled.div`
   color: ${(props) => (props.menustate ? "#fff" : "#8B8B8B")};
   font-size: 22px;
-  ${(props) =>
-    props.menustate && "font-weight:bold; border-bottom:2px solid #fff"};
+  ${(props) => props.menustate && "font-weight:bold; border-bottom:2px solid #fff"};
   padding-bottom: 8px;
 `;
 
@@ -37,7 +36,7 @@ export const NewNotice = styled.div`
   box-sizing: border-box;
   & > p:first-child {
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 600;
   }
   & > div:nth-child(2) {
     display: flex;

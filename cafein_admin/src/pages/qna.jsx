@@ -72,7 +72,15 @@ const QnAs = () => {
 
   return (
     <>
-      <SelectHeader menu="qna" menu1="notice" menu2="qna" Tmenu1="공지사항" Tmenu2="자주 묻는 질문" />
+      <SelectHeader
+        menu="qna"
+        menu1="notice"
+        menu2="qna"
+        Tmenu1="공지사항"
+        Tmenu2="자주 묻는 질문"
+        menu3="report"
+        Tmenu3="신고"
+      />
       <SS.Container>
         <div>
           <FilterRow
@@ -153,8 +161,22 @@ const QnAs = () => {
           forFunc={register}
         />
       )}
-      {preview && <NoticePreview item={register} setModal={setPreview} file={register.imageFiles} menu="QnA" />}
-      {modal && <NoticeDetailModal selectItem={selectItem} setModal={setModal} menu="QnA" setAlert={setDAlert} />}
+      {preview && (
+        <NoticePreview
+          item={register}
+          setModal={setPreview}
+          file={register.imageFiles}
+          menu="QnA"
+        />
+      )}
+      {modal && (
+        <NoticeDetailModal
+          selectItem={selectItem}
+          setModal={setModal}
+          menu="QnA"
+          setAlert={setDAlert}
+        />
+      )}
       {Dalert && (
         <RedAlert
           text="자주 묻는 질문 삭제"

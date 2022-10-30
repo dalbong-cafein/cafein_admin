@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Wrapper = styled.div`
   border-radius: ${(props) => (props.isNull ? "8px 8px 0 0" : "8px")};
   width: 100%;
-  height: 90%;
+  // height: 90%;
   border: 1px solid #404040;
 `;
 

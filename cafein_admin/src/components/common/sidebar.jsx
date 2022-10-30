@@ -29,31 +29,19 @@ const SideBar = () => {
             </div>
             대시보드
           </MenuBox>
-          <MenuBox
-            svgW={16}
-            onClick={() => navigate("/management")}
-            isT={menu === "management"}
-          >
+          <MenuBox svgW={16} onClick={() => navigate("/management")} isT={menu === "management"}>
             <div>
               <Cup />
             </div>
             카페 관리
           </MenuBox>
-          <MenuBox
-            svgW={16.6}
-            onClick={() => navigate("/review")}
-            isT={menu === "review"}
-          >
+          <MenuBox svgW={16.6} onClick={() => navigate("/review")} isT={menu === "review"}>
             <div>
               <Review />
             </div>
             카페 리뷰
           </MenuBox>
-          <MenuBox
-            svgW={13.3}
-            onClick={() => navigate("/user")}
-            isT={menu === "user"}
-          >
+          <MenuBox svgW={13.3} onClick={() => navigate("/user")} isT={menu === "user"}>
             <div>
               <User />
             </div>
@@ -62,7 +50,7 @@ const SideBar = () => {
           <MenuBox
             svgW={18.5}
             onClick={() => navigate("/marketing")}
-            isT={menu === "marketing"}
+            isT={menu === "marketing" || menu === "event"}
           >
             <div>
               <Marketing />
@@ -72,7 +60,7 @@ const SideBar = () => {
           <MenuBox
             svgW={16.2}
             onClick={() => navigate("/notice")}
-            isT={menu === "notice"}
+            isT={menu === "notice" || menu === "qna"}
           >
             <div>
               <Notice />
@@ -101,7 +89,7 @@ const SideBar = () => {
 
 const Container = styled.div`
   position: relative;
-  padding: 73px 124px 57px 57px;
+  padding: 53px 124px 57px 57px;
   width: 296px;
   box-sizing: border-box;
   height: 100vh;
