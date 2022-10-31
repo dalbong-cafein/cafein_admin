@@ -82,14 +82,17 @@ const Events = () => {
         navigate("/");
       });
   };
-
   useEffect(() => {
-    loadData();
-    adminFeedListForEventApi(page, sort).then((res) => {
+    adminFeedListForEventApi(pageForNotice, sortForNotice, false).then((res) => {
+      console.log(res);
       setCountForNotice(res.data.data.boardCnt);
       setNoticeData(res.data.data.boardResDtoList.dtoList);
     });
-  }, [page, sort, pageForNotice]);
+  }, [pageForNotice]);
+
+  useEffect(() => {
+    loadData();
+  }, [page, sort]);
   const input = useRef();
   return (
     <>

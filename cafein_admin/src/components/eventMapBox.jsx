@@ -54,7 +54,6 @@ const EventMapBoxs = ({ data, item, page, loadData, nowBanner }) => {
       })
       .catch((err) => window.alert("나중에 다시 시도해주세요"));
   };
-  console.log(nowBanner);
 
   return (
     <>

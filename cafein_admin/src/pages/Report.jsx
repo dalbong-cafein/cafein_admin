@@ -9,22 +9,23 @@ import FilterRow from "../components/common/FilterRow";
 
 import None from "../components/common/None";
 import { getReportListApi } from "../util/events";
-import { useRecoilState } from "recoil";
-import { registerNotice } from "../recoil/NNotice";
 
 import usePagination from "../hooks/usePagination";
-import RegNoticeBox from "../components/RegNoticeBox";
+import { ReactComponent as Memo } from "../svg/memo.svg";
+import { ReactComponent as Check } from "../svg/ArrowDown.svg";
+
+import MemoModal from "../components/modal/Memo";
 
 const Report = () => {
   const [data, setData] = useState([]);
-  const [selectItem, setSelectItem] = useState([]);
 
   const [search, setSearch] = useState("");
-  const [register, setRegister] = useRecoilState(registerNotice);
 
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination(10);
-
+  //memo
+  const [memoItem, setMemoItem] = useState(null);
+  const [modalMemo, setModalMemo] = useState(false);
   const searchData = () => {
     // adminFeedListApi(search, page, sort)
     //   .then((res) => {
@@ -33,20 +34,21 @@ const Report = () => {
     //   })
     //   .catch((err) => console.log(err));
   };
-  useEffect(() => {
-    const copy = { ...register };
-    copy.boardCategoryId = 1;
-    setRegister(copy);
+
+  const loadData = () => {
     getReportListApi(page, sort, search).then((res) => {
-      setCount(res.data.data.boardCnt);
-      setData(res.data.data.boardResDtoList.dtoList);
+      setCount(res.data.data.reportCnt);
+      setData(res.data.data.reportResDtoList.dtoList);
     });
+  };
+  useEffect(() => {
+    loadData();
   }, [sort, page]);
 
   return (
     <>
       <SelectHeader
-        menu="notice"
+        menu="report"
         menu1="notice"
         menu2="qna"
         Tmenu1="공지사항"
@@ -71,47 +73,61 @@ const Report = () => {
             search={search}
             setSearch={setSearch}
             searchData={searchData}
-            nodrop
           />
           <S.Wrapper isNull={data.length === 0}>
             <TableHeader>
               <div>분류</div>
-              <div>제목</div>
+              <div>내용</div>
+              <div>리뷰번호</div>
+              <div>신고한 회원 번호</div>
               <div>등록일</div>
+              <div>상태</div>
+              <div>메모</div>
             </TableHeader>
             <S.DataBox>
               {data &&
                 data.map((item, i) => (
-                  <ItemRow key={i}>
-                    <div>{String(item.boardId).padStart(6, "0")}</div>
+                  <ItemRow key={i} hasMemoId={item.memoId}>
+                    <div>{String(item.reportId).padStart(6, "0")}</div>
                     <div>
                       <p
                         style={{
-                          fontWeight: "bold",
                           marginBottom: "5px",
-                          width: "250px",
                           overflow: "hidden",
+                          width: "100%",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                          textAlign: "left",
+                          textAlign: "center",
                         }}
                       >
-                        {item.title}
-                      </p>
-                      <p
-                        style={{
-                          width: "250px",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          textAlign: "left",
-                        }}
-                      >
-                        {item.content}
+                        {item.categoryName}
                       </p>
                     </div>
 
-                    <div>{String(item.regDateTime).split("T")[0]}</div>
+                    <div>{String(item.reviewId).split("T")[0] || "-"}</div>
+                    <div>{String(item.fromMemberId).split("T")[0] || "-"}</div>
+                    <div>{String(item.regDateTime).split("T")[0] || "-"}</div>
+                    <div>
+                      <Btn content={item.reportStatus}>
+                        <div />
+                        {item.reportStatus === "APPROVAL"
+                          ? "승인"
+                          : item.reportStatus === "REJECT"
+                          ? "반려"
+                          : "대기"}
+                        {item.reportStatus === "WAIT" && (
+                          <Check style={{ paddingBottom: "2px", paddingLeft: "3px" }} />
+                        )}
+                      </Btn>
+                    </div>
+                    <div>
+                      <Memo
+                        onClick={() => {
+                          setMemoItem(item);
+                          setModalMemo(true);
+                        }}
+                      />
+                    </div>
                   </ItemRow>
                 ))}
             </S.DataBox>
@@ -119,6 +135,7 @@ const Report = () => {
           {data.length == 0 && <None text="공지" />}
         </div>
       </SS.Container>
+      {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
     </>
   );
 };
@@ -132,7 +149,7 @@ const TableHeader = styled.div`
   line-height: 42px;
   border-bottom: 1px solid #515151;
   & > div {
-    flex: 0.5;
+    flex: 1;
     border-right: 1px solid #515151;
   }
   & div:nth-child(2) {
@@ -140,7 +157,6 @@ const TableHeader = styled.div`
   }
 
   & > div:last-child {
-    flex: 1;
     border-right: none;
   }
 `;
@@ -160,7 +176,7 @@ const ItemRow = styled.div`
     text-align: left;
     line-height: 18px;
     box-sizing: border-box;
-    flex: 0.5;
+    flex: 1;
     border-right: 1px solid #515151;
   }
 
@@ -176,9 +192,38 @@ const ItemRow = styled.div`
   }
 
   & > div:last-child {
-    flex: 1;
     border-right: none;
     border-bottom: none;
+    & > svg {
+      path {
+        fill: ${(props) => (props.hasMemoId ? "#E3E3E3" : "#646464")};
+      }
+    }
+  }
+`;
+
+const Btn = styled.div`
+  position: relative;
+  width: 86px;
+  height: 26px;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 6px;
+  color: ${(props) =>
+    props.content === "APPROVAL" ? "#26BA6A" : props.content === "REJECT" ? "#f44336" : "#ff9800"};
+  line-height: 26px;
+  & > div:first-child {
+    position: absolute;
+    width: 86px;
+    height: 26px;
+    background-color: ${(props) =>
+      props.content === "APPROVAL"
+        ? "#26BA6A"
+        : props.content === "REJECT"
+        ? "#f44336"
+        : "#ff9800"};
+    opacity: 0.3;
+    border-radius: 4px;
   }
 `;
 

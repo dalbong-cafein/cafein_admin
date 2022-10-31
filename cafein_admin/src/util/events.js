@@ -93,7 +93,7 @@ export const delEventImgApi = (id) => {
 };
 
 export const getReportListApi = async (page, sort, search) => {
-  return await withAuthInstance.post(
+  return await withAuthInstance.get(
     `/reports?size=12&page=${page}&sort=${sort}${search && `&keyword=${search}`}`
   );
 };
