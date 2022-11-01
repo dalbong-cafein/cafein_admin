@@ -8,7 +8,17 @@ import RedAlert from "./RedAlert";
 
 export default function MemoModal({ setModal, item }) {
   const loc = window.location.pathname;
-  const id = item.storeId || item.memberId || item.reviewId || item.couponId;
+  const id =
+    loc == "/management"
+      ? item.storeId
+      : loc == "/review"
+      ? item.reviewId
+      : loc == "/user"
+      ? item.memberId
+      : loc == "/marketing"
+      ? item.couponId
+      : item.reportId;
+
   const where =
     loc == "/management"
       ? "카페관리"
@@ -18,7 +28,7 @@ export default function MemoModal({ setModal, item }) {
       ? "회원관리"
       : loc == "/marketing"
       ? "쿠폰관리"
-      : "rmftpdyd";
+      : "신고관리";
 
   const closeModal = () => {
     setModal(false);
@@ -86,7 +96,7 @@ export default function MemoModal({ setModal, item }) {
   }
 
   useEffect(() => {
-    if (item.memoId) {
+    if (!!item.memoId) {
       memoDataApi(item.memoId).then((res) => setMemo(res.data.data));
     }
   }, []);
@@ -97,13 +107,20 @@ export default function MemoModal({ setModal, item }) {
         <S.ModalHeader>
           <p>
             {`${memo?.memoType || where}`}
-            {`_${memo?.storeId || memo?.reviewId || memo?.couponId || memo?.memberId || id}`}
+            {`_${
+              memo?.storeId ||
+              memo?.reviewId ||
+              memo?.couponId ||
+              memo?.memberId ||
+              memo?.reportId ||
+              id
+            }`}
           </p>
           <Close onClick={closeModal} />
         </S.ModalHeader>
         {item?.memoId ? (
           <>
-            <S.ModalContent style={{ height: "0" }}>
+            <S.ModalContent>
               {editMode ? (
                 <textarea
                   cols="50"
@@ -114,7 +131,7 @@ export default function MemoModal({ setModal, item }) {
                   onChange={(e) => onChange(e)}
                 />
               ) : (
-                <div>{memo?.content}</div>
+                <div style={{ padding: "16px 0" }}>{memo?.content}</div>
               )}
             </S.ModalContent>
             <S.ModalFooter>

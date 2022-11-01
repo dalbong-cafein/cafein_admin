@@ -34,6 +34,9 @@ export const NewNotice = styled.div`
   gap: 34px;
   width: 100%;
   box-sizing: border-box;
+  background-color: rgba(51, 51, 51, 0.5);
+  padding: 16px 20px;
+  border-radius: 16px;
   & > p:first-child {
     font-size: 18px;
     font-weight: 600;
@@ -46,24 +49,35 @@ export const NewNotice = styled.div`
 `;
 export const Input = styled.div`
   width: 100%;
-  height: 48px;
+  padding: 16px;
   display: flex;
+  flex-direction: column;
   background-color: #333333;
   border-radius: 6px;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
 
   box-sizing: border-box;
   padding: 12px;
-  & > p:first-child {
-    width: 50px;
-    color: #acacac;
+  & > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    & > p {
+      width: 50px;
+      color: #e3e3e3;
+      font-weight: 600;
+    }
   }
+
   & > input {
     font-size: 16px;
     color: #e3e3e3;
     border: 0;
     background-color: #333333;
+    width: 100%;
+    border-bottom: 1px solid #515151;
     &:focus {
       outline: none;
     }
@@ -121,14 +135,23 @@ export const TextBox = styled.div`
   box-sizing: border-box;
   border-radius: 6px;
   padding: 12px;
-  & > textarea {
-    width: 90%;
-    heigth: 350px;
-    background-color: #333333;
-    color: #e3e3e3;
-    border: 0;
-    &:focus {
-      outline: none;
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    & > p {
+      color: #e3e3e3;
+      font-weight: 600;
+    }
+    & > textarea {
+      width: 90%;
+      heigth: 350px;
+      background-color: #333333;
+      color: #e3e3e3;
+      border: 0;
+      &:focus {
+        outline: none;
+      }
     }
   }
 `;

@@ -8,7 +8,7 @@ import SelectHeader from "../components/common/SelectHeader";
 import FilterRow from "../components/common/FilterRow";
 
 import None from "../components/common/None";
-import { getReportListApi } from "../util/events";
+import { changeReportStatusApi, getReportListApi } from "../util/events";
 
 import usePagination from "../hooks/usePagination";
 import { ReactComponent as Memo } from "../svg/memo.svg";
@@ -35,6 +35,13 @@ const Report = () => {
     //   .catch((err) => console.log(err));
   };
 
+  const changeState = (item) => {
+    changeReportStatusApi(item.reportId, item.reportStatus)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
   const loadData = () => {
     getReportListApi(page, sort, search).then((res) => {
       setCount(res.data.data.reportCnt);
@@ -108,7 +115,14 @@ const Report = () => {
                     <div>{String(item.fromMemberId).split("T")[0] || "-"}</div>
                     <div>{String(item.regDateTime).split("T")[0] || "-"}</div>
                     <div>
-                      <Btn content={item.reportStatus}>
+                      <Btn
+                        content={item.reportStatus}
+                        onClick={() => {
+                          if (item.reportStatus == "WAIT") {
+                            changeState(item);
+                          }
+                        }}
+                      >
                         <div />
                         {item.reportStatus === "APPROVAL"
                           ? "승인"
@@ -132,7 +146,7 @@ const Report = () => {
                 ))}
             </S.DataBox>
           </S.Wrapper>
-          {data.length == 0 && <None text="공지" />}
+          {data.length == 0 && <None text="신고" />}
         </div>
       </SS.Container>
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}

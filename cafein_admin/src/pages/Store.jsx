@@ -83,7 +83,7 @@ const Store = () => {
     if (area != "전체") {
       searchData();
     } else {
-      loadData();
+      searchData();
     }
   }, [page, sort, area]);
   return (

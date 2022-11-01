@@ -142,7 +142,7 @@ const Notice = () => {
                 ))}
             </S.DataBox>
           </S.Wrapper>
-          {data.length == 0 && <None text="공지" />}
+          {data.length == 0 && <None text="공지사항" />}
         </div>
         <RegNoticeBox
           register={register}

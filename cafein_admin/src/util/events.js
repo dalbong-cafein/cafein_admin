@@ -97,3 +97,6 @@ export const getReportListApi = async (page, sort, search) => {
     `/reports?size=12&page=${page}&sort=${sort}${search && `&keyword=${search}`}`
   );
 };
+export const changeReportStatusApi = async (id, status) => {
+  return await withAuthInstance.patch(`/reports/${id}/${status}`);
+};

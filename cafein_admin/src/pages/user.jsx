@@ -120,7 +120,7 @@ const User = () => {
             setMemoItem={setMemoItem}
           />
         ) : (
-          <None text="유저" />
+          <None text="회원" />
         )}
       </S.Wrapper>
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}

@@ -21,31 +21,36 @@ export default function RegNoticeBox({
 
       <div>
         <SS.Input>
-          <p>날짜</p>
-          <div>{new Date().toLocaleDateString()}</div>
-        </SS.Input>
-
-        <SS.Input>
-          <p>제목</p>
-          <input type="text" name="title" onChange={(e) => onChange(e)} />
+          <div>
+            <p>제목</p>
+            <span style={{ fontSize: "12px" }}>
+              <span style={{ color: "#2563EB" }}>{register.title.length}자</span>/최대 47자
+            </span>
+          </div>
+          <input
+            type="text"
+            name="title"
+            onChange={(e) => onChange(e)}
+            placeholder="제목을 입력해주세요 (최대 47자)"
+          />
         </SS.Input>
         <SS.TextBox>
-          <textarea
-            cols="50"
-            rows="20"
-            placeholder="내용을 입력하세요"
-            name="content"
-            onChange={(e) => onChange(e)}
-          />
+          <div>
+            <p>내용</p>
+            <textarea
+              cols="50"
+              rows="20"
+              placeholder="내용을 적어 주세요"
+              name="content"
+              onChange={(e) => onChange(e)}
+            />
+          </div>
 
           <FileUpload register={register} setRegister={setRegister} num={1} />
         </SS.TextBox>
       </div>
       <Row gap={16} justify="end" align="baseline">
-        <SS.Btn
-          back="#515151"
-          onClick={() => setPreview((previus) => !previus)}
-        >
+        <SS.Btn back="#515151" onClick={() => setPreview((previus) => !previus)}>
           미리보기
         </SS.Btn>
         <SS.Btn back="#2563eb" onClick={() => setAlert((previus) => !previus)}>

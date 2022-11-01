@@ -31,7 +31,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
   const [eUData, setEUData] = useState({});
 
   const reviewView = () => {
-    setReview(true);
+    navigate("/review", { state: selectItem.memberId });
   };
   const heartView = () => {
     setHeart(true);

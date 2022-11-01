@@ -22,6 +22,11 @@ export const registerMemoApi = async (id, content, where) => {
       couponId: id,
       content: content,
     };
+  } else {
+    body = {
+      reportId: id,
+      content: content,
+    };
   }
 
   return await withAuthInstance.post(`/memos`, body);

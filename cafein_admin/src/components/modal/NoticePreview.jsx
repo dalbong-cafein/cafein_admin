@@ -14,6 +14,7 @@ export default function NoticePreview({ setModal, item, file, menu }) {
     setModal(false);
   };
 
+  console.log(item);
   return (
     <Portal setModal={setModal}>
       <ModalBox>
@@ -31,6 +32,11 @@ export default function NoticePreview({ setModal, item, file, menu }) {
                 {file && (
                   <div>
                     <PVImg img={file[0]} />
+                  </div>
+                )}
+                {item?.boardImageDtoList && (
+                  <div>
+                    <img src={item?.boardImageDtoList[0].imageUrl} alt="" />
                   </div>
                 )}
               </ContentBox>
@@ -72,6 +78,11 @@ export default function NoticePreview({ setModal, item, file, menu }) {
                 {file && (
                   <div>
                     <PVImg img={file[0]} />
+                  </div>
+                )}
+                {item?.boardImageDtoList && (
+                  <div>
+                    <img src={item?.boardImageDtoList[0].imageUrl} alt="" />
                   </div>
                 )}
               </ContentBox2>
@@ -160,7 +171,7 @@ const Headers = styled.div`
 `;
 const ContentBox = styled.div`
   width: 375px;
-  min-height: 500px;
+  height: 500px;
   padding: 20px 16px;
   box-sizing: border-box;
   background-color: #fff;
@@ -168,13 +179,15 @@ const ContentBox = styled.div`
     white-space: pre-line;
     font-size: 14px;
     color: #333333;
-    min-height: 200px;
     line-height: 20px;
   }
   & > div:nth-child(2) {
-    width: 200px;
-    min-height: 200px;
-    padding: 12px 0;
+    width: 100%;
+    padding: 16px 0;
+    & > img {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 
@@ -182,12 +195,11 @@ const ContentBox2 = styled.div`
   width: 375px;
   box-sizing: border-box;
   background-color: #fff;
-  min-height: 600px;
+  height: 600px;
   & > div:first-child {
     margin: 16px 0 16px 16px;
     padding: 12px;
     width: 328px;
-    min-height: 200px;
     box-sizing: border-box;
     background-color: #f6f6f6;
     border-radius: 8px;
@@ -197,8 +209,11 @@ const ContentBox2 = styled.div`
     line-height: 20px;
   }
   & > div:nth-child(2) {
-    width: 200px;
-    min-height: 200px;
-    padding: 0 16px;
+    width: 100%;
+    padding: 16px;
+    & > img {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
