@@ -15,6 +15,7 @@ import { ReactComponent as Memo } from "../svg/memo.svg";
 import { ReactComponent as Check } from "../svg/ArrowDown.svg";
 
 import MemoModal from "../components/modal/Memo";
+import useSearch from "../hooks/useSearch";
 
 const Report = () => {
   const [data, setData] = useState([]);
@@ -23,17 +24,14 @@ const Report = () => {
 
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination(10);
+  const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
+    "분류",
+    "회원 번호",
+    "리뷰 번호",
+  ]);
   //memo
   const [memoItem, setMemoItem] = useState(null);
   const [modalMemo, setModalMemo] = useState(false);
-  const searchData = () => {
-    // adminFeedListApi(search, page, sort)
-    //   .then((res) => {
-    //     setCount(res.data.data.boardCnt);
-    //     setData(res.data.data.boardResDtoList.dtoList);
-    //   })
-    //   .catch((err) => console.log(err));
-  };
 
   const changeState = (item) => {
     changeReportStatusApi(item.reportId, item.reportStatus)
@@ -43,7 +41,7 @@ const Report = () => {
       .catch((err) => console.log(err));
   };
   const loadData = () => {
-    getReportListApi(page, sort, search).then((res) => {
+    getReportListApi(page, sort, search, searchType).then((res) => {
       setCount(res.data.data.reportCnt);
       setData(res.data.data.reportResDtoList.dtoList);
     });
@@ -70,6 +68,10 @@ const Report = () => {
       <SS.Container>
         <div>
           <FilterRow
+            searchType={searchType}
+            setSearchType={setSearchType}
+            searchArr={searchArr}
+            setSearchArr={setSearchArr}
             sort={sort}
             count={count}
             page={page}
@@ -79,7 +81,7 @@ const Report = () => {
             setPage={setPage}
             search={search}
             setSearch={setSearch}
-            searchData={searchData}
+            searchData={loadData}
           />
           <S.Wrapper isNull={data.length === 0}>
             <TableHeader>

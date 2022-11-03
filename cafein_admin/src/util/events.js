@@ -92,10 +92,22 @@ export const delEventImgApi = (id) => {
   return withAuthInstance.delete(`/events/${id}`);
 };
 
-export const getReportListApi = async (page, sort, search) => {
-  return await withAuthInstance.get(
-    `/reports?size=12&page=${page}&sort=${sort}${search && `&keyword=${search}`}`
-  );
+export const getReportListApi = async (page, sort, search, searchType) => {
+  if (search) {
+    const type =
+      searchType === "회원 번호"
+        ? "m"
+        : searchType === "분류"
+        ? "rp"
+        : searchType === "리뷰 번호"
+        ? "r"
+        : ["m", "rp", "r"];
+    return await withAuthInstance.get(
+      `/reports?size=12&page=${page}&sort=${sort}&searchType=${type}&keyword=${search}`
+    );
+  } else {
+    return await withAuthInstance.get(`/reports?size=12&page=${page}&sort=${sort}`);
+  }
 };
 export const changeReportStatusApi = async (id, status) => {
   return await withAuthInstance.patch(`/reports/${id}/${status}`);

@@ -87,8 +87,6 @@ export const feedDetailReviewApi = async (id) => {
 
 //피드 검색어
 export const feedSearchApi = async (keyword, searchType, page, sort, area) => {
-  const isAll = area != "전체";
-
   const type =
     searchType === "카페명"
       ? "sn"
