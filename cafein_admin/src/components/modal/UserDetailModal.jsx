@@ -68,7 +68,9 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
   useEffect(() => {
     if (selectItem.memberId) {
       userReportApi(selectItem.memberId)
-        .then((res) => setReportData(res.data.data.adminReportResDtoList))
+        .then((res) => {
+          setReportData(res.data.data);
+        })
         .catch((err) => console.log(err));
     }
     setEUData({
@@ -172,29 +174,29 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                   <Close onClick={closeModal} />
                 </Row>
                 <Columnbox>
-                  <Line color="#515151">
+                  <Line color="#515151" spanWidth={55}>
                     <span>방문</span>
                     <p>-</p>
                   </Line>
-                  <Line color="#515151">
+                  <Line color="#515151" spanWidth={55}>
                     <span>저장</span>
                     <p>{selectItem?.heartCnt || "-"}</p>
                     <Page onClick={heartView} />
                   </Line>
-                  <Line color="#515151">
+                  <Line color="#515151" spanWidth={55}>
                     <span>공유</span>
                     <p>-</p>
                   </Line>
-                  <Line color="#515151">
+                  <Line color="#515151" spanWidth={55}>
                     <span>혼잡도</span>
                     <p>{selectItem?.congestionCnt || "-"}</p>
                   </Line>
-                  <Line color="#515151">
+                  <Line color="#515151" spanWidth={55}>
                     <span>리뷰</span>
                     <p>{selectItem?.reviewCnt || "-"}</p>
                     <Page onClick={reviewView} />
                   </Line>
-                  <Line color="#515151">
+                  <Line color="#515151" spanWidth={55}>
                     <span>스티커</span>
                     <p>{selectItem?.stickerCnt || "-"}</p>
                     <Page onClick={() => setSticker(true)} />
@@ -204,7 +206,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                   기타
                 </Title>
                 <Columnbox>
-                  <Line color="#515151">
+                  <Line color="#515151" spanWidth={55}>
                     <span>가입일</span>
                     <p>{String(selectItem.joinDateTime).replace("T", " ") || "-"}</p>
                   </Line>
@@ -315,8 +317,8 @@ const Line = styled.div`
   padding: 2px 0 13px;
   border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
   & > span {
-    padding-right: 32px;
-    width: 69px;
+    padding-right: 20px;
+    width: ${(props) => (props.spanWidth ? props.spanWidth : "69")}px;
     text-align: right;
     font-size: 16px;
     font-weight: 700;
@@ -349,10 +351,10 @@ const StateRow = styled.div`
   border-bottom: 1px solid #515151;
   & > div:first-child {
     display: flex;
-    gap: 32px;
+    gap: 16px;
     align-items: baseline;
     & > span {
-      width: 69px;
+      width: 55px;
       text-align: right;
       font-size: 16px;
       font-weight: 700;
@@ -368,10 +370,11 @@ const StateRow = styled.div`
   & > div:nth-child(2) {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 15px;
     max-height: 100px;
+    gap: 3px;
     padding-bottom: 15px;
-    margin-left: 110px;
+    margin-left: 80px;
     overflow-y: scroll;
     ::-webkit-scrollbar {
       width: 6px;
@@ -409,7 +412,7 @@ const Btn = styled.div`
   width: 86px;
   height: 26px;
   text-align: center;
-  margin: 0 auto;
+  margin: 0 8px;
   border-radius: 6px;
   color: ${(props) =>
     props.content === "기본" ? "#26BA6A" : props.content === "신고" ? "#f44336" : "#ff9800"};

@@ -8,19 +8,21 @@ import SelectHeader from "../components/common/SelectHeader";
 import FilterRow from "../components/common/FilterRow";
 
 import None from "../components/common/None";
-import { changeReportStatusApi, getReportListApi } from "../util/events";
+import { getReportListApi } from "../util/events";
 
 import usePagination from "../hooks/usePagination";
-import { ReactComponent as Memo } from "../svg/memo.svg";
-import { ReactComponent as Check } from "../svg/ArrowDown.svg";
 
 import MemoModal from "../components/modal/Memo";
 import useSearch from "../hooks/useSearch";
+import ReportItem from "../components/ReportItem";
+import MUReport from "../components/modal/MUReport";
 
 const Report = () => {
   const [data, setData] = useState([]);
+  const [modal, setModal] = useState(false);
 
   const [search, setSearch] = useState("");
+  const [selectItem, setSelectItem] = useState(null);
 
   // pagination
   const [page, sort, item, count, setCount, setPage, onDesc, onAsc] = usePagination(10);
@@ -32,20 +34,26 @@ const Report = () => {
   //memo
   const [memoItem, setMemoItem] = useState(null);
   const [modalMemo, setModalMemo] = useState(false);
+  const onResetData = () => {
+    setSearchType("전체");
+    setSearch("");
+    setPage(1);
+    onDesc();
 
-  const changeState = (item) => {
-    changeReportStatusApi(item.reportId, item.reportStatus)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    loadData();
   };
+
   const loadData = () => {
     getReportListApi(page, sort, search, searchType).then((res) => {
       setCount(res.data.data.reportCnt);
       setData(res.data.data.reportResDtoList.dtoList);
     });
   };
+  const onModal = (item) => {
+    setModal(true);
+    setSelectItem(() => item);
+  };
+
   useEffect(() => {
     loadData();
   }, [sort, page]);
@@ -82,6 +90,7 @@ const Report = () => {
             search={search}
             setSearch={setSearch}
             searchData={loadData}
+            onResetData={onResetData}
           />
           <S.Wrapper isNull={data.length === 0}>
             <TableHeader>
@@ -96,55 +105,14 @@ const Report = () => {
             <S.DataBox>
               {data &&
                 data.map((item, i) => (
-                  <ItemRow key={i} hasMemoId={item.memoId}>
-                    <div>{String(item.reportId).padStart(6, "0")}</div>
-                    <div>
-                      <p
-                        style={{
-                          marginBottom: "5px",
-                          overflow: "hidden",
-                          width: "100%",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          textAlign: "center",
-                        }}
-                      >
-                        {item.categoryName}
-                      </p>
-                    </div>
-
-                    <div>{String(item.reviewId).split("T")[0] || "-"}</div>
-                    <div>{String(item.fromMemberId).split("T")[0] || "-"}</div>
-                    <div>{String(item.regDateTime).split("T")[0] || "-"}</div>
-                    <div>
-                      <Btn
-                        content={item.reportStatus}
-                        onClick={() => {
-                          if (item.reportStatus == "WAIT") {
-                            changeState(item);
-                          }
-                        }}
-                      >
-                        <div />
-                        {item.reportStatus === "APPROVAL"
-                          ? "승인"
-                          : item.reportStatus === "REJECT"
-                          ? "반려"
-                          : "대기"}
-                        {item.reportStatus === "WAIT" && (
-                          <Check style={{ paddingBottom: "2px", paddingLeft: "3px" }} />
-                        )}
-                      </Btn>
-                    </div>
-                    <div>
-                      <Memo
-                        onClick={() => {
-                          setMemoItem(item);
-                          setModalMemo(true);
-                        }}
-                      />
-                    </div>
-                  </ItemRow>
+                  <ReportItem
+                    key={i}
+                    item={item}
+                    setMemoItem={setMemoItem}
+                    setModalMemo={setModalMemo}
+                    loadData={onResetData}
+                    onModal={onModal}
+                  />
                 ))}
             </S.DataBox>
           </S.Wrapper>
@@ -152,6 +120,7 @@ const Report = () => {
         </div>
       </SS.Container>
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
+      {modal && <MUReport selectItem={selectItem} setModal={setModal} />}
     </>
   );
 };
@@ -174,72 +143,6 @@ const TableHeader = styled.div`
 
   & > div:last-child {
     border-right: none;
-  }
-`;
-
-const ItemRow = styled.div`
-  display: flex;
-  color: #e3e3e3;
-  height: calc(65vh / 9);
-  cursor: pointer;
-  border-bottom: 1px solid #515151;
-  font-size: 14px;
-  & > div {
-    // padding: 0 0 0 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: left;
-    line-height: 18px;
-    box-sizing: border-box;
-    flex: 1;
-    border-right: 1px solid #515151;
-  }
-
-  & div:nth-child(2) {
-    flex: 2.5;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    & > p {
-      margin: 0 0 0 16px;
-    }
-  }
-
-  & > div:last-child {
-    border-right: none;
-    border-bottom: none;
-    & > svg {
-      path {
-        fill: ${(props) => (props.hasMemoId ? "#E3E3E3" : "#646464")};
-      }
-    }
-  }
-`;
-
-const Btn = styled.div`
-  position: relative;
-  width: 86px;
-  height: 26px;
-  text-align: center;
-  margin: 0 auto;
-  border-radius: 6px;
-  color: ${(props) =>
-    props.content === "APPROVAL" ? "#26BA6A" : props.content === "REJECT" ? "#f44336" : "#ff9800"};
-  line-height: 26px;
-  & > div:first-child {
-    position: absolute;
-    width: 86px;
-    height: 26px;
-    background-color: ${(props) =>
-      props.content === "APPROVAL"
-        ? "#26BA6A"
-        : props.content === "REJECT"
-        ? "#f44336"
-        : "#ff9800"};
-    opacity: 0.3;
-    border-radius: 4px;
   }
 `;
 
