@@ -19,8 +19,10 @@ export default function FileUpload({ register, setRegister, num = 5, submitFunc 
         return;
       } else {
         if (e.target.files[0]) {
-          const file = await resizeImg(e.target.files[0]);
-          copy = [...copy, file];
+          for (let i = 0; i < e.target.files.length; i++) {
+            const file = await resizeImg(e.target.files[i]);
+            copy = [...copy, file];
+          }
           setFile(copy);
           const copy2 = { ...register };
           copy2.imageFiles = copy;
@@ -55,6 +57,7 @@ export default function FileUpload({ register, setRegister, num = 5, submitFunc 
           accept="image/*"
           style={{ display: "none" }}
           onChange={(e) => onLoadFile(e)}
+          multiple
         />
       </S.FileUpload>
       {file?.map((a, i) => {

@@ -154,7 +154,7 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
               <Row gap={10} style={{ minHeight: "120px", marginBottom: "30px" }}>
                 {file[0] && (
                   <Pic>
-                    <img src={process.env.PUBLIC_URL + file[0]} alt="img" />
+                    <img src={file[0]} alt="img" />
                   </Pic>
                 )}
               </Row>

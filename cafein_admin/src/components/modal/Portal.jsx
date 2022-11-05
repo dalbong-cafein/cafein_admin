@@ -3,10 +3,11 @@ import styled from "styled-components";
 export default function Portal({ children, setModal }) {
   return ReactDom.createPortal(
     <Background
-    // onClick={(e) => {
-    //   e.stopPropagation();
-    //   setModal(false);
-    // }}
+      onClick={(e) => {
+        if (e.target == e.currentTarget) {
+          setModal(() => false);
+        }
+      }}
     >
       {children}
     </Background>,

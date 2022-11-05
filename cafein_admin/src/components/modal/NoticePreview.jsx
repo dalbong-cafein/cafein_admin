@@ -14,7 +14,6 @@ export default function NoticePreview({ setModal, item, file, menu }) {
     setModal(false);
   };
 
-  console.log(item);
   return (
     <Portal setModal={setModal}>
       <ModalBox>
