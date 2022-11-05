@@ -3,6 +3,7 @@ import Portal from "../../modal/Portal";
 import * as S from "../../modal/style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import Slider from "./slider";
+import Row from "../../atoms/row";
 
 export default function Sliders({ imgs, setModal }) {
   const closeModal = () => {
@@ -12,7 +13,6 @@ export default function Sliders({ imgs, setModal }) {
   let file = [];
   useEffect(() => {
     if (imgs) {
-      imgs = imgs.concat(imgs);
       for (let i = 0; i < imgs.length; i++) {
         file.push(imgs[i].imageUrl);
       }
@@ -24,7 +24,12 @@ export default function Sliders({ imgs, setModal }) {
     <Portal setModal={setModal}>
       <S.ModalBox>
         <S.ModalHeader>
-          <p>카페 이미지 상세</p>
+          <Row>
+            <p style={{ color: "#f6f6f6", fontSize: "20px", fontWeight: "bold" }}>
+              카페 이미지 상세
+            </p>
+            <p style={{ color: "#f6f6f6" }}></p>
+          </Row>
           <Close onClick={closeModal} />
         </S.ModalHeader>
         <Slider imgs={file} />

@@ -23,7 +23,7 @@ export const Input = styled.input`
   border: 0;
   background-color: #131313;
   color: #fff;
-  max-width: 200px;
+  width: 250px;
   height: 32px;
   &:focus {
     outline: none;

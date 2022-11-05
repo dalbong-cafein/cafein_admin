@@ -108,6 +108,7 @@ const ItemRow = styled.div`
   }
   & > div:last-child {
     flex: 0.5;
+    border-bottom: none;
     & > svg {
       path {
         fill: ${(props) => (props.hasMemoId ? "#E3E3E3" : "#646464")};

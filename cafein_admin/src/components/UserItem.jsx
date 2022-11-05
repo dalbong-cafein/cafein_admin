@@ -13,7 +13,6 @@ const UserItem = ({ data, onModal, setModalMemo, setMemoItem }) => {
             <div onClick={() => onModal(item)}>{String(item.memberId).padStart(6, "0")}</div>
             <div onClick={() => onModal(item)}>
               <p>{item.socialTypeList[0]}</p>
-              {item.socialTypeList[1] && <p>/{item.socialTypeList[1]}</p>}
             </div>
             <div onClick={() => onModal(item)}>
               <Row gap={16} align="center" style={{ marginLeft: "16px" }}>
@@ -68,6 +67,15 @@ const ItemRow = styled.div`
   & > div:nth-child(3),
   div:nth-child(5) {
     flex: 2;
+  }
+  &>div: nth-child(3) {
+    & > div > p {
+      width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: left;
+    }
   }
   & > div:nth-child(4),
   div:nth-child(7) {

@@ -115,7 +115,7 @@ const Notice = () => {
                         style={{
                           fontWeight: "bold",
                           marginBottom: "5px",
-                          width: "250px",
+                          width: '"350px"',
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
@@ -126,7 +126,7 @@ const Notice = () => {
                       </p>
                       <p
                         style={{
-                          width: "250px",
+                          width: "350px",
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",

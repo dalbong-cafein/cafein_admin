@@ -42,7 +42,12 @@ const EventBox = styled.div`
     height: 72px;
     margin-top: 12px;
     border-radius: 8px;
-    background: ${({ img }) => img && `url(${img})`} no-repeat center center/contain;
+    & > img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+    // background: ${({ img }) => img && `url(${img})`} no-repeat center center/contain;
   }
 `;
 
@@ -64,7 +69,11 @@ const EventMapBoxs = ({ data, item, page, loadData, nowBanner }) => {
             <p>{nowBanner?.regDateTime.split("T")[0] || "-"}</p>
             <p onClick={() => delImg(nowBanner.eventId)}>삭제</p>
           </div>
-          {nowBanner?.eventImageDto && <div />}
+          {nowBanner?.eventImageDto && (
+            <div>
+              <img src={nowBanner?.eventImageDto?.imageUrl} alt="" />
+            </div>
+          )}
         </EventBox>
       </Card>
       <Card>

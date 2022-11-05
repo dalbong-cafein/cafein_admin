@@ -94,7 +94,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
             </Row>
             <Text>{data.content || "-"}</Text>
             {data.reviewImageDtoList && (
-              <Row gap={10}>
+              <Row gap={9}>
                 {data.reviewImageDtoList.map((item, i) => (
                   <Pic key={i} onClick={() => setSlider(true)}>
                     <img src={process.env.PUBLIC_URL + item.imageUrl} alt="img" />

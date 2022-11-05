@@ -17,7 +17,7 @@ const StoreItem = ({
     setCongestionScore(() => item.congestionScoreAvg);
   };
   return (
-    <S.DataBox style={{ height: "calc(59vh )" }}>
+    <S.DataBox style={{ height: "59vh" }}>
       {data &&
         data.map((item, i) => (
           <ItemRow key={i} hasMemoId={item.memoId}>
@@ -28,7 +28,9 @@ const StoreItem = ({
                 <p>{item.storeName}</p>
               </Row>
             </div>
-            <div onClick={() => onModal(item)}>{item.address.fullAddress}</div>
+            <div onClick={() => onModal(item)}>
+              <p>{item.address.fullAddress}</p>
+            </div>
             <div onClick={() => onModal(item)} style={{ textAlign: "center" }}>
               {item.congestionScoreAvg ? (
                 <S.CongestionBtn id={parseInt(item.congestionScoreAvg)}>
@@ -87,6 +89,16 @@ const ItemRow = styled.div`
   div:nth-child(2) {
     flex: 2.5;
   }
+  & > div:nth-child(3) {
+    & > p {
+      width: 230px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+    }
+  }
+
   & > div:nth-child(2) {
     justify-content: start;
   }
