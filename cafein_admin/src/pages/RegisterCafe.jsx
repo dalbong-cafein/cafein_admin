@@ -46,28 +46,21 @@ const RegisterCafe = () => {
     ) {
       window.alert("카공 카페로 추천하시겠어요? 카페에 대한 만족도를 알려주세요");
     }
-
+    console.log("hi");
     feedCreateApi(register)
       .then((res) => {
+        console.log(res);
         navigate("/management");
         setRegister(registerState);
       })
       .catch((err) => console.log(err));
   };
+  console.log(register);
 
   return (
     <>
       <Header align="center" mcolor="#8B8B8B" text="카페 관리" inner="새 카페 등록" btn={false}>
         <S.Submit
-          disabled={
-            register.storeName ||
-            register.siNm ||
-            register.recommendation ||
-            register.wifi ||
-            register.restroom ||
-            register.tableSize ||
-            register.socket
-          }
           isFill={
             register.storeName &&
             register.siNm &&
@@ -77,7 +70,10 @@ const RegisterCafe = () => {
             register.tableSize &&
             register.socket
           }
-          onClick={() => submit(register)}
+          onClick={() => {
+            submit(register);
+            console.log("hi");
+          }}
         >
           등록
         </S.Submit>
@@ -107,10 +103,22 @@ const RegisterCafe = () => {
             <S.Box height={304}>
               <p>카페에 대한 만족도를 알려주세요</p>
               <S.ColumnBox>
-                <RegisterCafeRowStar content="socket" register={register} setRegister={setRegister} />
+                <RegisterCafeRowStar
+                  content="socket"
+                  register={register}
+                  setRegister={setRegister}
+                />
                 <RegisterCafeRowStar content="wifi" register={register} setRegister={setRegister} />
-                <RegisterCafeRowStar content="restroom" register={register} setRegister={setRegister} />
-                <RegisterCafeRowStar content="tableSize" register={register} setRegister={setRegister} />
+                <RegisterCafeRowStar
+                  content="restroom"
+                  register={register}
+                  setRegister={setRegister}
+                />
+                <RegisterCafeRowStar
+                  content="tableSize"
+                  register={register}
+                  setRegister={setRegister}
+                />
               </S.ColumnBox>
             </S.Box>
             <S.TextBox>
@@ -124,7 +132,12 @@ const RegisterCafe = () => {
               <p>장소 사진</p>
               <FileUpload register={register} setRegister={setRegister} />
             </S.Box>
-            <CafeTimeBox dayarr={dayarr} setDayarr={setDayarr} register={register} setRegister={setRegister} />
+            <CafeTimeBox
+              dayarr={dayarr}
+              setDayarr={setDayarr}
+              register={register}
+              setRegister={setRegister}
+            />
             <S.InputBox>
               <span>기타 운영 시간</span>
               <input

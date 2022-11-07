@@ -10,8 +10,20 @@ export default function RegisterCafeRowStar({ content, register, setRegister }) 
     setRegister(copy);
   };
   const text = {
-    socket: ["바닥을 기어봐도 없어요", "적은 편이에요", "보통이에요", "여유 있어요", "모든 자리에 있어요"],
-    wifi: ["없어요 그냥 없어요", "자주 끊겨서 화나요", "그냥 저냥 쓸 만해요", "끊김없고 좋아요", "빵빵 잘 터져요"],
+    socket: [
+      "바닥을 기어봐도 없어요",
+      "적은 편이에요",
+      "보통이에요",
+      "여유 있어요",
+      "모든 자리에 있어요",
+    ],
+    wifi: [
+      "없어요 그냥 없어요",
+      "자주 끊겨서 화나요",
+      "그냥 저냥 쓸 만해요",
+      "끊김없고 좋아요",
+      "빵빵 잘 터져요",
+    ],
     restroom: [
       "없어요 그냥 없어요",
       "이용하기가 꺼려져요",
@@ -28,7 +40,13 @@ export default function RegisterCafeRowStar({ content, register, setRegister }) 
     ],
   };
   const title =
-    content == "socket" ? "콘센트" : content == "wifi" ? "와이파이" : content == "restromm" ? "화장실" : "테이블";
+    content == "socket"
+      ? "콘센트"
+      : content == "wifi"
+      ? "와이파이"
+      : content == "restromm"
+      ? "화장실"
+      : "테이블";
 
   return (
     <div>
@@ -64,6 +82,11 @@ const StarBox = styled.div`
   & > svg:nth-child(4) {
     path {
       fill: ${(props) => props.isFill >= 4 && "#ffce4a"};
+    }
+  }
+  & > svg:nth-child(5) {
+    path {
+      fill: ${(props) => props.isFill >= 5 && "#ffce4a"};
     }
   }
 `;

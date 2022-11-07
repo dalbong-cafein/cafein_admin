@@ -20,8 +20,10 @@ export default function FileUpload({ register, setRegister, num = 5, submitFunc 
       } else {
         if (e.target.files[0]) {
           for (let i = 0; i < e.target.files.length; i++) {
-            const file = await resizeImg(e.target.files[i]);
-            copy = [...copy, file];
+            if (copy.length < num) {
+              const file = await resizeImg(e.target.files[i]);
+              copy = [...copy, file];
+            }
           }
           setFile(copy);
           const copy2 = { ...register };

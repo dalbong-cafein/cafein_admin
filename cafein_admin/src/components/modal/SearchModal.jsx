@@ -88,9 +88,7 @@ export default function SearchModal({
 
       kakao.maps.event.addListener(marker, "click", function () {
         infowindow.setContent(
-          '<div style="padding:5px;font-size:12px;">' +
-            place.place_name +
-            "</div>"
+          '<div style="padding:5px;font-size:12px;">' + place.place_name + "</div>"
         );
         infowindow.open(map, marker);
       });
@@ -99,7 +97,6 @@ export default function SearchModal({
 
   const onLoc = (item) => {
     setLoc(item);
-    console.log(item);
     const copy = { ...register };
     const sp = item.road_address_name.split(" ");
     copy.siNm = sp[0] || "";

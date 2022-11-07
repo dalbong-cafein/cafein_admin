@@ -54,6 +54,24 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
 
     setData(copy2);
   };
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const replace = (content) => {
+    const convertContent = content.replace(urlRegex, function (url) {
+      return '<a href="' + url + '" target="_blank">' + url + "</a>";
+    });
+
+    const htmlArr = [];
+    convertContent.split("\n").forEach(function (text) {
+      const textHtml = "<p>" + text + "</p>";
+      htmlArr.push(textHtml);
+    });
+
+    // return htmlArr
+    return { __html: htmlArr.join("") };
+  };
+  function createMarkup() {
+    return { __html: "First &middot; Second" };
+  }
 
   const onSubmit = () => {
     if (!edit) {
@@ -123,7 +141,7 @@ export default function NoticeDetailModal({ setModal, selectItem, menu, setAlert
                 onChange={(e) => onChange(e)}
               />
             ) : (
-              <Text>{selectItem.content || "-"}</Text>
+              <Text dangerouslySetInnerHTML={replace(selectItem.content)}></Text>
             )}
           </S.ModalContent>
           <S.ModalFooter style={{ justifyContent: "end", flexDirection: "column" }}>

@@ -46,7 +46,7 @@ const StoreItem = ({
             </div>
             <div onClick={() => onModal(item)}>{item.reviewCnt}건</div>
             <div onClick={() => onModal(item)} style={{ textAlign: "center" }}>
-              {item.recommendPercent ? item.recommendPercent + "%" : "-"}
+              {item.recommendPercent ? Math.floor(item.recommendPercent * 10) / 10 + "%" : "-"}
             </div>
             <div onClick={() => onModal(item)}>{item.regDateTime.split("T")[0]}</div>
             <div onClick={() => onModal(item)}>{item.modDateTime.split("T")[0]}</div>
@@ -96,6 +96,15 @@ const ItemRow = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       text-align: center;
+    }
+  }
+  & > div:nth-child(2) {
+    & > div > p {
+      width: 190px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: left;
     }
   }
 
