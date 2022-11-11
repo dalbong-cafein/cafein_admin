@@ -85,7 +85,7 @@ const Store = () => {
     } else {
       loadData();
     }
-  }, [page, sort, area]);
+  }, [page, sort, area, search]);
   return (
     <Container>
       <Header

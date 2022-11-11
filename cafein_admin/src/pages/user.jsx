@@ -90,7 +90,7 @@ const User = () => {
     } else {
       searchData();
     }
-  }, [page, sort, selectState]);
+  }, [page, sort, selectState, search]);
 
   return (
     <>
