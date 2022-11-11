@@ -13,6 +13,7 @@ import StoreModal from "../components/modal/StoreModal";
 import StoreItem from "../components/StoreItem";
 
 import { feedDataApi, feedSearchApi } from "../util/management";
+import SubFilter from "../components/common/SubFilter";
 
 const Store = () => {
   const navigate = useNavigate();
@@ -48,7 +49,6 @@ const Store = () => {
   const loadData = () => {
     feedDataApi(page, sort)
       .then((res) => {
-        console.log(res);
         setCount(res.data.data.storeCnt);
         setData(res.data.data.storeResDtoList.dtoList);
       })
@@ -83,7 +83,7 @@ const Store = () => {
     if (area != "전체") {
       searchData();
     } else {
-      searchData();
+      loadData();
     }
   }, [page, sort, area]);
   return (
@@ -120,13 +120,8 @@ const Store = () => {
         onDesc={onDesc}
         onResetData={onResetData}
       />
-      <AreaFilter>
-        {areaArr.map((item, i) => (
-          <AreaItem key={i} isSelect={area == item} onClick={() => setAear(() => item)}>
-            {item}
-          </AreaItem>
-        ))}
-      </AreaFilter>
+      <SubFilter arr={areaArr} selectedItem={area} setSelectedItem={setAear} />
+
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>
           <div>분류</div>
@@ -187,23 +182,4 @@ const TableHeader = styled.div`
   }
 `;
 
-const AreaFilter = styled.div`
-  width: 100%;
-  border-radius: 6px;
-  background-color: #333333;
-  display: flex;
-  gap: 32px;
-  padding: 10px 48px;
-  align-item: center;
-  margin-bottom: 16px;
-`;
-
-const AreaItem = styled.div`
-  color: #fff;
-  font-weight: ${(props) => (props.isSelect ? 400 : 500)};
-  padding: 5px 15px;
-  background-color: ${(props) => props.isSelect && "#2563EB"};
-  border-radius: 15px;
-  cursor: pointer;
-`;
 export default Store;

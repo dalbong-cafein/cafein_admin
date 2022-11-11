@@ -12,10 +12,12 @@ import MemoModal from "../components/modal/Memo";
 import UserDetailModal from "../components/modal/UserDetailModal";
 import Header from "../components/common/Header";
 import FilterRow from "../components/common/FilterRow";
+import SubFilter from "../components/common/SubFilter";
 
 const User = () => {
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectState, setSelectState] = useState(["전체"]);
 
   //drop
   const [searchType, setSearchType, searchArr, setSearchArr] = useSearch([
@@ -35,7 +37,17 @@ const User = () => {
   const [modalMemo, setModalMemo] = useState(false);
 
   const searchData = () => {
-    userSearchApi(searchType, search, sort, page)
+    userSearchApi(searchType, search, sort, page, selectState)
+      .then((res) => {
+        console.log(res);
+        setData(res.data.data.memberResDtoList.dtoList);
+        setCount(res.data.data.memberCnt);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const loadListData = () => {
+    userListApi(sort, page)
       .then((res) => {
         setData(res.data.data.memberResDtoList.dtoList);
         setCount(res.data.data.memberCnt);
@@ -49,12 +61,11 @@ const User = () => {
     setPage(1);
     onDesc();
 
-    userListApi(sort, page)
-      .then((res) => {
-        setData(res.data.data.memberResDtoList.dtoList);
-        setCount(res.data.data.memberCnt);
-      })
-      .catch((err) => console.log(err));
+    if (selectItem != "전체") {
+      searchData();
+    } else {
+      loadListData();
+    }
   };
 
   const loadD = (id) => {
@@ -66,14 +77,20 @@ const User = () => {
       });
   };
 
+  const stateArr = ["전체", "기본", "신고", "탈퇴"];
+
   const onModal = (item) => {
     loadD(item.memberId);
     setModal(true);
   };
 
   useEffect(() => {
-    searchData();
-  }, [page, sort]);
+    if (selectState.includes("전체")) {
+      loadListData();
+    } else {
+      searchData();
+    }
+  }, [page, sort, selectState]);
 
   return (
     <>
@@ -99,6 +116,12 @@ const User = () => {
         searchData={searchData}
         search={search}
         setSearch={setSearch}
+      />
+      <SubFilter
+        isMulti
+        arr={stateArr}
+        selectedItem={selectState}
+        setSelectedItem={setSelectState}
       />
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>

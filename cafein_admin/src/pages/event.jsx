@@ -38,7 +38,7 @@ const Events = () => {
     setPageForNotice,
     onDescForNotice,
     onAscForNotice,
-  ] = usePagination(4);
+  ] = usePagination(5);
 
   const [preview, setPreview] = useState(false);
 
@@ -141,10 +141,14 @@ const Events = () => {
               isNull={noticeData.length === 0}
               style={{ border: 0, backgroundColor: "#333333" }}
             >
-              <S.DataBox style={{ height: "32vh" }}>
+              <S.DataBox style={{ height: "40vh" }}>
                 {noticeData &&
                   noticeData.map((item, i) => (
-                    <ItemRow key={i} onClick={() => setNoticeId(() => item.boardId)}>
+                    <ItemRow
+                      isSelected={noticeId == item.boardId}
+                      key={i}
+                      onClick={() => setNoticeId(() => item.boardId)}
+                    >
                       <div>{String(item.boardId).padStart(6, "0")}</div>
 
                       <div>
@@ -175,16 +179,7 @@ const Events = () => {
               />
             </S.Wrapper>
           </Card>
-          <Card>
-            <p>배너와 연결할 공지사항</p>
-            <input
-              placeholder="공지사항 번호를 입력해 주세요"
-              value={noticeId}
-              onChange={(e) => {
-                setNoticeId(e.target.value);
-              }}
-            />
-          </Card>
+
           <Card>
             <p>이미지 첨부</p>
             <AttachBox>
@@ -267,10 +262,11 @@ const AttachBox = styled.div`
 const ItemRow = styled.div`
   display: flex;
   color: #e3e3e3;
-  height: calc(32vh / 4);
+  height: calc(40vh / 4);
   cursor: pointer;
   font-size: 14px;
   border-bottom: 1px solid #515151;
+  ${(props) => props.isSelected && `background-color : #646464;`}
 
   & > div {
     // padding: 0 0 0 16px;

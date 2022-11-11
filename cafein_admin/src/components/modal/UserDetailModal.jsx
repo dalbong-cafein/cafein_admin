@@ -80,7 +80,6 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
       birth: selectItem.birth,
     });
   }, [selectItem]);
-
   return (
     <>
       <Portal setModal={setModal}>
@@ -109,6 +108,10 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                     {selectItem.memberImageDto && (
                       <Photo img={selectItem.memberImageDto.imageUrl} />
                     )}
+                  </Line>
+                  <Line align>
+                    <span>이름</span>
+                    <p style={{ width: "220px" }}>{selectItem.username || "-"}</p>
                   </Line>
                   <Line>
                     <span>핸드폰</span>
