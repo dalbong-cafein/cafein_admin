@@ -24,7 +24,7 @@ export default function RegNoticeBox({
           <div>
             <p>제목</p>
             <span style={{ fontSize: "12px" }}>
-              <span style={{ color: "#2563EB" }}>{register.title.length}자</span>/최대 47자
+              <span style={{ color: "#F6F6F6" }}>{register.title.length}자</span>/최대 47자
             </span>
           </div>
           <input

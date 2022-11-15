@@ -62,12 +62,19 @@ const Review = () => {
       })
       .catch((err) => console.log(err));
   };
+  useEffect(() => {
+    if (!!state) {
+      setSearch(() => state);
+    }
+  }, []);
 
   useEffect(() => {
-    if (!state) {
+    if (search) {
+      searchData();
+    } else {
       loadData();
     }
-  }, [page, sort]);
+  }, [page, sort, search]);
   return (
     <>
       <Header
