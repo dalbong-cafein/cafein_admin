@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Portal from "./Portal";
 import * as S from "./style";
 import styled from "styled-components";
@@ -11,8 +11,8 @@ import Row from "../atoms/row";
 import HoverContent from "../HoverContent";
 import Sliders from "../common/carousel/carousel";
 import RedAlert from "./RedAlert";
+import CongestionModal from "./CongestionModal";
 import { cafeDelApi, feedDetailApi, feedDetailReviewApi } from "../../util/management";
-import { useEffect } from "react";
 
 export default function CafeDetailModal({ setDModal, id, congestionScore }) {
   const closeModal = () => {
@@ -20,6 +20,7 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
   };
 
   const [data, setData] = useState([]);
+  const [congestionVisible, setCongestionVisible] = useState(false);
   const [reviewData, setReviewData] = useState([]);
   const [slider, setSlider] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -208,7 +209,7 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
                   <span>혼잡도</span>
                   <Row gap={10}>
                     <p>{data?.congestionCnt ? data?.congestionCnt + "개" : "-"}</p>
-                    {!!data?.congestionCnt && <Page />}
+                    {!!data?.congestionCnt && <Page onClick={() => setCongestionVisible(true)} />}
                     {congestionScore && (
                       <CongestionBtn id={parseInt(congestionScore)}>
                         {parseInt(congestionScore) == 1
@@ -292,6 +293,13 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
         )}
       </Portal>
       {slider && <Sliders setModal={setSlider} imgs={data?.storeImageDtoList} />}
+      {congestionVisible && (
+        <CongestionModal
+          storeId={data?.storeId}
+          storeName={data?.storeName}
+          setModal={setCongestionVisible}
+        />
+      )}
       {alert && (
         <RedAlert
           text="카페 삭제"

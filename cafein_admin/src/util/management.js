@@ -106,3 +106,12 @@ export const feedSearchApi = async (keyword, searchType, page, sort, area) => {
 export const cafeDelApi = async (id) => {
   return await withAuthInstance.delete(`/stores/${id}`);
 };
+
+//카페 혼잡도
+export const cafeCongestionsListApi = async (page, id, day) => {
+  if (!!day) {
+    return await withAuthInstance.get(`/stores/${id}/congestions?page=${page}&minusDays=${day}`);
+  } else {
+    return await withAuthInstance.get(`/stores/${id}/congestions?page=${page}`);
+  }
+};
