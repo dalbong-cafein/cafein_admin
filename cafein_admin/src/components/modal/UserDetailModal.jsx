@@ -65,6 +65,7 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
     setEdit(true);
   };
 
+  console.log(selectItem);
   useEffect(() => {
     if (selectItem.memberId) {
       userReportApi(selectItem.memberId)
@@ -232,7 +233,18 @@ export default function UserDetailModal({ setModal, selectItem, loadD }) {
                           ? "신고"
                           : "탈퇴"}
                       </Btn>
-                      <p onClick={() => setAlert(true)}>탈퇴하기</p>
+                      {selectItem.memberState == "LEAVE" ? (
+                        <p style={{ color: "#FF9800" }}>
+                          {String(selectItem.leaveDateTime).split("T").join(" ")}
+                        </p>
+                      ) : (
+                        <p
+                          style={{ color: "#f44336", marginLeft: "60px" }}
+                          onClick={() => setAlert(true)}
+                        >
+                          탈퇴하기
+                        </p>
+                      )}
                     </div>
                     <div>
                       {reportData &&
@@ -364,9 +376,7 @@ const StateRow = styled.div`
       color: #8b8b8b;
     }
     & > p {
-      margin-left: 60px;
-      font-weight: 700;
-      color: #f44336;
+      font-weight: 600;
       cursor: pointer;
     }
   }

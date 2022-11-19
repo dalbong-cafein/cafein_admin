@@ -4,6 +4,7 @@ import NoneDiv from "../components/common/Nonediv";
 import Header from "../components/common/Header";
 import TodayNewData from "../components/DeshTodayNewData";
 import MarketingTable from "../components/DeshMarketingTable";
+import ReportTable from "../components/DeshReportTable";
 import DateColumn from "../components/DeshHeaderDateColumn";
 import MemoTable from "../components/DeshMemoTable";
 
@@ -23,7 +24,10 @@ const Desh = () => {
                 <NoneDiv text="통계" loc="statistics" />
               </div>
             </StaticBox>
-            <MarketingTable />
+            <div style={{ display: "flex", gap: "20px", width: "100%" }}>
+              <MarketingTable />
+              <ReportTable />
+            </div>
           </ColumnBox>
           <MemoTable />
         </RowBox>

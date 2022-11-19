@@ -21,23 +21,14 @@ export default function MarketingTable() {
   }, []);
   return (
     <Box isNull={marketingArr.length === 0}>
-      <p>마케팅 서비스</p>
+      <p>쿠폰</p>
       <Table>
-        <THead isNull={marketingArr.length === 0}>
-          <div>회원번호</div>
-          <div>상품명</div>
-          <div>신청 날짜</div>
-          <div>처리 날짜</div>
-          <div>상태</div>
-        </THead>
-
         {marketingArr?.length === 0 ? (
           <NoneDiv padding={100} text="마케팅 서비스" loc="marketing" />
         ) : (
-          <ColumnBox onClick={() => navigate("/marketing")}>
-            {marketingArr &&
-              marketingArr.map((item, i) => <TableItem key={i} item={item} />)}
-          </ColumnBox>
+          <RowBox onClick={() => navigate("/marketing")}>
+            {marketingArr && marketingArr.map((item, i) => <TableItem key={i} item={item} />)}
+          </RowBox>
         )}
       </Table>
     </Box>
@@ -71,27 +62,7 @@ const Table = styled.div`
   box-sizing: border-box;
 `;
 
-const THead = styled.div`
-  width: 100%;
-  display: flex;
-  height: 40px;
-  line-height: 40px;
-  background-color: #333333;
-  border-radius: 20px;
-  margin: ${(props) => (props.isNull ? "32px 0" : "10px 0")};
-  box-sizing: border-box;
-  font-size: 14px;
-
-  & > div {
-    flex: 1;
-    text-align: center;
-  }
-  & > div:nth-child(2) {
-    flex: 2;
-  }
-`;
-
-const ColumnBox = styled.div`
+const RowBox = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;

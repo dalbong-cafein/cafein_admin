@@ -39,7 +39,6 @@ const User = () => {
   const searchData = () => {
     userSearchApi(searchType, search, sort, page, selectState)
       .then((res) => {
-        console.log(res);
         setData(res.data.data.memberResDtoList.dtoList);
         setCount(res.data.data.memberCnt);
       })

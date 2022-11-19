@@ -3,13 +3,9 @@ import styled from "styled-components";
 const TableItem = ({ item }) => {
   return (
     <Box>
-      <div>{String(item.memberId).padStart(6, "0")}</div>
-      <div style={{ textAlign: "center" }}>{item.itemName}</div>
-      <div>{String(item.regDateTime).split("T")[0]}</div>
       <div>
-        {item.processingDateTime
-          ? String(item.processingDateTime).split("T")[0]
-          : "-"}
+        <div style={{ color: "#E3E3E3" }}>{String(item.memberId).padStart(6, "0")}</div>
+        <div style={{ color: "#ACACAC" }}>{String(item.regDateTime).split("T")[0]}</div>
       </div>
       <div>
         <Btn content={item.status}>
@@ -26,12 +22,13 @@ const Box = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  & > div {
-    flex: 1;
-    text-align: center;
-  }
-  & > div:nth-child(2) {
-    flex: 2;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #515151;
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 `;
 

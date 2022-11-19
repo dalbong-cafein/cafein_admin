@@ -64,7 +64,6 @@ const QnAs = () => {
     copy.boardCategoryId = 2;
     setRegister(copy);
     eventListApi(search, page, sort).then((res) => {
-      console.log(res);
       setCount(res.data.data.boardCnt);
       setData(res.data.data.boardResDtoList.dtoList);
     });
