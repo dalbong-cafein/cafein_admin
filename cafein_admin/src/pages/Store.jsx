@@ -20,7 +20,7 @@ const Store = () => {
 
   const [data, setData] = useState([]);
   const [search, setSearch] = useState("");
-  const [area, setAear] = useState("전체");
+  const [area, setAear] = useState(["전체"]);
   //detail
   const [dModal, setDModal] = useState(false);
   const [detailStoreId, setDetailStoreId] = useState(null);
@@ -40,6 +40,7 @@ const Store = () => {
   const searchData = () => {
     feedSearchApi(search, searchType, page, sort, area)
       .then((res) => {
+        console.log(res);
         setData(res.data.data.storeResDtoList.dtoList);
         setCount(res.data.data.storeCnt);
       })
@@ -57,6 +58,7 @@ const Store = () => {
 
   const onResetData = () => {
     setSearchType("전체");
+    setAear(["전체"]);
     setSearch("");
     setPage(1);
     onDesc();
@@ -80,10 +82,10 @@ const Store = () => {
   ];
 
   useEffect(() => {
-    if (area != "전체") {
-      searchData();
-    } else {
+    if (area.includes("전체")) {
       loadData();
+    } else {
+      searchData();
     }
   }, [page, sort, area, search]);
   return (
@@ -120,7 +122,7 @@ const Store = () => {
         onDesc={onDesc}
         onResetData={onResetData}
       />
-      <SubFilter arr={areaArr} selectedItem={area} setSelectedItem={setAear} />
+      <SubFilter isMulti arr={areaArr} selectedItem={area} setSelectedItem={setAear} />
 
       <S.Wrapper isNull={data.length === 0}>
         <TableHeader>

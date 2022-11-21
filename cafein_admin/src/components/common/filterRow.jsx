@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 import Row from "../atoms/row";
 import DropBox from "./Dropbox";
@@ -91,7 +91,7 @@ export default function FilterRow({
             </S.Sbtn>
             <Row style={{ borderBottom: "1px solid #fff" }} onKeyDown={onEnterKey}>
               <S.Input
-                placeholder="검색"
+                placeholder="검색어를 입력하세요."
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}

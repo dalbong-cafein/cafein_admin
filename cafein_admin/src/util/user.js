@@ -4,7 +4,6 @@ export const userListApi = async (sort, page) => {
   return await withAuthInstance.get(`/members?page=${page}&sort=${sort}`);
 };
 export const userSearchApi = async (searchType, keyword, sort, page, selectedState) => {
-  console.log("gg");
   const sub =
     searchType == "분류"
       ? "m"

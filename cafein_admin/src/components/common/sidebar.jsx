@@ -120,7 +120,7 @@ const Box = styled.div`
 const MenuBox = styled.div`
   width: 156px;
   height: 40px;
-  color: #fff;
+  color: ${(props) => (props.isT ? "#fff" : "#646464")};
   display: flex;
   justify-content: flex-start;
   gap: 9px;

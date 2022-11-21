@@ -57,6 +57,7 @@ const User = () => {
   const onResetData = () => {
     setSearchType("전체");
     setSearch("");
+    setSelectState(["전체"]);
     setPage(1);
     onDesc();
 

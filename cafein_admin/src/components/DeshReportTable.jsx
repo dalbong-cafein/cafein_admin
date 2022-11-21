@@ -109,7 +109,6 @@ const Btn = styled.div`
   width: 86px;
   height: 26px;
   text-align: center;
-  margin: 0 auto;
   border-radius: 6px;
   color: ${(props) =>
     props.content === "APPROVAL" ? "#26BA6A" : props.content === "REJECT" ? "#f44336" : "#ff9800"};

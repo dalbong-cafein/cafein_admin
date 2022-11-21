@@ -6,10 +6,15 @@ export default function SubFilter({ small, arr, selectedItem, setSelectedItem, i
       if (selectedItem.includes("전체")) {
         copy = [];
       }
+      if (item == "전체") {
+        copy = ["전체"];
+      }
 
       if (selectedItem.includes(item)) {
         copy = copy.filter((copyItem) => copyItem != item);
-        if (!copy.length) copy = ["전체"];
+        if (!copy.length) {
+          copy = ["전체"];
+        }
       } else {
         copy.push(item);
       }
@@ -20,8 +25,7 @@ export default function SubFilter({ small, arr, selectedItem, setSelectedItem, i
     }
   };
   const isSelect = (item) => {
-    if (isMulti) return selectedItem.includes(item);
-    else return selectedItem == item;
+    return selectedItem.includes(item);
   };
 
   return (

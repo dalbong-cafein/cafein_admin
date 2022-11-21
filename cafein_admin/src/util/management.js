@@ -96,8 +96,8 @@ export const feedSearchApi = async (keyword, searchType, page, sort, area) => {
       ? "a"
       : ["a", "sn", "s"];
   return await withAuthInstance.get(
-    `/stores?page=${page}&sort=${sort}&searchType=${type}&keyword=${keyword}&sggNm=${
-      area != "전체" ? area : ""
+    `/stores?page=${page}&sort=${sort}&searchType=${type}&keyword=${keyword}&sggNms=${
+      area.includes("전체") ? "" : area
     }`
   );
 };
