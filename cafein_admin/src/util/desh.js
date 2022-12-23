@@ -17,9 +17,9 @@ export const deshDataApi = async () => {
 };
 
 export const marketingDListApi = async () => {
-  return await withAuthInstance.get(`/coupons/limit`);
+  return await withAuthInstance.get(`/coupons/limit?limit=4`);
 };
 
 export const reportDListApi = async () => {
-  return await withAuthInstance.get(`/reports/limit`);
+  return await withAuthInstance.get(`/reports/limit?limit=4`);
 };

@@ -4,7 +4,7 @@
 
   display: block;
   box-sizing: border-box;
-
+  width: "60%";
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;

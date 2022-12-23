@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useRef } from "react";
 import { resizeImg } from "../../constant/resizeImg";
 
-export default function FileUpload({ register, setRegister, num = 5, submitFunc }) {
+export default function FileUpload({ register, setRegister, num = 5, submitFunc, noLimit }) {
   const [file, setFile] = useState([]);
   const input = useRef();
 
@@ -14,23 +14,33 @@ export default function FileUpload({ register, setRegister, num = 5, submitFunc 
     if (submitFunc) submitFunc();
     else {
       let copy = [...file];
-      if (copy.length >= num) {
-        window.alert(`이미지는 ${num}개만 추가 가능합니다`);
-        return;
+
+      if (!noLimit) {
+        if (copy.length >= num) {
+          window.alert(`이미지는 ${num}개만 추가 가능합니다`);
+          return;
+        } else {
+          if (e.target.files[0]) {
+            for (let i = 0; i < e.target.files.length; i++) {
+              if (copy.length < num) {
+                const file = await resizeImg(e.target.files[i]);
+                copy = [...copy, file];
+              }
+            }
+          }
+        }
       } else {
         if (e.target.files[0]) {
           for (let i = 0; i < e.target.files.length; i++) {
-            if (copy.length < num) {
-              const file = await resizeImg(e.target.files[i]);
-              copy = [...copy, file];
-            }
+            const file = await resizeImg(e.target.files[i]);
+            copy = [...copy, file];
           }
-          setFile(copy);
-          const copy2 = { ...register };
-          copy2.imageFiles = copy;
-          setRegister(copy2);
         }
       }
+      setFile(copy);
+      const copy2 = { ...register };
+      copy2.imageFiles = copy;
+      setRegister(copy2);
     }
   };
 
@@ -50,9 +60,11 @@ export default function FileUpload({ register, setRegister, num = 5, submitFunc 
         }}
       >
         <Photo />
-        <div>
-          {file.length}/{num}
-        </div>
+        {!noLimit && (
+          <div>
+            {file.length}/{num}
+          </div>
+        )}
         <input
           ref={input}
           type="file"
@@ -62,14 +74,16 @@ export default function FileUpload({ register, setRegister, num = 5, submitFunc 
           multiple
         />
       </S.FileUpload>
-      {file?.map((a, i) => {
-        return (
-          <S.ImgBox key={i}>
-            <CloseIcon name={a.name} onClick={() => deleteImg(i)} />
-            <PVImg img={a} />
-          </S.ImgBox>
-        );
-      })}
+      <S.PhotoRow>
+        {file?.map((a, i) => {
+          return (
+            <S.ImgBox key={i}>
+              <CloseIcon name={a.name} onClick={() => deleteImg(i)} />
+              <PVImg img={a} />
+            </S.ImgBox>
+          );
+        })}
+      </S.PhotoRow>
     </S.PhotoBox>
   );
 }

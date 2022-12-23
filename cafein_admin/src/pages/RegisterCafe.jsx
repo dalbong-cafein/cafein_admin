@@ -46,7 +46,6 @@ const RegisterCafe = () => {
     ) {
       window.alert("카공 카페로 추천하시겠어요? 카페에 대한 만족도를 알려주세요");
     }
-    console.log("hi");
     feedCreateApi(register)
       .then((res) => {
         console.log(res);
@@ -55,7 +54,6 @@ const RegisterCafe = () => {
       })
       .catch((err) => console.log(err));
   };
-  console.log(register);
 
   return (
     <>
@@ -72,7 +70,6 @@ const RegisterCafe = () => {
           }
           onClick={() => {
             submit(register);
-            console.log("hi");
           }}
         >
           등록
@@ -121,16 +118,11 @@ const RegisterCafe = () => {
                 />
               </S.ColumnBox>
             </S.Box>
-            <S.TextBox>
-              <p>안내사항</p>
-              <p>카공인에게 도움이 될 수 있는 정보를 공유해 주세요.</p>
-              <p>부적절한 정보가 등록될 경우 카페인 운영정책에 따라 삭제될 수 있어요.</p>
-            </S.TextBox>
           </S.Column>
           <S.Column>
             <S.Box height={168}>
               <p>장소 사진</p>
-              <FileUpload register={register} setRegister={setRegister} />
+              <FileUpload register={register} setRegister={setRegister} noLimit />
             </S.Box>
             <CafeTimeBox
               dayarr={dayarr}

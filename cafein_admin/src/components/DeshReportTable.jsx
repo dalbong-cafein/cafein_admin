@@ -20,7 +20,6 @@ export default function ReportTable() {
   useEffect(() => {
     reportDListApi()
       .then((res) => {
-        console.log(res);
         setReportArr(res.data.data.reportResDtoList);
       })
       .catch((err) => console.log(err));

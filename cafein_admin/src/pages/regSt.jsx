@@ -85,9 +85,16 @@ export const Box = styled.div`
 `;
 
 export const PhotoBox = styled.div`
-  // padding: 0 24px;
+  padding: 0 0 24px;
   display: flex;
-  gap: 12px;
+  gap: 10px;
+`;
+
+export const PhotoRow = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 90%;
 `;
 
 export const FileUpload = styled.div`

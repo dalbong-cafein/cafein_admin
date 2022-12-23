@@ -33,12 +33,7 @@ export default function MemoTable() {
         ) : (
           <>
             {memoArr?.map((item, i) => (
-              <MemoItem
-                key={i}
-                item={item}
-                memoClick={memoClick}
-                setselectMItem={setselectMItem}
-              />
+              <MemoItem key={i} item={item} memoClick={memoClick} setselectMItem={setselectMItem} />
             ))}
           </>
         )}
@@ -51,7 +46,7 @@ export default function MemoTable() {
 const Box = styled.div`
   flex: 1;
   box-sizing: border-box;
-  height: 100%;
+  min-height: 200px;
   width: 25%;
   background-color: #222222;
   border-radius: 16px;
