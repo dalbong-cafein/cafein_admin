@@ -38,10 +38,10 @@ export default function ReportTable() {
                     <div>{String(item.regDateTime).split("T")[0] || "-"}</div>
                   </div>
 
-                  <Btn content={item.reportStatus}>
+                  <Btn content={item.currentReportStatus}>
                     <div />
-                    {statusObj[item.reportStatus]}
-                    {item.reportStatus === "WAIT" && (
+                    {statusObj[item.currentReportStatus]}
+                    {item.currentReportStatus === "WAIT" && (
                       <Check style={{ paddingBottom: "2px", paddingLeft: "3px" }} />
                     )}
                   </Btn>

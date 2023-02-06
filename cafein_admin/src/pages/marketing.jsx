@@ -74,9 +74,7 @@ const Marketing = () => {
         onDesc={onDesc}
         sort={sort}
         btn
-      >
-        <S.Sbtn color="#2563EB">스티커 지급</S.Sbtn>
-      </SelectHeader>
+      />
       <FilterRow
         searchType={searchType}
         setSearchType={setSearchType}

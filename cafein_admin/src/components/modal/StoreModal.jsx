@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as Close } from "../../svg/close2.svg";
 import { ReactComponent as Page } from "../../svg/page.svg";
+import { ReactComponent as Star } from "../../svg/Star.svg";
 
 import Row from "../atoms/row";
 import HoverContent from "../HoverContent";
@@ -20,6 +21,7 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
   };
 
   const [data, setData] = useState([]);
+  const [imgList, setImgList] = useState(null);
   const [congestionVisible, setCongestionVisible] = useState(false);
   const [reviewData, setReviewData] = useState([]);
   const [slider, setSlider] = useState(false);
@@ -48,15 +50,21 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
     });
   };
 
-  useEffect(() => {
+  const loadData = () => {
     feedDetailApi(id)
       .then((res) => {
         setData(res.data.data);
         feedDetailReviewApi(res.data.data.storeId).then((res) => {
           setReviewData(res.data.data);
         });
+
+        setImgList([...res?.data?.data?.storeImageDtoList, ...res?.data?.data?.reviewImageDtoList]);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   const dayArr = [
@@ -126,18 +134,27 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
                   <StateRow>
                     <div>
                       <Row justify="center" gap={8} style={{ padding: "0 auto" }}>
-                        {data?.storeImageDtoList && data?.storeImageDtoList.length > 4 ? (
+                        {data?.presentImageDto && (
+                          <StarBox>
+                            <Photo
+                              img={data?.presentImageDto?.imageUrl}
+                              onClick={() => setSlider(true)}
+                            />
+                            <Star />
+                          </StarBox>
+                        )}
+                        {imgList && imgList?.length > 3 ? (
                           <>
-                            {data?.storeImageDtoList.slice(0, 4).map((item, i) => (
+                            {imgList.slice(0, 3).map((item, i) => (
                               <Photo key={i} img={item.imageUrl} onClick={() => setSlider(true)} />
                             ))}
                             <PhotoPlus onClick={() => setSlider(true)}>
-                              +{data?.storeImageDtoList?.length - 4}
+                              +{imgList?.length - 4}
                             </PhotoPlus>
                           </>
                         ) : (
                           <>
-                            {data?.storeImageDtoList?.map((item, i) => (
+                            {imgList?.map((item, i) => (
                               <Photo key={i} img={item.imageUrl} onClick={() => setSlider(true)} />
                             ))}
                           </>
@@ -155,7 +172,7 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
                       {data?.totalBusinessHoursResDto ? (
                         <Column>
                           {dayArr.map((item, i) => (
-                            <p>
+                            <p key={i}>
                               {data?.totalBusinessHoursResDto[item.key] &&
                                 `${item.name} ${data?.totalBusinessHoursResDto[item.key]?.open}-${
                                   data?.totalBusinessHoursResDto[item.key]?.closed
@@ -292,7 +309,15 @@ export default function CafeDetailModal({ setDModal, id, congestionScore }) {
           </ModalBox>
         )}
       </Portal>
-      {slider && <Sliders setModal={setSlider} imgs={data?.storeImageDtoList} />}
+      {slider && (
+        <Sliders
+          storeId={data?.storeId}
+          setModal={setSlider}
+          imgs={imgList}
+          main={data?.presentImageDto}
+          loadData={loadData}
+        />
+      )}
       {congestionVisible && (
         <CongestionModal
           storeId={data?.storeId}
@@ -431,4 +456,18 @@ const CongestionBtn = styled.div`
     props.id == 1 ? "#DFF5E8" : props.id == 2 ? "#FFF3E0" : "#FFEBEE"};
   color: ${(props) => (props.id == 1 ? "#26BA6A" : props.id == 2 ? "#FF9800" : "#F44336")};
   border-radius: 4px;
+`;
+
+const StarBox = styled.div`
+  position: relative;
+  & > svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 5px;
+    right: 5px;
+    path {
+      fill: #ffce4a;
+    }
+  }
 `;

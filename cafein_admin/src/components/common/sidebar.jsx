@@ -70,7 +70,7 @@ const SideBar = () => {
           <a
             style={{ textDecoration: "none" }}
             target="blank"
-            href="https://cafeinofficial.notion.site/Cafein-1fb25a757f9a4424880c6be28df18807"
+            href="https://analytics.google.com/analytics/web/?authuser=2#/p343165353/reports/intelligenthome"
           >
             <MenuBox svgW={18.3} isT={menu === "statistics"}>
               <div>

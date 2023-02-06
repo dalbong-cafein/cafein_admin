@@ -44,7 +44,7 @@ export default function RegisterCafeRowStar({ content, register, setRegister }) 
       ? "콘센트"
       : content == "wifi"
       ? "와이파이"
-      : content == "restromm"
+      : content == "restroom"
       ? "화장실"
       : "테이블";
 

@@ -109,15 +109,15 @@ const Editcafe = () => {
     };
 
     const fetching = async () => {
-      const obj = Object.keys(state.businessHoursResDto);
+      const obj = Object.keys(state.totalBusinessHoursResDto);
       const copy = [...dayarr];
       const copy2 = { ...register };
       obj?.map((item, i) => {
-        if (state?.businessHoursResDto) {
-          if (item !== "etcTime") {
+        if (state?.totalBusinessHoursResDto) {
+          if (item !== "etcTime" && !!state.totalBusinessHoursResDto[item]) {
             const day = convertDay(item);
-            const open = state.businessHoursResDto[item].open || null;
-            const close = state.businessHoursResDto[item].closed || null;
+            const open = state.totalBusinessHoursResDto[item].open || null;
+            const close = state.totalBusinessHoursResDto[item].closed || null;
             copy.push([open, close, day]);
             updateDay(day, copy2, open, close);
           }
@@ -220,7 +220,7 @@ const Editcafe = () => {
               type="text"
               placeholder="Ex. 매달 첫째주 수요일"
               name="etcTime"
-              defaultValue={state?.businessHoursResDto?.etcTime}
+              defaultValue={state?.totalBusinessHoursResDto?.etcTime}
               onChange={(e) => onChange(e)}
             />
           </S.InputBox>

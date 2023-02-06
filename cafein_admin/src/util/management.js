@@ -115,3 +115,12 @@ export const cafeCongestionsListApi = async (page, id, day) => {
     return await withAuthInstance.get(`/stores/${id}/congestions?page=${page}`);
   }
 };
+
+//카페 대표이미지 변경
+export const cafeChangeImgApi = async (storeId, imgId) => {
+  const data = {
+    storeId: storeId,
+    representImageId: imgId,
+  };
+  return await withAuthInstance.patch(`/stores/${storeId}/representation-image`, data);
+};

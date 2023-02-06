@@ -32,8 +32,12 @@ export default function ReportItem({ onModal, loadData, item, setMemoItem, setMo
 
   const onClickStatusBtn = () => {
     const copy = { ...dropData };
-    copy.isDrop = true;
-    copy.item = item;
+    if (dropData?.isDrop) {
+      copy.isDrop = false;
+    } else {
+      copy.isDrop = true;
+      copy.item = item;
+    }
     setDropData(() => copy);
   };
 
@@ -45,7 +49,7 @@ export default function ReportItem({ onModal, loadData, item, setMemoItem, setMo
     setAlert(() => true);
   };
 
-  const itemStatus = statusObj[item.reportStatus];
+  const itemStatus = statusObj[item.currentReportStatus];
 
   return (
     <>
@@ -69,25 +73,25 @@ export default function ReportItem({ onModal, loadData, item, setMemoItem, setMo
         <div onClick={() => onModal(item)}>{String(item.reviewId).split("T")[0] || "-"}</div>
         <div onClick={() => onModal(item)}>{String(item.fromMemberId).split("T")[0] || "-"}</div>
         <div onClick={() => onModal(item)}>{String(item.regDateTime).split("T")[0] || "-"}</div>
-        <div onClick={() => onModal(item)}>
+        <div>
           <Btn
-            content={item.reportStatus}
+            content={item.currentReportStatus}
             onClick={() => {
-              if (item.reportStatus == "WAIT") {
+              if (item.currentReportStatus == "WAIT") {
                 onClickStatusBtn();
               }
             }}
           >
             <div />
             {itemStatus}
-            {item.reportStatus === "WAIT" && (
+            {item.currentReportStatus === "WAIT" && (
               <Check style={{ paddingBottom: "2px", paddingLeft: "3px" }} />
             )}
           </Btn>
           {dropData.isDrop && (
             <DropBox>
               {statusArrKr
-                .filter((item) => item != statusObj[dropData.item.reportStatus])
+                .filter((item) => item != statusObj[dropData.item.currentReportStatus])
                 .map((item, i) => (
                   <Item key={i} onClick={() => onClickStatusItem(item)}>
                     {item}

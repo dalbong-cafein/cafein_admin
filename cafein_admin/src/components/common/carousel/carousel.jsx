@@ -4,6 +4,7 @@ import * as S from "../../modal/style";
 import { ReactComponent as Close } from "../../../svg/close2.svg";
 import { ReactComponent as ArrowR } from "../../../svg/arrowRight.svg";
 import { ReactComponent as ArrowL } from "../../../svg/arrowLeft.svg";
+import { ReactComponent as Star } from "../../../svg/Star.svg";
 
 import Row from "../../atoms/row";
 import usePagination from "../../../hooks/usePagination";
@@ -12,13 +13,27 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./index.css";
 import Paging from "../Pagination";
+import { cafeChangeImgApi } from "../../../util/management";
+import Alert from "../../modal/Alert";
+import RedAlert from "../../modal/RedAlert";
 
-export default function Sliders({ imgs, setModal }) {
+export default function Sliders({ loadData, storeId, main, imgs, setModal }) {
   const closeModal = () => {
     setModal(false);
   };
-  const [idx, setIdx] = useState(0);
+  const [idx, setIdx] = useState(main ? "main" : 0);
+  const [alert, setAlert] = useState(false);
 
+  const onPressChangeMainImg = () => {
+    if (idx != "main") {
+      cafeChangeImgApi(storeId, imgs[idx].imageId).then((res) => {
+        loadData();
+        setModal(false);
+      });
+    }
+  };
+
+  console.log(imgs);
   // pagination
   const [page, _, item, count, setCount, setPage] = usePagination(21);
 
@@ -41,6 +56,14 @@ export default function Sliders({ imgs, setModal }) {
         <Container>
           <div>
             <div>
+              {main && (
+                <StarBox>
+                  <SmImg onClick={() => setIdx("main")}>
+                    <img src={main.imageUrl} alt="" />
+                  </SmImg>
+                  <Star />
+                </StarBox>
+              )}
               {imgs.slice((page - 1) * item, (page - 1) * item + item).map((item, i) => (
                 <SmImg key={i} onClick={() => setIdx(i)}>
                   <img src={item.imageUrl} alt="" />
@@ -56,25 +79,59 @@ export default function Sliders({ imgs, setModal }) {
               />
             </div>
           </div>
-          <div style={{ width: "60%", display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              width: "60%",
+              display: "flex",
+              justifyContent: "center",
+              position: "relative",
+            }}
+          >
             {imgs && (
               <Box>
-                <IconBox isLeft onClick={() => setIdx(idx - 1)}>
+                <IconBox
+                  isLeft
+                  onClick={() => {
+                    if (idx == 0) {
+                      setIdx("main");
+                    } else setIdx(idx - 1);
+                  }}
+                >
                   <ArrowL />
                 </IconBox>
-                <IconBox onClick={() => setIdx(idx + 1)}>
+                <IconBox
+                  onClick={() => {
+                    if (idx == "main") {
+                      setIdx(0);
+                    } else setIdx(idx + 1);
+                  }}
+                >
                   <ArrowR />
                 </IconBox>
 
-                <img src={imgs[idx].imageUrl} alt="" />
+                <img src={idx == "main" ? main?.imageUrl : imgs[idx].imageUrl} alt="" />
+                <ChangeMainImg isMain={idx == "main"} onClick={() => setAlert(true)}>
+                  {idx == "main" ? "대표 이미지" : "대표 이미지 설정"}
+                </ChangeMainImg>
                 <p>
-                  {idx + 1} / {count}
+                  {idx == "main" ? 1 : idx + 1} / {count}
                 </p>
               </Box>
             )}
           </div>
         </Container>
       </S.ModalBox>
+      {alert && (
+        <RedAlert
+          text="대표 이미지 설정"
+          text1="이미지를"
+          text2={` 대표 이미지로 설정`}
+          text3="하시겠습니까?"
+          setAlert={setAlert}
+          func={onPressChangeMainImg}
+          forFunc={null}
+        />
+      )}
     </Portal>
   );
 }
@@ -135,4 +192,27 @@ const IconBox = styled.div`
   position: absolute;
   ${(props) => (props.isLeft ? "left:0;" : "right:0;")}
   top : 50%;
+`;
+const StarBox = styled.div`
+  position: relative;
+  & > svg {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 5px;
+    right: 5px;
+    path {
+      fill: #ffce4a;
+    }
+  }
+`;
+
+const ChangeMainImg = styled.div`
+  padding: 15px;
+  background-color: rgba(19, 19, 19, 0.8);
+  position: absolute;
+  top: 300px;
+  left: ${(props) => (props.isMain ? "38%" : "32%")};
+  color: #fc7521;
+  border-radius: 32px;
 `;
