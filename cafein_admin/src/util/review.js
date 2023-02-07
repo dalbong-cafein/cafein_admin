@@ -16,8 +16,8 @@ export const reviewDetailApi = async (id) => {
 
 export const reviewSearchApi = async (keyword, searchType, page, sort) => {
   const sub =
-    searchType === "내용"
-      ? "c"
+    searchType === "분류"
+      ? "r"
       : searchType === "회원 번호"
       ? "w"
       : searchType === "카페 번호"
@@ -36,4 +36,8 @@ export const reviewReportApi = async (id, reportCId) => {
   const data = { reviewId: id, reportCategoryId: reportCId };
 
   return await withAuthInstance.post(`/reviews/${id}/reports`, data);
+};
+
+export const changePostStatusApi = async (id, isPost) => {
+  return await withAuthInstance.patch(`/reviews/${id}/${isPost ? "stop-posting" : "post"}`);
 };

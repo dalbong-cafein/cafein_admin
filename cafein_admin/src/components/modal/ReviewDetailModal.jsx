@@ -10,7 +10,7 @@ import ReportReason from "./ReportReason";
 import ReviewStarRow from "../common/ReviewStarRow";
 import ReviewRecommendationBtn from "../ReviewRecommendationBtn";
 
-import { reviewDelApi, reviewDetailApi } from "../../util/review";
+import { changePostStatusApi, reviewDelApi, reviewDetailApi } from "../../util/review";
 
 import { ReactComponent as Close } from "../../svg/close2.svg";
 
@@ -21,6 +21,7 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
   const [data, setData] = useState([]);
   const [del, setDel] = useState(false);
   const [rReason, setRReason] = useState(false);
+  const [changeStatusAlert, setChangeStatusAlert] = useState(false);
   const [slider, setSlider] = useState(false);
 
   const onDel = () => {
@@ -31,13 +32,27 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
+  const changeState = () => {
+    changePostStatusApi(data?.reviewId, data?.isPost).then((res) => {
+      console.log(res);
+      loadData();
+      setChangeStatusAlert(false);
+    });
+  };
+
+  const loadData = () => {
     reviewDetailApi(detailReviewId)
       .then((res) => {
         setData(res.data.data);
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
+
+  console.log(data);
 
   return (
     <>
@@ -71,6 +86,18 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
               <S.Line>
                 <span>최종수정일</span>
                 <p>{String(data.modDateTime).replace("T", " ")}</p>
+              </S.Line>
+              <S.Line>
+                <span>리뷰상태</span>
+                <Btn content={data.isPost} onClick={() => setChangeStatusAlert(true)}>
+                  <div />
+                  {data?.isPost ? "게시중" : "게시중단"}
+                </Btn>
+                {!data?.isPost && (
+                  <p style={{ color: data?.isPost ? "#26BA6A" : "#f44336" }}>
+                    {String(data?.modDateTime).replace("T", " ")}
+                  </p>
+                )}
               </S.Line>
             </Columnbox>
             <ReviewRecommendationBtn isDetail recommendation={data.recommendation} />
@@ -129,6 +156,17 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
       )}
       {rReason && <ReportReason setModal={setRReason} id={data.reviewId} />}
       {slider && <Sliders setModal={setSlider} imgs={data?.reviewImageDtoList} />}
+      {changeStatusAlert && (
+        <RedAlert
+          text="리뷰 삭제"
+          text1="리뷰를 "
+          text2={`${data?.isPost ? "게시 중단" : "게시"}`}
+          text3="하시겠습니까?"
+          setAlert={setChangeStatusAlert}
+          func={changeState}
+          forFunc={null}
+        />
+      )}
     </>
   );
 }
@@ -153,5 +191,23 @@ const Pic = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 6px;
+  }
+`;
+
+const Btn = styled.div`
+  position: relative;
+  width: 86px;
+  height: 26px;
+  text-align: center;
+  border-radius: 6px;
+  color: ${(props) => (props.content ? "#26BA6A" : "#f44336")};
+  line-height: 26px;
+  & > div:first-child {
+    position: absolute;
+    width: 86px;
+    height: 26px;
+    background-color: ${(props) => (props.content ? "#26BA6A" : "#f44336")};
+    opacity: 0.3;
+    border-radius: 4px;
   }
 `;
