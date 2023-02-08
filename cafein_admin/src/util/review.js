@@ -41,3 +41,8 @@ export const reviewReportApi = async (id, reportCId) => {
 export const changePostStatusApi = async (id, isPost) => {
   return await withAuthInstance.patch(`/reviews/${id}/${isPost ? "stop-posting" : "post"}`);
 };
+
+//신고가능여부체크
+export const isAbleReportApi = async (id) => {
+  return await withAuthInstance.get(`/reviews/${id}/reports/check-possible-report`);
+};

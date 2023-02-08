@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Portal from "./Portal";
 import styled from "styled-components";
 import * as S from "./style";
-import { ReactComponent as Close } from "../../svg/close2.svg";
+
 import Row from "../atoms/row";
-import { ReactComponent as Check } from "../../svg/ArrowDown.svg";
-import { changeReportStatusApi } from "../../util/events";
-import { useState } from "react";
 import RedAlert from "./RedAlert";
 
-export default function MUReport({ setModal, selectItem }) {
+import { ReactComponent as Close } from "../../svg/close2.svg";
+import { ReactComponent as Check } from "../../svg/ArrowDown.svg";
+
+import { changeReportStatusApi } from "../../util/events";
+
+export default function MUReport({ loadData, setModal, selectItem }) {
   const closeModal = () => {
     setModal(false);
   };
@@ -29,6 +31,8 @@ export default function MUReport({ setModal, selectItem }) {
     const state = selectState == "반려" ? "reject" : "approve";
     changeReportStatusApi(selectItem.reportId, state)
       .then((res) => {
+        console.log(res);
+        loadData();
         setAlert(() => false);
         setDropData(false);
         closeModal();
@@ -47,8 +51,9 @@ export default function MUReport({ setModal, selectItem }) {
     setSelectState(() => status);
     setAlert(() => true);
   };
+  console.log(selectItem);
 
-  const itemStatus = statusObj[selectItem.reportStatus];
+  const itemStatus = statusObj[selectItem.currentReportStatus];
 
   return (
     <>
@@ -75,39 +80,46 @@ export default function MUReport({ setModal, selectItem }) {
               <span>신고 등록일</span>
               <p>{String(selectItem.regDateTime).replace("T", " ")}</p>
             </Line>
-            <Line>
+            <LineForHistory>
               <span>신고 상태</span>
-              <Row gap={16} align="baseline">
-                <Btn
-                  content={selectItem.reportStatus}
-                  onClick={() => {
-                    if (selectItem.reportStatus == "WAIT") {
+              <div>
+                {selectItem?.reportHistoryResDtoList.map((item, i) => {
+                  return (
+                    <Row gap={16} align="baseline" key={i}>
+                      <GrayBtn>{statusObj[item?.reportStatus]}</GrayBtn>
+                      <p>{String(item?.regDateTime).replace("T", " ")}</p>
+                    </Row>
+                  );
+                })}
+                <Row gap={16} align="baseline">
+                  <Btn
+                    content={selectItem.currentReportStatus}
+                    onClick={() => {
                       onClickStatusBtn();
-                    }
-                  }}
-                >
-                  <div />
-                  {itemStatus}
-                  {selectItem.reportStatus === "WAIT" && (
+                    }}
+                  >
+                    <div />
+                    {itemStatus}
+
                     <Check style={{ paddingBottom: "2px", paddingLeft: "3px" }} />
+                  </Btn>
+                  {dropData && (
+                    <DropBox>
+                      {statusArrKr
+                        .filter((item) => item != itemStatus)
+                        .map((item, i) => (
+                          <Item key={i} onClick={() => onClickStatusItem(item)}>
+                            {item}
+                          </Item>
+                        ))}
+                    </DropBox>
                   )}
-                </Btn>
-                {dropData && (
-                  <DropBox>
-                    {statusArrKr
-                      .filter((item) => item != itemStatus)
-                      .map((item, i) => (
-                        <Item key={i} onClick={() => onClickStatusItem(item)}>
-                          {item}
-                        </Item>
-                      ))}
-                  </DropBox>
-                )}
-                <ModDate content={selectItem.reportStatus}>
-                  {selectItem.modDateTime || selectItem.regDateTime}
-                </ModDate>
-              </Row>
-            </Line>
+                  <ModDate content={selectItem.currentReportStatus}>
+                    {selectItem.modDateTime || selectItem.regDateTime}
+                  </ModDate>
+                </Row>
+              </div>
+            </LineForHistory>
             <Line>
               <span>리뷰 번호</span>
               <p>{String(selectItem.reviewId).padStart(6, "0")}</p>
@@ -157,6 +169,39 @@ const Line = styled.div`
   & > p:nth-child(2) {
     color: #e3e3e3;
   }
+`;
+const LineForHistory = styled.div`
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  padding: 10px 0 13px;
+  border-bottom: 1px solid ${(props) => (props.color ? props.color : "#333333")};
+  & > span {
+    width: 120px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    color: #8b8b8b;
+  }
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+  }
+  & > p {
+    color: #e3e3e3;
+  }
+`;
+
+const GrayBtn = styled.div`
+  position: relative;
+  width: 86px;
+  height: 26px;
+  text-align: center;
+  border-radius: 6px;
+  color: #fff;
+  margin-bottom: 5px;
+  line-height: 26px;
+  background-color: #646464;
 `;
 
 const Btn = styled.div`

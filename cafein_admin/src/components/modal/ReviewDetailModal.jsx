@@ -10,7 +10,12 @@ import ReportReason from "./ReportReason";
 import ReviewStarRow from "../common/ReviewStarRow";
 import ReviewRecommendationBtn from "../ReviewRecommendationBtn";
 
-import { changePostStatusApi, reviewDelApi, reviewDetailApi } from "../../util/review";
+import {
+  changePostStatusApi,
+  isAbleReportApi,
+  reviewDelApi,
+  reviewDetailApi,
+} from "../../util/review";
 
 import { ReactComponent as Close } from "../../svg/close2.svg";
 
@@ -20,9 +25,11 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
   };
   const [data, setData] = useState([]);
   const [del, setDel] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [rReason, setRReason] = useState(false);
   const [changeStatusAlert, setChangeStatusAlert] = useState(false);
   const [slider, setSlider] = useState(false);
+  const [isAbleReport, setIsAbleReport] = useState(null);
 
   const onDel = () => {
     reviewDelApi(detailReviewId)
@@ -48,11 +55,17 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
       .catch((err) => console.log(err));
   };
 
+  const loadIsAbleReportData = () => {
+    isAbleReportApi(detailReviewId).then((res) => {
+      console.log(res?.data?.data);
+      setIsAbleReport(res?.data?.data);
+    });
+  };
+
   useEffect(() => {
     loadData();
+    loadIsAbleReportData();
   }, []);
-
-  console.log(data);
 
   return (
     <>
@@ -132,12 +145,23 @@ export default function ReviewDetailModal({ setModal, detailReviewId }) {
           </S.ModalContent>
           <S.ModalFooter style={{ justifyContent: "end" }}>
             <Row gap={24}>
-              <S.Btn color="#2563eb" onClick={() => setDel(true)}>
-                삭제
-              </S.Btn>
-              <S.Btn color="#515151" onClick={() => setRReason(true)}>
-                신고
-              </S.Btn>
+              <S.Btn onClick={() => setDel(true)}>삭제</S.Btn>
+
+              {isAbleReport?.isPossibleRegistration && (
+                <S.Btn color="#515151" onClick={() => setRReason(true)}>
+                  신고
+                </S.Btn>
+              )}
+              {/* <S.Btn
+                color="#2563eb"
+                onClick={() => {
+                  if (!isEdit) {
+                    setIsEdit(true);
+                  }
+                }}
+              >
+                {isEdit ? "저장" : "수정"}
+              </S.Btn> */}
             </Row>
           </S.ModalFooter>
         </S.ModalBox>

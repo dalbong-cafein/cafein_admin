@@ -79,6 +79,7 @@ export const Btn = styled.div`
   border-radius: 6px;
   text-align: center;
   line-height: 40px;
+  ${(props) => !props.color && "border:1px solid #515151;"}
   cursor: pointer;
 `;
 export const ModalContent = styled.div`

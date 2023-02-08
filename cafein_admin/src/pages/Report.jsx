@@ -120,7 +120,7 @@ const Report = () => {
         </div>
       </SS.Container>
       {modalMemo && <MemoModal item={memoItem} setModal={setModalMemo} />}
-      {modal && <MUReport selectItem={selectItem} setModal={setModal} />}
+      {modal && <MUReport selectItem={selectItem} setModal={setModal} loadData={onResetData} />}
     </>
   );
 };
