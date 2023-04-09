@@ -9,13 +9,7 @@ import { ReactComponent as ArrowUp } from "../../svg/ArrowUp.svg";
 
 import { convertTime, updateDay } from "../../hooks/registerHook";
 
-export default function CafeTimeBox({
-  register,
-  setRegister,
-  dayarr,
-  setDayarr,
-  isEdit,
-}) {
+export default function CafeTimeBox({ register, setRegister, dayarr, setDayarr, isEdit }) {
   const [selectOn, setSelectOn] = useState(false);
   const [days, setDays] = useState([]);
   const [openTime, setOpenTime] = useState("");
@@ -65,6 +59,8 @@ export default function CafeTimeBox({
     setSelectOn(false);
   };
 
+  console.log(openTime);
+
   return (
     <>
       <S.Box height={128}>
@@ -72,7 +68,7 @@ export default function CafeTimeBox({
         <S.TimeBox>
           <S.BtnRow gap={13}>
             <S.Btn>
-              {openTime && <p>{openTime.slice(0, 2) > 12 ? "오후" : "오전"}</p>}
+              {!!openTime?.length && <p>{openTime?.slice(0, 2) > 12 ? "오후" : "오전"}</p>}
               <input
                 placeholder="시작 시간"
                 value={openTime}
@@ -82,9 +78,7 @@ export default function CafeTimeBox({
               />
             </S.Btn>
             <S.Btn>
-              {closeTime && (
-                <p>{closeTime.slice(0, 2) > 12 ? "오후" : "오전"}</p>
-              )}
+              {!!closeTime?.length && <p>{closeTime?.slice(0, 2) > 12 ? "오후" : "오전"}</p>}
               <input
                 placeholder="종료 시간"
                 value={closeTime}
@@ -102,33 +96,21 @@ export default function CafeTimeBox({
                 <p>{days.join(" ")}</p>
               )}
             </S.Btn2>
-            {selectOn && (
-              <ComboBoxForDay
-                dayArr={dayArr}
-                dayPush={dayPush}
-                isEdit={isEdit}
-              />
-            )}
+            {selectOn && <ComboBoxForDay dayArr={dayArr} dayPush={dayPush} isEdit={isEdit} />}
             <Plus onClick={addTime} />
           </S.BtnRow>
           {dayarr.map((item, i) => (
             <S.Day key={i}>
               <div>
-                {item[0].slice(0, 2) > 12 ? "오후" : "오전"}
-                {item[0].slice(0, 2) > 12
-                  ? `${String(item[0].slice(0, 2) - 12).padStart(
-                      2,
-                      "0"
-                    )}:${item[0].slice(3)}`
+                {item[0]?.slice(0, 2) > 12 ? "오후" : "오전"}
+                {item[0]?.slice(0, 2) > 12
+                  ? `${String(item[0]?.slice(0, 2) - 12).padStart(2, "0")}:${item[0].slice(3)}`
                   : item[0]}
               </div>
               <div>
-                {item[1].slice(0, 2) > 12 ? "오후" : "오전"}
-                {item[1].slice(0, 2) > 12
-                  ? `${String(item[1].slice(0, 2) - 12).padStart(
-                      2,
-                      "0"
-                    )}:${item[1].slice(3)}`
+                {item[1]?.slice(0, 2) > 12 ? "오후" : "오전"}
+                {item[1]?.slice(0, 2) > 12
+                  ? `${String(item[1]?.slice(0, 2) - 12).padStart(2, "0")}:${item[1].slice(3)}`
                   : item[1]}
               </div>
               <div>{item[2].length == 1 ? item[2] : item[2].join(",")}</div>
